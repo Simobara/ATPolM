@@ -107,7 +107,6 @@ const Table = ({ handleAddNewRecPopup, rowData = [], columnData = [] }) => {
               <div className="section-item">
                 <strong className="color-red"></strong>
               </div>
-
               <div className="section-item">
                 <strong className="color-blue">Quantita:</strong>
                 <span>{quantita}</span>

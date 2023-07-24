@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
+
 /* CSS */
 import "./sidebar.css";
 // import farfallaLeft from "../../Assets/Images/farfallaLeft.jpg";
 import farfallaRight from "../../Assets/Images/farfallaRight.jpg";
 // import arrowDown from "../../Assets/Images/black-arrow-down.png";
+
 /* COMPONENTS */
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import ClearIcon from "@mui/icons-material/Clear";
+
 /* MUI MATERIAL ICONS */
 import MenuList from "@mui/material/MenuList";
 import MenuItem from "@mui/material/MenuItem";
