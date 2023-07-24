@@ -1,0 +1,102 @@
+.form_middle_page {
+  position: absolute;
+  left: 20rem;
+  width: calc(20vw + 25rem);
+}
+
+.dropdown_menu {
+  position: absolute;
+  left: 20rem;
+  width: calc(1vw + 15rem);
+}
+
+.dropdown_menu_2 {
+  position: absolute;
+  left: 16rem;
+  width: calc(1vw + 20rem);
+  top: -5px;
+}
+
+.scegli_menu {
+  position: absolute;
+  left: 20rem;
+  width: calc(1vw + 20rem);
+}
+
+.spinner_menu {
+  position: absolute;
+  left: 20rem;
+  width: calc(1vw + 10rem);
+}
+
+.quantity_menu {
+  position: absolute;
+
+  left: 20rem;
+  width: calc(1vw + 15rem);
+}
+
+@media (min-width: 768px) and (min-width: 1024px) {
+  .form_middle_page {
+    left: 20rem;
+    max-width: 40%;
+  }
+
+  .dropdown_menu {
+    left: 20rem;
+    max-width: 40%;
+  }
+
+  .dropdown_menu_2 {
+    left: 11rem;
+    max-width: 100%;
+  }
+
+  .scegli_menu {
+    left: 20rem;
+    max-width: 40%;
+  }
+
+  .spinner_menu {
+    left: 20rem;
+    max-width: 40%;
+  }
+
+  .quantity_menu {
+    display: block;
+    left: 20rem;
+    max-width: 40%;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .form_middle_page {
+    left: 10rem;
+    max-width: 20%;
+  }
+
+  .dropdown_menu {
+    left: 5rem;
+    max-width: 5%;
+  }
+
+  .dropdown_menu_2 {
+    left: 2rem;
+    max-width: 10%;
+  }
+
+  .scegli_menu {
+    left: 10rem;
+    max-width: 20%;
+  }
+
+  .spinner_menu {
+    left: 10rem;
+    max-width: 20%;
+  }
+
+  .quantity_menu {
+    left: 5rem;
+    max-width: 10%;
+  }
+}

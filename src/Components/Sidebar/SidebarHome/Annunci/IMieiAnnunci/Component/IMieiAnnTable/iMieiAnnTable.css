@@ -1,0 +1,63 @@
+.bold {
+  font-weight: bold;
+}
+
+.bold-columns th:nth-child(-n+3) {
+  font-weight: bold;
+}
+
+
+.button .icon{
+  cursor: pointer !important;
+  }
+  
+  .button-modify{
+      border: 3px solid  blue ;
+      background-color: blue;
+      color:white;
+      margin: 4px;
+      /* width: 40px;
+      height: 6px; */
+      z-index: 1;
+  }
+  
+  
+  .button-modify:hover{
+      background-color: white !important;
+      /* border: 3px dashed  blue; */
+      color:blue !important;
+  }
+  
+  .icon-add{
+     background-color: greenyellow!important;
+     color:blue;
+  }
+  
+  .icon-add:hover{
+    background-color: greenyellow!important;
+    /* border: 3px dotted  blue ; */
+  }
+
+  .button-close{
+    background-color: red !important;
+    color:white;
+  }
+
+  .button-close:hover{
+    background-color: pink !important;
+    border: 3px dotted  red ;
+    color:white;
+  }
+
+
+  tr {
+    border-top: 1px dashed black;
+    border-bottom: 1px dashed black;
+  }
+
+  
+  .page-text-input{
+    background-color: blue;
+    color: white;
+    
+  }

@@ -1,0 +1,44 @@
+.background-image {
+    background-repeat: no-repeat;
+    background-size: cover;
+  }  
+
+.centered-container {
+    display: flex;
+    justify-content: center; /* Centrare orizzontalmente */
+    align-items: center; /* Centrare verticalmente */
+    height: 100vh; /* Altezza della finestra visualizzata */
+    /* background-color: grey; */
+}
+
+.centered-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    padding: 20px;
+}
+
+
+.success {
+    color: green;
+}
+
+
+.signup-button {
+    margin-top: 2rem; /* Puoi regolare il valore del margine in base alle tue preferenze */
+}
+
+
+.line {
+    background-color: rgb(62, 208, 174);
+}
+
+
+.unselectable {
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+/Edge */
+    user-select: none; /* Versioni standard */
+  }

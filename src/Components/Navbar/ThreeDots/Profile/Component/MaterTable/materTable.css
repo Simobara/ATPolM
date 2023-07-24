@@ -1,0 +1,63 @@
+.bold {
+  font-weight: bold;
+}
+
+.bold-columns th:nth-child(n + 1) {
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 1.2rem;
+  border-top: 5px solid black;
+  background-color: rgb(164, 246, 39);
+}
+
+.button .icon {
+  cursor: pointer !important;
+}
+
+.button-modify {
+  border: 5px solid blue;
+  background-color: blue;
+  color: white;
+  margin: 1px;
+  /* width: 40px;
+        height: 6px; */
+  z-index: 1;
+}
+
+.button-modify:hover {
+  background-color: white !important;
+  border: 5px solid blue;
+  color: blue !important;
+}
+
+.icon-add {
+  background-color: #dc86d8 !important;
+  color: blue;
+  border: 5px solid blue;
+}
+
+.icon-add:hover {
+  background-color: rgb(253, 69, 217) !important;
+  border: 5px dotted blue;
+}
+
+.button-close {
+  background-color: red !important;
+  color: white;
+}
+
+.button-close:hover {
+  background-color: pink !important;
+  border: 3px dotted red;
+  color: red;
+}
+
+tr {
+  border-top: 1px dashed black;
+  border-bottom: 1px dashed black;
+}
+.th-BorderNone {
+  border: none !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+}

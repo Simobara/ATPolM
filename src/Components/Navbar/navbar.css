@@ -1,0 +1,177 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto");
+i {
+  margin-right: 10px;
+}
+.navbar-logo {
+  padding: 15px;
+  color: #fff;
+  user-select: none;
+}
+
+.navbar-brand {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.1rem !important;
+  color: #ffffff !important;
+}
+.navbar-logo img {
+  margin-right: 10px;
+  height: 23px;
+}
+
+.navbar-mainbg-blue {
+  /*background-color: #fdfdfe;*/
+  background-color: rgb(9, 88, 207);
+  box-shadow: 0 -5px 0 0 #14294a, 0 1px 0 0 #e4e6ee;
+  padding: 5px 20px !important;
+}
+.navbar-mainbg-white {
+  background-color: #fdfdfe;
+  color: #441010 !important;
+  box-shadow: 0 -5px 0 0 #14294a, 0 1px 0 0 #e4e6ee;
+  padding: 5px 20px !important;
+}
+#navbarSupportedContent {
+  overflow: hidden;
+  position: relative;
+}
+#navbarSupportedContent ul {
+  display: flex;
+  justify-content: center;
+}
+#navbarSupportedContent ul li a i {
+  margin-right: 10px;
+}
+#navbarSupportedContent li {
+  list-style-type: none;
+  float: left;
+}
+#navbarSupportedContent ul li a {
+  color: #dbd9d9;
+  text-decoration: none;
+  text-align: center;
+  display: block;
+  padding: 10px 10px;
+  font-size: 1rem;
+  transition-duration: 0.6s;
+  transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  position: relative;
+}
+#navbarSupportedContent > ul > li.active > a {
+  color: #dc73ff;
+  font-weight: bold;
+  background-color: transparent;
+  transition: all 0.7s;
+}
+#navbarSupportedContent a:not(:only-child):after {
+  content: "\f105";
+  position: absolute;
+  right: 20px;
+  top: 10px;
+  font-family: "Font Awesome 5 Free";
+  display: inline-block;
+  padding-right: 3px;
+  vertical-align: middle;
+  font-weight: 900;
+  transition: 0.5s;
+}
+#navbarSupportedContent .active > a:not(:only-child):after {
+  transform: rotate(90deg);
+}
+
+.customClassName {
+  border-right: 1px solid;
+}
+
+/* -------------MEDIA-------------------- */
+
+@media (max-width: 991px) {
+  #navbarSupportedContent ul li a {
+    /* padding: 12px 30px; */
+  }
+  .hori-selector {
+    margin-top: 0px;
+    margin-left: 10px;
+    border-radius: 0;
+    border-top-left-radius: 25px;
+    border-bottom-left-radius: 25px;
+  }
+  .hori-selector .left,
+  .hori-selector .right {
+    right: 10px;
+  }
+  .hori-selector .left {
+    top: -25px;
+    left: auto;
+  }
+  .hori-selector .right {
+    bottom: -25px;
+  }
+  .hori-selector .left:before {
+    left: -25px;
+    top: -25px;
+  }
+  .hori-selector .right:before {
+    bottom: -25px;
+    left: -25px;
+  }
+}
+@media only screen and (min-width: 300px) and (max-width: 550px) {
+  .MenuIcon-toggle {
+    color: #fff;
+    position: fixed;
+    top: 24px;
+    left: 5px;
+    z-index: 999999999;
+    cursor: pointer;
+  }
+  .crossIcon-toggle {
+    color: #fff;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    z-index: 999999999;
+    cursor: pointer;
+  }
+  .NavigationItem-nav {
+    font-size: 11px !important;
+    margin-top: 11px !important;
+  }
+}
+
+@media only screen and (min-width: 551px) and (max-width: 2550px) {
+  .MenuIcon-toggle {
+    display: none !important;
+  }
+  .crossIcon-toggle {
+    display: none !important;
+  }
+}
+@media only screen and (min-width: 300px) and (max-width: 480px) {
+  .nav-Polieco-Marketplac {
+    display: none !important;
+  }
+}
+/* @media only screen and (min-width: 300px) and (max-width: 1024px) {
+  .largeScreen {
+    display: none !important;
+  }
+  .smallScreen {
+  }
+}
+@media only screen and (min-width: 1025px) and (max-width: 2600px) {
+  .smallScreen {
+    display: none !important;
+  }
+  .largeScreen {
+  }
+} */
+.menuNavDropdown {
+  height: 24px !important;
+  width: 24px !important;
+  font-size: 24px !important;
+}
+.menuWidth {
+  min-width: 120px !important;
+}

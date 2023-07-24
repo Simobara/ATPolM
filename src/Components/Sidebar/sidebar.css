@@ -1,0 +1,588 @@
+.container-Heading {
+  min-height: 100vh !important;
+  border-bottom: 1px solid #b9b8b8;
+  padding-right: 30px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: center;
+  height: 100%;
+  max-width: fit-content;
+}
+.flexDocument {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 100%;
+}
+.Search-Container {
+  height: 30px !important;
+  border: 1px solid rgba(22, 21, 19, 0.5);
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  height: 100%;
+  padding-right: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #161513;
+}
+.Search-DocumentHeading {
+  font-size: 20px;
+  font-weight: 600;
+  color: #000;
+  padding-right: 35px;
+}
+.menu-Documents-open {
+  /* -----------------------------------------------SIDEBAR WIDTH------------- */
+  width: 340px !important;
+  height: 100vh !important;
+  overflow: auto;
+  border-right: 1px solid #f9f3f3;
+  font-size: 22px !important;
+  background-color: #030947 !important;
+}
+.menu-Documents-open::-webkit-scrollbar {
+  display: none;
+}
+.menuHeight::-webkit-scrollbar {
+  display: none;
+}
+.menu-Documents-open .menuHeight {
+  overflow: none;
+  height: 100vh !important;
+}
+.ListItemIcon {
+  position: relative;
+  top: 0 !important;
+  color: #006cfa !important;
+}
+.ListItemIcon .icon {
+  top: 0px !important;
+}
+.menu-Documents-close .MenuItem:hover {
+  color: white;
+  background-color: #00688c !important;
+}
+.MenuItem:hover .ListItemIcon {
+  color: #00688c !important;
+}
+.MenuItem:hover .ListItemTypo {
+  color: #00688c !important;
+}
+.home-item {
+  display: inline-block;
+  color: rgb(251, 0, 255) !important;
+  margin-bottom: 0.6rem !important;
+}
+.home-item::after {
+  content: "HOME";
+  letter-spacing: 1rem;
+}
+.container.ListItemTypo {
+  color: #5367af;
+  font-weight: 500px !important;
+  font-size: 20px !important;
+}
+/* ------------------------------- */
+.doubleArrowTwo {
+  background-color: rgb(85, 142, 226);
+  color: white;
+  font-size: 12px;
+}
+.doubleArrowTwo:hover {
+  background-color: rgb(20, 93, 202);
+}
+.edit_hover_class {
+  display: flex;
+}
+.edit_hover_class a {
+  visibility: hidden;
+}
+.edit_hover_class:hover a {
+  visibility: visible;
+}
+.ListItemTypo .arrow-down-btn {
+  width: 1.7rem;
+  height: 2rem;
+  margin-left: 14px;
+  cursor: pointer;
+  color: #161513 !important;
+}
+.arrow {
+  position: absolute;
+  margin-left: 220px;
+}
+.arrow-Menu {
+  position: absolute;
+  margin-left: 205px;
+}
+.submenu {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  color: #60619e !important ;
+  font-size: 15px;
+  width: 228px !important;
+  margin-left: 1rem !important;
+}
+.submenu:hover {
+  background-color: #e4e6f4;
+  color: #60619e;
+  border-radius: 4px;
+  width: 228px !important;
+}
+.sidebar-text-link {
+  background-color: #f7fdeb !important;
+  color: #2225da !important ;
+  font-weight: bold;
+  border-radius: 4px;
+  width: 239px !important;
+}
+.arrow-down-btn:hover {
+  background-color: #007ffd !important;
+}
+.ListItemTypo > .item-arrow {
+  display: flex;
+  align-items: center;
+}
+.item-arrow .item {
+  color: #ffffff;
+}
+.arrow .arrow-localita {
+  margin-left: 10rem !important;
+}
+.item {
+  margin-right: auto;
+  font-size: 18px;
+}
+.submenu-open {
+  border-left: 4px solid blue;
+}
+.submenu-open-height {
+  min-height: 9rem;
+}
+.submenu .menu-link {
+  color: #f08ff5 !important;
+}
+.submenu:hover .menu-link {
+  color: #ed09f9 !important;
+  font-weight: bold;
+  text-align: center !important;
+}
+.sub-submenu .sub-menu-link {
+  color: #f08ff5 !important;
+}
+.sub-submenu:hover .sub-menu-link {
+  color: #ed09f9 !important;
+}
+.clickTypography {
+  cursor: default;
+}
+/******************************************* media queries *********************************************/
+@media only screen and (max-width: 640px) {
+  .container-Heading {
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  .flexDocument {
+    display: block;
+    text-align: left;
+  }
+  .Search-Container {
+    padding-left: 5px;
+    margin-top: 10px;
+    padding-right: 5px;
+    min-width: 70px !important;
+  }
+  .Search-DocumentHeading {
+    padding-right: 0px;
+  }
+  .ActiveItem :active {
+    border-left: 3px solid red;
+  }
+  .search-button {
+    height: 40px !important;
+    width: 80px !important;
+    border-radius: 3px;
+    color: #fff;
+    background-color: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 100%;
+  }
+  .Search-body {
+    height: 40px !important;
+    border: 1px solid rgba(22, 21, 19, 0.5);
+    border-radius: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 100%;
+    padding-left: 12px;
+    padding-right: 12px;
+    margin-left: 8px;
+    margin-right: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #161513;
+  }
+  .Clearfilters-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #00688c;
+    margin-top: 10px;
+  }
+  .searchContainer {
+    height: 40px !important;
+    margin-right: 8px !important;
+  }
+  .searchContainer .MuiOutlinedInput-adornedStart {
+    padding-left: 14px;
+    height: 40px !important;
+    font-size: 14px;
+    font-style: italic;
+  }
+  .searchContainer.MuiFormControl-root {
+    width: 70% !important;
+  }
+  .Checkbox-title {
+    font-size: 15px;
+    color: #333333;
+    margin-top: 10px !important;
+    font-weight: 600;
+  }
+  .colorBlack {
+    color: #000;
+  }
+  .select-multi {
+    width: 100% !important;
+    font-style: italic;
+    font-size: 12px;
+    font-weight: 400;
+  }
+  .select-multi .css-1p3m7a8-multiValue {
+    background-color: transparent !important;
+    border-radius: 50px;
+    border: 1px solid #333333;
+    margin: 2px;
+    box-sizing: border-box;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .select-multi .css-1xc3v61-indicatorContainer {
+    display: none !important;
+  }
+  .select-multi .css-1u9des2-indicatorSeparator {
+    display: none !important;
+  }
+  .select-multi .css-12a83d4-MultiValueRemove {
+    border-radius: 50px !important;
+  }
+  .select-multi .css-wsp0cs-MultiValueGeneric {
+    padding-bottom: 4px !important;
+  }
+  .SelectWidth {
+    width: 100% !important;
+    height: 36px !important;
+    border-radius: 5px;
+    border: 1px solid #b9b8b8;
+    padding-left: 10px;
+    padding-right: 10px !important;
+  }
+  .Typography-text {
+    color: #908f8f;
+    padding-bottom: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 3px;
+  }
+  .date-query {
+    font-size: 15px;
+    font-weight: 600;
+    color: #000;
+  }
+  .flexSpace {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  .MORE-FILTERSTitle {
+    font-size: 12px;
+    line-height: 16px;
+    color: black;
+    text-transform: uppercase;
+    display: block;
+    margin-top: 3px;
+  }
+  .bottomFilter-container {
+    height: 40vh;
+    background-color: #f3f3f3;
+    font-style: italic;
+    border-top: 1px solid #908f8f;
+    padding-top: 30px;
+    padding-left: 25px;
+    color: #676565;
+  }
+  .flex-display {
+    display: flex;
+  }
+  .width-dropdown {
+    width: 100% !important;
+  }
+  .ListItemTypo {
+    color: #5367af;
+    font-weight: 500px !important;
+    font-size: 20px !important;
+    margin-top: 10px !important;
+  }
+  .menu-Documents-open {
+    height: 100vh;
+    font-size: 22px !important;
+  }
+}
+@media only screen and (min-width: 550px) and (max-width: 1100px) {
+  .item {
+    font-size: 16px;
+  }
+}
+@media only screen and (max-width: 1000px) {
+  .flex-display {
+    display: block;
+  }
+  .searchContainer.MuiFormControl-root {
+    width: 100% !important;
+  }
+  .ListItemTypo {
+    color: #5367af;
+    font-weight: 500px !important;
+    font-size: 20px !important;
+    margin-top: 10px !important;
+  }
+  .menu-Documents-open {
+    height: 100vh;
+    font-size: 22px !important;
+  }
+}
+@media only screen and (min-width: 300px) and (max-width: 400px) {
+  .select-multi {
+    width: 100% !important;
+  }
+  .SelectWidth {
+    width: 100% !important;
+  }
+  .inputWidth {
+    width: 100%;
+  }
+  .width-dropdown {
+    width: 100%;
+  }
+  .menu-Documents-open {
+    height: 100vh;
+    font-size: 22px !important;
+  }
+}
+@media only screen and (min-width: 401px) and (max-width: 600px) {
+  .select-multi {
+    width: 100%;
+  }
+  .SelectWidth {
+    width: 100% !important;
+  }
+  .inputWidth {
+    width: 100%;
+  }
+  .width-dropdown {
+    width: 100%;
+  }
+  .ListItemTypo {
+    color: #5367af;
+    font-weight: 500px !important;
+    font-size: 20px !important;
+    margin-top: 10px !important;
+  }
+  .flex-menu-body {
+    display: flex;
+  }
+  .menu-Documents-open {
+    height: 100vh;
+    font-size: 22px !important;
+  }
+}
+@media only screen and (min-width: 550px) and (max-width: 700px) {
+  .submenu {
+    width: 185px !important;
+  }
+  .submenu:hover {
+    width: 185px !important;
+  }
+}
+@media only screen and (min-width: 300px) and (max-width: 550px) {
+  .menu-Documents {
+    display: none;
+  }
+  .flexSpace {
+    display: block;
+  }
+  .menu-DocumentsSmall {
+    display: none;
+  }
+  .menuSmall-Documents {
+  }
+  .ListItemTypo {
+    color: #5367af;
+    font-weight: 500px !important;
+    font-size: 20px !important;
+    margin-top: 10px !important;
+  }
+  .menu-Documents-open {
+    height: 100vh;
+    border-right: 5px solid #00688c;
+    font-size: 22px !important;
+  }
+  .menu-DocumentsSmall {
+    border-right: 1px solid #cccccc;
+  }
+}
+@media only screen and (min-width: 550px) {
+  .menuSmall-Documents {
+    display: none;
+  }
+  .ListItemTypo {
+    color: #5367af;
+    font-weight: 500px !important;
+    font-size: 20px !important;
+    margin-top: 10px !important;
+  }
+  .arrow .arrow-localita {
+    margin-left: 10rem !important;
+  }
+}
+@media only screen and (min-width: 300px) and (max-width: 550px) {
+  .menu-Documents-openSmall {
+    width: 290px !important;
+    min-height: 160vh;
+    border-right: none;
+    font-size: 22px !important;
+    position: absolute;
+    background: #030947;
+    z-index: 999999999999999999;
+  }
+  .menu-Documents-open {
+    display: none;
+  }
+}
+@media only screen and (min-width: 551px) and (max-width: 2550px) {
+  .menu-Documents-open {
+    height: 100vh !important;
+    overflow-y: auto;
+    font-size: 22px !important;
+  }
+  .menu-Documents-openSmall {
+    display: none;
+  }
+}
+.Polieco-Marketplace-heading {
+  font-size: 16px;
+  color: #007bff;
+  text-align: center;
+  margin-bottom: -2px;
+}
+.MenuMainItemHome {
+  border-bottom: 1px solid #f9f3f3 !important;
+  border-top: 1px solid #f9f3f3 !important;
+  padding-top: 11px !important;
+  padding-bottom: 15px !important;
+}
+.MenuMainItem {
+  border-bottom: 1px solid #f9f3f3 !important;
+  padding-top: 11px !important;
+  padding-bottom: 15px !important;
+}
+@media only screen and (min-width: 701px) and (max-width: 1300px) {
+  .submenu {
+    width: 200px !important;
+  }
+  .submenu:hover {
+    width: 200px !important;
+  }
+}
+@media only screen and (min-width: 1700px) and (max-width: 2550px) {
+  .submenu {
+    width: 210px !important;
+  }
+  .submenu:hover {
+    width: 210px !important;
+  }
+}
+@media only screen and (min-width: 550px) and (max-width: 649px) {
+  .arrow {
+    margin-left: 170px;
+  }
+  .arrow-Menu {
+    margin-left: 156px;
+  }
+  .submenu {
+    width: 172px !important;
+  }
+  .submenu:hover {
+    width: 172px !important;
+  }
+}
+@media only screen and (min-width: 650px) and (max-width: 1000px) {
+  .arrow {
+    margin-left: 190px;
+  }
+  .arrow-Menu {
+    margin-left: 178px;
+  }
+  .submenu {
+    width: 185px !important;
+  }
+  .submenu:hover {
+    width: 185px !important;
+  }
+}
+@media only screen and (min-width: 1001px) and (max-width: 1100px) {
+  .arrow {
+    margin-left: 200px;
+  }
+  .arrow-Menu {
+    margin-left: 190px;
+  }
+}
+@media only screen and (min-width: 1101px) and (max-width: 1300px) {
+  .arrow {
+    margin-left: 200px;
+  }
+  .arrow-Menu {
+    margin-left: 190px;
+  }
+}
+@media only screen and (min-width: 300px) and (max-width: 550px) {
+  .arrow {
+    margin-left: 220px;
+  }
+  .arrow-Menu {
+    margin-left: 207px;
+  }
+}
+.activeTab {
+  color: #f08ff5;
+  border-radius: 4px;
+  font-weight: bold;
+  background-color: #e4e6f4 !important;
+}
+.activeSubTab {
+  color: #f08ff5;
+  border-radius: 4px;
+  font-weight: bold;
+  background-color: #e4e6f4 !important;
+  /* width: 217px !important; */
+}
