@@ -41,7 +41,7 @@ const UpdateModal = ({ show, close }) => {
           </div>
         </div>
         <Modal.Body>
-          <div style={{ color: "red", textAlign: "center", fontSize: "14px", fontWeight: "600" }}>ALL APERTURA E' GIA' PREPOPOLATO</div>
+          <div style={{ color: "red", textAlign: "center", fontSize: "14px", fontWeight: "600" }}>ALL APERTURA E' GIA' PREPOPOLATO </div>
           <div className="row mt-5">
             <div className="word-label ml-2  mb-4" style={{ color: "black", fontSize: "16px" }}>
               Dati Login

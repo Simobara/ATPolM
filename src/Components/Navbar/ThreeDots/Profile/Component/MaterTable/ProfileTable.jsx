@@ -152,7 +152,12 @@ const ProfileNavTable = () => {
               defaultValue={indexOfLastItem >= rowsCatAziende.length ? currentPage - 1 : currentPage + 1}
             /> */}
             </span>
-            <ProButton text=">>" title="Next Page" disabled={indexOfLastItem >= rowsCatAziende.length} clicked={() => handlePageChange(currentPage + 1)} />
+            <ProButton
+              text=">>"
+              title="Next Page"
+              disabled={indexOfLastItem >= rowsCatAziende.length}
+              clicked={() => handlePageChange(currentPage + 1)}
+            />
           </div>
         </div>
 

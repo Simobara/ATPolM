@@ -1,14 +1,19 @@
 import React, { useState } from "react";
 /* CSS */
 import "./aggSingAz.css";
+import { Button } from "react-bootstrap";
 /* COMPONENTS */
 // import ModificationButton from "./Component/saveButton";
-import ModificationButton from "./Component/modification";
+// import ModificationButton from "./Component/modification";
 // import DeleteButton from "./Component/deleteButton";
 // /* MUI MATERIAL ICONS */
 // import VisibilityIcon from "@mui/icons-material/Visibility";
 // import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import UpdateModal from "./Component/Profileupdatemodal";
+
+
+
+
 const ProfileDel = () => {
   // eslint-disable-next-line
   // const [selectedImageTwo, setSelectedImageTwo] = useState(null);
@@ -28,6 +33,14 @@ const ProfileDel = () => {
     setIsModalAddActive(false);
     console.log("modalAdd close");
   };
+
+
+  // const handleSave = () => {
+  //   // Logic to handle saving data goes here
+  //   console.log("Save button clicked!");
+
+  // };
+
   return (
     <>
       <div className="container  custom-container mt-5" style={{ backgroundColor: "#f3f3f3" }}>
@@ -273,8 +286,15 @@ const ProfileDel = () => {
             </div>
           </div>
         </div>
-        <div onClick={handleClickAddOpen} className="d-flex justify-content-center form_middle_page_btn" style={{ marginRight: "20%", marginTop: "50px", marginBottom: "105px" }}>
-          <ModificationButton />
+        <div
+          className="d-flex justify-content-center form_middle_page_btn"
+          style={{ marginRight: "20%", marginTop: "50px", marginBottom: "105px" }}
+        >
+          <div className="mr-4">
+            <Button style={{ fontSize: "14px", background: "#3934d2", borderRadius: "5px" }} onClick={handleClickAddOpen}>
+              Modifica i dati
+            </Button>
+          </div>
         </div>
         <div>{isModalAddActive && <UpdateModal show={isModalAddActive} close={handleClickAddClose} />}</div>
       </div>
