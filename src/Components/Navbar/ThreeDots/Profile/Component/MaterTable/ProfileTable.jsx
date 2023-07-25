@@ -114,7 +114,9 @@ const ProfileNavTable = () => {
             {currentItems.map((row, rowIndex) => (
               <tr key={rowIndex}>
                 <td className={getColumnClassName(0)}>
-                  <button type="button" className="btn btn-primary button-modify" onClick={() => navigate("/profile/del")}>
+                  <button type="button"
+                    className="btn btn-primary button-modify"
+                    onClick={() => navigate("/profile/del")}>
                     <ModeIcon className="icon" />
                   </button>
                   {/* <ButtonPen onClick={openModal} /> */}
@@ -139,7 +141,10 @@ const ProfileNavTable = () => {
         </table>
         <div style={{ marginBottom: "100px" }} className="d-flex justify-content-center w-100 text-sm page-text-input">
           <div className="widthSmall d-flex justify-content-around align-items-center my-1">
-            <ProButton text="<<" title="Previous Page" disabled={currentPage === 1} clicked={() => handlePageChange(currentPage - 1)} />
+            <ProButton text="<<"
+              title="Previous Page"
+              disabled={currentPage === 1}
+              clicked={() => handlePageChange(currentPage - 1)} />
             <span className="text-center text-sm">
               Pagina
               <strong className="mx-3 text-sm">
