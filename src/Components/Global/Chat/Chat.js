@@ -15,8 +15,8 @@ const Chat = () => {
             width: "80px",
             position: "fixed",
             zIndex: "9999999",
-            bottom: "4px",
-            right: "10px",
+            bottom: "35rem",
+            right: "65rem",
             background: "linear-gradient(to right, #7c1f64, #552257)",
           }}
           onClick={toggleShow}

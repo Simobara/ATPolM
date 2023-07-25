@@ -10,6 +10,7 @@ import Search from "../Search/Search";
 import ProButton from "../../../../Global/ProButton/ProButton";
 import ModalImage from "../../../../Global/Modal/modalImage";
 import ModalContact from "../../../../Global/ModalContact/modalContact";
+import Chat from "../../../../Global/Chat/Chat";
 // import Loader from "../../../../Global/Loader/loader";
 let isOpenDetailPanel = false;
 
@@ -111,10 +112,11 @@ const Table = ({ handleAddNewRecPopup, rowData = [], columnData = [] }) => {
                 <strong className="color-blue">Quantita:</strong>
                 <span>{quantita}</span>
               </div>
-              <div className="section-item">
+              <div className="section-item position-relative">
                 <strong className="color-blue">Offerente:</strong>
                 <span>{ragioneSociale}</span>
                 <ModalContact sell={ragioneSociale} />
+                <Chat />
               </div>
             </section>
             <section className="">

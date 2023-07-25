@@ -2,11 +2,10 @@ import React, { useState } from "react";
 /* CSS */
 import "./home.css";
 /* COMPONENTS */
-import { newData } from "../../../../Data/newData";
+import { newData } from "../../../../DataAPI/newData";
 import { tableColumn } from "./Data/MainTable/Columns";
 import Table from "./Table/Table";
 import AddNewRecordForm from "./AddNewRecord/AddNewRecord";
-import Chat from "../../../Global/Chat/Chat";
 
 const SHome = () => {
   const [showAddNewRecPopup, setShowAddNewRecPopup] = useState(false);
@@ -46,7 +45,7 @@ const SHome = () => {
           {/*</div>*/}
         </div>
         {/* <div className="chat-container"> */}
-        <Chat />
+
         {showAddNewRecPopup && <AddNewRecordForm rowsLength={rowsData?.length || ''} onClosePopup={onClosePopup} onCancel={onClosePopup} onSubmitForm={onSubmitForm} />}
       </div>
     </>
