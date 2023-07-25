@@ -88,8 +88,8 @@ const CitTable = () => {
             ))}
           </tbody>
         </table>
-        <div style={{ marginBottom: "100px" }} className="d-flex justify-content-around bg-primary text-white w-100 text-sm page-text-input">
-          <div className="widthSmall d-flex align-items-center my-1">
+        <div style={{ marginBottom: "100px" }} className="d-flex justify-content-center w-100 text-sm page-text-input">
+          <div className="widthSmall d-flex justify-content-around align-items-center my-1">
             <ProButton text="<<" title="Previous Page" disabled={currentPage === 1} clicked={() => handlePageChange(currentPage - 1)} />
             <span className="text-center text-sm">
               Pagina
