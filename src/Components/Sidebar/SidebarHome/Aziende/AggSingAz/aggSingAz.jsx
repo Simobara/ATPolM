@@ -59,14 +59,14 @@ const AggSingAz = () => {
                   {isEyePswOpen ? (
                     <>
                       <input type="text" id="Password" className="form-control form_middle_page custom-container mt-2" />
-                      <div className="items-icon" onClick={() => setIsEyePswOpen(!isEyePswOpen)}>
+                      <div className="items-icon items-container" onClick={() => setIsEyePswOpen(!isEyePswOpen)}>
                         <VisibilityIcon fontSize="large" />
                       </div>
                     </>
                   ) : (
                     <>
                       <input type="password" id="Password" className="form-control form_middle_page custom-container mt-2" />
-                      <div className="items-icon" onClick={() => setIsEyePswOpen(!isEyePswOpen)}>
+                      <div className="items-icon items-container" onClick={() => setIsEyePswOpen(!isEyePswOpen)}>
                         <VisibilityOffIcon fontSize="large" />
                       </div>
                     </>
@@ -85,14 +85,14 @@ const AggSingAz = () => {
                   {isEyeConfPswOpen ? (
                     <>
                       <input type="text" id="ConfPassword" className="form-control form_middle_page custom-container mt-1" />
-                      <div className="items-icon" style={{ bottom: "15px" }} onClick={() => setIsEyeConfPswOpen(!isEyeConfPswOpen)}>
+                      <div className="items-icon items-container" style={{ bottom: "15px" }} onClick={() => setIsEyeConfPswOpen(!isEyeConfPswOpen)}>
                         <VisibilityIcon fontSize="large" />
                       </div>
                     </>
                   ) : (
                     <>
                       <input type="password" id="ConfPassword" className="form-control form_middle_page custom-container mt-1" />
-                      <div className="items-icon" style={{ bottom: "15px" }} onClick={() => setIsEyeConfPswOpen(!isEyeConfPswOpen)}>
+                      <div className="items-icon items-container" style={{ bottom: "15px" }} onClick={() => setIsEyeConfPswOpen(!isEyeConfPswOpen)}>
                         <VisibilityOffIcon fontSize="large" />
                       </div>
                     </>

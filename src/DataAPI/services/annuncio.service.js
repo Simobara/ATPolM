@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 
 const API_URL = 'http://localhost:8080/api/';
 
 const AnnuncioService = () => {
     const [accessToken, setAccessToken] = useState(null);
-
 
     const getAnnunci = async () => {
         try {
@@ -15,8 +14,6 @@ const AnnuncioService = () => {
             console.error('Error while fetching annunci:', error);
         }
     };
-
-
 
     const addAnnuncio = async (titolo, descrizione, quantita) => {
         try {
@@ -34,6 +31,7 @@ const AnnuncioService = () => {
             console.error('Error while adding annuncio:', error);
         }
     };
+
     return { getAnnunci, addAnnuncio, accessToken };
 };
 

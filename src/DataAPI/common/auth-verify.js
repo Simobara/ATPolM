@@ -10,7 +10,8 @@ const parseJwt = (token) => {
 };
 
 const AuthVerify = (props) => {
-  let location = props.router.location;
+  const { router, logOut } = props;
+  const { location } = router;
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
@@ -18,13 +19,13 @@ const AuthVerify = (props) => {
     if (user) {
       const decodedJwt = parseJwt(user.accessToken);
 
-      if (decodedJwt.exp * 1000 < Date.now()) {
-        props.logOut();
+      if (decodedJwt && decodedJwt.exp * 1000 < Date.now()) {
+        logOut();
       }
     }
-  }, [location]);
+  }, [location, logOut]);
 
-  return <div></div>;
+  return null;
 };
 
 export default withRouter(AuthVerify);

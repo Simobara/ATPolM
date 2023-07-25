@@ -11,52 +11,25 @@ const UserService = () => {
   const [adminBoard, setAdminBoard] = useState(null);
 
   useEffect(() => {
-    const fetchPublicContent = async () => {
+    const fetchData = async () => {
       try {
-        const response = await axios.get(API_URL + 'all');
-        setPublicContent(response.data);
+        const [publicResponse, userResponse, moderatorResponse, adminResponse] = await Promise.all([
+          axios.get(API_URL + 'all'),
+          axios.get(API_URL + 'user', { headers: authHeader() }),
+          axios.get(API_URL + 'mod', { headers: authHeader() }),
+          axios.get(API_URL + 'admin', { headers: authHeader() })
+        ]);
+
+        setPublicContent(publicResponse.data);
+        setUserBoard(userResponse.data);
+        setModeratorBoard(moderatorResponse.data);
+        setAdminBoard(adminResponse.data);
       } catch (error) {
-        console.error('Error while fetching public content:', error);
+        console.error('Error while fetching data:', error);
       }
     };
 
-    const fetchUserBoard = async () => {
-      try {
-        const response = await axios.get(API_URL + 'user', {
-          headers: authHeader(),
-        });
-        setUserBoard(response.data);
-      } catch (error) {
-        console.error('Error while fetching user board:', error);
-      }
-    };
-
-    const fetchModeratorBoard = async () => {
-      try {
-        const response = await axios.get(API_URL + 'mod', {
-          headers: authHeader(),
-        });
-        setModeratorBoard(response.data);
-      } catch (error) {
-        console.error('Error while fetching moderator board:', error);
-      }
-    };
-
-    const fetchAdminBoard = async () => {
-      try {
-        const response = await axios.get(API_URL + 'admin', {
-          headers: authHeader(),
-        });
-        setAdminBoard(response.data);
-      } catch (error) {
-        console.error('Error while fetching admin board:', error);
-      }
-    };
-
-    fetchPublicContent();
-    fetchUserBoard();
-    fetchModeratorBoard();
-    fetchAdminBoard();
+    fetchData();
   }, []);
 
   return { publicContent, userBoard, moderatorBoard, adminBoard };
