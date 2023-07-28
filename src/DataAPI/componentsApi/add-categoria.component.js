@@ -6,6 +6,8 @@ import CheckButton from "react-validation/build/button";
 import { withRouter } from "../common/with-router";
 import CategoriaService from "../services/categoria.service";
 
+
+
 const required = value => {
   if (!value) {
     return (

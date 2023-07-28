@@ -17,7 +17,7 @@ const required = (value) => {
 };
 
 const AddAnnuncio = (props) => {
-  const form = useRef(null);
+  const refForm = useRef(null);
   const checkBtn = useRef(null);
 
   const [loading, setLoading] = useState(false);
@@ -30,15 +30,17 @@ const AddAnnuncio = (props) => {
 
   const onChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevState) => ({ ...prevState, [name]: value }));
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value
+    }));
   };
 
   const handleAddAnnuncio = async (e) => {
     e.preventDefault();
     setMessage("");
     setLoading(true);
-
-    form.current.validateAll();
+    refForm.current.validateAll();
 
     if (checkBtn.current.context._errors.length === 0) {
       try {
@@ -46,10 +48,7 @@ const AddAnnuncio = (props) => {
         props.router.navigate("/home");
         window.location.reload();
       } catch (error) {
-        const resMessage =
-          (error.response && error.response.data && error.response.data.message) ||
-          error.message ||
-          error.toString();
+        const resMessage = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
         setMessage(resMessage);
       } finally {
         setLoading(false);
@@ -62,7 +61,7 @@ const AddAnnuncio = (props) => {
   return (
     <div className="col-md-6">
       <div>
-        <Form onSubmit={handleAddAnnuncio} ref={form}>
+        <Form onSubmit={handleAddAnnuncio} ref={refForm}>
           <div className="form-group">
             <label htmlFor="titolo">Titolo</label>
             <Input
