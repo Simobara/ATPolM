@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 /* CSS */
 import "./home.css";
 /* COMPONENTS */
@@ -11,7 +11,7 @@ import AnnuncioService from "../../../../DataAPI/services/annuncio.service";
 const SHome = () => {
   const [showAddNewRecPopup, setShowAddNewRecPopup] = useState(false);
   const [rowsData, setRowsData] = useState([...newData]);
-  // const [tableColumns, setTableColumns] = useState([...tableColumn])
+  // const [tableColumns, setTableColumns] = useState([...tableColumn]) 
 
   const { getAnnunci } = AnnuncioService();
 
@@ -27,6 +27,30 @@ const SHome = () => {
     setRowsData(data);
     onClosePopup();
   };
+
+  const [annunci, setAnnunci] = useState([]);
+  useEffect(() => {
+    if (getAnnunci) {
+      if (typeof getAnnunci === 'function') {
+        setAnnunci(getAnnunci());
+      }
+    }
+  }, [])
+
+
+  useEffect(() => {
+    if (getAnnunci) {
+      const { PromiseResult } = annunci;
+      console.log("IMPRIME GET ANNUNCI:", annunci);
+      console.log("IMPRIME result:", PromiseResult);
+    }
+
+  }, [getAnnunci])
+
+
+
+
+
   return (
     <>
       <div className="elems-container" style={{ fontSize: "1.9rem", marginTop: "80px" }}>

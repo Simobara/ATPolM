@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-// import Chat from '../Chat/Chat';
+
+import Chat from "../Chat/Chat";
 // import car from '../../../Assets/Images/car.jpg'
 
 const ModalImage = ({ igm }) => {
@@ -26,6 +27,7 @@ const ModalImage = ({ igm }) => {
                 </Modal.Header>
                 <Modal.Body>
                     <div><img src={igm} alt="igmArrow" /></div>
+                    <Chat />
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>

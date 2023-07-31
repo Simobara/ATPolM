@@ -6,6 +6,7 @@ const API_URL = 'http://localhost:8080/api/';
 const AnnuncioService = () => {
     const [accessToken, setAccessToken] = useState(null);
 
+
     const getAnnunci = async () => {
         try {
             const response = await axios.get(API_URL + 'annunci');

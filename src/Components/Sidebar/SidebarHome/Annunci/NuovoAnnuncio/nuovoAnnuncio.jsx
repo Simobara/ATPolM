@@ -83,8 +83,8 @@ const NuovoAnnuncio = (props) => {
     if (refCheckBtn.current.context._errors.length === 0) {
       try {
         await addAnnuncio(formData.titolo, formData.descrizione, formData.quantita);
-        props.router.navigate("/");
-        window.location.reload();
+        // props.router.navigate("/");
+        // window.location.reload();
 
       } catch (error) {
         const resMessage = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
@@ -156,20 +156,22 @@ const NuovoAnnuncio = (props) => {
                     Quantità
                   </label>
                 </div>
-                <div className="col-xl-9   col-md-9 col-lg-9 col-sm-12 col-12">
-                  <div className="form_middle_pagenuovo  d-flex">
+                {/* FORM' **********************************************************  */}
+                <div className="col-xl-9 col-md-9 col-lg-9 col-sm-12 col-12  d-flex">
+
+                  <div className="flex-grow-1">
                     <Input
                       id="quantita"
                       type="text"
-                      className="mt-2 form-control form_middle_pagenuovo custom-container"
+                      className="mt-2 form-control"
                       name="quantita"
                       value={formData.quantita}
                       onChange={onChange}
                       validations={[required]}
                     />
-                    <div style={{ width: "180px", marginTop: "6px", fontSize: "24px" }}>
-                      <DropdownMenu />
-                    </div>
+                  </div>
+                  <div style={{ width: "200px", marginTop: "6px", fontSize: "24px" }}>
+                    <DropdownMenu />
                   </div>
                 </div>
               </div>

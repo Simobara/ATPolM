@@ -1,0 +1,12 @@
+.section-item {
+    position: relative;
+  }
+  
+  /* Stile per la chat posizionata in basso a sinistra */
+  .chat-bottom-left {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+  }
+
+  

@@ -3,8 +3,8 @@ import { Link, NavLink } from "react-router-dom";
 
 /* CSS */
 import "./sidebar.css";
-// import farfallaLeft from "../../Assets/Images/farfallaLeft.jpg";
 import farfallaRight from "../../Assets/Images/farfallaRight.jpg";
+// import farfallaLeft from "../../Assets/Images/farfallaLeft.jpg";
 // import arrowDown from "../../Assets/Images/black-arrow-down.png";
 
 /* COMPONENTS */
@@ -14,9 +14,9 @@ import ClearIcon from "@mui/icons-material/Clear";
 /* MUI MATERIAL ICONS */
 import MenuList from "@mui/material/MenuList";
 import MenuItem from "@mui/material/MenuItem";
-// import ListItemIcon from "@mui/material/ListItemIcon";
 import Typography from "@mui/material/Typography";
 import MenuIcon from "@mui/icons-material/Menu";
+// import ListItemIcon from "@mui/material/ListItemIcon";
 // import DashboardIcon from "@mui/icons-material/Dashboard";
 // import FileUploadIcon from "@mui/icons-material/FileUploadOutlined";
 // import StartOutlinedIcon from "@mui/icons-material/StartOutlined";
