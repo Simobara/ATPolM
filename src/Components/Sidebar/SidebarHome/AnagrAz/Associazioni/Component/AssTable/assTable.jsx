@@ -7,6 +7,7 @@ import AssModalAdd from "../AssModalAdd/assModalAdd";
 import AssModalMod from "../AssModalMod/assModalMod";
 import AssModalDel from "../AssModalDel/assModalDel";
 import ProButton from "../../../../../../Global/ProButton/ProButton";
+import AssociazioneService from "../../../../../../../DataAPI/services/associazione.service";
 
 // import { useTable, usePagination, useGlobalFilter, useSortBy } from "react-table";
 /* MUI MATERIAL ICONS */
@@ -15,9 +16,22 @@ import CloseIcon from "@mui/icons-material/Close";
 import AddIcon from "@mui/icons-material/Add";
 // import Pagination from "../../../../SHome/Pagination/Pagination";
 
+
+
+
 const AssTable = () => {
   const columns = ["", "Descrizione", ""];
   const rowsNominatAziende = ["A.I.B.", "AFIDAMP", "AGR", "ALI", "ANCO", "ANGAISA", "ANIT", "API", "API-INDUSTRIA-MANTOVA"];
+
+
+
+  const [formData, setFormData] = useState({
+    descrizione: "",
+  });
+
+  const { addAssociazione } = AssociazioneService();
+
+
 
   const itemsPerPage = 10;
   const [currentPage, setCurrentPage] = useState(1);

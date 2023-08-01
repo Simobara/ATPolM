@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const API_URL = 'http://localhost:8080/api/';
 
-const AssociazioniService = () => {
+const AssociazioneService = () => {
     const getAssociazione = async () => {
         try {
             const response = await axios.get(API_URL + 'associazione');
@@ -44,20 +44,20 @@ const AssociazioniService = () => {
         }
     };
 
-    const updateAssociazione = (id, descrizione) => {
-        return axios.put(API_URL + `update-associazione/${id}`, {
-            id,
-            descrizione
-        })
-            .then(response => {
-                if (response.data.accessToken) {
-                    localStorage.setItem("associazione", JSON.stringify(response.data));
-                }
-                return response.data;
-            });
-    }
+    // const updateAssociazione = (id, descrizione) => {
+    //     return axios.put(API_URL + `update-associazione/${id}`, {
+    //         id,
+    //         descrizione
+    //     })
+    //         .then(response => {
+    //             if (response.data.accessToken) {
+    //                 localStorage.setItem("associazione", JSON.stringify(response.data));
+    //             }
+    //             return response.data;
+    //         });
+    // }
 
     return { getAssociazione, addAssociazione, deleteAssociazione };
 };
 
-export default AssociazioniService;
+export default AssociazioneService;

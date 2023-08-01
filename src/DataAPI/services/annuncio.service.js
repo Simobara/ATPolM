@@ -33,6 +33,19 @@ const AnnuncioService = () => {
         }
     };
 
+    // const updateAnnuncio = (id, descrizione) => {
+    //     return axios.put(API_URL + `upda-annuncio/${id}`, {
+    //         id,
+    //         descrizione
+    //     })
+    //         .then(response => {
+    //             if (response.data.accessToken) {
+    //                 localStorage.setItem("associazione", JSON.stringify(response.data));
+    //             }
+    //             return response.data;
+    //         });
+    // }
+
     return { getAnnunci, addAnnuncio, accessToken };
 };
 

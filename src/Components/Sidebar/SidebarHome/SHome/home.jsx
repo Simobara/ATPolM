@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 /* CSS */
 import "./home.css";
 /* COMPONENTS */
@@ -6,14 +6,14 @@ import { newData } from "../../../../DataAPI/newData";
 import { tableColumn } from "./Data/MainTable/Columns";
 import Table from "./Table/Table";
 import AddNewRecordForm from "./AddNewRecord/AddNewRecord";
-import AnnuncioService from "../../../../DataAPI/services/annuncio.service";
+// import AnnuncioService from "../../../../DataAPI/services/annuncio.service";
 
 const SHome = () => {
   const [showAddNewRecPopup, setShowAddNewRecPopup] = useState(false);
   const [rowsData, setRowsData] = useState([...newData]);
   // const [tableColumns, setTableColumns] = useState([...tableColumn]) 
 
-  const { getAnnunci } = AnnuncioService();
+  // const { getAnnunci } = AnnuncioService();
 
   const handleAddNewRecPopup = () => {
     setShowAddNewRecPopup((p) => !p);
@@ -28,24 +28,24 @@ const SHome = () => {
     onClosePopup();
   };
 
-  const [annunci, setAnnunci] = useState([]);
-  useEffect(() => {
-    if (getAnnunci) {
-      if (typeof getAnnunci === 'function') {
-        setAnnunci(getAnnunci());
-      }
-    }
-  }, [])
+  // const [annunci, setAnnunci] = useState([]);
+  // useEffect(() => {
+  //   if (getAnnunci) {
+  //     if (typeof getAnnunci === 'function') {
+  //       setAnnunci(getAnnunci());
+  //     }
+  //   }
+  // }, [])
 
 
-  useEffect(() => {
-    if (getAnnunci) {
-      const { PromiseResult } = annunci;
-      console.log("IMPRIME GET ANNUNCI:", annunci);
-      console.log("IMPRIME result:", PromiseResult);
-    }
+  // useEffect(() => {
+  //   if (getAnnunci) {
+  //     const { PromiseResult } = annunci;
+  //     console.log("IMPRIME GET ANNUNCI:", annunci);
+  //     console.log("IMPRIME result:", PromiseResult);
+  //   }
 
-  }, [getAnnunci])
+  // }, [getAnnunci])
 
 
 
