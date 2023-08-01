@@ -1,130 +1,262 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
+
 /* CSS */
 // import "./nuovoAnnuncio.css";
+
+/*REACT VALIDATION*/
+import Form from "react-validation/build/form";
+import Input from "react-validation/build/input";
+import CheckButton from "react-validation/build/button";
+
 // /* COMPONENTS */
 import DropdownMenu from "./Component/DropdownMenu/dropdownMenu";
-import SaveButton from "./Component/SaveButton/saveButton";
-import DeleteButton from "./Component/DeleteButton/deleteButton";
+// import SaveButton from "./Component/SaveButton/saveButton";
+// import DeleteButton from "./Component/DeleteButton/deleteButton";
+import AnnuncioService from "../../../../../DataAPI/services/annuncio.service";
+import withRouter from "../../../../../DataAPI/common/with-router";
+
 /* MUI MATERIAL ICONS */
 
-const NuovoAnnuncio = () => {
+
+
+
+
+const NuovoAnnuncio = (props) => {
+  const refForm = useRef(null);
+  const refCheckBtn = useRef(null);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+  const [formData, setFormData] = useState({
+    titolo: "",
+    descrizione: "",
+    quantita: ""
+  });
+
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     setSelectedImage(file);
   };
-  return (
-    <div>
-      <div className="pl-4" style={{ backgroundColor: "#f3f3f3", height: "100%", paddingTop: "40px", marginTop: "5rem" }}>
-        <div className="row mt-4">
-          <div className="col-10  col-lg-11 ml-4">
-            <div className="row">
 
-              <div className="col-xl-3 col-md-3 col-lg-3 col-sm-12 col-12">
-                <label htmlFor="titolo" className="word-label">
-                  Titolo
-                </label>
-              </div>
-              <div className="col-xl-9   col-md-9 col-lg-9 col-sm-12 col-12">
-                <div className="form_middle_pagenuovo  d-flex">
-                  <input type="text" id="titolo" className="mt-2 form-control form_middle_pagenuovo custom-container"
+  const onChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value
+    }));
+  };
+
+  const required = (value) => {
+    if (!value) {
+      return (
+        <div className="alert alert-danger" role="alert">
+          Questo campo è obbligatorio!
+        </div>
+      );
+    }
+  };
+
+  //solo per modifica
+  // const saveAnnuncio = async () => {
+  //   setMessage("");
+  //   setLoading(true);
+
+  //   try {
+  //     await addAnnuncio(formData.titolo, formData.descrizione, formData.quantita);
+  //     props.router.navigate("/");
+  //     window.location.reload();
+
+  //   } catch (error) {
+  //     const resMessage = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+  //     setMessage(resMessage);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+
+  // };
+
+  const { addAnnuncio } = AnnuncioService();
+
+  const handleAddAnnuncio = async (e) => {
+    e.preventDefault();
+    setMessage("");
+    setLoading(true);
+    refForm.current.validateAll();
+
+    if (refCheckBtn.current.context._errors.length === 0) {
+      try {
+        await addAnnuncio(formData.titolo, formData.descrizione, formData.quantita);
+        // props.router.navigate("/");
+        // window.location.reload();
+
+      } catch (error) {
+        const resMessage = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+        setMessage(resMessage);
+      } finally {
+        setLoading(false);
+      }
+    } else {
+      setLoading(false);
+    }
+  };
+
+
+  return (
+    <>
+      <div className="pl-4" style={{ backgroundColor: "#f3f3f3", height: "100%", paddingTop: "40px", marginTop: "5rem" }}>
+
+        <Form onSubmit={handleAddAnnuncio} ref={refForm}>
+          <div className="row mt-4">
+            <div className="col-10 col-lg-11 ml-4">
+              <div className="row">
+
+                <div className="col-xl-3 col-md-3 col-lg-3 col-sm-12 col-12">
+                  <label htmlFor="titolo" className="word-label">
+                    Titolo
+                  </label>
+                </div>
+                <div className="col-xl-9   col-md-9 col-lg-9 col-sm-12 col-12">
+                  <Input
+                    id="titolo"
+                    type="text"
+                    className="mt-2 form-control form_middle_pagenuovo custom-container"
+                    name="titolo"
+                    value={formData.titolo}
+                    onChange={onChange}
+                    validations={[required]}
                   />
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <div className="row mt-4">
-          <div className="col-10  col-lg-11 ml-4">
-            <div className="row">
-              <div className="col-xl-3 col-md-3 col-lg-3 col-sm-12 col-12">
-                <label htmlFor="descrizione" className="word-label">
-                  Descrizione
-                </label>
-              </div>
-              <div className="col-xl-9 col-md-9 col-lg-9 col-sm-12 col-12">
-                <div className="form_middle_pagenuovo  d-flex">
-                  <input type="text" id="descrizione" className="mt-2 form-control form_middle_pagenuovo  custom-container" />
+          <div className="row mt-4">
+            <div className="col-10  col-lg-11 ml-4">
+              <div className="row">
+                <div className="col-xl-3 col-md-3 col-lg-3 col-sm-12 col-12">
+                  <label htmlFor="descrizione" className="word-label">
+                    Descrizione
+                  </label>
+                </div>
+                <div className="col-xl-9 col-md-9 col-lg-9 col-sm-12 col-12">
+                  <Input
+                    id="descrizione"
+                    type="text"
+                    className="mt-2 form-control form_middle_pagenuovo custom-container"
+                    name="descrizione"
+                    value={formData.descrizione}
+                    onChange={onChange}
+                    validations={[required]}
+                  />
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <div className="row mt-4">
-          <div className="col-10  col-lg-11 ml-4">
-            <div className="row">
-              <div className="col-xl-3 col-md-3 col-lg-3 col-sm-12 col-12">
-                <label htmlFor="quantita" className="word-label">
-                  Quantità
-                </label>
+          <div className="row mt-4">
+            <div className="col-10  col-lg-11 ml-4">
+              <div className="row">
+                <div className="col-xl-3 col-md-3 col-lg-3 col-sm-12 col-12">
+                  <label htmlFor="quantita" className="word-label">
+                    Quantità
+                  </label>
+                </div>
+                {/* FORM' **********************************************************  */}
+                <div className="col-xl-9 col-md-9 col-lg-9 col-sm-12 col-12  d-flex">
+
+                  <div className="flex-grow-1">
+                    <Input
+                      id="quantita"
+                      type="text"
+                      className="mt-2 form-control"
+                      name="quantita"
+                      value={formData.quantita}
+                      onChange={onChange}
+                      validations={[required]}
+                    />
+                  </div>
+                  <div style={{ width: "200px", marginTop: "6px", fontSize: "24px" }}>
+                    <DropdownMenu />
+                  </div>
+                </div>
               </div>
-              <div className="col-xl-9   col-md-9 col-lg-9 col-sm-12 col-12">
-                <div className="form_middle_pagenuovo  d-flex">
-                  <input type="text" id="quantita" className="mt-2 form-control  custom-container" />
-                  <div style={{ width: "180px", marginTop: "6px", fontSize: "24px" }}>
+            </div>
+          </div >
+          <div className="row mt-4">
+            <div className="col-10  col-lg-11 ml-4">
+              <div className="row">
+                <div className="col-xl-3 col-md-3 col-lg-3 col-sm-12 col-12">
+                  <label htmlFor="classewaste" className="word-label">
+                    Classe waste
+                  </label>
+                </div>
+                <div className="col-xl-9   col-md-9 col-lg-9 col-sm-12 col-12">
+                  <div style={{ fontSize: "24px", marginTop: "9px" }} className="form_middle_pagenuovo ">
                     <DropdownMenu />
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <div className="row mt-4">
-          <div className="col-10  col-lg-11 ml-4">
-            <div className="row">
-              <div className="col-xl-3 col-md-3 col-lg-3 col-sm-12 col-12">
-                <label htmlFor="classewaste" className="word-label">
-                  Classe waste
-                </label>
-              </div>
-              <div className="col-xl-9   col-md-9 col-lg-9 col-sm-12 col-12">
-                <div style={{ fontSize: "24px", marginTop: "9px" }} className="form_middle_pagenuovo ">
-                  <DropdownMenu />
+          <div className="row mt-4">
+            <div className="col-10  col-lg-11 ml-4">
+              <div className="row">
+                <div className="col-xl-3 col-md-3 col-lg-3 col-sm-12 col-12">
+                  <label htmlFor="scadenza" className="word-label">
+                    Scadenza
+                  </label>
+                </div>
+                <div className="col-xl-9   col-md-9 col-lg-9 col-sm-12 col-12">
+                  <input type="date" id="scadenza" style={{ height: "40px" }} className="form-control form_middle_pagenuovo mt-2 " />
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <div className="row mt-4">
-          <div className="col-10  col-lg-11 ml-4">
-            <div className="row">
-              <div className="col-xl-3 col-md-3 col-lg-3 col-sm-12 col-12">
-                <label htmlFor="scadenza" className="word-label">
-                  Scadenza
-                </label>
-              </div>
-              <div className="col-xl-9   col-md-9 col-lg-9 col-sm-12 col-12">
-                <input type="date" id="scadenza" style={{ height: "40px" }} className="form-control form_middle_pagenuovo mt-2 " />
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="row mt-3">
-          <div className="col-10  col-lg-11 ml-4">
-            <div className="row">
-              <div className="col-xl-3 col-md-3 col-lg-3 col-sm-12 col-12">
-                <label htmlFor="foto" className="word-label" style={{ marginRight: "10px" }}>
-                  Foto
-                </label>
-              </div>
-              <div className="col-xl-9   col-md-9 col-lg-9 col-sm-12 col-12">
-                <input type="file" style={{ fontSize: "16px", marginTop: "12px" }} onChange={handleImageChange} accept="image/*" className="scegli_menu" />
-                {selectedImage && (
-                  <div>
-                    {/* <p> </p>
+          <div className="row mt-3">
+            <div className="col-10  col-lg-11 ml-4">
+              <div className="row">
+                <div className="col-xl-3 col-md-3 col-lg-3 col-sm-12 col-12">
+                  <label htmlFor="foto" className="word-label" style={{ marginRight: "10px" }}>
+                    Foto
+                  </label>
+                </div>
+                <div className="col-xl-9   col-md-9 col-lg-9 col-sm-12 col-12">
+                  <input type="file" style={{ fontSize: "16px", marginTop: "12px" }} onChange={handleImageChange} accept="image/*" className="scegli_menu" />
+                  {selectedImage && (
+                    <div>
+                      {/* <p> </p>
           <img src={URL.createObjectURL(selectedImage)} alt="Selected" /> */}
-                  </div>
-                )}
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div className="d-flex justify-content-center form_middle_page_btn" style={{ marginRight: "20%", marginTop: "80px", paddingBottom: "130px" }}>
-          <SaveButton />
-          <DeleteButton />
-        </div>
-        {/* <div className="row col-12">
+
+          <div className="col-md-6 mx-auto mt-4">
+
+
+            {message && (
+              <div className="form-group">
+                <div className="alert alert-danger" role="alert">
+                  {message}
+                </div>
+              </div>
+            )}
+
+            <CheckButton style={{ display: "none" }} ref={refCheckBtn} />
+          </div>
+
+          <div className="d-flex justify-content-center form_middle_page_btn" style={{ marginRight: "20%", marginTop: "80px", paddingBottom: "130px" }}>
+            {/* <SaveButton isDisabled={loading} handleAdd={saveAnnuncio} /> */}
+            <div className="form-group">
+              <button className="btn btn-primary btn-block" disabled={loading}>
+                {loading && <span className="spinner-border spinner-border-sm"></span>}
+                <span>Aggiungi</span>
+              </button>
+            </div>
+            {/* <DeleteButton /> */}
+          </div>
+          {/* <div className="row col-12">
           <div className="col-md-8 mt-4 d-flex align-items-start form form-main">
             <label htmlFor="Titolo" className="word-label">
               Titolo
@@ -138,7 +270,7 @@ const NuovoAnnuncio = () => {
             <input type="text" id="Descrizione" className="form-control form_middle_page" />
           </div>
         </div> */}
-        {/* <div className="row">
+          {/* <div className="row">
           <div className="col-md-10 mt-4 d-flex align-items-start position-relative">
             <label htmlFor="input3">Quantità</label>
             <input type="number" id="input3" className="form-control quantity_menu" />
@@ -151,7 +283,7 @@ const NuovoAnnuncio = () => {
             <DropdownMenu />
           </div>
         </div> */}
-        {/* <div className="col-md-12 mt-4 d-flex align-items-start position-relative ml-4">
+          {/* <div className="col-md-12 mt-4 d-flex align-items-start position-relative ml-4">
             <label htmlFor="Foto" className="word-label" style={{ marginRight: "10px" }}>
               Foto
             </label>
@@ -164,13 +296,16 @@ const NuovoAnnuncio = () => {
             )}
           </div> */}
 
-        {/* <div className="col-md-12 mt-4 d-flex align-items-start position-relative">
+          {/* <div className="col-md-12 mt-4 d-flex align-items-start position-relative">
             <label htmlFor="Scadenza">Scadenza</label>
             <input type="date" id="Scadenza" className="form-control form_middle_page" />
           </div> */}
-      </div>
-    </div>
+        </Form >
+      </div >
+    </>
   );
 };
 
-export default NuovoAnnuncio;
+export default withRouter(NuovoAnnuncio);
+
+// export default NuovoAnnuncio;
