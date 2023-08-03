@@ -6,7 +6,7 @@ import React, { useState, useRef } from "react";
 /*REACT VALIDATION*/
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
-import CheckButton from "react-validation/build/button";
+// import CheckButton from "react-validation/build/button";
 
 // /* COMPONENTS */
 import DropdownMenu from "./Component/DropdownMenu/dropdownMenu";
@@ -17,10 +17,6 @@ import withRouter from "../../../../../DataAPI/common/with-router";
 
 /* MUI MATERIAL ICONS */
 
-
-
-
-
 const NuovoAnnuncio = (props) => {
   const refForm = useRef(null);
   const refCheckBtn = useRef(null);
@@ -30,9 +26,8 @@ const NuovoAnnuncio = (props) => {
   const [formData, setFormData] = useState({
     titolo: "",
     descrizione: "",
-    quantita: ""
+    quantita: "",
   });
-
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
@@ -43,7 +38,7 @@ const NuovoAnnuncio = (props) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({
       ...prevState,
-      [name]: value
+      [name]: value,
     }));
   };
 
@@ -56,25 +51,6 @@ const NuovoAnnuncio = (props) => {
       );
     }
   };
-
-  //solo per modifica
-  // const saveAnnuncio = async () => {
-  //   setMessage("");
-  //   setLoading(true);
-
-  //   try {
-  //     await addAnnuncio(formData.titolo, formData.descrizione, formData.quantita);
-  //     props.router.navigate("/");
-  //     window.location.reload();
-
-  //   } catch (error) {
-  //     const resMessage = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
-  //     setMessage(resMessage);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-
-  // };
 
   const { addAnnuncio } = AnnuncioService();
 
@@ -89,7 +65,12 @@ const NuovoAnnuncio = (props) => {
         await addAnnuncio(formData.titolo, formData.descrizione, formData.quantita);
         // props.router.navigate("/");
         // window.location.reload();
-
+        setFormData({
+          titolo: "",
+          descrizione: "",
+          quantita: "",
+        });
+        console.log("set form data annunci --- dati salvati");
       } catch (error) {
         const resMessage = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
         setMessage(resMessage);
@@ -101,16 +82,13 @@ const NuovoAnnuncio = (props) => {
     }
   };
 
-
   return (
     <>
       <div className="pl-4" style={{ backgroundColor: "#f3f3f3", height: "100%", paddingTop: "40px", marginTop: "5rem" }}>
-
         <Form onSubmit={handleAddAnnuncio} ref={refForm}>
           <div className="row mt-4">
             <div className="col-10 col-lg-11 ml-4">
               <div className="row">
-
                 <div className="col-xl-3 col-md-3 col-lg-3 col-sm-12 col-12">
                   <label htmlFor="titolo" className="word-label">
                     Titolo
@@ -162,17 +140,8 @@ const NuovoAnnuncio = (props) => {
                 </div>
                 {/* FORM' **********************************************************  */}
                 <div className="col-xl-9 col-md-9 col-lg-9 col-sm-12 col-12  d-flex">
-
                   <div className="flex-grow-1">
-                    <Input
-                      id="quantita"
-                      type="text"
-                      className="mt-2 form-control"
-                      name="quantita"
-                      value={formData.quantita}
-                      onChange={onChange}
-                      validations={[required]}
-                    />
+                    <Input id="quantita" type="text" className="mt-2 form-control" name="quantita" value={formData.quantita} onChange={onChange} validations={[required]} />
                   </div>
                   <div style={{ width: "200px", marginTop: "6px", fontSize: "24px" }}>
                     <DropdownMenu />
@@ -180,7 +149,7 @@ const NuovoAnnuncio = (props) => {
                 </div>
               </div>
             </div>
-          </div >
+          </div>
           <div className="row mt-4">
             <div className="col-10  col-lg-11 ml-4">
               <div className="row">
@@ -233,8 +202,6 @@ const NuovoAnnuncio = (props) => {
           </div>
 
           <div className="col-md-6 mx-auto mt-4">
-
-
             {message && (
               <div className="form-group">
                 <div className="alert alert-danger" role="alert">
@@ -243,7 +210,7 @@ const NuovoAnnuncio = (props) => {
               </div>
             )}
 
-            <CheckButton style={{ display: "none" }} ref={refCheckBtn} />
+            {/* <CheckButton style={{ display: "none" }} ref={refCheckBtn} /> */}
           </div>
 
           <div className="d-flex justify-content-center form_middle_page_btn" style={{ marginRight: "20%", marginTop: "80px", paddingBottom: "130px" }}>
@@ -300,8 +267,8 @@ const NuovoAnnuncio = (props) => {
             <label htmlFor="Scadenza">Scadenza</label>
             <input type="date" id="Scadenza" className="form-control form_middle_page" />
           </div> */}
-        </Form >
-      </div >
+        </Form>
+      </div>
     </>
   );
 };

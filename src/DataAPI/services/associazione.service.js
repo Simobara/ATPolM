@@ -3,6 +3,10 @@ import axios from 'axios';
 
 const API_URL = 'http://localhost:8080/api/';
 
+
+
+
+
 const AssociazioneService = () => {
     // const [accessToken, setAccessToken] = useState(null);
 
@@ -14,6 +18,8 @@ const AssociazioneService = () => {
             console.error('Error while fetching associazione:', error);
         }
     };
+
+
 
     const addAssociazione = async (descrizione) => {
         try {
@@ -30,7 +36,31 @@ const AssociazioneService = () => {
         }
     };
 
-    return { getAssociazione, addAssociazione };
+
+
+
+
+
+
+    const deleteAssociazione = async (id) => {
+        try {
+            const response = await axios.delete(`${API_URL}associazione/${id}`, {
+                id,
+            });
+
+            if (response.data.accessToken) {
+                localStorage.setItem('associazione', JSON.stringify(response.data));
+            }
+
+            return response.data;
+        } catch (error) {
+            console.error('Error while deleting associazione:', error);
+        }
+    };
+
+
+
+    return { getAssociazione, addAssociazione, deleteAssociazione };
     // return { getAssociazione, addAssociazione, accessToken };
 };
 

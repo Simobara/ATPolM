@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useState } from "react";
+import axios from "axios";
+
 /* CSS */
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
@@ -15,10 +17,16 @@ import SaveIcon from '@mui/icons-material/Save';
 
 
 
-const AssModalMod = ({ show, close }) => {
-    // const [show, setShow] = useState(false);
-    // const handleClose = () => setShow(false);
-    // const handleShow = () => setShow(true);
+const AssModalMod = ({ show, close, id }) => {
+    const [updated, setupdated] = useState("");
+
+    const updatedvalue = async () => {
+        const payload = {
+            descrizione: updated,
+        };
+        await axios.put(`http://localhost:8080/api/update-categoria/${id}`, payload);
+        close();
+    };
 
     return (
         <>
@@ -40,7 +48,9 @@ const AssModalMod = ({ show, close }) => {
                 <Modal.Body>
                     <Row className="d-flex justify-content-start mb-4">
                         <Col xs={12} md={6}><h4>Nome Associazione</h4></Col>
-                        <Col xs={12} md={6}><Form.Control type="text" placeholder="" autoFocus /></Col>
+                        <Col xs={12} md={6}>
+                            <Form.Control type="text" placeholder="" autoFocus onChange={(e) => setupdated(e.target.value)} />
+                        </Col>
                     </Row>
                     {/* <Row className="d-flex justify-content-start mb-4">
                         <Col xs={12} md={6}><h4>Codice Regione</h4></Col>
@@ -54,7 +64,9 @@ const AssModalMod = ({ show, close }) => {
                     </Row> */}
                 </Modal.Body>
                 <Modal.Footer className="d-flex justify-content-center mt-4">
-                    <Button onClick={close}>{<SaveIcon />}Save and Close</Button>
+                    <Button onClick={() => { updatedvalue(); }} >
+                        {<SaveIcon />}Save and Close
+                    </Button>
                 </Modal.Footer>
             </Modal>
         </>

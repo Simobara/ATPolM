@@ -2,6 +2,11 @@ import axios from 'axios';
 
 const API_URL = 'http://localhost:8080/api/';
 
+
+
+
+
+
 const CategoriaService = () => {
     const getCategorie = async () => {
         try {
@@ -11,6 +16,10 @@ const CategoriaService = () => {
             console.error('Error while fetching categorie:', error);
         }
     };
+
+
+
+
 
     const addCategoria = async (descrizione) => {
         try {
@@ -27,6 +36,11 @@ const CategoriaService = () => {
             console.error('Error while adding categoria:', error);
         }
     };
+
+
+
+
+
 
     const deleteCategoria = async (id) => {
         try {

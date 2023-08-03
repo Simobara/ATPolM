@@ -1,23 +1,39 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+
 /* CSS */
 import "./assTable.css";
+
 /* COMPONENTS */
-// import ButtonPen from '../../../../../../../Global/ButtonPen/buttonPen';
 import AssModalAdd from "../AssModalAdd/assModalAdd";
 import AssModalMod from "../AssModalMod/assModalMod";
 import AssModalDel from "../AssModalDel/assModalDel";
 import ProButton from "../../../../../../Global/ProButton/ProButton";
+// import ButtonPen from '../../../../../../../Global/ButtonPen/buttonPen';
 
-// import { useTable, usePagination, useGlobalFilter, useSortBy } from "react-table";
 /* MUI MATERIAL ICONS */
 import ModeIcon from "@mui/icons-material/Mode";
 import CloseIcon from "@mui/icons-material/Close";
 import AddIcon from "@mui/icons-material/Add";
-// import Pagination from "../../../../SHome/Pagination/Pagination";
+
+
+
+
+
+
+
+
+
 
 const AssTable = () => {
   const columns = ["", "Descrizione", ""];
-  const rowsNominatAziende = ["A.I.B.", "AFIDAMP", "AGR", "ALI", "ANCO", "ANGAISA", "ANIT", "API", "API-INDUSTRIA-MANTOVA"];
+  // const rowsNominatAziende = ["A.I.B.", "AFIDAMP", "AGR", "ALI", "ANCO", "ANGAISA", "ANIT", "API", "API-INDUSTRIA-MANTOVA"];
+
+
+  const [associazioni, setAssociazioni] = useState([]);
+
+
+
 
   const itemsPerPage = 10;
   const [currentPage, setCurrentPage] = useState(1);
@@ -28,36 +44,16 @@ const AssTable = () => {
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
-  const currentItems = rowsNominatAziende.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = associazioni.slice(indexOfFirstItem, indexOfLastItem);
 
+
+
+  const [id, setID] = useState("");
   const [isModalAddActive, setIsModalAddActive] = useState(false);
   const [isModalModActive, setIsModalModActive] = useState(false);
   const [isModalDelActive, setIsModalDelActive] = useState(false);
 
-  //   const {
-  //     getTableProps,
-  //     getTableBodyProps,
-  //     headerGroups,
-  //     prepareRow,
-  //     setGlobalFilter,
-  //     page,
-  //     canPreviousPage,
-  //     canNextPage,
-  //     gotoPage,
-  //     pageOptions,
-  //     nextPage,
-  //     previousPage,
-  //     state: { pageIndex, globalFilter }, //fpr Pagination and global filter
-  //   } = useTable(
-  //     {
-  //       columns,
-  //       data: rowsData,
-  //       initialState: { pageIndex: 0 }, // Initial page index
-  //     },
-  //     useGlobalFilter,
-  //     useSortBy,
-  //     usePagination
-  //   );
+
 
   const handleClickAddOpen = () => {
     setIsModalAddActive(true);
@@ -70,6 +66,7 @@ const AssTable = () => {
 
   const handleClickModOpen = () => {
     setIsModalModActive(true);
+    setID(id);
     console.log("modal modify open");
   };
 
@@ -88,6 +85,11 @@ const AssTable = () => {
     console.log("modalDel close");
   };
 
+
+
+
+
+
   const getColumnClassName = (columnIndex) => {
     if (columnIndex === 0) {
       return "col-2 px-2 text-center h5 justify-content-center";
@@ -103,6 +105,25 @@ const AssTable = () => {
       return "col-12 px-12 text-center h5";
     }
   };
+
+
+
+
+
+
+  const getAssociazioni = async () => {
+    const result = await axios.get("http://localhost:8080/api/associazioni");
+
+    setAssociazioni(result?.data);
+  };
+  useEffect(() => {
+    getAssociazioni();
+  }, [isModalModActive]);
+
+
+
+
+
 
   return (
     <>
@@ -123,15 +144,15 @@ const AssTable = () => {
             </tr>
           </thead>
           <tbody>
-            {currentItems.map((row, rowIndex) => (
+            {currentItems?.map((row, rowIndex) => (
               <tr key={rowIndex}>
                 <td className={getColumnClassName(0)}>
-                  <button type="button" className="btn btn-primary button-modify" onClick={handleClickModOpen}>
+                  <button type="button" className="btn btn-primary button-modify" onClick={() => handleClickModOpen(row?.id)}>
                     <ModeIcon className="icon" />
                   </button>
                   {/* <ButtonPen onClick={openModal} /> */}
                 </td>
-                <td className={getColumnClassName(1)}>{row}</td>
+                <td className={getColumnClassName(1)}>{row?.descrizione}</td>
                 <td className={getColumnClassName(2)}>
                   <button type="button" className="btn btn-danger button-close" onClick={handleClickDelOpen}>
                     <CloseIcon className="icon-close" />
@@ -148,7 +169,7 @@ const AssTable = () => {
             <span className="text-center text-sm">
               Pagina
               <strong className="mx-3 text-sm">
-                {currentPage} di {Math.ceil(rowsNominatAziende.length / itemsPerPage)}
+                {currentPage} di {Math.ceil(associazioni.length / itemsPerPage)}
               </strong>
               {/* &nbsp;| &nbsp; */}
               {/* Go To Page &nbsp;&nbsp; */}
@@ -158,12 +179,12 @@ const AssTable = () => {
               defaultValue={indexOfLastItem >= rowsNominatAziende.length ? currentPage - 1 : currentPage + 1}
             /> */}
             </span>
-            <ProButton text=">>" title="Next Page" disabled={indexOfLastItem >= rowsNominatAziende.length} clicked={() => handlePageChange(currentPage + 1)} />
+            <ProButton text=">>" title="Next Page" disabled={indexOfLastItem >= associazioni.length} clicked={() => handlePageChange(currentPage + 1)} />
           </div>
         </div>
 
         <div> {isModalAddActive && <AssModalAdd show={isModalAddActive} close={handleClickAddClose} />}</div>
-        <div>{isModalModActive && <AssModalMod show={isModalModActive} close={handleClickModClose} />}</div>
+        <div>{isModalModActive && <AssModalMod show={isModalModActive} close={handleClickModClose} id={id} />}</div>
         <div>{isModalDelActive && <AssModalDel show={isModalDelActive} close={handleClickDelClose} />}</div>
       </div>
     </>

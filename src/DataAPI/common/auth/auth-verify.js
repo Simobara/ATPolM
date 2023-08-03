@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { withRouter } from "./with-router";
+import { withRouter } from "../with-router";
 
 const parseJwt = (token) => {
   try {
