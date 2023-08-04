@@ -44,7 +44,7 @@ const CategoriaService = () => {
 
     const deleteCategoria = async (id) => {
         try {
-            const response = await axios.delete(`${API_URL}categorie/${id}`, {
+            const response = await axios.delete(`${API_URL}categoria/${id}`, {
                 id,
             });
 
