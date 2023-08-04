@@ -22,12 +22,11 @@ const CittaService = () => {
 
 
 
-    const addCitta = async (id, cap, descrizione, idProvincia) => {
+    const addCitta = async (descrizione, cap, idProvincia) => {
         try {
-            const response = await axios.post(API_URL + 'add-localita', {
-                id,
-                cap,
+            const response = await axios.post(API_URL + `add-localita/${idProvincia}`, {
                 descrizione,
+                cap,
                 idProvincia
             });
 
@@ -42,13 +41,25 @@ const CittaService = () => {
     };
 
 
-
+updateCitta(id, descrizione, cap) {
+        return axios.put(API_URL + `update-localita/${id}`, {
+            id,
+            descrizione,
+            cap
+        })
+        .then(response => {
+            if (response.data.accessToken) {
+                localStorage.setItem("localita", JSON.stringify(response.data));
+            }
+            return response.data;
+        });
+    }
 
 
 
     const deleteCitta = async (id) => {
         try {
-            const response = await axios.delete(`${API_URL}localita/${id}`, {
+            const response = await axios.delete(API_URL + `localita/${id}`, {
                 id,
             });
 

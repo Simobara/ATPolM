@@ -19,12 +19,16 @@ const AnnuncioService = () => {
         }
     };
 
-    const addAnnuncio = async (titolo, descrizione, quantita) => {
+    const addAnnuncio = async (titolo, descrizione, quantita, idLocalita, idMateriale, idUnitaDiMisura, currentUserId) => {
         try {
-            const response = await axios.post(API_URL + 'add-annuncio', {
+            const response = await axios.post(API_URL + `add-annuncio/${currentUserId}`, {
                 titolo,
                 descrizione,
                 quantita,
+                idLocalita,
+                idMateriale,
+                idUnitaDiMisura,
+                currentUserId
             });
             if (response.data.accessToken) {
                 localStorage.setItem('annuncio', JSON.stringify(response.data));

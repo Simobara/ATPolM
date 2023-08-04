@@ -44,7 +44,7 @@ const MaterialeService = () => {
 
     const deleteMateriale = async (id) => {
         try {
-            const response = await axios.delete(`${API_URL}materiale/${id}`, {
+            const response = await axios.delete( API_URL + `materiale/${id}`, {
                 id,
             });
 

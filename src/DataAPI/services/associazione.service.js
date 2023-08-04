@@ -10,12 +10,12 @@ const API_URL = 'http://localhost:8080/api/';
 const AssociazioneService = () => {
     // const [accessToken, setAccessToken] = useState(null);
 
-    const getAssociazione = async () => {
+    const getAssociazioni = async () => {
         try {
-            const response = await axios.get(API_URL + 'associazione');
+            const response = await axios.get(API_URL + 'associazioni');
             return response.data;
         } catch (error) {
-            console.error('Error while fetching associazione:', error);
+            console.error('Error while fetching associazioni:', error);
         }
     };
 
@@ -60,7 +60,7 @@ const AssociazioneService = () => {
 
 
 
-    return { getAssociazione, addAssociazione, deleteAssociazione };
+    return { getAssociazioni, addAssociazione, deleteAssociazione };
     // return { getAssociazione, addAssociazione, accessToken };
 };
 

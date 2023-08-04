@@ -38,6 +38,18 @@ const CategoriaService = () => {
     };
 
 
+        updateCategoria(id, descrizione) {
+        return axios.put(API_URL + `update-categoria/${id}`, {
+            id,
+            descrizione
+        })
+        .then(response => {
+            if (response.data.accessToken) {
+                localStorage.setItem("categoria", JSON.stringify(response.data));
+            }
+            return response.data;
+        });
+    }
 
 
 

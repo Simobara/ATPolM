@@ -44,7 +44,7 @@ const UnitaDiMisuraService = () => {
 
     const deleteUnitaDiMisura = async (id) => {
         try {
-            const response = await axios.delete(`${API_URL}unita-di-misura/${id}`, {
+            const response = await axios.delete(API_URL + `unita-di-misura/${id}`, {
                 id,
             });
 

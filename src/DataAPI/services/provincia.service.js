@@ -21,10 +21,9 @@ const ProvinciaService = () => {
 
 
 
-    const addProvincia = async (id, codice, idRegione) => {
+    const addProvincia = async (codice, idRegione) => {
         try {
-            const response = await axios.post(API_URL + 'add-provincia', {
-                id,
+            const response = await axios.post(API_URL + `add-provincia/${idRegione}`, {
                 codice,
                 idRegione,
             });
@@ -40,7 +39,17 @@ const ProvinciaService = () => {
     };
 
 
+ updateProvincia(id, codice, idRegione) {
+        return axios.put(API_URL + `update-provincia/${id}/${idRegione}`, {
+            id,
+            codice,
+            idRegione
+        })             //Commentato perché gestiamo l'errore direttamente dalla risposta del metodo "handleSubmit()" su mod-provincia
+        /*.catch((error) => {
+            console.log("Stringify from provincia.service: " + JSON.stringify(error))
 
+        });*/
+    }
 
 
 
