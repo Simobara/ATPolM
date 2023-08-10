@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 /* CSS */
 import "./materTable.css";
 /* COMPONENTS */
@@ -11,8 +11,11 @@ import ProButton from "../../../../../../Global/ProButton/ProButton";
 import ModeIcon from "@mui/icons-material/Mode";
 import CloseIcon from "@mui/icons-material/Close";
 import AddIcon from "@mui/icons-material/Add";
+import axios from "axios";
 
 const MaterTable = () => {
+  const[material,setMaterial]=useState([])
+  const[id,setId]=useState()
   const columns = ["", "Materiali", ""];
 
   const rowsCatAziende = ["A", "B", "C", "D", "E", "F", "G"];
@@ -26,7 +29,7 @@ const MaterTable = () => {
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
-  const currentItems = rowsCatAziende.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = material?.slice(indexOfFirstItem, indexOfLastItem);
 
   const [isModalAddActive, setIsModalAddActive] = useState(false);
   const [isModalModActive, setIsModalModActive] = useState(false);
@@ -41,7 +44,8 @@ const MaterTable = () => {
     console.log("modalAdd close");
   };
 
-  const handleClickModOpen = () => {
+  const handleClickModOpen = (id) => {
+    setId(id)
     setIsModalModActive(true);
     console.log("modalModify open");
   };
@@ -76,7 +80,17 @@ const MaterTable = () => {
       return "col-12 px-12 text-center h5";
     }
   };
+  
+  const getMaterial = async () => {
+    const result = await axios.get("http://localhost:8080/api/materiali");
 
+    setMaterial(result?.data);
+  };
+  useEffect(() => {
+    getMaterial();
+  }, [isModalDelActive,isModalModActive,isModalAddActive]);
+
+  
   return (
     <>
       <div style={{ marginTop: "5rem" }}>
@@ -86,7 +100,7 @@ const MaterTable = () => {
               {columns.map((column, columnIndex) => (
                 <th key={columnIndex}>
                   {columnIndex === 0 && (
-                    <button type="button" className="btn button-modify icon-add" onClick={handleClickAddOpen}>
+                    <button type="button" className="btn button-modify icon-add" onClick={()=>handleClickAddOpen()}>
                       <AddIcon className="icon" />
                     </button>
                   )}
@@ -99,14 +113,14 @@ const MaterTable = () => {
             {currentItems.map((row, rowIndex) => (
               <tr key={rowIndex}>
                 <td className={getColumnClassName(0)}>
-                  <button type="button" className="btn btn-primary button-modify" onClick={handleClickModOpen}>
+                  <button type="button" className="btn btn-primary button-modify" onClick={()=>handleClickModOpen(row?.id)}>
                     <ModeIcon className="icon" />
                   </button>
                   {/* <ButtonPen onClick={openModal} /> */}
                 </td>
-                <td className={getColumnClassName(1)}>{row}</td>
+                <td className={getColumnClassName(1)}>{row?.descrizione}</td>
                 <td className={getColumnClassName(2)}>
-                  <button type="button" className="btn btn-danger button-close" onClick={handleClickDelOpen}>
+                  <button type="button" className="btn btn-danger button-close" onClick={()=>handleClickDelOpen()}>
                     <CloseIcon className="icon-close" />
                   </button>
                 </td>
@@ -134,7 +148,7 @@ const MaterTable = () => {
         </div>
 
         <div>{isModalAddActive && <MaterModalAdd show={isModalAddActive} close={handleClickAddClose} />}</div>
-        <div>{isModalModActive && <MaterModalMod show={isModalModActive} close={handleClickModClose} />}</div>
+        <div>{isModalModActive && <MaterModalMod show={isModalModActive} close={handleClickModClose} id={id} />}</div>
         <div>{isModalDelActive && <MaterModalDel show={isModalDelActive} close={handleClickDelClose} />}</div>
       </div>
     </>

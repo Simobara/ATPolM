@@ -1,3 +1,5 @@
+
+// import { useState } from 'react';
 import axios from 'axios';
 
 const API_URL = 'http://localhost:8080/api/';
@@ -10,14 +12,20 @@ const API_URL = 'http://localhost:8080/api/';
 const FormaGiuridicaService = () => {
     const getFormeGiuridiche = async () => {
         try {
-            const response = await axios.get(API_URL + 'forme-giuridiche');
+            const response = await axios.get(`${API_URL} + forme-giuridiche`);
             return response.data;
         } catch (error) {
             console.error('Error while fetching forme-giuridiche:', error);
         }
     };
 
+    const  updateMaterial=(id, descrizione)=> {
+        return axios.put(API_URL + `update-forma-giuridica/${id}`, {
+            
+            descrizione
 
+        })            
+    }
 
 
 
@@ -58,7 +66,7 @@ const FormaGiuridicaService = () => {
         }
     };
 
-    return { getFormeGiuridiche, addFormaGiuridica, deleteFormaGiuridica };
+    return { getFormeGiuridiche, addFormaGiuridica, deleteFormaGiuridica,updateMaterial };
 };
 
 export default FormaGiuridicaService;

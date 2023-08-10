@@ -38,7 +38,17 @@ const MaterialeService = () => {
     };
 
 
+    const  updateMaterial=(id, descrizione)=> {
+        return axios.put(API_URL + `update-materiale/${id}`, {
+            
+            descrizione
 
+        })             //Commentato perché gestiamo l'errore direttamente dalla risposta del metodo "handleSubmit()" su mod-provincia
+        /*.catch((error) => {
+            console.log("Stringify from provincia.service: " + JSON.stringify(error))
+
+        });*/
+    }
 
 
 
@@ -58,7 +68,7 @@ const MaterialeService = () => {
         }
     };
 
-    return { getMateriali, addMateriale, deleteMateriale };
+    return { getMateriali, addMateriale, deleteMateriale,updateMaterial };
 };
 
 export default MaterialeService;

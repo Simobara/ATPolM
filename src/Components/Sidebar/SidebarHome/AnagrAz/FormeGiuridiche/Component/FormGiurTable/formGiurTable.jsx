@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+
 /* CSS */
 import "./formGiurTable.css";
 /* COMPONENTS */
@@ -12,10 +14,28 @@ import ModeIcon from "@mui/icons-material/Mode";
 import CloseIcon from "@mui/icons-material/Close";
 import AddIcon from "@mui/icons-material/Add";
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 const FormGiurTable = () => {
   const columns = ["", "Descrizione", ""];
 
-  const rowsNominatAziende = ["ARL", "SA", "SAS", "SCRL", "SIN", "SNC", "SPA", "SRL", "XXX"];
+  // const rowsNominatAziende = ["ARL", "SA", "SAS", "SCRL", "SIN", "SNC", "SPA", "SRL", "XXX"];
+
+
+  const [formeGiuridiche, setFormeGiuridiche] = useState([]);
+
+
 
   const itemsPerPage = 10;
   const [currentPage, setCurrentPage] = useState(1);
@@ -26,12 +46,16 @@ const FormGiurTable = () => {
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
-  const currentItems = rowsNominatAziende.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = formeGiuridiche?.slice(indexOfFirstItem, indexOfLastItem);
 
+
+
+  const [id, setID] = useState("");
   const [isModalAddActive, setIsModalAddActive] = useState(false);
   const [isModalModActive, setIsModalModActive] = useState(false);
   const [isModalDelActive, setIsModalDelActive] = useState(false);
   // const [pages, setPages] = useState([]);
+
 
   const handleClickAddOpen = () => {
     setIsModalAddActive(true);
@@ -42,8 +66,9 @@ const FormGiurTable = () => {
     console.log("modalAdd close");
   };
 
-  const handleClickModOpen = () => {
+  const handleClickModOpen = (id) => {
     setIsModalModActive(true);
+    setID(id);
     console.log("modalModify open");
   };
 
@@ -62,6 +87,12 @@ const FormGiurTable = () => {
     console.log("modalDel close");
   };
 
+
+
+
+
+
+
   const getColumnClassName = (columnIndex) => {
     if (columnIndex === 0) {
       return "col-2 px-2 text-center h5 justify-content-center";
@@ -78,6 +109,22 @@ const FormGiurTable = () => {
     }
   };
 
+
+
+  const getFormeGiuridiche = async () => {
+    const result = await axios.get("http://localhost:8080/api/forme-giuridiche");
+
+    setFormeGiuridiche(result?.data);
+  };
+  useEffect(() => {
+    getFormeGiuridiche();
+  }, [isModalDelActive,isModalModActive,isModalAddActive]);
+
+
+
+
+
+
   return (
     <>
       <div style={{ marginTop: "5rem" }}>
@@ -87,7 +134,7 @@ const FormGiurTable = () => {
               {columns.map((column, columnIndex) => (
                 <th key={columnIndex}>
                   {columnIndex === 0 && (
-                    <button type="button" className="btn button-modify icon-add" onClick={handleClickAddOpen}>
+                    <button type="button" className="btn button-modify icon-add" onClick={()=>handleClickAddOpen()}>
                       <AddIcon className="icon" />
                     </button>
                   )}
@@ -97,17 +144,17 @@ const FormGiurTable = () => {
             </tr>
           </thead>
           <tbody>
-            {currentItems.map((row, rowIndex) => (
+            {currentItems.length>0&&currentItems?.map((row, rowIndex) => (
               <tr key={rowIndex}>
                 <td className={getColumnClassName(0)}>
-                  <button type="button" className="btn btn-primary button-modify" onClick={handleClickModOpen}>
+                  <button type="button" className="btn btn-primary button-modify" onClick={()=>handleClickModOpen(row?.id)}>
                     <ModeIcon className="icon" />
                   </button>
                   {/* <ButtonPen onClick={openModal} /> */}
                 </td>
-                <td className={getColumnClassName(1)}>{row}</td>
+                <td className={getColumnClassName(1)}>{row?.descrizione}</td>
                 <td className={getColumnClassName(2)}>
-                  <button type="button" className="btn btn-danger button-close" onClick={handleClickDelOpen}>
+                  <button type="button" className="btn btn-danger button-close" onClick={()=>handleClickDelOpen()}>
                     <CloseIcon className="icon-close" />
                   </button>
                 </td>
@@ -121,7 +168,7 @@ const FormGiurTable = () => {
             <span className="text-center text-sm">
               Pagina
               <strong className="mx-3 text-sm">
-                {currentPage} di {Math.ceil(rowsNominatAziende.length / itemsPerPage)}
+                {currentPage} di {Math.ceil(formeGiuridiche?.length / itemsPerPage)}
               </strong>
               {/* &nbsp; | &nbsp; Go To Page &nbsp;&nbsp;
             <input
@@ -130,11 +177,11 @@ const FormGiurTable = () => {
               defaultValue={indexOfLastItem >= rowsCatAziende.length ? currentPage - 1 : currentPage + 1}
             /> */}
             </span>
-            <ProButton text=">>" title="Next Page" disabled={indexOfLastItem >= rowsNominatAziende.length} clicked={() => handlePageChange(currentPage + 1)} />
+            <ProButton text=">>" title="Next Page" disabled={indexOfLastItem >= formeGiuridiche?.length} clicked={() => handlePageChange(currentPage + 1)} />
           </div>
         </div>
         <div> {isModalAddActive && <FormGiurModalAdd show={isModalAddActive} close={handleClickAddClose} />}</div>
-        <div> {isModalModActive && <FormGiurModalMod show={isModalModActive} close={handleClickModClose} />}</div>
+        <div> {isModalModActive && <FormGiurModalMod show={isModalModActive} close={handleClickModClose} id={id} />}</div>
         <div> {isModalDelActive && <FormGiurModalDel show={isModalDelActive} close={handleClickDelClose} />}</div>
       </div>
     </>

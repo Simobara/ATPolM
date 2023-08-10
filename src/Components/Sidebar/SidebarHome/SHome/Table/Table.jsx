@@ -10,8 +10,6 @@ import Search from "../Search/Search";
 import ProButton from "../../../../Global/ProButton/ProButton";
 import ModalImage from "../../../../Global/Modal/modalImage";
 import ModalContact from "../../../../Global/ModalContact/modalContact";
-import Chat from "../../../../Global/Chat/Chat";
-// import Loader from "../../../../Global/Loader/loader";
 let isOpenDetailPanel = false;
 
 
@@ -103,37 +101,44 @@ const Table = ({ handleAddNewRecPopup, rowData = [], columnData = [] }) => {
       <>
         <tr className="detail-wrapper">
           <td className="detail-sections">
-            <section>
+            <section className="info-section" >
+              
+              
               <span className="color-lightcoral">Id Annuncio : {id}</span>
               <div className="section-item">
-                <strong className="color-red"></strong>
+                <strong className="color-white"></strong>
               </div>
-              <div className="section-item">
-                <strong className="color-blue">Quantita:</strong>
-                <span>{quantita}</span>
-              </div>
-              <div className="section-item position-relative">
-                <strong className="color-blue">Offerente:</strong>
-                <span>{ragioneSociale}</span>
-                <ModalContact sell={ragioneSociale} />
-                <Chat />
-              </div>
-            </section>
-            <section className="">
               <div className="section-item">
                 <strong className="color-blue">Descrizione:</strong>
                 <span>{descrizione}</span>
               </div>
               <div className="section-item">
+                <strong className="color-blue">Quantita:</strong>
+                <span>{quantita}</span>
+              </div>           
+              <div className="section-item">
                 <strong className="color-blue">Classe Waste</strong>
                 <span>{classeWaste}</span>
-              </div>
+              </div>              
+            
+            
+            </section>
+            <section className="section-details">
+            
+            
+            <div className="section-item">
+                <strong className="color-blue">Offerente:</strong>
+                <span>{ragioneSociale}</span>
+                <ModalContact sell={ragioneSociale} />
+              </div> 
               <div className="section-item">
                 <img src={immagine} alt="imagePic" />
                 <ModalImage igm={immagine} />
               </div>
+            
+            
             </section>
-            <section className="map-wrapper">
+            <section className="map-wrapper">           
               <div className="section-item">
                 <strong className="color-blue">Indirizzo</strong>
                 <span>{address}</span>
@@ -141,7 +146,7 @@ const Table = ({ handleAddNewRecPopup, rowData = [], columnData = [] }) => {
               <div className="map-wrapper">
                 <InitMap />
                 {/*<AddressToCoordinates/>*/}
-              </div>
+              </div>         
             </section>
           </td>
         </tr>

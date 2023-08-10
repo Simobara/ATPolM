@@ -37,7 +37,13 @@ const UnitaDiMisuraService = () => {
         }
     };
 
-
+    const  updatemisura=(id,descrizione
+        )=> {
+        return axios.put(API_URL + `update-unita-di-misura/${id}`, {
+            descrizione
+            
+        })             
+    }
 
 
 
@@ -58,7 +64,7 @@ const UnitaDiMisuraService = () => {
         }
     };
 
-    return { getUnitaDiMisura, addUnitaDiMisura, deleteUnitaDiMisura };
+    return { getUnitaDiMisura, addUnitaDiMisura, deleteUnitaDiMisura,updatemisura };
 };
 
 export default UnitaDiMisuraService;

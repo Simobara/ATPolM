@@ -119,7 +119,7 @@ const CatTable = () => {
   };
   useEffect(() => {
     getCategories();
-  }, [isModalModActive]);
+  }, [isModalDelActive,isModalModActive,isModalAddActive]);
 
 
 

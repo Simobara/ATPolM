@@ -1,21 +1,42 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+
 /* CSS */
 import "./provTable.css";
+
 /* COMPONENTS */
-// import ButtonPen from '../../../../../../../Global/ButtonPen/buttonPen';
-import ProvModal from "../ProvModal/provModal";
-import ModeIcon from "@mui/icons-material/Mode";
+import ProvModalAdd from "../ProvModalAdd/provModalAdd";
+import ProvModalMod from "../ProvModalMod/provModalMod";
+import ProvModalDel from "../ProvModalDel/provModalDel";
 import ProButton from "../../../../../../../Global/ProButton/ProButton";
+// import ButtonPen from '../../../../../../../Global/ButtonPen/buttonPen';
+
+/* MUI MATERIAL ICONS */
+import ModeIcon from "@mui/icons-material/Mode";
+import CloseIcon from "@mui/icons-material/Close";
+import AddIcon from "@mui/icons-material/Add";
+
+
+
+
+
+
+
+
+
+
+
 
 const ProvTable = () => {
-  const columns = ["", "Codice Provincia", "Codice Regione"];
+  const columns = ["", "Codice Provincia", "Codice Regione", ""];
 
+  // eslint-disable-next-line
   const rowsProv = ["BG1", "BG2", "BG", "BG", "BG5", "BG", "BG7", "BG", "BG9", "BG10", "BG11", "BG12", "BG", "14", "PIPPO", "16", "PAPERINO", "PLUTO18", "TOPOLINIO19", "MINNIE20", "GBSCUGUCIA 21"];
 
   const rowsCodReg = ["ABR", "BAS", "CAL", "CAM", "EMR", "FVG", "LAZ", "LIG", "LOM", "MAR10", "MOL11", "PIE", "PUG13", "SAR", "SIC15", "TOS", "TRE17", "UMB", "VAO19", "VEN", "REGIONE 21"];
 
-  // eslint-disable-next-line
-  const [isModalActive, setIsModalActive] = useState(false);
+
+  const [province, setProvince] = useState([]);
 
   const itemsPerPage = 10;
   const [currentPage, setCurrentPage] = useState(1);
@@ -26,18 +47,58 @@ const ProvTable = () => {
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
-  const currentRowsProv = rowsProv.slice(indexOfFirstItem, indexOfLastItem);
+  const currentRowsProv = province?.slice(indexOfFirstItem, indexOfLastItem);
+
+  //eslint-disable-next-line
   const currentRowsCodReg = rowsCodReg.slice(indexOfFirstItem, indexOfLastItem);
 
-  const handleClickOpen = () => {
-    setIsModalActive(true);
-    console.log("modal open");
+
+
+  const [id, setID] = useState("");
+  const [isModalAddActive, setIsModalAddActive] = useState(false);
+  const [isModalModActive, setIsModalModActive] = useState(false);
+  const [isModalDelActive, setIsModalDelActive] = useState(false);
+
+
+  const handleClickAddOpen = () => {
+    setIsModalAddActive(true);
+    console.log("modalAdd open");
+  };
+  const handleClickAddClose = () => {
+    setIsModalAddActive(false);
+    console.log("modalAdd close");
   };
 
-  const handleClickClose = () => {
-    setIsModalActive(false);
-    console.log("modal close");
+  const handleClickModOpen = (id) => {
+    
+    setIsModalModActive(true);
+    setID(id);
+    console.log("modalModify open");
   };
+
+  const handleClickModClose = () => {
+    setIsModalModActive(false);
+    console.log("modalModify close");
+  };
+
+  const handleClickDelOpen = () => {
+    setIsModalDelActive(true);
+    console.log("modalDel open");
+  };
+
+  const handleClickDelClose = () => {
+    setIsModalDelActive(false);
+    console.log("modalDel close");
+  };
+
+
+
+
+
+
+
+
+
 
   const getColumnClassName = (columnIndex) => {
     if (columnIndex === 0) {
@@ -46,14 +107,29 @@ const ProvTable = () => {
       return "col-8 px-8 text-center h5 justify-content-center";
     } else if (columnIndex === 2) {
       return "col-2 px-2 text-center h5 justify-content-center";
-      // } else if (columnIndex === 3) {
-      //     return 'col-2 px-2 text-center h5';
+    } else if (columnIndex === 3) {
+      return 'col-2 px-2 text-center h5 justify-content-center';
       // } else if (columnIndex === 4) {
       //     return 'col-4 px-4 text-center h5';
     } else {
-      return "col-12 px-12 text-center h5";
+      return "col-12 px-12 text-center h5 justify-content-center";
     }
   };
+
+
+
+
+
+  const getProvince = async () => {
+    const result = await axios.get("http://localhost:8080/api/province");
+
+    setProvince(result?.data);
+  };
+  useEffect(() => {
+    getProvince();
+  }, [isModalDelActive,isModalModActive,isModalAddActive]);
+
+
 
   return (
     <>
@@ -61,22 +137,35 @@ const ProvTable = () => {
         <table className="table table-bordered w-100">
           <thead>
             <tr className="bold-columns text-center">
-              {columns.map((column) => (
-                <th key={column}> {column} </th>
+              {columns.map((column, columnIndex) => (
+                <th key={columnIndex}>
+                  {columnIndex === 0 && (
+                    <button type="button" className="btn button-modify icon-add" onClick={() => handleClickAddOpen()}>
+                      <AddIcon className="icon" />
+                    </button>
+                  )}
+                  {column}
+                </th>
               ))}
             </tr>
           </thead>
           <tbody>
-            {currentRowsProv.map((row, rowIndex) => (
+            {currentRowsProv?.map((row, rowIndex) => (
               <tr key={rowIndex}>
                 <td className={getColumnClassName(0)}>
-                  <button type="button" className="btn btn-primary button" onClick={handleClickOpen}>
+                  <button type="button" className="btn btn-primary button" onClick={() => handleClickModOpen(row?.id)}>
                     <ModeIcon className="icon" />
                   </button>
                   {/* <ButtonPen onClick={openModal} /> */}
                 </td>
-                <td className={getColumnClassName(1)}>{currentRowsProv[rowIndex]}</td>
-                <td className={getColumnClassName(2)}>{currentRowsCodReg[rowIndex]}</td>
+                <td className={getColumnClassName(1)}>{row?.codice}</td>
+                <td className={getColumnClassName(2)}>{row?.regioneCodice}</td>
+                <td className={getColumnClassName(3)}>
+                  <button type="button" className="btn btn-danger button-close " onClick={() => handleClickDelOpen()}>
+                    <CloseIcon className="icon-close" />
+                  </button>
+                </td>
+
               </tr>
             ))}
           </tbody>
@@ -87,7 +176,7 @@ const ProvTable = () => {
             <span className="text-center text-sm">
               Pagina
               <strong className="mx-3 text-sm">
-                {currentPage} di {Math.ceil(rowsProv.length / itemsPerPage)}
+                {currentPage} di {Math.ceil(province.length / itemsPerPage)}
               </strong>
               {/* &nbsp; | &nbsp; Go To Page &nbsp;&nbsp;
                         <input
@@ -96,10 +185,12 @@ const ProvTable = () => {
                             defaultValue={currentPage !== 1 && indexOfLastItem >= rowsDescr.length ? currentPage - 1 : currentPage + 1}
                         /> */}
             </span>
-            <ProButton text=">>" title="Next Page" disabled={indexOfLastItem >= rowsProv.length} clicked={() => handlePageChange(currentPage + 1)} />
+            <ProButton text=">>" title="Next Page" disabled={indexOfLastItem >= province.length} clicked={() => handlePageChange(currentPage + 1)} />
           </div>
         </div>
-        <div> {isModalActive && <ProvModal show={isModalActive} close={handleClickClose} />} </div>
+        <div>{isModalAddActive && <ProvModalAdd show={isModalAddActive} close={handleClickAddClose} />}</div>
+        <div>{isModalModActive && <ProvModalMod show={isModalModActive} close={handleClickModClose} id={id} />}</div>
+        <div>{isModalDelActive && <ProvModalDel show={isModalDelActive} close={handleClickDelClose} />}</div>
       </div>
     </>
   );

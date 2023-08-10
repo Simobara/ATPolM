@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useState } from "react";
+import axios from "axios";
+
 /* CSS */
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
@@ -10,15 +12,31 @@ import Form from 'react-bootstrap/Form';
 
 /* MUI MATERIAL ICONS */
 import SaveIcon from '@mui/icons-material/Save';
+import FormaGiuridicaService from "../../../../../../../DataAPI/services/formaGiuridica.service";
 
 
 
 
 
-const FormGiurModalAdd = ({ show, close }) => {
-    // const [show, setShow] = useState(false);
-    // const handleClose = () => setShow(false);
-    // const handleShow = () => setShow(true);
+const AssModalMod = ({ show, close }) => {
+    const [descrizione,setDescrizione]=useState()
+    const { addFormaGiuridica } = FormaGiuridicaService();
+
+    const handleAdd = async (e) => {
+        try {
+            if(!descrizione) return alert("add descrizione")
+          await addFormaGiuridica(descrizione);
+    
+          setDescrizione()
+          console.log("set form data provincia --- dati salvati");
+          close();
+        } catch (error) {
+          const resMessage = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+         
+        } finally {
+      
+        }
+      };
 
     return (
         <>
@@ -31,7 +49,7 @@ const FormGiurModalAdd = ({ show, close }) => {
             >
                 <Modal.Header >
                     <Modal.Title id="contained-modal-title-vcenter" className="font-weight-bold">
-                        <h2>Aggiungi Forma Giuridica</h2>
+                        <h2>Addiungi FormaGiuridica</h2>
                     </Modal.Title>
                     <Button variant="danger" onClick={close} size="lg">
                         X
@@ -39,8 +57,10 @@ const FormGiurModalAdd = ({ show, close }) => {
                 </Modal.Header>
                 <Modal.Body>
                     <Row className="d-flex justify-content-start mb-4">
-                        <Col xs={12} md={6}><h4>Nome Forma Giuridica</h4></Col>
-                        <Col xs={12} md={6}><Form.Control type="text" placeholder="" autoFocus /></Col>
+                        <Col xs={12} md={6}><h4>Nome FormaGiuridica</h4></Col>
+                        <Col xs={12} md={6}>
+                        <Form.Control type="text" placeholder="" autoFocus value={descrizione} onChange={(e)=>setDescrizione(e.target.value)}/>
+                        </Col>
                     </Row>
                     {/* <Row className="d-flex justify-content-start mb-4">
                         <Col xs={12} md={6}><h4>Codice Regione</h4></Col>
@@ -54,11 +74,13 @@ const FormGiurModalAdd = ({ show, close }) => {
                     </Row> */}
                 </Modal.Body>
                 <Modal.Footer className="d-flex justify-content-center mt-4">
-                    <Button onClick={close}>{<SaveIcon />}Save and Close</Button>
+                    <Button onClick={() => { handleAdd(); }} >
+                        {<SaveIcon />}Save and Close
+                    </Button>
                 </Modal.Footer>
             </Modal>
         </>
     );
 }
 
-export default FormGiurModalAdd;
+export default AssModalMod;

@@ -15,11 +15,12 @@ const provinceItaliane = [
     'UD', 'VA', 'VB', 'VC', 'VE', 'VI', 'VR', 'VS', 'VT', 'VV',
 ];
 
-function CitForm() {
+function CitForm({setFormData}) {
     const [selectedCit, setSelectedCit] = useState('');
 
-    const handleCitSelect = (provincia) => {
-        setSelectedCit(provincia);
+    const handleCitSelect = (citta,index) => {
+        setFormData(index)
+        setSelectedCit(citta);
     };
 
     const renderCitForm = () => {
@@ -38,15 +39,15 @@ function CitForm() {
 
     return (
         <Form>
-            <Form.Group controlId="provinceSelect">
+            <Form.Group controlId="cittaSelect">
                 <Dropdown>
                     <Row>
-                        <Dropdown.Toggle variant="primary" id="provinceDropdown">
+                        <Dropdown.Toggle variant="primary" id="cittaDropdown">
                             Seleziona
                         </Dropdown.Toggle>
                         <Dropdown.Menu>
                             {provinceItaliane.map((provincia, index) => (
-                                <Dropdown.Item key={index} onClick={() => handleCitSelect(provincia)}>
+                                <Dropdown.Item key={index} onClick={() => handleCitSelect(provincia,index)}>
                                     {provincia}
                                 </Dropdown.Item>
                             ))}

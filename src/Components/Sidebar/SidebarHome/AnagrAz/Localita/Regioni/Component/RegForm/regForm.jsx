@@ -6,10 +6,11 @@ const regioniItaliane = [
     'MOL', 'PIE', 'PUG', 'SAR', 'SIC', 'TOS', 'TRE', 'UMB', 'VAO', 'VEN',
 ];
 
-const RegForm = () => {
+const RegForm = ({ setFormData }) => {
     const [selectedReg, setSelectedReg] = useState('');
 
     const handleRegSelect = (province) => {
+        if (setFormData) setFormData(province)
         setSelectedReg(province);
     };
 
@@ -19,7 +20,7 @@ const RegForm = () => {
         }
 
         return (
-            <Form.Group controlId="provinceDetails">
+            <Form.Group controlId="regioneDetails">
                 <Form.Label>{''}</Form.Label>
                 <Form.Control type="text" value={selectedReg} readOnly />
                 {/* Aggiungi altri campi del form per i dettagli della provincia qui */}
@@ -29,10 +30,10 @@ const RegForm = () => {
 
     return (
         <Form>
-            <Form.Group controlId="provinceSelect">
+            <Form.Group controlId="regioneSelect">
                 <Dropdown>
                     <Row>
-                        <Dropdown.Toggle variant="primary" id="provinceDropdown">
+                        <Dropdown.Toggle variant="primary" id="regioneDropdown">
                             Seleziona
                         </Dropdown.Toggle>
                         <Dropdown.Menu>

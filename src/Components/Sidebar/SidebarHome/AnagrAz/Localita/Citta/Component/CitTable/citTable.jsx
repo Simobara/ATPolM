@@ -1,24 +1,53 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+
 /* CSS */
 import "./citTable.css";
+
 /* COMPONENTS */
-// import ButtonPen from '../../../../../../../Global/ButtonPen/buttonPen';
-import CitModal from "../CitModal/citModal";
+import CitModalAdd from "../CitModalAdd/citModalAdd";
+import CitModalMod from "../CitModalMod/citModalMod";
+import CitModalDel from "../CitModalDel/citModalDel";
 import ProButton from "../../../../../../../Global/ProButton/ProButton";
+// import ButtonPen from '../../../../../../../Global/ButtonPen/buttonPen';
 
 /* MUI MATERIAL ICONS */
 import ModeIcon from "@mui/icons-material/Mode";
+import CloseIcon from "@mui/icons-material/Close";
+import AddIcon from "@mui/icons-material/Add";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 const CitTable = () => {
-  const columns = ["", "Citta'", "Cap", "Provincia"];
+  const columns = ["", "Citta'", "Cap", "Provincia",""];
 
-  const rowsDescr = ["Albano S'Alessandro", "Albano S'Alessandro", "Albino", "Arcene", "Bergamo", "Bergamo", "Bolgare", "AAA", "BBB", "CCC 10", "AAA 11", "BBB 12", "CCC 13", "DDD14"];
-
-  const rowsCap = ["24061", "24061", "24021", "24040", "24126", "24127", "24060", "8", "9", "10", "11", "12", "MANCA 13"];
-  const rowsProv = ["BG", "BG2", "BG", "BG4", "BG", "BG6", "BG", "BG8", "BG", "BG10", "BG", "BG12", "BG 13", "BG14"];
 
   // eslint-disable-next-line
-  const [isModalActive, setIsModalActive] = useState(false);
+  const rowsDescr = ["Albano S'Alessandro", "Albano S'Alessandro", "Albino", "Arcene", "Bergamo", "Bergamo", "Bolgare", "AAA", "BBB", "CCC 10", "AAA 11", "BBB 12", "CCC 13", "DDD14"];
+
+  // eslint-disable-next-line
+  const rowsCap = ["24061", "24061", "24021", "24040", "24126", "24127", "24060", "8", "9", "10", "11", "12", "MANCA 13"];
+
+  // eslint-disable-next-line 
+  const rowsProv = ["BG", "BG2", "BG", "BG4", "BG", "BG6", "BG", "BG8", "BG", "BG10", "BG", "BG12", "BG 13", "BG14"];
+
+
+
+
+
+  const [citta, setCitta] = useState([]);
 
   const itemsPerPage = 10;
   const [currentPage, setCurrentPage] = useState(1);
@@ -29,61 +58,126 @@ const CitTable = () => {
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
-  const currentItems = rowsDescr.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = citta.slice(indexOfFirstItem, indexOfLastItem);
+  // eslint-disable-next-line
   const currentRowsCap = rowsCap.slice(indexOfFirstItem, indexOfLastItem);
+  // eslint-disable-next-line
   const currentRowsProv = rowsProv.slice(indexOfFirstItem, indexOfLastItem);
 
-  const handleClickOpen = () => {
-    setIsModalActive(true);
-    console.log("modal open");
+
+  const [id, setID] = useState("");
+  const [isModalAddActive, setIsModalAddActive] = useState(false);
+  const [isModalModActive, setIsModalModActive] = useState(false);
+  const [isModalDelActive, setIsModalDelActive] = useState(false);
+
+
+
+
+
+  const handleClickAddOpen = () => {
+    setIsModalAddActive(true);
+    console.log("modalAdd open");
+  };
+  const handleClickAddClose = () => {
+    setIsModalAddActive(false);
+    console.log("modalAdd close");
   };
 
-  const handleClickClose = () => {
-    setIsModalActive(false);
-    console.log("modal close");
+  const handleClickModOpen = (id) => {
+    setIsModalModActive(true);
+    setID(id);
+    console.log("modalModify open");
   };
+
+  const handleClickModClose = () => {
+    setIsModalModActive(false);
+    console.log("modalModify close");
+  };
+
+  const handleClickDelOpen = () => {
+    setIsModalDelActive(true);
+    console.log("modalDel open");
+  };
+
+  const handleClickDelClose = () => {
+    setIsModalDelActive(false);
+    console.log("modalDel close");
+  };
+
+
+
 
   const getColumnClassName = (columnIndex) => {
     if (columnIndex === 0) {
-      return "col-2 px-2 text-center h5";
+      return "col-2 px-2 text-center h5 justify-content-center";
     } else if (columnIndex === 1) {
-      return "col-4 px-4 text-center h5";
+      return "col-8 px-8 text-center h5 justify-content-center";
     } else if (columnIndex === 2) {
-      return "col-4 px-4 text-center h5";
-    } else if (columnIndex === 3) {
-      return "col-12 px-12 text-center h5";
+      return "col-2 px-2 text-center h5 justify-content-center";
+      // } else if (columnIndex === 3) {
+      //     return 'col-2 px-2 text-center h5';
       // } else if (columnIndex === 4) {
       //     return 'col-4 px-4 text-center h5';
     } else {
-      return "col-12 px-12 text-center h5";
+      return "col-12 px-12 text-center h5 justify-content-center";
     }
   };
+
+
+
+
+  const getCitta = async () => {
+    const result = await axios.get("http://localhost:8080/api/localita");
+
+    setCitta(result?.data);
+  };
+  useEffect(() => {
+    getCitta();
+  }, [isModalDelActive,isModalModActive,isModalAddActive]);
+
+
+
+
+
+
 
   return (
     <>
       <div style={{ marginTop: "5rem" }}>
         <table className="table table-bordered w-100">
           <thead>
-            <tr className="bold-columns text-center ">
-              {columns.map((column) => (
-                <th key={column}>{column}</th>
+            <tr className="bold-columns text-center">
+              {columns.map((column, columnIndex) => (
+                <th key={columnIndex}>
+                  {columnIndex === 0 && (
+                    <button type="button" className="btn button-modify icon-add" onClick={() => handleClickAddOpen()}>
+                      <AddIcon className="icon" />
+                    </button>
+                  )}
+                  {column}
+                </th>
               ))}
             </tr>
           </thead>
           <tbody>
-            {currentItems.map((row, rowIndex) => (
+            {currentItems?.map((row, rowIndex) => (
               <tr key={rowIndex}>
                 <td className={getColumnClassName(0)}>
                   <div>
-                    <button type="button" className="btn btn-primary button" onClick={handleClickOpen}>
+                    <button type="button" className="btn btn-primary button" onClick={() => handleClickModOpen(row?.id)}>
                       <ModeIcon className="icon" />
                     </button>
                   </div>
                   {/* <ButtonPen onClick={openModal} /> */}
                 </td>
-                <td className={getColumnClassName(1)}>{rowsDescr[rowIndex]}</td>
-                <td className={getColumnClassName(2)}>{currentRowsCap[rowIndex]}</td>
-                <td className={getColumnClassName(3)}>{currentRowsProv[rowIndex]}</td>
+                <td className={getColumnClassName(1)}>{row?.descrizione}</td>
+                <td className={getColumnClassName(2)}>{row?.cap}</td>
+                <td className={getColumnClassName(3)}>{row?.provinciaCodice}</td>
+                <td className={getColumnClassName(3)}>
+                  <button type="button" className="btn btn-danger button-close " onClick={() => handleClickDelOpen()}>
+                    <CloseIcon className="icon-close" />
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>
@@ -94,7 +188,7 @@ const CitTable = () => {
             <span className="text-center text-sm">
               Pagina
               <strong className="mx-3 text-sm">
-                {currentPage} di {Math.ceil(rowsDescr.length / itemsPerPage)}
+                {currentPage} di {Math.ceil(citta.length / itemsPerPage)}
               </strong>
               {/* &nbsp; | &nbsp; Go To Page &nbsp;&nbsp;
                         <input
@@ -103,10 +197,12 @@ const CitTable = () => {
                             defaultValue={currentPage !== 1 && indexOfLastItem >= rowsDescr.length ? currentPage - 1 : currentPage + 1}
                         /> */}
             </span>
-            <ProButton text=">>" title="Next Page" disabled={indexOfLastItem >= rowsDescr.length} clicked={() => handlePageChange(currentPage + 1)} />
+            <ProButton text=">>" title="Next Page" disabled={indexOfLastItem >= citta.length} clicked={() => handlePageChange(currentPage + 1)} />
           </div>
         </div>
-        <div>{isModalActive && <CitModal show={isModalActive} close={handleClickClose} />}</div>
+        <div>{isModalAddActive && <CitModalAdd show={isModalAddActive} close={handleClickAddClose} />}</div>
+        <div>{isModalModActive && <CitModalMod show={isModalModActive} close={handleClickModClose} id={id} />}</div>
+        <div>{isModalDelActive && <CitModalDel show={isModalDelActive} close={handleClickDelClose} />}</div>
       </div>
     </>
   );

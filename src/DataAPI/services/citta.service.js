@@ -41,18 +41,18 @@ const CittaService = () => {
     };
 
 
-updateCitta(id, descrizione, cap) {
+  const  updateCitta=async(id, descrizione, cap)=> {
         return axios.put(API_URL + `update-localita/${id}`, {
             id,
             descrizione,
-            cap
+            cap,
         })
-        .then(response => {
-            if (response.data.accessToken) {
-                localStorage.setItem("localita", JSON.stringify(response.data));
-            }
-            return response.data;
-        });
+            .then(response => {
+                if (response.data.accessToken) {
+                    localStorage.setItem("localita", JSON.stringify(response.data));
+                }
+                return response.data;
+            });
     }
 
 
@@ -73,7 +73,7 @@ updateCitta(id, descrizione, cap) {
         }
     };
 
-    return { getCitta, addCitta, deleteCitta };
+    return { getCitta, addCitta, deleteCitta,updateCitta };
 };
 
 export default CittaService;

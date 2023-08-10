@@ -21,10 +21,10 @@ const RegioneService = () => {
 
 
 
-    const addRegione = async (id, codice, descrizione) => {
+    const addRegione = async ( codice, descrizione) => {
         try {
             const response = await axios.post(API_URL + 'add-regione', {
-                id,
+                // id,
                 codice,
                 descrizione,
             });
@@ -41,19 +41,19 @@ const RegioneService = () => {
 
 
 
- updateRegione(id, descrizione, codice) {
-        return axios.put(API_URL + `update-regione/${id}`, {
-            id,
-            descrizione,
-            codice
-        })
-        .then(response => {
-            if (response.data.accessToken) {
-                localStorage.setItem("regione", JSON.stringify(response.data));
-            }
-            return response.data;
-        });
-    }
+    const  updateRegione=async(id, descrizione, codice)=> {
+            return axios.put(API_URL + `update-regione/${id}`, {
+                id,
+                descrizione,
+                codice
+            })
+            .then(response => {
+                if (response.data.accessToken) {
+                    localStorage.setItem("regione", JSON.stringify(response.data));
+                }
+                return response.data;
+            });
+        }
 
 
     const deleteRegione = async (id) => {
@@ -72,7 +72,7 @@ const RegioneService = () => {
         }
     };
 
-    return { getRegioni, addRegione, deleteRegione };
+    return { getRegioni, addRegione, deleteRegione,updateRegione };
 };
 
 export default RegioneService;

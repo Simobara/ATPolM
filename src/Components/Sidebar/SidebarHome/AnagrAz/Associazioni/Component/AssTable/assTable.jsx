@@ -144,7 +144,7 @@ const AssTable = () => {
             </tr>
           </thead>
           <tbody>
-            {currentItems?.map((row, rowIndex) => (
+            {currentItems.length>0&&currentItems?.map((row, rowIndex) => (
               <tr key={rowIndex}>
                 <td className={getColumnClassName(0)}>
                   <button type="button" className="btn btn-primary button-modify" onClick={() => handleClickModOpen(row?.id)}>
@@ -154,7 +154,7 @@ const AssTable = () => {
                 </td>
                 <td className={getColumnClassName(1)}>{row?.descrizione}</td>
                 <td className={getColumnClassName(2)}>
-                  <button type="button" className="btn btn-danger button-close" onClick={handleClickDelOpen}>
+                  <button type="button" className="btn btn-danger button-close" onClick={()=>handleClickDelOpen()}>
                     <CloseIcon className="icon-close" />
                   </button>
                 </td>
