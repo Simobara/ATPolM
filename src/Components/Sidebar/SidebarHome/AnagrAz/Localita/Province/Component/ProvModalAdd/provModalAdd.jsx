@@ -17,6 +17,7 @@ import ProvForm from '../ProvForm/provForm';
 
 /* MUI MATERIAL ICONS */
 import SaveIcon from "@mui/icons-material/Save";
+import CodiceForm from "../CodiceForm/CodiceForm";
 
 const ProvModalAdd = ({ show, close }) => {
   // const [show, setShow] = useState(false);
@@ -40,6 +41,7 @@ const ProvModalAdd = ({ show, close }) => {
 
   const handleAddProvincia = async (e) => {
     try {
+      if (!formData?.idRegione || !formData?.codice) return alert("add all value")
       await addProvincia(formData.codice, formData.idRegione);
 
       setFormData({
@@ -79,16 +81,8 @@ const ProvModalAdd = ({ show, close }) => {
               <h4>Codice</h4>
             </Col>
             <Col xs={12} md={6}>
-              <Form.Control
-                id="codice"
-                type="text"
-                className="mt-2 form-control form_middle_pagenuovo custom-container"
-                name="codice"
-                value={formData.codice}
-                onChange={onChange}
-                placeholder=""
-                autoFocus
-              />
+              
+               <CodiceForm setFormData={(e) => setFormData((prevState) => ({ ...prevState, "codice": e }))} />
             </Col>
           </Row>
           <Row xs={12} md={6} className="d-flex justify-content-start mb-4">
@@ -104,7 +98,7 @@ const ProvModalAdd = ({ show, close }) => {
           </Row>
         </Modal.Body>
         <Modal.Footer className="d-flex justify-content-center mt-4">
-          <Button onClick={handleAddProvincia}>{<SaveIcon />}Save and Close</Button>
+          <Button onClick={()=>handleAddProvincia()}>{<SaveIcon />}Save and Close</Button>
         </Modal.Footer>
       </Modal>
     </>

@@ -38,7 +38,7 @@ const CitModalAdd = ({ show, close }) => {
 
   const handleUpdate = async () => {
     try {
-        if(!formData.descrizione && !formData.cap) return alert("add descrizione")
+        if(!formData.descrizione || !formData.cap || !formData.idProvincia) return alert("add all value")
       await addCitta(formData.descrizione,formData.cap,formData.idProvincia);
 
       setFormData({

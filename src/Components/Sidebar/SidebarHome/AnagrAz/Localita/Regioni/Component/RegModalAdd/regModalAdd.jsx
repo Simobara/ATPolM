@@ -1,10 +1,10 @@
 import React, { useState } from "react";
+
 /* CSS */
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Form from "react-bootstrap/Form";
 
 /*REACT VALIDATION*/
 // import Form from "react-validation/build/form";
@@ -13,11 +13,16 @@ import Form from "react-bootstrap/Form";
 import RegioneService from "../../../../../../../../DataAPI/services/regione.service";
 
 /* COMPONENTS */
-// import RegForm from '../RegForm/regForm';
+import AbbrRegForm from "../AbbrRegForm/abbrRegForm";
+import RegioniForm from "../RegioniForm/regioniForm";
 
 /* MUI MATERIAL ICONS */
 import SaveIcon from "@mui/icons-material/Save";
-import RegForm from "../RegForm/regForm";
+
+
+
+
+
 
 
 
@@ -32,13 +37,16 @@ const RegModalAdd = ({ show, close }) => {
   // eslint-disable-next-line
   const [message, setMessage] = useState("");
   const [formData, setFormData] = useState({
-    descrizione: "",
     codice: "",
+    descrizione: ""
   });
 
-  // eslint-disable-next-line
+
   const { addRegione } = RegioneService();
 
+
+
+  // eslint-disable-next-line 
   const onChange = (e) => {
     console.log("CHANGE");
     const { name, value } = e.target;
@@ -48,17 +56,30 @@ const RegModalAdd = ({ show, close }) => {
     }));
   };
 
-  const handleAddRegione = async (e) => {
+
+
+
+
+
+
+
+
+
+
+  const handleAddRegione = async () => {
     try {
-      await addRegione(formData.codice,formData.descrizione);
-      // props.router.navigate("/");
-      // window.location.reload();
+      if (!formData?.codice || !formData?.descrizione) {
+        return alert("Aggiungi valori per AggiungiRegione")
+      }
+      await addRegione(formData.descrizione, formData.codice);
+
       setFormData({
-        descrizione: "",
         codice: "",
+        descrizione: ""
       });
-      console.log("set form data annunci --- dati salvati");
-      close(); // Chiudi il modal dopo aver aggiunto l'associazione
+      console.log("set form data regione --- dati salvati");
+      close();
+
     } catch (error) {
       const resMessage = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
       setMessage(resMessage);
@@ -66,6 +87,7 @@ const RegModalAdd = ({ show, close }) => {
       setLoading(false);
     }
   };
+  console.log(formData, "formdata")
 
   return (
     <>
@@ -86,11 +108,10 @@ const RegModalAdd = ({ show, close }) => {
         </Modal.Header>
         <Modal.Body>
           <Row className="d-flex justify-content-start mb-4">
+            <Col xs={12} md={6}> <h4>Nome Regione</h4> </Col>
             <Col xs={12} md={6}>
-              <h4>Nome Regione</h4>
-            </Col>
-            <Col xs={12} md={6}>
-              <Form.Control
+              <Row> <Col> <RegioniForm setFormData={(e) => setFormData((prevState) => ({ ...prevState, "codice": e }))} /> </Col> </Row>
+              {/* <Form.Control
                 id="descrizione"
                 type="text"
                 className="mt-2 form-control form_middle_pagenuovo custom-container"
@@ -99,23 +120,20 @@ const RegModalAdd = ({ show, close }) => {
                 onChange={onChange}
                 placeholder=""
                 autoFocus
-              />
+              /> */}
             </Col>
           </Row>
           <Row xs={12} md={6} className="d-flex justify-content-start mb-4">
             <Col xs={12} md={6}><h4>Codice Regione</h4></Col>
             <Col xs={12} md={6}>
               <Row>
-                <Col>
-                  <RegForm setFormData={(e) => setFormData((prevState) => ({ ...prevState, "codice": e }))} />
-                  {/* <Form.Control type="text" placeholder="" autoFocus className="d-flex justify-content-end /> */}
-                </Col>
+                <Col> <AbbrRegForm setFormData={(e) => setFormData((prevState) => ({ ...prevState, "descrizione": e }))} /> </Col>
               </Row>
             </Col>
           </Row>
         </Modal.Body>
         <Modal.Footer className="d-flex justify-content-center mt-4">
-          <Button onClick={handleAddRegione}>{<SaveIcon />}Save and Close</Button>
+          <Button onClick={() => handleAddRegione()}>{<SaveIcon />}Save and Close</Button>
         </Modal.Footer>
       </Modal>
     </>

@@ -3,9 +3,8 @@ import React, { useState, useRef } from "react";
 import "./aggSingAz.css";
 
 /*REACT VALIDATION*/
-import Form from "react-bootstrap/Form";
-// import Form from "react-validation/build/form";
-// import Input from "react-bootstrap/input";
+import Form from "react-validation/build/form";
+import Input from "react-validation/build/input";
 // import CheckButton from "react-validation/build/button";
 
 // /* COMPONENTS */
@@ -18,7 +17,6 @@ import AziendaService from "../../../../../DataAPI/services/azienda.service";
 /* MUI MATERIAL ICONS */
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import { InputGroup } from "react-bootstrap";
 
 
 
@@ -110,7 +108,7 @@ const AggSingAz = () => {
     <>
       <div className="container  custom-container mt-5" style={{ backgroundColor: "#f3f3f3" }}>
 
-        <Form onSubmit={()=>handleAddAzienda()} ref={refForm}></Form>
+        <Form onSubmit={handleAddAzienda} ref={refForm}></Form>
         <div className="row mt-5">
           <div className="word-label ml-2  mb-4" style={{ color: "black", fontSize: "16px" }}>
             Dati Login
@@ -124,7 +122,7 @@ const AggSingAz = () => {
               </div>
 
               <div className="col-xl-9  col-md-9 col-lg-9 col-sm-8 col-8">
-                <InputGroup
+                <Input
                   id="email"
                   type="email"
                   className="mt-2 form-control form_middle_pagenuovo custom-container"
@@ -210,7 +208,7 @@ const AggSingAz = () => {
                 </label>
               </div>
               <div className="col-xl-9 col-md-9 col-lg-9 col-sm-8 col-8">
-                <InputGroup
+                <Input
                   id="ragioneSociale"
                   type="text"
                   className="mt-2 form-control form_middle_pagenuovo custom-container"
@@ -240,8 +238,7 @@ const AggSingAz = () => {
                 </label>
               </div>
               <div className="col-xl-9 col-md-9 col-lg-9 col-sm-8 col-8">
-                         <InputGroup
-
+                <Input
                   id="indirizzo"
                   type="text"
                   className="mt-2 form-control form_middle_pagenuovo custom-container"
@@ -282,8 +279,7 @@ const AggSingAz = () => {
                 </label>
               </div>
               <div className="col-xl-9 col-md-9 col-lg-9 col-sm-8 col-8">
-                             <InputGroup
-
+                <Input
                   id="telefono1"
                   type="number"
                   className="mt-2 form-control form_middle_pagenuovo custom-container"

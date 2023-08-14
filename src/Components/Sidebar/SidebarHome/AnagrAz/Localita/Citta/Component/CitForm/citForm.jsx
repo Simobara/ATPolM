@@ -1,4 +1,6 @@
+import axios from 'axios';
 import React, { useState } from 'react';
+import { useEffect } from 'react';
 import { Row, Form, Dropdown } from 'react-bootstrap';
 
 const provinceItaliane = [
@@ -17,7 +19,7 @@ const provinceItaliane = [
 
 function CitForm({setFormData}) {
     const [selectedCit, setSelectedCit] = useState('');
-
+    const [province, setProvince] = useState([]);
     const handleCitSelect = (citta,index) => {
         setFormData(index)
         setSelectedCit(citta);
@@ -27,7 +29,8 @@ function CitForm({setFormData}) {
         if (selectedCit === '') {
             return null;
         }
-
+        
+        
         return (
             <Form.Group controlId="provinceDetails">
                 <Form.Label>{''}</Form.Label>
@@ -36,7 +39,13 @@ function CitForm({setFormData}) {
             </Form.Group>
         );
     };
-
+    const getProvince = async () => {
+        const result = await axios.get("http://localhost:8080/api/province");
+        setProvince(result?.data);
+      };
+      useEffect(() => {
+        getProvince();
+      }, []);
     return (
         <Form>
             <Form.Group controlId="cittaSelect">
@@ -46,9 +55,9 @@ function CitForm({setFormData}) {
                             Seleziona
                         </Dropdown.Toggle>
                         <Dropdown.Menu>
-                            {provinceItaliane.map((provincia, index) => (
-                                <Dropdown.Item key={index} onClick={() => handleCitSelect(provincia,index)}>
-                                    {provincia}
+                            {province.length>0&&province?.map((provincia, index) => (
+                                <Dropdown.Item key={index} onClick={() => handleCitSelect(provincia?.codice,provincia?.id)}>
+                                    {provincia?.codice}
                                 </Dropdown.Item>
                             ))}
                         </Dropdown.Menu>

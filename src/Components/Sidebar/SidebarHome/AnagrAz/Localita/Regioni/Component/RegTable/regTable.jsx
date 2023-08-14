@@ -28,7 +28,7 @@ import AddIcon from "@mui/icons-material/Add";
 
 
 const RegTable = () => {
-  const columns = ["", "Descrizione", ""];
+  const columns = ["", "Descrizione", "codice",""];
   // const rowsCatAziende = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W"];
   const [regioni, setRegioni] = useState([]);
 
@@ -99,8 +99,8 @@ const RegTable = () => {
       return "col-8 px-8 text-center h5 justify-content-center";
     } else if (columnIndex === 2) {
       return "col-2 px-2 text-center h5 justify-content-center";
-      // } else if (columnIndex === 3) {
-      //     return 'col-2 px-2 text-center h5';
+      } else if (columnIndex === 3) {
+          return 'col-2 px-2 text-center h5';
       // } else if (columnIndex === 4) {
       //     return 'col-4 px-4 text-center h5';
     } else {
@@ -155,7 +155,8 @@ const RegTable = () => {
                   {/* <ButtonPen onClick={openModal} /> */}
                 </td>
                 <td className={getColumnClassName(1)}>{row?.descrizione}</td>
-                <td className={getColumnClassName(2)}>
+                <td className={getColumnClassName(2)}>{row?.codice}</td>
+                <td className={getColumnClassName(3)}>
                   <button type="button" className="btn btn-danger button-close " onClick={handleClickDelOpen}>
                     <CloseIcon className="icon-close" />
                   </button>

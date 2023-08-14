@@ -12,6 +12,7 @@ import ProvinciaService from "../../../../../../../../DataAPI/services/provincia
 
 /* MUI MATERIAL ICONS */
 import SaveIcon from '@mui/icons-material/Save';
+import CodiceForm from '../CodiceForm/CodiceForm';
 
 
 
@@ -34,7 +35,7 @@ const ProvModalMod = ({ show, close, id}) => {
     }));
   };
   const updatedvalue = async () => {
-    if (!formData?.idRegione || !formData?.codice) return alert("codice and descrizione are required")
+    if (!formData?.idRegione || !formData?.codice) return alert("add all value")
     // eslint-disable-next-line 
     const result = await updateProvincia(formData?.id, formData?.codice, formData?.idRegione);
     setFormData({
@@ -68,12 +69,15 @@ console.log(formData,"formData")
         <Modal.Body>
           <Row className="d-flex justify-content-start mb-4">
             <Col xs={12} md={6}><h4>Codice Provincia</h4></Col>
-            <Col xs={12} md={6}><Form.Control id="idRegione"
+            <Col xs={12} md={6}>
+              {/* <Form.Control id="idRegione"
               type="text"
               className="mt-2 form-control form_middle_pagenuovo custom-container"
               name="codice"
               value={formData.codice}
-              onChange={onChange} /></Col>
+              onChange={onChange} /> */}
+               <CodiceForm setFormData={(e) => setFormData((prevState) => ({ ...prevState, "codice": e }))} />
+              </Col>
           </Row>
           {/* <Row className="d-flex justify-content-start mb-4">
                         <Col xs={12} md={6}><h4>Regione</h4></Col>

@@ -31,7 +31,7 @@ import AddIcon from "@mui/icons-material/Add";
 
 
 const CitTable = () => {
-  const columns = ["", "Citta'", "Cap", "Provincia",""];
+  const columns = ["", "Citta'", "Cap", "Provincia", ""];
 
 
   // eslint-disable-next-line
@@ -133,7 +133,7 @@ const CitTable = () => {
   };
   useEffect(() => {
     getCitta();
-  }, [isModalDelActive,isModalModActive,isModalAddActive]);
+  }, [isModalDelActive, isModalModActive, isModalAddActive]);
 
 
 
@@ -173,7 +173,7 @@ const CitTable = () => {
                 <td className={getColumnClassName(1)}>{row?.descrizione}</td>
                 <td className={getColumnClassName(2)}>{row?.cap}</td>
                 <td className={getColumnClassName(3)}>{row?.provinciaCodice}</td>
-                <td className={getColumnClassName(3)}>
+                <td className={getColumnClassName(4)}>
                   <button type="button" className="btn btn-danger button-close " onClick={() => handleClickDelOpen()}>
                     <CloseIcon className="icon-close" />
                   </button>

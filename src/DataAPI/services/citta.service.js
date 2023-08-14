@@ -41,11 +41,12 @@ const CittaService = () => {
     };
 
 
-  const  updateCitta=async(id, descrizione, cap)=> {
+  const  updateCitta=async(id, descrizione, cap,idProvincia)=> {
         return axios.put(API_URL + `update-localita/${id}`, {
             id,
             descrizione,
             cap,
+            idProvincia
         })
             .then(response => {
                 if (response.data.accessToken) {
