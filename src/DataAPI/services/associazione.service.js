@@ -21,6 +21,7 @@ const AssociazioneService = () => {
 
 
 
+
     const addAssociazione = async (descrizione) => {
         try {
             const response = await axios.post(API_URL + 'add-associazione', {
@@ -36,7 +37,11 @@ const AssociazioneService = () => {
         }
     };
 
-
+    const updateAssociazione = (id, descrizione) => {
+        return axios.put(API_URL + `update-associazione/${id}`, {
+            descrizione
+        })
+    }
 
 
 
@@ -47,11 +52,9 @@ const AssociazioneService = () => {
             const response = await axios.delete(`${API_URL}associazione/${id}`, {
                 id,
             });
-
             if (response.data.accessToken) {
                 localStorage.setItem('associazione', JSON.stringify(response.data));
             }
-
             return response.data;
         } catch (error) {
             console.error('Error while deleting associazione:', error);
@@ -59,8 +62,7 @@ const AssociazioneService = () => {
     };
 
 
-
-    return { getAssociazioni, addAssociazione, deleteAssociazione };
+    return { getAssociazioni, addAssociazione, updateAssociazione, deleteAssociazione };
     // return { getAssociazione, addAssociazione, accessToken };
 };
 

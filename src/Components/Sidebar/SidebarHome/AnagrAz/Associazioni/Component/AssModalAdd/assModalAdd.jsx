@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+// import axios from "axios";
+
 /* CSS */
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
@@ -22,47 +24,27 @@ import SaveIcon from '@mui/icons-material/Save';
 
 
 
+
+
+
 const AssModalAdd = ({ show, close }) => {
-    // const [show, setShow] = useState(false);
-    // const handleClose = () => setShow(false);
-    // const handleShow = () => setShow(true);
-
-    // eslint-disable-next-line
-    const [loading, setLoading] = useState(false);
-    // eslint-disable-next-line
-    const [message, setMessage] = useState("");
-    const [formData, setFormData] = useState({
-        descrizione: "",
-    });
-
-    // eslint-disable-next-line
+    const [descrizione, setDescrizione] = useState()
     const { addAssociazione } = AssociazioneService();
-
-
-    const onChange = (e) => {
-        console.log("CHANGE");
-        const { name, value } = e.target;
-        setFormData((prevState) => ({
-            ...prevState,
-            [name]: value
-        }));
-    }
 
     const handleAddAssociazione = async (e) => {
         try {
-            await addAssociazione(formData.descrizione);
-            // props.router.navigate("/");
-            // window.location.reload();
-            setFormData({
-                descrizione: "",
-            })
-            console.log("set form data annunci --- dati salvati")
-            close();// Chiudi il modal dopo aver aggiunto l'associazione
+            if (!descrizione) return alert("Aggiungi descrizione")
+            await addAssociazione(descrizione);
+
+            setDescrizione()
+            console.log("set form data provincia --- dati salvati");
+            close();
         } catch (error) {
+            // eslint-disable-next-line 
             const resMessage = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
-            setMessage(resMessage);
+
         } finally {
-            setLoading(false);
+
         }
     };
 
@@ -96,11 +78,10 @@ const AssModalAdd = ({ show, close }) => {
                                 type="text"
                                 className="mt-2 form-control form_middle_pagenuovo custom-container"
                                 name="descrizione"
-                                value={formData.descrizione}
-                                onChange={onChange}
+                                value={descrizione}
                                 placeholder=""
                                 autoFocus
-                            />
+                                onChange={(e) => setDescrizione(e.target.value)} />
                         </Col>
                     </Row>
                     {/* <Row className="d-flex justify-content-start mb-4">
@@ -115,7 +96,7 @@ const AssModalAdd = ({ show, close }) => {
                     </Row> */}
                 </Modal.Body>
                 <Modal.Footer className="d-flex justify-content-center mt-4">
-                    <Button onClick={handleAddAssociazione}>{<SaveIcon />}Save and Close</Button>
+                    <Button onClick={() => handleAddAssociazione()}>{<SaveIcon />}Save and Close</Button>
                 </Modal.Footer>
             </Modal>
 

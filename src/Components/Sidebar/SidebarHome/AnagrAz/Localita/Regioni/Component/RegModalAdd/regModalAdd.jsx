@@ -13,8 +13,9 @@ import Col from "react-bootstrap/Col";
 import RegioneService from "../../../../../../../../DataAPI/services/regione.service";
 
 /* COMPONENTS */
-import AbbrRegForm from "../AbbrRegForm/abbrRegForm";
+// import AbbrRegForm from "../AbbrRegForm/abbrRegForm";
 import RegioniForm from "../RegioniForm/regioniForm";
+import RegioneMappings from "../RegioneMappings/regioneMappings";
 
 /* MUI MATERIAL ICONS */
 import SaveIcon from "@mui/icons-material/Save";
@@ -38,8 +39,9 @@ const RegModalAdd = ({ show, close }) => {
   const [message, setMessage] = useState("");
   const [formData, setFormData] = useState({
     codice: "",
-    descrizione: ""
+    descrizione: "",
   });
+  const [selectedRegionValue, setSelectedRegionValue] = useState("");
 
 
   const { addRegione } = RegioneService();
@@ -48,7 +50,7 @@ const RegModalAdd = ({ show, close }) => {
 
   // eslint-disable-next-line 
   const onChange = (e) => {
-    console.log("CHANGE");
+    // .log("CHANGE");
     const { name, value } = e.target;
     setFormData((prevState) => ({
       ...prevState,
@@ -60,34 +62,45 @@ const RegModalAdd = ({ show, close }) => {
 
 
 
-
-
-
-
-
-
   const handleAddRegione = async () => {
     try {
-      if (!formData?.codice || !formData?.descrizione) {
-        return alert("Aggiungi valori per AggiungiRegione")
+      if (!formData?.descrizione) {
+        return alert("Aggiungi valori per AggiungiRegione");
       }
-      await addRegione(formData.descrizione, formData.codice);
 
+      const mappingRegione = RegioneMappings[selectedRegionValue];
+      console.log("mappingRegione:", mappingRegione);
+
+
+      let updatedFormData = { ...formData }; // Crea una nuova istanza di oggetto formData
+
+      if (mappingRegione) {
+        updatedFormData.codice = mappingRegione.codice;
+        updatedFormData.descrizione = mappingRegione.descrizione;
+      }
+      await addRegione(updatedFormData.codice, updatedFormData.descrizione);
+
+      console.log("updatedFormData:", updatedFormData);
       setFormData({
-        codice: "",
+        codice: updatedFormData.codice,
         descrizione: ""
       });
-      console.log("set form data regione --- dati salvati");
-      close();
 
+
+
+      close();
     } catch (error) {
-      const resMessage = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+      const resMessage =
+        (error.response && error.response.data && error.response.data.message) ||
+        error.message ||
+        error.toString();
       setMessage(resMessage);
     } finally {
       setLoading(false);
     }
   };
-  console.log(formData, "formdata")
+
+
 
   return (
     <>
@@ -110,7 +123,19 @@ const RegModalAdd = ({ show, close }) => {
           <Row className="d-flex justify-content-start mb-4">
             <Col xs={12} md={6}> <h4>Nome Regione</h4> </Col>
             <Col xs={12} md={6}>
-              <Row> <Col> <RegioniForm setFormData={(e) => setFormData((prevState) => ({ ...prevState, "codice": e }))} /> </Col> </Row>
+              <Row>
+                <Col>
+                  <RegioniForm
+                    setFormRegioni={(reg) => {
+                      setFormData((prevState) => ({
+                        ...prevState,
+                        "descrizione": reg,
+                      }))
+                      setSelectedRegionValue(reg)
+                    }}
+                  />
+                </Col>
+              </Row>
               {/* <Form.Control
                 id="descrizione"
                 type="text"
@@ -123,14 +148,22 @@ const RegModalAdd = ({ show, close }) => {
               /> */}
             </Col>
           </Row>
-          <Row xs={12} md={6} className="d-flex justify-content-start mb-4">
+          {/* <Row xs={12} md={6} className="d-flex justify-content-start mb-4">
             <Col xs={12} md={6}><h4>Codice Regione</h4></Col>
             <Col xs={12} md={6}>
               <Row>
-                <Col> <AbbrRegForm setFormData={(e) => setFormData((prevState) => ({ ...prevState, "descrizione": e }))} /> </Col>
+                <Col>
+                  <AbbrRegForm
+                    setFormAbbrRegioni={(e) => setFormData((prevState) => ({
+                      ...prevState,
+                      "codice": e
+                    }))}
+                    selectedRegVal={selectedRegionValue}
+                  />
+                </Col>
               </Row>
             </Col>
-          </Row>
+          </Row> */}
         </Modal.Body>
         <Modal.Footer className="d-flex justify-content-center mt-4">
           <Button onClick={() => handleAddRegione()}>{<SaveIcon />}Save and Close</Button>

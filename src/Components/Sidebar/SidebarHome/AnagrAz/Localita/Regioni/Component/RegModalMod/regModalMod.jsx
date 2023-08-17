@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import axios from "axios";
 
 /* CSS */
 import Button from "react-bootstrap/Button";
@@ -8,8 +7,10 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
 /* COMPONENTS */
-import RegForm from '../AbbrRegForm/abbrRegForm';
+// import RegForm from '../AbbrRegForm/abbrRegForm';
 import RegioniForm from "../RegioniForm/regioniForm";
+import RegioneMappings from "../RegioneMappings/regioneMappings";
+import RegioneService from "../../../../../../../../DataAPI/services/regione.service";
 
 /* MUI MATERIAL ICONS */
 import SaveIcon from "@mui/icons-material/Save";
@@ -23,17 +24,20 @@ import SaveIcon from "@mui/icons-material/Save";
 
 
 const RegModalMod = ({ show, close, id }) => {
-
+  // eslint-disable-next-line
+  const [message, setMessage] = useState("");
 
   const [formData, setFormData] = useState({
     id: id,
-    descrizione: "",
     codice: "",
+    descrizione: "",
+
   });
 
+  const [selectedRegionValue, setSelectedRegionValue] = useState("");
 
 
-
+  const { updateRegione } = RegioneService();
 
 
   // eslint-disable-next-line
@@ -49,41 +53,55 @@ const RegModalMod = ({ show, close, id }) => {
 
 
 
-  // const updatedvalue = async () => {
-  //   if (!formData?.descrizione || !formData?.codice) {
-  //     return alert("Add all value")
-  //   }
 
 
-  //   const payload = {
-  //     id: id,
-  //     descrizione: formData.descrizione,
-  //     codice: formData.codice
-  //   };
-  //   await axios.put(`http://localhost:8080/api/update-regione/${id}`, payload);
-  //   close();
-  // };
+
+
+
+
 
 
 
 
   const handleUpdate = async () => {
-    // try catch{
-    if (!formData?.descrizione || !formData?.codice) {
-      return alert("Aggiungi tutti i valori in Modifica Regione")
+    try {
+      if (!formData?.descrizione) {
+        return alert("Aggiungi tutti i valori in Modifica Regione");
+      }
+
+      const mappingRegione = RegioneMappings[selectedRegionValue];
+      console.log("mappingRegione:", mappingRegione);
+
+
+      let updatedModFormData = { ...formData }; // Crea una nuova istanza di oggetto formData
+
+      if (mappingRegione) {
+        updatedModFormData.codice = mappingRegione.codice;
+        updatedModFormData.descrizione = mappingRegione.descrizione;
+      }
+
+      await updateRegione(id, updatedModFormData.codice, updatedModFormData.descrizione);
+
+      console.log("updatedFormData:", updatedModFormData);
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        codice: updatedModFormData.codice,
+        descrizione: updatedModFormData.descrizione,
+      }));
+
+
+
+      close();
+    } catch (error) {
+      const resMessage =
+        (error.response && error.response.data && error.response.data.message) ||
+        error.message ||
+        error.toString();
+      setMessage(resMessage);
     }
-    const payload = {
-      id: id,
-      descrizione: formData.descrizione,
-      codice: formData.codice
-    };
-
-
-    await axios.put(`http://localhost:8080/api/update-regione/${id}`, payload);
-    close();
   };
 
-  console.log(formData, "formData")
+
 
 
 
@@ -107,7 +125,17 @@ const RegModalMod = ({ show, close, id }) => {
             <Col xs={12} md={6}> <h4>Nome Regione</h4> </Col>
             <Col xs={12} md={6}>
               <Row>
-                <Col> <RegioniForm setFormData={(e) => setFormData((prevState) => ({ ...prevState, "descrizione": e }))} /> </Col>
+                <Col>
+                  <RegioniForm
+                    setFormRegioni={(reg) => {
+                      setFormData((prevState) => ({
+                        ...prevState,
+                        "descrizione": reg,
+                      }))
+                      setSelectedRegionValue(reg)
+                    }}
+                  />
+                </Col>
               </Row>
               {/* <Form.Control
                 id="descrizione"
@@ -121,14 +149,14 @@ const RegModalMod = ({ show, close, id }) => {
               /> */}
             </Col>
           </Row>
-          <Row className="d-flex justify-content-start mb-4">
+          {/* <Row className="d-flex justify-content-start mb-4">
             <Col xs={12} md={6}><h4>Codice Regione</h4></Col>
             <Col xs={12} md={6}>
               <Row>
                 <Col> <RegForm setFormData={(e) => setFormData((prevState) => ({ ...prevState, "codice": e }))} /> </Col>
               </Row>
             </Col>
-          </Row>
+          </Row> */}
         </Modal.Body>
         <Modal.Footer className="d-flex justify-content-center mt-4">
           <Button onClick={() => handleUpdate()} className="justify-content-around"> {<SaveIcon />}Save and Close </Button>

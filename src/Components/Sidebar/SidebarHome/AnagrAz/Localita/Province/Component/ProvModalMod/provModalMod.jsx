@@ -4,7 +4,6 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Form from 'react-bootstrap/Form';
 
 /* COMPONENTS */
 import ProvForm from '../ProvForm/provForm';
@@ -18,7 +17,7 @@ import CodiceForm from '../CodiceForm/CodiceForm';
 
 
 
-const ProvModalMod = ({ show, close, id}) => {
+const ProvModalMod = ({ show, close, id }) => {
 
   const [formData, setFormData] = useState({
     id: id,
@@ -26,7 +25,13 @@ const ProvModalMod = ({ show, close, id}) => {
     codice: "",
 
   });
+
+
+
   const { updateProvincia } = ProvinciaService();
+
+
+  // eslint-disable-next-line
   const onChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({
@@ -34,6 +39,9 @@ const ProvModalMod = ({ show, close, id}) => {
       [name]: value
     }));
   };
+
+
+
   const updatedvalue = async () => {
     if (!formData?.idRegione || !formData?.codice) return alert("add all value")
     // eslint-disable-next-line 
@@ -47,7 +55,7 @@ const ProvModalMod = ({ show, close, id}) => {
 
     close();
   };
-console.log(formData,"formData")
+  // console.log(formData, "formData")
 
   return (
     <>
@@ -76,15 +84,15 @@ console.log(formData,"formData")
               name="codice"
               value={formData.codice}
               onChange={onChange} /> */}
-               <CodiceForm setFormData={(e) => setFormData((prevState) => ({ ...prevState, "codice": e }))} />
-              </Col>
+              <CodiceForm setFormData={(e) => setFormData((prevState) => ({ ...prevState, "codice": e }))} />
+            </Col>
           </Row>
           {/* <Row className="d-flex justify-content-start mb-4">
                         <Col xs={12} md={6}><h4>Regione</h4></Col>
                         <Col xs={12} md={6}><Form.Control type="text" placeholder="" autoFocus className="d-flex justify-content-end" /></Col>
                     </Row> */}
           <Row xs={12} md={6} className="d-flex justify-content-start mb-4">
-            <Col xs={12} md={6}><h4>Regione</h4></Col>
+            <Col xs={12} md={6}><h4>Codice Regione</h4></Col>
             <Col xs={12} md={6}>
               <Row>
                 <Col>

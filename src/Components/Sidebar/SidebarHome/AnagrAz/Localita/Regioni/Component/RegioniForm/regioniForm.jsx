@@ -2,15 +2,16 @@ import React, { useState } from 'react';
 import { Row, Form, Dropdown } from 'react-bootstrap';
 
 const regioni = [
-    'ABRUZZO', 'BASILICATA', 'CALABRIA', 'CAMPANIA', 'EMILIA-ROMAGNA', 'FRIULI VENEZIA GIULIA', 'LAZIO', 'LIGURIA', 'LOMBARDIA', 'MARCHE', 'MOLISE', 'PIEMONTE', 'PUGLIA', 'SARDEGNA', 'SICILIA', 'TOSCANA', 'TRENTINO', 'UMBRIA', 'VAL D\'AOSTA', 'VENETO',
+    'ABRUZZO', 'BASILICATA', 'CALABRIA', 'CAMPANIA', 'EMILIA-ROMAGNA', 'FRIULI-VENEZIA-GIULIA', 'LAZIO', 'LIGURIA', 'LOMBARDIA', 'MARCHE', 'MOLISE', 'PIEMONTE', 'PUGLIA', 'SARDEGNA', 'SICILIA', 'TOSCANA', 'TRENTINO', 'UMBRIA', 'VAL D\'AOSTA', 'VENETO',
 ];
 
-const RegioniForm = ({ setFormData }) => {
+const RegioniForm = ({ setFormRegioni }) => {
     const [selectedReg, setSelectedReg] = useState('');
 
     const handleRegSelect = (region) => {
-        if (setFormData)
-            setFormData(region)
+        if (setFormRegioni) {
+            setFormRegioni(region)
+        }
         setSelectedReg(region);
     };
 

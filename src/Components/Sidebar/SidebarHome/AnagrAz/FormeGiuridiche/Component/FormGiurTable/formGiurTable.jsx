@@ -111,6 +111,7 @@ const FormGiurTable = () => {
 
 
 
+
   const getFormeGiuridiche = async () => {
     const result = await axios.get("http://localhost:8080/api/forme-giuridiche");
 
@@ -118,7 +119,8 @@ const FormGiurTable = () => {
   };
   useEffect(() => {
     getFormeGiuridiche();
-  }, [isModalDelActive,isModalModActive,isModalAddActive]);
+  }, [isModalDelActive, isModalModActive, isModalAddActive]);
+
 
 
 
@@ -134,7 +136,7 @@ const FormGiurTable = () => {
               {columns.map((column, columnIndex) => (
                 <th key={columnIndex}>
                   {columnIndex === 0 && (
-                    <button type="button" className="btn button-modify icon-add" onClick={()=>handleClickAddOpen()}>
+                    <button type="button" className="btn button-modify icon-add" onClick={() => handleClickAddOpen()}>
                       <AddIcon className="icon" />
                     </button>
                   )}
@@ -144,17 +146,17 @@ const FormGiurTable = () => {
             </tr>
           </thead>
           <tbody>
-            {currentItems.length>0&&currentItems?.map((row, rowIndex) => (
+            {currentItems?.length > 0 && currentItems?.map((row, rowIndex) => (
               <tr key={rowIndex}>
                 <td className={getColumnClassName(0)}>
-                  <button type="button" className="btn btn-primary button-modify" onClick={()=>handleClickModOpen(row?.id)}>
+                  <button type="button" className="btn btn-primary button-modify" onClick={() => handleClickModOpen(row?.id)}>
                     <ModeIcon className="icon" />
                   </button>
                   {/* <ButtonPen onClick={openModal} /> */}
                 </td>
                 <td className={getColumnClassName(1)}>{row?.descrizione}</td>
                 <td className={getColumnClassName(2)}>
-                  <button type="button" className="btn btn-danger button-close" onClick={()=>handleClickDelOpen()}>
+                  <button type="button" className="btn btn-danger button-close" onClick={() => handleClickDelOpen()}>
                     <CloseIcon className="icon-close" />
                   </button>
                 </td>

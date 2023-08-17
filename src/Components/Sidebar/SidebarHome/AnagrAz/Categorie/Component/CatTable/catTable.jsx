@@ -119,7 +119,7 @@ const CatTable = () => {
   };
   useEffect(() => {
     getCategories();
-  }, [isModalDelActive,isModalModActive,isModalAddActive]);
+  }, [isModalDelActive, isModalModActive, isModalAddActive]);
 
 
 
@@ -136,7 +136,7 @@ const CatTable = () => {
               {columns.map((column, columnIndex) => (
                 <th key={columnIndex}>
                   {columnIndex === 0 && (
-                    <button type="button" className="btn button-modify icon-add" onClick={handleClickAddOpen}>
+                    <button type="button" className="btn button-modify icon-add" onClick={() => handleClickAddOpen()}>
                       <AddIcon className="icon" />
                     </button>
                   )}
@@ -146,7 +146,7 @@ const CatTable = () => {
             </tr>
           </thead>
           <tbody>
-            {currentItems?.map((row, rowIndex) => (
+            {currentItems?.length > 0 && currentItems?.map((row, rowIndex) => (
               <tr key={rowIndex}>
                 <td className={getColumnClassName(0)}>
                   <button type="button" className="btn btn-primary button-modify" onClick={() => handleClickModOpen(row?.id)}>
@@ -170,7 +170,7 @@ const CatTable = () => {
             <span className="text-center text-sm">
               Pagina
               <strong className="mx-3 text-sm">
-                {currentPage} di {Math.ceil(categorie.length / itemsPerPage)}
+                {currentPage} di {Math.ceil(categorie?.length / itemsPerPage)}
               </strong>
               {/* &nbsp; | &nbsp; Go To Page &nbsp;&nbsp;
             <input
@@ -179,7 +179,7 @@ const CatTable = () => {
               defaultValue={indexOfLastItem >= rowsCatAziende.length ? currentPage - 1 : currentPage + 1}
             /> */}
             </span>
-            <ProButton text=">>" title="Next Page" disabled={indexOfLastItem >= categorie.length} clicked={() => handlePageChange(currentPage + 1)} />
+            <ProButton text=">>" title="Next Page" disabled={indexOfLastItem >= categorie?.length} clicked={() => handlePageChange(currentPage + 1)} />
           </div>
         </div>
         <div>{isModalAddActive && <CatModalAdd show={isModalAddActive} close={handleClickAddClose} />}</div>

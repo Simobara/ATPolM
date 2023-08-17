@@ -2,27 +2,36 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Row, Form, Dropdown } from 'react-bootstrap';
 
+// eslint-disable-next-line
 const provinceItaliane = [
     'ABR', 'BAS', 'CAL', 'CAM', 'EMR', 'FVG', 'LAZ', 'LIG', 'LOM', 'MAR',
     'MOL', 'PIE', 'PUG', 'SAR', 'SIC', 'TOS', 'TRE', 'UMB', 'VAO', 'VEN',
 ];
 
-const ProvForm = ({setFormData}) => {
+const ProvForm = ({ setFormData }) => {
     const [selectedProv, setSelectedProv] = useState('');
     const [regioni, setRegioni] = useState([]);
-    const handleProvSelect = (province,index) => {
-        if(setFormData)  setFormData(index)
+    const handleProvSelect = (province, index) => {
+        if (setFormData) setFormData(index)
         setSelectedProv(province);
     };
 
     const getRegioni = async () => {
         const result = await axios.get("http://localhost:8080/api/regioni");
-    
+
         setRegioni(result?.data);
-      };
-      useEffect(() => {
+    };
+    useEffect(() => {
         getRegioni();
-      }, []);
+    }, []);
+
+
+    const filteredRegioni = regioni.filter((regione, index, self) =>
+        index === self.findIndex(r => r.codice === regione.codice)
+    );
+
+    const sortedRegioni = filteredRegioni.slice().sort((a, b) => a.codice.localeCompare(b.codice));
+
     const renderProvForm = () => {
         if (selectedProv === '') {
             return null;
@@ -46,8 +55,8 @@ const ProvForm = ({setFormData}) => {
                             Seleziona
                         </Dropdown.Toggle>
                         <Dropdown.Menu>
-                            {regioni.length>0&&regioni?.map((provincia, index) => (
-                                <Dropdown.Item key={index} onClick={() => handleProvSelect(provincia?.codice,provincia?.id)}>
+                            {sortedRegioni.length > 0 && sortedRegioni?.map((provincia, index) => (
+                                <Dropdown.Item key={index} onClick={() => handleProvSelect(provincia?.codice, provincia?.id)}>
                                     {provincia?.codice}
                                 </Dropdown.Item>
                             ))}

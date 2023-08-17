@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+
 /* CSS */
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
@@ -18,6 +19,9 @@ import CategoriaService from "../../../../../../../DataAPI/services/categoria.se
 /* MUI MATERIAL ICONS */
 import SaveIcon from "@mui/icons-material/Save";
 
+
+
+
 const CatModalAdd = ({ show, close }) => {
   // const [show, setShow] = useState(false);
   // const handleClose = () => setShow(false);
@@ -27,33 +31,31 @@ const CatModalAdd = ({ show, close }) => {
   const [loading, setLoading] = useState(false);
   // eslint-disable-next-line
   const [message, setMessage] = useState("");
-  const [formData, setFormData] = useState({
-    descrizione: "",
-  });
 
-  // eslint-disable-next-line
+
+  const [descrizione, setDescrizione] = useState()
   const { addCategoria } = CategoriaService();
 
-  const onChange = (e) => {
-    console.log("CHANGE");
-    const { name, value } = e.target;
-    setFormData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
+  // eslint-disable-next-line
+  // const onChange = (e) => {
+  //   console.log("CHANGE");
+  //   const { name, value } = e.target;
+  //   setFormData((prevState) => ({
+  //     ...prevState,
+  //     [name]: value,
+  //   }));
+  // };
 
-  const handleAddCategoria = async (e) => {
+  const handleAddCategoria = async () => {
     try {
-      await addCategoria(formData.descrizione);
-      // props.router.navigate("/");
-      // window.location.reload();
-      setFormData({
-        descrizione: "",
-      });
+      if (!descrizione) return alert("Aggiungi descrizione")
+      await addCategoria(descrizione);
+
+      setDescrizione()
       console.log("set form data annunci --- dati salvati");
       close(); // Chiudi il modal dopo aver aggiunto l'associazione
     } catch (error) {
+      // eslint-disable-next-line 
       const resMessage = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
       setMessage(resMessage);
     } finally {
@@ -89,8 +91,8 @@ const CatModalAdd = ({ show, close }) => {
                 type="text"
                 className="mt-2 form-control form_middle_pagenuovo custom-container"
                 name="descrizione"
-                value={formData.descrizione}
-                onChange={onChange}
+                value={descrizione}
+                onChange={(e) => setDescrizione(e.target.value)}
                 placeholder=""
                 autoFocus
               />

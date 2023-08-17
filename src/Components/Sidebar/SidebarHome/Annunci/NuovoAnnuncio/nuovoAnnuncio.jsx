@@ -166,20 +166,7 @@ const NuovoAnnuncio = (props) => {
               </div>
             </div>
           </div>
-          <div className="row mt-4">
-            <div className="col-10  col-lg-11 ml-4">
-              <div className="row">
-                <div className="col-xl-3 col-md-3 col-lg-3 col-sm-12 col-12">
-                  <label htmlFor="scadenza" className="word-label">
-                    Scadenza
-                  </label>
-                </div>
-                <div className="col-xl-9   col-md-9 col-lg-9 col-sm-12 col-12">
-                  <input type="date" id="scadenza" style={{ height: "40px" }} className="form-control form_middle_pagenuovo mt-2 " />
-                </div>
-              </div>
-            </div>
-          </div>
+
           <div className="row mt-3">
             <div className="col-10  col-lg-11 ml-4">
               <div className="row">
@@ -196,6 +183,36 @@ const NuovoAnnuncio = (props) => {
           <img src={URL.createObjectURL(selectedImage)} alt="Selected" /> */}
                     </div>
                   )}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="row mt-4">
+            <div className="col-10  col-lg-11 ml-4">
+              <div className="row">
+                <div className="col-xl-3 col-md-3 col-lg-3 col-sm-12 col-12">
+                  <label htmlFor="ubicazione" className="word-label">
+                    Ubicazione
+                  </label>
+                </div>
+                <div className="col-xl-9   col-md-9 col-lg-9 col-sm-12 col-12">
+                  <div style={{ fontSize: "24px", marginTop: "9px" }} className="form_middle_pagenuovo ">
+                    <DropdownMenu />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="row mt-4">
+            <div className="col-10  col-lg-11 ml-4">
+              <div className="row">
+                <div className="col-xl-3 col-md-3 col-lg-3 col-sm-12 col-12">
+                  <label htmlFor="scadenza" className="word-label">
+                    Scadenza
+                  </label>
+                </div>
+                <div className="col-xl-9   col-md-9 col-lg-9 col-sm-12 col-12">
+                  <input type="date" id="scadenza" style={{ height: "40px" }} className="form-control form_middle_pagenuovo mt-2 " />
                 </div>
               </div>
             </div>

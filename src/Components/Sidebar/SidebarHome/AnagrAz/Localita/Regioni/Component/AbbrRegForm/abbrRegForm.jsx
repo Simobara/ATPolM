@@ -1,20 +1,24 @@
 import React, { useState } from 'react';
 import { Row, Form, Dropdown } from 'react-bootstrap';
 
-const regioniItaliane = [
+const abbrRegioni = [
     'ABR', 'BAS', 'CAL', 'CAM', 'EMR', 'FVG', 'LAZ', 'LIG', 'LOM', 'MAR',
     'MOL', 'PIE', 'PUG', 'SAR', 'SIC', 'TOS', 'TRE', 'UMB', 'VAO', 'VEN',
 ];
 
-const RegForm = ({ setFormData }) => {
+const AbbrRegForm = ({ setFormAbbrRegioni, selectedRegVal }) => {
     const [selectedReg, setSelectedReg] = useState('');
 
-    const handleRegSelect = (province) => {
-        if (setFormData) setFormData(province)
-        setSelectedReg(province);
+
+
+    const handleRegSelect = (region) => {
+        if (setFormAbbrRegioni) {
+            setFormAbbrRegioni(region);
+        }
+        setSelectedReg(selectedRegVal);
     };
 
-    const renderRegForm = () => {
+    const renderAbbrRegForm = () => {
         if (selectedReg === '') {
             return null;
         }
@@ -28,6 +32,11 @@ const RegForm = ({ setFormData }) => {
         );
     };
 
+
+
+
+
+
     return (
         <Form>
             <Form.Group controlId="regioneSelect">
@@ -37,7 +46,7 @@ const RegForm = ({ setFormData }) => {
                             Seleziona
                         </Dropdown.Toggle>
                         <Dropdown.Menu>
-                            {regioniItaliane.map((regione, index) => (
+                            {abbrRegioni?.map((regione, index) => (
                                 <Dropdown.Item key={index} onClick={() => handleRegSelect(regione)}>
                                     {regione}
                                 </Dropdown.Item>
@@ -46,9 +55,9 @@ const RegForm = ({ setFormData }) => {
                     </Row>
                 </Dropdown>
             </Form.Group>
-            {renderRegForm()}
+            {renderAbbrRegForm()}
         </Form>
     );
 }
 
-export default RegForm;
+export default AbbrRegForm;

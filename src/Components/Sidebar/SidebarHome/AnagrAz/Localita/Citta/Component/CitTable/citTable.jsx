@@ -27,11 +27,8 @@ import AddIcon from "@mui/icons-material/Add";
 
 
 
-
-
-
 const CitTable = () => {
-  const columns = ["", "Citta'", "Cap", "Provincia", ""];
+  const columns = ["", "Citta'", "Cap", "Codice Provincia", ""];
 
 
   // eslint-disable-next-line
@@ -65,7 +62,7 @@ const CitTable = () => {
   const currentRowsProv = rowsProv.slice(indexOfFirstItem, indexOfLastItem);
 
 
-  const [id, setID] = useState("");
+  const [idModal, setIDModal] = useState("");
   const [isModalAddActive, setIsModalAddActive] = useState(false);
   const [isModalModActive, setIsModalModActive] = useState(false);
   const [isModalDelActive, setIsModalDelActive] = useState(false);
@@ -85,7 +82,7 @@ const CitTable = () => {
 
   const handleClickModOpen = (id) => {
     setIsModalModActive(true);
-    setID(id);
+    setIDModal(id);
     console.log("modalModify open");
   };
 
@@ -188,7 +185,7 @@ const CitTable = () => {
             <span className="text-center text-sm">
               Pagina
               <strong className="mx-3 text-sm">
-                {currentPage} di {Math.ceil(citta.length / itemsPerPage)}
+                {currentPage} di {Math.ceil(citta?.length / itemsPerPage)}
               </strong>
               {/* &nbsp; | &nbsp; Go To Page &nbsp;&nbsp;
                         <input
@@ -197,11 +194,11 @@ const CitTable = () => {
                             defaultValue={currentPage !== 1 && indexOfLastItem >= rowsDescr.length ? currentPage - 1 : currentPage + 1}
                         /> */}
             </span>
-            <ProButton text=">>" title="Next Page" disabled={indexOfLastItem >= citta.length} clicked={() => handlePageChange(currentPage + 1)} />
+            <ProButton text=">>" title="Next Page" disabled={indexOfLastItem >= citta?.length} clicked={() => handlePageChange(currentPage + 1)} />
           </div>
         </div>
         <div>{isModalAddActive && <CitModalAdd show={isModalAddActive} close={handleClickAddClose} />}</div>
-        <div>{isModalModActive && <CitModalMod show={isModalModActive} close={handleClickModClose} id={id} />}</div>
+        <div>{isModalModActive && <CitModalMod show={isModalModActive} close={handleClickModClose} id={idModal} />}</div>
         <div>{isModalDelActive && <CitModalDel show={isModalDelActive} close={handleClickDelClose} />}</div>
       </div>
     </>

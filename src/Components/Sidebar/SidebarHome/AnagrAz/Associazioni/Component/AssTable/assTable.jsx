@@ -25,6 +25,8 @@ import AddIcon from "@mui/icons-material/Add";
 
 
 
+
+
 const AssTable = () => {
   const columns = ["", "Descrizione", ""];
   // const rowsNominatAziende = ["A.I.B.", "AFIDAMP", "AGR", "ALI", "ANCO", "ANGAISA", "ANIT", "API", "API-INDUSTRIA-MANTOVA"];
@@ -48,7 +50,7 @@ const AssTable = () => {
 
 
 
-  const [id, setID] = useState("");
+  const [idModal, setIDModal] = useState("");
   const [isModalAddActive, setIsModalAddActive] = useState(false);
   const [isModalModActive, setIsModalModActive] = useState(false);
   const [isModalDelActive, setIsModalDelActive] = useState(false);
@@ -64,9 +66,10 @@ const AssTable = () => {
     console.log("modal add close");
   };
 
-  const handleClickModOpen = () => {
+  const handleClickModOpen = (id) => {
     setIsModalModActive(true);
-    setID(id);
+    console.log("id", id)
+    setIDModal(id);
     console.log("modal modify open");
   };
 
@@ -118,7 +121,7 @@ const AssTable = () => {
   };
   useEffect(() => {
     getAssociazioni();
-  }, [isModalModActive]);
+  }, [isModalDelActive, isModalModActive, isModalAddActive]);
 
 
 
@@ -144,7 +147,7 @@ const AssTable = () => {
             </tr>
           </thead>
           <tbody>
-            {currentItems.length>0&&currentItems?.map((row, rowIndex) => (
+            {currentItems.length > 0 && currentItems?.map((row, rowIndex) => (
               <tr key={rowIndex}>
                 <td className={getColumnClassName(0)}>
                   <button type="button" className="btn btn-primary button-modify" onClick={() => handleClickModOpen(row?.id)}>
@@ -154,7 +157,7 @@ const AssTable = () => {
                 </td>
                 <td className={getColumnClassName(1)}>{row?.descrizione}</td>
                 <td className={getColumnClassName(2)}>
-                  <button type="button" className="btn btn-danger button-close" onClick={()=>handleClickDelOpen()}>
+                  <button type="button" className="btn btn-danger button-close" onClick={() => handleClickDelOpen()}>
                     <CloseIcon className="icon-close" />
                   </button>
                 </td>
@@ -162,14 +165,13 @@ const AssTable = () => {
             ))}
           </tbody>
         </table>
-        {/* <Pagination nextPage={nextPage} previousPage={previousPage} canPreviousPage={canPreviousPage} canNextPage={canNextPage} pageOptions={pageOptions} pageIndex={pageIndex} gotoPage={gotoPage} /> */}
         <div style={{ marginBottom: "100px" }} className="d-flex justify-content-center w-100 text-sm page-text-input">
           <div className="widthSmall d-flex justify-content-around align-items-center my-1">
             <ProButton text="<<" title="Previous Page" disabled={currentPage === 1} clicked={() => handlePageChange(currentPage - 1)} />
             <span className="text-center text-sm">
               Pagina
               <strong className="mx-3 text-sm">
-                {currentPage} di {Math.ceil(associazioni.length / itemsPerPage)}
+                {currentPage} di {Math.ceil(associazioni?.length / itemsPerPage)}
               </strong>
               {/* &nbsp;| &nbsp; */}
               {/* Go To Page &nbsp;&nbsp; */}
@@ -179,12 +181,12 @@ const AssTable = () => {
               defaultValue={indexOfLastItem >= rowsNominatAziende.length ? currentPage - 1 : currentPage + 1}
             /> */}
             </span>
-            <ProButton text=">>" title="Next Page" disabled={indexOfLastItem >= associazioni.length} clicked={() => handlePageChange(currentPage + 1)} />
+            <ProButton text=">>" title="Next Page" disabled={indexOfLastItem >= associazioni?.length} clicked={() => handlePageChange(currentPage + 1)} />
           </div>
         </div>
 
         <div> {isModalAddActive && <AssModalAdd show={isModalAddActive} close={handleClickAddClose} />}</div>
-        <div>{isModalModActive && <AssModalMod show={isModalModActive} close={handleClickModClose} id={id} />}</div>
+        <div>{isModalModActive && <AssModalMod show={isModalModActive} close={handleClickModClose} id={idModal} />}</div>
         <div>{isModalDelActive && <AssModalDel show={isModalDelActive} close={handleClickDelClose} />}</div>
       </div>
     </>

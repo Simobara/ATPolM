@@ -21,6 +21,7 @@ const CategoriaService = () => {
 
 
 
+
     const addCategoria = async (descrizione) => {
         try {
             const response = await axios.post(API_URL + 'add-categoria', {
@@ -37,6 +38,20 @@ const CategoriaService = () => {
         }
     };
 
+    const updateCategoria = async (id, descrizione) => {
+        try {
+            const response = await axios.put(API_URL + `update-categoria/${id}`, {
+                descrizione,
+            });
+            if (response.data.accessToken) {
+                localStorage.setItem('categoria', JSON.stringify(response.data));
+                // setAccessToken(response.data.accessToken);
+            }
+            return response.data;
+        } catch (error) {
+            console.error('Error while modifing categoria:', error);
+        }
+    };
 
     //     updateCategoria(id, descrizione) {
     //     return axios.put(API_URL + `update-categoria/${id}`, {
@@ -70,7 +85,7 @@ const CategoriaService = () => {
         }
     };
 
-    return { getCategorie, addCategoria, deleteCategoria };
+    return { getCategorie, addCategoria, updateCategoria, deleteCategoria };
 };
 
 export default CategoriaService;

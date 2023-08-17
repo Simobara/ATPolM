@@ -3,24 +3,24 @@ import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { Row, Form, Dropdown } from 'react-bootstrap';
 
-const provinceItaliane = [
-    'AG', 'AL', 'AN', 'AO', 'AP', 'AQ', 'AR', 'AT', 'AV', 'BA',
-    'BG', 'BI', 'BL', 'BN', 'BO', 'BR', 'BS', 'BT', 'BZ', 'CA',
-    'CB', 'CE', 'CH', 'CI', 'CL', 'CN', 'CO', 'CR', 'CS', 'CT',
-    'CZ', 'EN', 'FC', 'FE', 'FG', 'FI', 'FM', 'FR', 'GE', 'GO',
-    'GR', 'IM', 'IS', 'KR', 'LC', 'LE', 'LI', 'LO', 'LT', 'LU',
-    'MB', 'MC', 'ME', 'MI', 'MN', 'MO', 'MS', 'MT', 'NA', 'NO',
-    'NU', 'OG', 'OR', 'OT', 'PA', 'PC', 'PD', 'PE', 'PG', 'PI',
-    'PN', 'PO', 'PR', 'PT', 'PU', 'PV', 'PZ', 'RA', 'RC', 'RE',
-    'RG', 'RI', 'RM', 'RN', 'RO', 'SA', 'SI', 'SO', 'SP', 'SR',
-    'SS', 'SV', 'TA', 'TE', 'TN', 'TO', 'TP', 'TR', 'TS', 'TV',
-    'UD', 'VA', 'VB', 'VC', 'VE', 'VI', 'VR', 'VS', 'VT', 'VV',
-];
+// const provinceItaliane = [
+//     'AG', 'AL', 'AN', 'AO', 'AP', 'AQ', 'AR', 'AT', 'AV', 'BA',
+//     'BG', 'BI', 'BL', 'BN', 'BO', 'BR', 'BS', 'BT', 'BZ', 'CA',
+//     'CB', 'CE', 'CH', 'CI', 'CL', 'CN', 'CO', 'CR', 'CS', 'CT',
+//     'CZ', 'EN', 'FC', 'FE', 'FG', 'FI', 'FM', 'FR', 'GE', 'GO',
+//     'GR', 'IM', 'IS', 'KR', 'LC', 'LE', 'LI', 'LO', 'LT', 'LU',
+//     'MB', 'MC', 'ME', 'MI', 'MN', 'MO', 'MS', 'MT', 'NA', 'NO',
+//     'NU', 'OG', 'OR', 'OT', 'PA', 'PC', 'PD', 'PE', 'PG', 'PI',
+//     'PN', 'PO', 'PR', 'PT', 'PU', 'PV', 'PZ', 'RA', 'RC', 'RE',
+//     'RG', 'RI', 'RM', 'RN', 'RO', 'SA', 'SI', 'SO', 'SP', 'SR',
+//     'SS', 'SV', 'TA', 'TE', 'TN', 'TO', 'TP', 'TR', 'TS', 'TV',
+//     'UD', 'VA', 'VB', 'VC', 'VE', 'VI', 'VR', 'VS', 'VT', 'VV',
+// ];
 
-function CitForm({setFormData}) {
+function CitForm({ setFormData }) {
     const [selectedCit, setSelectedCit] = useState('');
     const [province, setProvince] = useState([]);
-    const handleCitSelect = (citta,index) => {
+    const handleCitSelect = (citta, index) => {
         setFormData(index)
         setSelectedCit(citta);
     };
@@ -29,8 +29,8 @@ function CitForm({setFormData}) {
         if (selectedCit === '') {
             return null;
         }
-        
-        
+
+
         return (
             <Form.Group controlId="provinceDetails">
                 <Form.Label>{''}</Form.Label>
@@ -42,10 +42,10 @@ function CitForm({setFormData}) {
     const getProvince = async () => {
         const result = await axios.get("http://localhost:8080/api/province");
         setProvince(result?.data);
-      };
-      useEffect(() => {
+    };
+    useEffect(() => {
         getProvince();
-      }, []);
+    }, []);
     return (
         <Form>
             <Form.Group controlId="cittaSelect">
@@ -55,8 +55,8 @@ function CitForm({setFormData}) {
                             Seleziona
                         </Dropdown.Toggle>
                         <Dropdown.Menu>
-                            {province.length>0&&province?.map((provincia, index) => (
-                                <Dropdown.Item key={index} onClick={() => handleCitSelect(provincia?.codice,provincia?.id)}>
+                            {province.length > 0 && province?.map((provincia, index) => (
+                                <Dropdown.Item key={index} onClick={() => handleCitSelect(provincia?.codice, provincia?.id)}>
                                     {provincia?.codice}
                                 </Dropdown.Item>
                             ))}

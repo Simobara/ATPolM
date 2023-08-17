@@ -28,7 +28,7 @@ import AddIcon from "@mui/icons-material/Add";
 
 
 const RegTable = () => {
-  const columns = ["", "Descrizione", "codice",""];
+  const columns = ["", "Descrizione Regione", "Codice Regione", ""];
   // const rowsCatAziende = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W"];
   const [regioni, setRegioni] = useState([]);
 
@@ -99,8 +99,8 @@ const RegTable = () => {
       return "col-8 px-8 text-center h5 justify-content-center";
     } else if (columnIndex === 2) {
       return "col-2 px-2 text-center h5 justify-content-center";
-      } else if (columnIndex === 3) {
-          return 'col-2 px-2 text-center h5';
+    } else if (columnIndex === 3) {
+      return 'col-2 px-2 text-center h5';
       // } else if (columnIndex === 4) {
       //     return 'col-4 px-4 text-center h5';
     } else {
@@ -119,7 +119,7 @@ const RegTable = () => {
   };
   useEffect(() => {
     getRegioni();
-  }, [isModalModActive,,isModalDelActive,isModalAddActive]);
+  }, [isModalModActive, isModalDelActive, isModalAddActive]);
 
 
 
@@ -171,7 +171,7 @@ const RegTable = () => {
             <span className="text-center text-sm">
               Pagina
               <strong className="mx-3 text-sm">
-                {currentPage} di {Math.ceil(regioni.length / itemsPerPage)}
+                {currentPage} di {Math.ceil(regioni?.length / itemsPerPage)}
               </strong>
               {/* &nbsp; | &nbsp; Go To Page &nbsp;&nbsp;
             <input
@@ -180,7 +180,7 @@ const RegTable = () => {
               defaultValue={indexOfLastItem >= rowsCatAziende.length ? currentPage - 1 : currentPage + 1}
             /> */}
             </span>
-            <ProButton text=">>" title="Next Page" disabled={indexOfLastItem >= regioni.length} clicked={() => handlePageChange(currentPage + 1)} />
+            <ProButton text=">>" title="Next Page" disabled={indexOfLastItem >= regioni?.length} clicked={() => handlePageChange(currentPage + 1)} />
           </div>
         </div>
         <div>{isModalAddActive && <RegModalAdd show={isModalAddActive} close={handleClickAddClose} />}</div>
