@@ -11,6 +11,13 @@ import CatModalDel from "../CatModalDel/catModalDel";
 import ProButton from "../../../../../../Global/ProButton/ProButton";
 // import ButtonPen from '../../../../../../../Global/ButtonPen/buttonPen';
 
+
+/*REACT VALIDATION*/
+// import Form from "react-validation/build/form";
+// import Input from "react-validation/build/input";
+// import CheckButton from "react-validation/build/button";
+// import CategoriaService from "../../../../../../../DataAPI/services/categoria.service";
+
 /* MUI MATERIAL ICONS */
 import ModeIcon from "@mui/icons-material/Mode";
 import CloseIcon from "@mui/icons-material/Close";
@@ -46,7 +53,7 @@ const CatTable = () => {
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
-  const currentItems = categorie.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = categorie?.slice(indexOfFirstItem, indexOfLastItem);
 
 
 
@@ -119,7 +126,16 @@ const CatTable = () => {
   };
   useEffect(() => {
     getCategories();
-  }, [isModalDelActive, isModalModActive, isModalAddActive]);
+  }, [isModalAddActive, isModalModActive, isModalDelActive]);
+
+
+  // const { getCategorie } = CategoriaService();
+
+  // useEffect(() => {
+  //   getCategorie().then(result => {
+  //     setCategorie(result?.data);
+  //   })
+  // }, [getCategorie, isModalModActive, isModalDelActive, isModalAddActive]);
 
 
 

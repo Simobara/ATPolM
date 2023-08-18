@@ -1,44 +1,40 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+// import axios from 'axios';
+import React, { useState } from 'react';
 import { Row, Form, Dropdown } from 'react-bootstrap';
 
-// eslint-disable-next-line
 const provinceItaliane = [
-    'ABR', 'BAS', 'CAL', 'CAM', 'EMR', 'FVG', 'LAZ', 'LIG', 'LOM', 'MAR',
-    'MOL', 'PIE', 'PUG', 'SAR', 'SIC', 'TOS', 'TRE', 'UMB', 'VAO', 'VEN',
+    'AG', 'AL', 'AN', 'AO', 'AP', 'AQ', 'AR', 'AT', 'AV', 'BA',
+    'BG', 'BI', 'BL', 'BN', 'BO', 'BR', 'BS', 'BT', 'BZ', 'CA',
+    'CB', 'CE', 'CH', 'CI', 'CL', 'CN', 'CO', 'CR', 'CS', 'CT',
+    'CZ', 'EN', 'FC', 'FE', 'FG', 'FI', 'FM', 'FR', 'GE', 'GO',
+    'GR', 'IM', 'IS', 'KR', 'LC', 'LE', 'LI', 'LO', 'LT', 'LU',
+    'MB', 'MC', 'ME', 'MI', 'MN', 'MO', 'MS', 'MT', 'NA', 'NO',
+    'NU', 'OG', 'OR', 'OT', 'PA', 'PC', 'PD', 'PE', 'PG', 'PI',
+    'PN', 'PO', 'PR', 'PT', 'PU', 'PV', 'PZ', 'RA', 'RC', 'RE',
+    'RG', 'RI', 'RM', 'RN', 'RO', 'SA', 'SI', 'SO', 'SP', 'SR',
+    'SS', 'SV', 'TA', 'TE', 'TN', 'TO', 'TP', 'TR', 'TS', 'TV',
+    'UD', 'VA', 'VB', 'VC', 'VE', 'VI', 'VR', 'VS', 'VT', 'VV',
 ];
 
-const ProvForm = ({ setFrmData }) => {
+const CodiceForm = ({ setFrmData }) => {
     const [selectedProv, setSelectedProv] = useState('');
-    const [regioni, setRegioni] = useState([]);
 
-
-
-
-
-    const handleProvSelect = (province, index) => {
+    const handleProvSelect = (province) => {
         if (setFrmData) {
-            setFrmData(index)
+            setFrmData(province)
         }
         setSelectedProv(province);
+
     };
 
-    const getRegioni = async () => {
-        const result = await axios.get("http://localhost:8080/api/regioni");
-
-        setRegioni(result?.data);
-    };
-
-    useEffect(() => {
-        getRegioni();
-    }, []);
 
 
-    const filteredRegioni = regioni.filter((regione, index, self) =>
-        index === self.findIndex(r => r.codice === regione.codice)
-    );
 
-    const sortedRegioni = filteredRegioni.slice().sort((a, b) => a.codice.localeCompare(b.codice));
+
+
+
+
+
 
     const renderProvForm = () => {
         if (selectedProv === '') {
@@ -54,6 +50,9 @@ const ProvForm = ({ setFrmData }) => {
         );
     };
 
+
+
+
     return (
         <Form>
             <Form.Group controlId="provinceSelect">
@@ -63,9 +62,9 @@ const ProvForm = ({ setFrmData }) => {
                             Seleziona
                         </Dropdown.Toggle>
                         <Dropdown.Menu>
-                            {sortedRegioni.length > 0 && sortedRegioni?.map((provincia, index) => (
-                                <Dropdown.Item key={index} onClick={() => handleProvSelect(provincia?.codice, provincia?.id)}>
-                                    {provincia?.codice}
+                            {provinceItaliane?.map((provincia, index) => (
+                                <Dropdown.Item key={index} onClick={() => handleProvSelect(provincia)}>
+                                    {provincia}
                                 </Dropdown.Item>
                             ))}
                         </Dropdown.Menu>
@@ -77,4 +76,4 @@ const ProvForm = ({ setFrmData }) => {
     );
 }
 
-export default ProvForm;
+export default CodiceForm;

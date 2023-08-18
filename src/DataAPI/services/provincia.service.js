@@ -17,20 +17,14 @@ const ProvinciaService = () => {
         }
     };
 
-
-
-
-
     const addProvincia = async (codice, idRegione) => {
         try {
             const response = await axios.post(API_URL + `add-provincia/${idRegione}`, {
                 codice,
             });
-
             if (response.data.accessToken) {
                 localStorage.setItem('provincia', JSON.stringify(response.data));
             }
-
             return response.data;
         } catch (error) {
             console.error('Error while adding provincia:', error);

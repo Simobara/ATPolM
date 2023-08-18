@@ -1,5 +1,5 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+// import axios from 'axios';
+import React, { useState } from 'react';
 import { Row, Form, Dropdown } from 'react-bootstrap';
 
 const provinceItaliane = [
@@ -16,15 +16,52 @@ const provinceItaliane = [
     'UD', 'VA', 'VB', 'VC', 'VE', 'VI', 'VR', 'VS', 'VT', 'VV',
 ];
 
-const CodiceForm = ({setFormData}) => {
+const CodiceForm = ({ setFrmData, codIdProvFiltered, formDatId }) => {
     const [selectedProv, setSelectedProv] = useState('');
-  
-    const handleProvSelect = (province,index) => {
-        if(setFormData)  setFormData(province)
+
+    const handleProvSelect = (province) => {
+        if (setFrmData) {
+            setFrmData(province)
+        }
         setSelectedProv(province);
+
+        console.log("formDatId: ", formDatId)
     };
 
-    
+
+
+
+
+    // **FUNZIONE PER TROVARE SOLO QUEI CODICI DELLE PROVINCE DA ESCLUDERE NELLA LISTA**
+    const codiciProvince = codIdProvFiltered.map(item => item.codice);
+    console.log("codiciProvince: ", codiciProvince);
+
+    // **FUNZIONE PER TROVARE IL CODICE DELLA PROVINCIA SELEZIONATA**
+    const selectedObject = codIdProvFiltered.find(item => item.id === formDatId);
+    console.log("Codice trovato:", selectedObject.codice);
+
+
+
+    // **PROVINCE FILTRATE ESCLUDENDO QUEI CODICI SOPRA DALLA LISTA**
+    const provincesFiltered = provinceItaliane.filter(provincia => !codiciProvince.includes(provincia));
+    // console.log("provincesFiltered:", provincesFiltered);
+
+    // **AGGIUNGI LA PROVINCIA DENTRO ARRAY**
+    provincesFiltered.push(selectedObject.codice);
+
+    // ORDINA L'ARRAY IN ORDINE ALFABETICO
+    provincesFiltered.sort();
+
+    // console.log("UPDATE:", provincesFiltered);
+
+
+
+
+
+
+
+
+
     const renderProvForm = () => {
         if (selectedProv === '') {
             return null;
@@ -39,6 +76,9 @@ const CodiceForm = ({setFormData}) => {
         );
     };
 
+
+
+
     return (
         <Form>
             <Form.Group controlId="provinceSelect">
@@ -48,7 +88,7 @@ const CodiceForm = ({setFormData}) => {
                             Seleziona
                         </Dropdown.Toggle>
                         <Dropdown.Menu>
-                            {provinceItaliane?.map((provincia, index) => (
+                            {provincesFiltered.map((provincia, index) => (
                                 <Dropdown.Item key={index} onClick={() => handleProvSelect(provincia)}>
                                     {provincia}
                                 </Dropdown.Item>

@@ -42,9 +42,10 @@ const CitTable = () => {
 
 
 
-
-
   const [citta, setCitta] = useState([]);
+  const [descrIdCittaFiltered, setDescrIdCittaFiltered] = useState([]);
+
+
 
   const itemsPerPage = 10;
   const [currentPage, setCurrentPage] = useState(1);
@@ -62,7 +63,7 @@ const CitTable = () => {
   const currentRowsProv = rowsProv.slice(indexOfFirstItem, indexOfLastItem);
 
 
-  const [idModal, setIDModal] = useState("");
+  const [rowId, setRowId] = useState("");
   const [isModalAddActive, setIsModalAddActive] = useState(false);
   const [isModalModActive, setIsModalModActive] = useState(false);
   const [isModalDelActive, setIsModalDelActive] = useState(false);
@@ -80,9 +81,9 @@ const CitTable = () => {
     console.log("modalAdd close");
   };
 
-  const handleClickModOpen = (id) => {
+  const handleClickModOpen = (idrow) => {
     setIsModalModActive(true);
-    setIDModal(id);
+    setRowId(idrow);
     console.log("modalModify open");
   };
 
@@ -127,10 +128,22 @@ const CitTable = () => {
     const result = await axios.get("http://localhost:8080/api/localita");
 
     setCitta(result?.data);
+
+    const descrIdCittaFiltered = (result?.data).map((citta) => ({
+      id: citta.id,
+      descrizione: citta.descrizione,
+    }));
+
+    setDescrIdCittaFiltered(descrIdCittaFiltered);
+    console.log("descrIdCittaFiltered: ", descrIdCittaFiltered);
   };
+
+
   useEffect(() => {
     getCitta();
+    // eslint-disable-next-line 
   }, [isModalDelActive, isModalModActive, isModalAddActive]);
+
 
 
 
@@ -198,7 +211,10 @@ const CitTable = () => {
           </div>
         </div>
         <div>{isModalAddActive && <CitModalAdd show={isModalAddActive} close={handleClickAddClose} />}</div>
-        <div>{isModalModActive && <CitModalMod show={isModalModActive} close={handleClickModClose} id={idModal} />}</div>
+        <div>{isModalModActive && <CitModalMod show={isModalModActive} close={handleClickModClose}
+          rowID={rowId}
+          descIdCittaFiltered={descrIdCittaFiltered} />}
+        </div>
         <div>{isModalDelActive && <CitModalDel show={isModalDelActive} close={handleClickDelClose} />}</div>
       </div>
     </>

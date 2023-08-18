@@ -38,6 +38,15 @@ const ProvTable = () => {
 
   const [province, setProvince] = useState([]);
 
+  const [codIdProvinciaFiltered, setCodIdProvinciaFiltered] = useState([]);
+
+
+
+
+
+
+
+
   const itemsPerPage = 10;
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -54,10 +63,39 @@ const ProvTable = () => {
 
 
 
-  const [id, setID] = useState("");
+  const [rowId, setRowId] = useState("");
   const [isModalAddActive, setIsModalAddActive] = useState(false);
   const [isModalModActive, setIsModalModActive] = useState(false);
   const [isModalDelActive, setIsModalDelActive] = useState(false);
+
+
+
+
+
+  const getProvince = async () => {
+    const result = await axios.get("http://localhost:8080/api/province");
+
+    setProvince(result?.data);
+
+    const codIdProvinciaFiltered = (result?.data).map((provincia) => ({
+      id: provincia.id,
+      codice: provincia.codice,
+    }));
+
+    setCodIdProvinciaFiltered(codIdProvinciaFiltered);
+    console.log("codIdProvinciaFiltered: ", codIdProvinciaFiltered);
+  };
+
+  useEffect(() => {
+    getProvince();
+    // eslint-disable-next-line 
+  }, [isModalAddActive, isModalModActive, isModalDelActive]);
+
+
+
+
+
+
 
 
   const handleClickAddOpen = () => {
@@ -69,11 +107,12 @@ const ProvTable = () => {
     console.log("modalAdd close");
   };
 
-  const handleClickModOpen = (id) => {
-    
+  const handleClickModOpen = (idrow) => {
     setIsModalModActive(true);
-    setID(id);
-    console.log("modalModify open");
+    setRowId(idrow);
+    // console.log("modalModify open");
+    // console.log("Row index:", rowIndex);
+    // console.log("idRow:", idrow);
   };
 
   const handleClickModClose = () => {
@@ -117,17 +156,6 @@ const ProvTable = () => {
   };
 
 
-
-
-
-  const getProvince = async () => {
-    const result = await axios.get("http://localhost:8080/api/province");
-
-    setProvince(result?.data);
-  };
-  useEffect(() => {
-    getProvince();
-  }, [isModalDelActive,isModalModActive,isModalAddActive]);
 
 
 
@@ -176,7 +204,7 @@ const ProvTable = () => {
             <span className="text-center text-sm">
               Pagina
               <strong className="mx-3 text-sm">
-                {currentPage} di {Math.ceil(province.length / itemsPerPage)}
+                {currentPage} di {Math.ceil(province?.length / itemsPerPage)}
               </strong>
               {/* &nbsp; | &nbsp; Go To Page &nbsp;&nbsp;
                         <input
@@ -185,11 +213,14 @@ const ProvTable = () => {
                             defaultValue={currentPage !== 1 && indexOfLastItem >= rowsDescr.length ? currentPage - 1 : currentPage + 1}
                         /> */}
             </span>
-            <ProButton text=">>" title="Next Page" disabled={indexOfLastItem >= province.length} clicked={() => handlePageChange(currentPage + 1)} />
+            <ProButton text=">>" title="Next Page" disabled={indexOfLastItem >= province?.length} clicked={() => handlePageChange(currentPage + 1)} />
           </div>
         </div>
         <div>{isModalAddActive && <ProvModalAdd show={isModalAddActive} close={handleClickAddClose} />}</div>
-        <div>{isModalModActive && <ProvModalMod show={isModalModActive} close={handleClickModClose} id={id} />}</div>
+        <div>{isModalModActive && <ProvModalMod show={isModalModActive} close={handleClickModClose}
+          rowID={rowId}
+          codIdProvinFiltered={codIdProvinciaFiltered} />}
+        </div>
         <div>{isModalDelActive && <ProvModalDel show={isModalDelActive} close={handleClickDelClose} />}</div>
       </div>
     </>

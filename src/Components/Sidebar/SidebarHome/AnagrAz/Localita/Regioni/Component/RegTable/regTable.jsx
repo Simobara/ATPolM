@@ -119,6 +119,7 @@ const RegTable = () => {
   };
   useEffect(() => {
     getRegioni();
+    // eslint-disable-next-line 
   }, [isModalModActive, isModalDelActive, isModalAddActive]);
 
 

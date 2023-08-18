@@ -7,7 +7,6 @@ const API_URL = 'http://localhost:8080/api/';
 
 
 
-
 const CittaService = () => {
     const getCitta = async () => {
         try {
@@ -17,10 +16,6 @@ const CittaService = () => {
             console.error('Error while fetching localita:', error);
         }
     };
-
-
-
-
 
     const addCitta = async (descrizione, cap, idProvincia) => {
         try {
@@ -41,8 +36,8 @@ const CittaService = () => {
     };
 
 
-  const  updateCitta=async(id, descrizione, cap,idProvincia)=> {
-        return axios.put(API_URL + `update-localita/${id}`, {
+    const updateCitta = async (id, descrizione, cap, idProvincia) => {
+        return axios.put(API_URL + `update-localita/${id}/${idProvincia}`, {
             id,
             descrizione,
             cap,
@@ -74,7 +69,7 @@ const CittaService = () => {
         }
     };
 
-    return { getCitta, addCitta, deleteCitta,updateCitta };
+    return { getCitta, addCitta, deleteCitta, updateCitta };
 };
 
 export default CittaService;
