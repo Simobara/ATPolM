@@ -1,22 +1,20 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-/* CSS */
+//* CSS
 import "./assTable.css";
 
-/* COMPONENTS */
+//* COMPONENTS
 import AssModalAdd from "../AssModalAdd/assModalAdd";
 import AssModalMod from "../AssModalMod/assModalMod";
 import AssModalDel from "../AssModalDel/assModalDel";
 import ProButton from "../../../../../../Global/ProButton/ProButton";
-// import ButtonPen from '../../../../../../../Global/ButtonPen/buttonPen';
 
-
-
-/* MUI MATERIAL ICONS */
+//* MUI MATERIAL ICONS
 import ModeIcon from "@mui/icons-material/Mode";
 import CloseIcon from "@mui/icons-material/Close";
 import AddIcon from "@mui/icons-material/Add";
+
 
 
 
@@ -33,8 +31,8 @@ const AssTable = () => {
   const columns = ["", "Descrizione", ""];
   // const rowsNominatAziende = ["A.I.B.", "AFIDAMP", "AGR", "ALI", "ANCO", "ANGAISA", "ANIT", "API", "API-INDUSTRIA-MANTOVA"];
 
-
   const [associazioni, setAssociazioni] = useState([]);
+
 
 
 
@@ -42,20 +40,20 @@ const AssTable = () => {
   const itemsPerPage = 10;
   const [currentPage, setCurrentPage] = useState(1);
 
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
+  const handlePageChange = (pageNumber) => { setCurrentPage(pageNumber); };
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
   const currentItems = associazioni.slice(indexOfFirstItem, indexOfLastItem);
 
 
-
   const [idModal, setIDModal] = useState("");
   const [isModalAddActive, setIsModalAddActive] = useState(false);
   const [isModalModActive, setIsModalModActive] = useState(false);
   const [isModalDelActive, setIsModalDelActive] = useState(false);
+
+
+
 
 
 
@@ -94,7 +92,6 @@ const AssTable = () => {
 
 
 
-
   const getColumnClassName = (columnIndex) => {
     if (columnIndex === 0) {
       return "col-2 px-2 text-center h5 justify-content-center";
@@ -115,15 +112,14 @@ const AssTable = () => {
 
 
 
-
   const getAssociazioni = async () => {
     const result = await axios.get("http://localhost:8080/api/associazioni");
-
     setAssociazioni(result?.data);
   };
   useEffect(() => {
     getAssociazioni();
   }, [isModalDelActive, isModalModActive, isModalAddActive]);
+
 
 
 

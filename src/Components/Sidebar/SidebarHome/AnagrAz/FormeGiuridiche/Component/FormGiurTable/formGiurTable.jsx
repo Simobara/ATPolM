@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-/* CSS */
+//* CSS
 import "./formGiurTable.css";
-/* COMPONENTS */
-// import ButtonPen from '../../../../../../../Global/ButtonPen/buttonPen';
+
+//* COMPONENTS
 import FormGiurModalAdd from "../FormGiurModalAdd/formGiurModalAdd";
 import FormGiurModalMod from "../FormGiurModalMod/formGiurModalMod";
 import FormGiurModalDel from "../FormGiurModalDel/formGiurModalDel";
 import ProButton from "../../../../../../Global/ProButton/ProButton";
-/* MUI MATERIAL ICONS */
+
+//* MUI MATERIAL ICONS
 import ModeIcon from "@mui/icons-material/Mode";
 import CloseIcon from "@mui/icons-material/Close";
 import AddIcon from "@mui/icons-material/Add";
@@ -26,12 +27,9 @@ import AddIcon from "@mui/icons-material/Add";
 
 
 
-
 const FormGiurTable = () => {
   const columns = ["", "Descrizione", ""];
-
   // const rowsNominatAziende = ["ARL", "SA", "SAS", "SCRL", "SIN", "SNC", "SPA", "SRL", "XXX"];
-
 
   const [formeGiuridiche, setFormeGiuridiche] = useState([]);
 
@@ -40,21 +38,19 @@ const FormGiurTable = () => {
   const itemsPerPage = 10;
   const [currentPage, setCurrentPage] = useState(1);
 
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
+  const handlePageChange = (pageNumber) => { setCurrentPage(pageNumber); };
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
   const currentItems = formeGiuridiche?.slice(indexOfFirstItem, indexOfLastItem);
 
 
-
   const [id, setID] = useState("");
   const [isModalAddActive, setIsModalAddActive] = useState(false);
   const [isModalModActive, setIsModalModActive] = useState(false);
   const [isModalDelActive, setIsModalDelActive] = useState(false);
-  // const [pages, setPages] = useState([]);
+
+
 
 
   const handleClickAddOpen = () => {
@@ -91,8 +87,6 @@ const FormGiurTable = () => {
 
 
 
-
-
   const getColumnClassName = (columnIndex) => {
     if (columnIndex === 0) {
       return "col-2 px-2 text-center h5 justify-content-center";
@@ -112,9 +106,9 @@ const FormGiurTable = () => {
 
 
 
+
   const getFormeGiuridiche = async () => {
     const result = await axios.get("http://localhost:8080/api/forme-giuridiche");
-
     setFormeGiuridiche(result?.data);
   };
   useEffect(() => {

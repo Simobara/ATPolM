@@ -1,21 +1,21 @@
-import React, { useState } from "react";
-// import axios from "axios";
+import React, { useState, useEffect } from "react";
 
-/* CSS */
+//* CSS
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
-/* COMPONENTS */
-// import RegForm from '../RegForm/regForm';
 
-/* MUI MATERIAL ICONS */
-import SaveIcon from "@mui/icons-material/Save";
-import CitForm from '../CitForm/citForm';
-
+//* REACT-VALIDATION
 import CittaService from "../../../../../../../../DataAPI/services/citta.service";
 
+//* COMPONENTS
+// import RegForm from '../RegForm/regForm';
+
+//* MUI MATERIAL ICONS
+import SaveIcon from "@mui/icons-material/Save";
+import CitForm from '../CitForm/citForm';
 
 
 
@@ -34,62 +34,136 @@ const CitModalMod = ({ show, close, rowID, descIdCittaFiltered }) => {
     cap: "",
     idProvincia: ""
   })
+  const { updateCitta } = CittaService();
 
-  const [error, setError] = useState("");
-  const [disableSaveButton, setDisableSaveButton] = useState(false);
 
+  const [errorDescr, setErrorDescr] = useState("");
+  const [errorCap, setErrorCap] = useState("");
+
+  const [isCapValid, setIsCapValid] = useState(false);
+  const [isDescrValid, setIsDescrValid] = useState(false);
+
+  const [timeoutCap, setTimeoutCap] = useState(null);
+
+  const [isButtonDisable, setIsButtonDisable] = useState(true);
 
 
 
   // eslint-disable-next-line
   const formDataId = formData?.id
-  console.log("formData: ", formDataId)
+  console.log("formDataId: ", formDataId)
   // console.log("formData?codice: ", formDataCodice)
 
 
+
+
+
+
+
+
+
   // ************************************************************
+  const descIdCittaFilteredData = descIdCittaFiltered.filter(item => item.id !== formDataId);
   // **FUNZIONE PER TROVARE SOLO QUEI NOMI(DESCR) DELLE CITTA DA ESCLUDERE NELLA LISTA**
-  const descrCitta = descIdCittaFiltered.map(item => item.descrizione);
-  console.log("descrCitta: ", descrCitta);
-
-  // **FUNZIONE PER TROVARE IL CODICE DELLA PROVINCIA SELEZIONATA**
-  const selectedObject = descIdCittaFiltered.find(item => item.id === formDataId);
-  console.log("Codice trovato:", selectedObject.descrizione);
-
-
-
-  // ************************************************************
-
-
-  const { updateCitta } = CittaService();
-
-  // eslint-disable-next-line
-  const handleChange = (e) => {
+  const descrListaCitNoSpazUPPER = descIdCittaFilteredData.map(item => item.descrizione.replace(/\s+/g, '').toUpperCase());
+ const handleInputChange = (e) => {
     const { name, value } = e.target;
-    if (descrCitta.includes(value) && value !== selectedObject.descrizione) {
-      setDisableSaveButton(true)
-      setError("Non puoi inserire un nome di città già esistente");
-    } else {
-      setError("");
-      setDisableSaveButton(false)
+
+    if (name === "cap") {
+      handleCapChange(value);
+    } else if (name === "descrizione") {
+      handleDescrChange(value);
     }
-    setFormData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
   };
+
+
+  const handleCapChange = (value) => {
+    const isNumber = /^\d+$/.test(value);
+
+    if (value === "") {
+      clearTimeout(timeoutCap);
+      setErrorCap("");
+    } else if (!isNumber) {
+      setIsButtonDisable(true);
+      setErrorCap("❌ Solo valori numerici");
+    } else if (value.length > 5) {
+      setIsButtonDisable(true);
+      setIsCapValid(false)
+      setErrorCap("❌ NB: Il CAP deve essere di 5 numeri.");
+    } else if (value.length < 5) {
+      setIsCapValid(false)
+      const newTimeoutCap = setTimeout(() => {
+        setErrorCap("❌ NB: Il CAP deve essere di 5 numeri.");
+      }, 3000); // 3000 millisecondi = 3 secondi
+      setTimeoutCap(newTimeoutCap);
+    } else {
+      setIsCapValid(true)
+      setErrorCap("");
+    }
+    setFormData((prevState) => ({ ...prevState, cap: value }));
+  };
+
+
+
+
+
+
+
+
+
+
+
+
+  const handleDescrChange = (value) => {
+    // ************************************************************
+
+    const valNoSpaziUPPER = value.replace(/\s+/g, '').toUpperCase(); // Rimuove gli spazi dal valore e lo mette upperCase
+
+    const contieneSoloLettere = /^[A-Za-z\s]+$/.test(valNoSpaziUPPER);//true false
+    // eslint-disable-next-line 
+    const contieneCarattSpeciali = /[!@#$%^&*()[\]{}\-_+=|;:'",.<>?/\\]/.test(valNoSpaziUPPER);//true false
+
+    const isValueInList = descrListaCitNoSpazUPPER.includes(valNoSpaziUPPER);
+
+    if (value === "" && value.length <= 2) {
+      setErrorDescr("");
+    } else if (contieneCarattSpeciali) {
+      setIsButtonDisable(true);
+      setIsDescrValid(false)
+      // eslint-disable-next-line 
+      setErrorDescr("❌ Non si possono inserire simboli: !@#$%^&*()[\]{}\-_+=|;:',.<>?");
+    } else if (!contieneSoloLettere) {
+      setIsButtonDisable(true);
+      setIsDescrValid(false)
+      setErrorDescr("❌ Si possono inserire solo lettere");
+    } else if (isValueInList ) {
+      setIsButtonDisable(true);
+      setIsDescrValid(false);
+      setErrorDescr("❌ Nome Citta' gia' presente in elenco");
+    } else if (contieneSoloLettere && !contieneCarattSpeciali && !isValueInList) {
+      setIsDescrValid(true)
+      setErrorDescr("");
+    }
+    setFormData((prevState) => ({ ...prevState, descrizione: value }));
+  }
+
+
+
+
+
+
+  function capitalizeText(text) {
+    return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
+  }
+
 
 
   const handleUpdate = async () => {
     try {
       if (!formData.descrizione || !formData.cap || !formData.idProvincia) {
-        return alert("Aggiungi tutti i valori corretti per: ModificaCitta")
+        return alert("Inserisci tutti i valori in: ModificaCitta'")
       }
-
-
-
-
-      await updateCitta(rowID, formData.descrizione, formData.cap, formData.idProvincia);
+      await updateCitta(rowID, capitalizeText(formData.descrizione), formData.cap, formData.idProvincia);
       setFormData({
         id: rowID,
         descrizione: "",
@@ -109,6 +183,22 @@ const CitModalMod = ({ show, close, rowID, descIdCittaFiltered }) => {
 
 
 
+
+  useEffect(() => {
+    if (isCapValid && isDescrValid) {
+    
+      setIsButtonDisable(false);
+    } else {
+     
+      setIsButtonDisable(true);
+    }
+  }, [isCapValid, isDescrValid]);
+
+
+
+
+
+
   return (
     <>
       <Modal
@@ -116,7 +206,7 @@ const CitModalMod = ({ show, close, rowID, descIdCittaFiltered }) => {
         // close={close}
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"
-        centered
+        top
       >
         <Modal.Header>
           <Modal.Title id="contained-modal-title-vcenter" className="font-weight-bold">
@@ -134,12 +224,13 @@ const CitModalMod = ({ show, close, rowID, descIdCittaFiltered }) => {
                 type="text"
                 placeholder=""
                 autoFocus
-                value={formData.descrizione}
+                value={(formData?.descrizione).toUpperCase()}
                 name="descrizione"
-                onChange={handleChange}
-                style={{ border: error ? '1px solid red' : '1px solid #ced4da' }}
+                onChange={handleInputChange}
+                style={{ border: '1px solid #ced4da' }}
               />
-              {error && <p style={{ color: 'red', fontSize: '14px', marginTop: '4px' }}>{error}</p>}
+              {!isDescrValid && formData.descrizione !== "" && (<span style={{ color: 'red', fontSize: '20px', marginTop: '4px' }}>{errorDescr}</span>)}
+              {isDescrValid && formData.descrizione !== "" && < span style={{ color: 'green', fontSize: '20px', marginTop: '4px' }}>✅ </span>}
             </Col>
           </Row>
           <Row className="d-flex justify-content-start mb-4">
@@ -149,12 +240,13 @@ const CitModalMod = ({ show, close, rowID, descIdCittaFiltered }) => {
                 type="text"
                 placeholder=""
                 className="d-flex justify-content-end"
-                value={formData.cap}
+                value={formData?.cap}
                 name="cap"
-                onChange={handleChange}
-                disabled={error !== ""}
-                style={{ backgroundColor: error !== "" ? "#9da4aa" : "white", color: "#333" }}
+                onChange={handleInputChange}
+                style={{ border: '1px solid #ced4da' }}
               />
+              {!isCapValid && formData.cap !== "" && (<span style={{ color: 'red', fontSize: '20px', marginTop: '4px' }}>{errorCap}</span>)}
+              {isCapValid && formData.cap !== "" && < span style={{ color: 'green', fontSize: '20px', marginTop: '4px' }}>✅ </span>}
             </Col>
           </Row>
           <Row xs={12} md={6} className="d-flex justify-content-start mb-4">
@@ -162,7 +254,7 @@ const CitModalMod = ({ show, close, rowID, descIdCittaFiltered }) => {
             <Col xs={12} md={6}>
               <Row>
                 <Col>
-                  <CitForm setFormData={(e) => setFormData((prevState) => ({
+                  <CitForm FrmData={(e) => setFormData((prevState) => ({
                     ...prevState,
                     "idProvincia": e
                   }))}
@@ -174,7 +266,7 @@ const CitModalMod = ({ show, close, rowID, descIdCittaFiltered }) => {
           </Row>
         </Modal.Body>
         <Modal.Footer className="d-flex justify-content-center mt-4">
-          <Button onClick={() => handleUpdate()} className="justify-content-around" disabled={disableSaveButton}>{<SaveIcon />}Save and Close</Button>
+          <Button onClick={() => handleUpdate()} className="justify-content-around" disabled={isButtonDisable}>{<SaveIcon />}Save and Close</Button>
         </Modal.Footer>
       </Modal>
     </>

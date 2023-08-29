@@ -17,25 +17,25 @@ import UnitaDiMisuraService from "../../../../../../../DataAPI/services/unitaDiM
 
 const UDMModalAdd = ({ show, close }) => {
     const { addUnitaDiMisura } = UnitaDiMisuraService();
-    const [descrizione,setDescrizione]=useState()
+    const [descrizione, setDescrizione] = useState()
     // const [show, setShow] = useState(false);
     // const handleClose = () => setShow(false);
     // const handleShow = () => setShow(true);
     const handleAddUmd = async (e) => {
         try {
 
-          await addUnitaDiMisura(descrizione);
-    
-          setDescrizione()
-          console.log("set form data provincia --- dati salvati");
-          close();
-        } catch (error) {
-          const resMessage = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
-         
+            await addUnitaDiMisura(descrizione);
+
+            setDescrizione()
+            console.log("set form data provincia --- dati salvati");
+            close();
+            // eslint-disable-next-line
+            const resMessage = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+
         } finally {
-      
+
         }
-      };
+    };
     return (
         <>
             <Modal
@@ -56,7 +56,7 @@ const UDMModalAdd = ({ show, close }) => {
                 <Modal.Body>
                     <Row className="d-flex justify-content-start mb-4">
                         <Col xs={12} md={6}><h4>Unità di Misura</h4></Col>
-                        <Col xs={12} md={6}><Form.Control type="text" placeholder="" autoFocus value={descrizione} onChange={(e)=>setDescrizione(e.target.value)}/></Col>
+                        <Col xs={12} md={6}><Form.Control type="text" placeholder="" autoFocus value={descrizione} onChange={(e) => setDescrizione(e.target.value)} /></Col>
                     </Row>
                     {/* <Row className="d-flex justify-content-start mb-4">
                         <Col xs={12} md={6}><h4>Codice Regione</h4></Col>
@@ -70,7 +70,7 @@ const UDMModalAdd = ({ show, close }) => {
                     </Row> */}
                 </Modal.Body>
                 <Modal.Footer className="d-flex justify-content-center mt-4">
-                    <Button onClick={()=>handleAddUmd()}>{<SaveIcon />}Save and Close</Button>
+                    <Button onClick={() => handleAddUmd()}>{<SaveIcon />}Save and Close</Button>
                 </Modal.Footer>
             </Modal>
         </>

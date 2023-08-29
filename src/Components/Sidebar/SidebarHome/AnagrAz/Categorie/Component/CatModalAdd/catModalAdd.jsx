@@ -1,58 +1,73 @@
 import React, { useState } from "react";
 
-/* CSS */
+//* CSS
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 
-/*REACT VALIDATION*/
-// import Form from "react-validation/build/form";
-// import Input from "react-validation/build/input";
-// import CheckButton from "react-validation/build/button";
+//*REACT VALIDATION
 import CategoriaService from "../../../../../../../DataAPI/services/categoria.service";
 
-/* COMPONENTS */
+//* COMPONENTS */
 // import RegForm from '../RegForm/regForm';
 
-/* MUI MATERIAL ICONS */
+//* MUI MATERIAL ICONS
 import SaveIcon from "@mui/icons-material/Save";
 
 
 
 
+
+
+
+
+
+
+
 const CatModalAdd = ({ show, close }) => {
-  // const [show, setShow] = useState(false);
-  // const handleClose = () => setShow(false);
-  // const handleShow = () => setShow(true);
+  const [descrizione, setDescrizione] = useState()
+  const { addCategoria } = CategoriaService();
 
   // eslint-disable-next-line
   const [loading, setLoading] = useState(false);
   // eslint-disable-next-line
   const [message, setMessage] = useState("");
 
+  const [errorMessage, setErrorMessage] = useState("");
+  const [showErrorMessage, setShowErrorMessage] = useState(false);
 
-  const [descrizione, setDescrizione] = useState()
-  const { addCategoria } = CategoriaService();
 
-  // eslint-disable-next-line
-  // const onChange = (e) => {
-  //   console.log("CHANGE");
-  //   const { name, value } = e.target;
-  //   setFormData((prevState) => ({
-  //     ...prevState,
-  //     [name]: value,
-  //   }));
-  // };
+
+
+
+
+
+
+  const handleInputChange = (e) => {
+    const { value } = e.target;
+    setDescrizione(value);
+    setShowErrorMessage(false); // Nascondi il messaggio di errore quando l'utente riprende a scrivere
+  };
+
+
+
+
 
   const handleAddCategoria = async () => {
     try {
-      if (!descrizione) return alert("Aggiungi descrizione")
+      if (!descrizione) {
+        setErrorMessage("Valore non presente");
+        setShowErrorMessage(true);
+        return
+      }
       await addCategoria(descrizione);
 
-      setDescrizione()
-      console.log("set form data annunci --- dati salvati");
+      setDescrizione("");
+      setShowErrorMessage(false);
+
+      console.log("set form data categoria --- dati salvati");
       close(); // Chiudi il modal dopo aver aggiunto l'associazione
     } catch (error) {
       // eslint-disable-next-line 
@@ -62,6 +77,15 @@ const CatModalAdd = ({ show, close }) => {
       setLoading(false);
     }
   };
+
+
+
+
+
+
+
+
+
 
   return (
     <>
@@ -82,20 +106,19 @@ const CatModalAdd = ({ show, close }) => {
         </Modal.Header>
         <Modal.Body>
           <Row className="d-flex justify-content-start mb-4">
-            <Col xs={12} md={6}>
-              <h4>Nome Categoria</h4>
-            </Col>
+            <Col xs={12} md={6}> <h4>Nome Categoria</h4> </Col>
             <Col xs={12} md={6}>
               <Form.Control
                 id="descrizione"
-                type="text"
-                className="mt-2 form-control form_middle_pagenuovo custom-container"
                 name="descrizione"
                 value={descrizione}
-                onChange={(e) => setDescrizione(e.target.value)}
+                type="text"
+                className={`mt-2 form-control form_middle_pagenuovo custom-container ${showErrorMessage ? "is-invalid" : ""}`}
+                onChange={handleInputChange}
                 placeholder=""
                 autoFocus
               />
+              {showErrorMessage && (<div className="invalid-feedback"> <p className="text-danger text-lg font-weight-bold"> {errorMessage} </p> </div>)}
             </Col>
           </Row>
           {/* <Row className="d-flex justify-content-start mb-4">

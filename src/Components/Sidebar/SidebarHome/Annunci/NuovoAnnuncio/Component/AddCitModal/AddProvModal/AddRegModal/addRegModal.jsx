@@ -6,14 +6,17 @@ import Modal from "react-bootstrap/Modal";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
+//*REACT VALIDATION
+
 //* COMPONENTS
-// import RegForm from '../AbbrRegForm/abbrRegForm';
-import RegioniForm from "../RegioniForm/regioniForm";
-import RegioneMappings from "../RegioneMappings/regioneMappings";
-import RegioneService from "../../../../../../../../DataAPI/services/regione.service";
+// import AbbrRegForm from "../AbbrRegForm/abbrRegForm";
+
 
 //* MUI MATERIAL ICONS
 import SaveIcon from "@mui/icons-material/Save";
+import RegioneService from "../../../../../../../../../DataAPI/services/regione.service";
+import RegioniForm from "../../../../../../AnagrAz/Localita/Regioni/Component/RegioniForm/regioniForm";
+import RegioneMappings from "../../../../../../AnagrAz/Localita/Regioni/Component/RegioneMappings/regioneMappings"
 
 
 
@@ -23,25 +26,28 @@ import SaveIcon from "@mui/icons-material/Save";
 
 
 
-const RegModalMod = ({ show, close, id, listaRegDescrAdded }) => {
-  // eslint-disable-next-line
-  const [message, setMessage] = useState("");
-
+const RegModalAdd = ({ show, close, listaRegDescrAdded }) => {
   const [formData, setFormData] = useState({
-    id: id,
     codice: "",
     descrizione: "",
-
   });
-  const [selectedRegionValue, setSelectedRegionValue] = useState("");
-  const [error, setError] = useState(""); // Aggiunto stato per l'errore
-
-
-  const { updateRegione } = RegioneService();
 
   // eslint-disable-next-line
+  const [loading, setLoading] = useState(false);
+  // eslint-disable-next-line
+  const [message, setMessage] = useState("");
+  const [selectedRegionValue, setSelectedRegionValue] = useState("");
+  const [error, setError] = useState("");
+
+
+
+  const { addRegione } = RegioneService();
+
+
+
+  // eslint-disable-next-line 
   const onChange = (e) => {
-    console.log("CHANGE");
+    // .log("CHANGE");
     const { name, value } = e.target;
     setFormData((prevState) => ({
       ...prevState,
@@ -55,42 +61,29 @@ const RegModalMod = ({ show, close, id, listaRegDescrAdded }) => {
 
 
 
-
-
-
-
-
-
-
-  const handleUpdate = async () => {
+  const handleAddRegione = async () => {
     try {
+      console.log("listaRegDescrAdded:", listaRegDescrAdded);/// IMP IMP IMP TOTALE VALORI (coppia valori)DENTRO GLI ARRAY
       if (!formData?.descrizione) {
-        setError("Inserisci una regione"); // Imposta l'errore se la descrizione è vuota
-        return;
+        setError("Inserisci una regione");
+        return
       }
-
       const mappingRegione = RegioneMappings[selectedRegionValue];
       // console.log("mappingRegione:", mappingRegione);
 
-
-      let updatedModFormData = { ...formData }; // Crea una nuova istanza di oggetto formData
-
+      let updatedFormData = { ...formData }; // Crea una nuova istanza di oggetto formData
       if (mappingRegione) {
-        updatedModFormData.codice = mappingRegione.codice;
-        updatedModFormData.descrizione = mappingRegione.descrizione;
+        updatedFormData.codice = mappingRegione.codice;
+        updatedFormData.descrizione = mappingRegione.descrizione;
       }
+      await addRegione(updatedFormData.codice, updatedFormData.descrizione);
+      // console.log("updatedFormData:", updatedFormData);// aggiornamento sul singolo valore inserito(coppia di valori)
+      // console.log("formData: ", formData)
 
-      await updateRegione(id, updatedModFormData.codice, updatedModFormData.descrizione.toUpperCase());
-
-      // console.log("updatedFormData:", updatedModFormData);
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        codice: updatedModFormData.codice,
-        descrizione: updatedModFormData.descrizione,
-      }));
-
-
-
+      setFormData({
+        codice: updatedFormData.codice,
+        descrizione: ""
+      });
       close();
     } catch (error) {
       const resMessage =
@@ -98,10 +91,10 @@ const RegModalMod = ({ show, close, id, listaRegDescrAdded }) => {
         error.message ||
         error.toString();
       setMessage(resMessage);
+    } finally {
+      setLoading(false);
     }
   };
-
-
 
 
 
@@ -110,12 +103,15 @@ const RegModalMod = ({ show, close, id, listaRegDescrAdded }) => {
       <Modal
         show={show}
         // close={close}
-        size="lg"
-        aria-labelledby="contained-modal-title-vcenter"
-        top
+        dialogClassName="custom-modal"
+                contentClassName="custom-modal-content"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
       >
         <Modal.Header>
-          <Modal.Title id="contained-modal-title-vcenter" className="font-weight-bold"> <h2>Modifica Regione</h2> </Modal.Title>
+          <Modal.Title id="contained-modal-title-vcenter" className="font-weight-bold">
+            <h2>Aggiungi Regione</h2>
+          </Modal.Title>
           <Button variant="danger" onClick={close} size="lg">
             X
           </Button>
@@ -130,6 +126,7 @@ const RegModalMod = ({ show, close, id, listaRegDescrAdded }) => {
                     FrmRegioni={(reg) => {
                       setFormData((prevState) => ({ ...prevState, "descrizione": reg, }));
                       setSelectedRegionValue(reg)
+                      setError("");
                     }}
                     listRegDescrAdded={listaRegDescrAdded}
                   />
@@ -148,21 +145,29 @@ const RegModalMod = ({ show, close, id, listaRegDescrAdded }) => {
               /> */}
             </Col>
           </Row>
-          {/* <Row className="d-flex justify-content-start mb-4">
+          {/* <Row xs={12} md={6} className="d-flex justify-content-start mb-4">
             <Col xs={12} md={6}><h4>Codice Regione</h4></Col>
             <Col xs={12} md={6}>
               <Row>
-                <Col> <RegForm setFormData={(e) => setFormData((prevState) => ({ ...prevState, "codice": e }))} /> </Col>
+                <Col>
+                  <AbbrRegForm
+                    setFormAbbrRegioni={(e) => setFormData((prevState) => ({
+                      ...prevState,
+                      "codice": e
+                    }))}
+                    selectedRegVal={selectedRegionValue}
+                  />
+                </Col>
               </Row>
             </Col>
           </Row> */}
         </Modal.Body>
         <Modal.Footer className="d-flex justify-content-center mt-4">
-          <Button onClick={() => handleUpdate()} className="justify-content-around"> {<SaveIcon />}Save and Close </Button>
+          <Button onClick={() => handleAddRegione()}>{<SaveIcon />}Save and Close</Button>
         </Modal.Footer>
       </Modal>
     </>
   );
 };
 
-export default RegModalMod;
+export default RegModalAdd;

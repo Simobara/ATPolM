@@ -17,11 +17,11 @@ import { Row, Form, Dropdown } from 'react-bootstrap';
 //     'UD', 'VA', 'VB', 'VC', 'VE', 'VI', 'VR', 'VS', 'VT', 'VV',
 // ];
 
-function CitForm({ setFormData }) {
+function CitForm({ FrmData, estado = '' }) {
     const [selectedCit, setSelectedCit] = useState('');
     const [province, setProvince] = useState([]);
     const handleCitSelect = (citta, index) => {
-        setFormData(index)
+        FrmData(index)
         setSelectedCit(citta);
     };
 
@@ -46,6 +46,21 @@ function CitForm({ setFormData }) {
     useEffect(() => {
         getProvince();
     }, []);
+
+
+    useEffect(() => {
+        console.log("estadoProv", estado)
+        if (!estado) {
+            getProvince();
+        }
+    }, [estado])
+
+
+
+
+
+
+
     return (
         <Form>
             <Form.Group controlId="cittaSelect">

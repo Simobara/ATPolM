@@ -123,19 +123,21 @@ const CitTable = () => {
 
 
 
-
+  function capitalizeText(text) {
+    return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
+  }
   const getCitta = async () => {
     const result = await axios.get("http://localhost:8080/api/localita");
-
+console.log(result)
     setCitta(result?.data);
 
     const descrIdCittaFiltered = (result?.data).map((citta) => ({
       id: citta.id,
-      descrizione: citta.descrizione,
+      descrizione:capitalizeText(citta.descrizione),
     }));
 
     setDescrIdCittaFiltered(descrIdCittaFiltered);
-    console.log("descrIdCittaFiltered: ", descrIdCittaFiltered);
+    // console.log("descrIdCittaFiltered: ", descrIdCittaFiltered);
   };
 
 
@@ -147,6 +149,10 @@ const CitTable = () => {
 
 
 
+
+  const citDescr = citta.map(cit => cit.descrizione)
+
+  // console.log("Descrizione Citta:", citDescr);
 
 
 
@@ -180,7 +186,7 @@ const CitTable = () => {
                   </div>
                   {/* <ButtonPen onClick={openModal} /> */}
                 </td>
-                <td className={getColumnClassName(1)}>{row?.descrizione}</td>
+                <td className={getColumnClassName(1)}>{capitalizeText(row?.descrizione)}</td>
                 <td className={getColumnClassName(2)}>{row?.cap}</td>
                 <td className={getColumnClassName(3)}>{row?.provinciaCodice}</td>
                 <td className={getColumnClassName(4)}>
@@ -210,10 +216,12 @@ const CitTable = () => {
             <ProButton text=">>" title="Next Page" disabled={indexOfLastItem >= citta?.length} clicked={() => handlePageChange(currentPage + 1)} />
           </div>
         </div>
-        <div>{isModalAddActive && <CitModalAdd show={isModalAddActive} close={handleClickAddClose} />}</div>
+        <div>{isModalAddActive && <CitModalAdd show={isModalAddActive} close={handleClickAddClose} listaCitDescrAdded={citDescr} />}</div>
         <div>{isModalModActive && <CitModalMod show={isModalModActive} close={handleClickModClose}
           rowID={rowId}
-          descIdCittaFiltered={descrIdCittaFiltered} />}
+          descIdCittaFiltered={descrIdCittaFiltered}
+        // listaCitDescrAdded={citDescr}
+        />}
         </div>
         <div>{isModalDelActive && <CitModalDel show={isModalDelActive} close={handleClickDelClose} />}</div>
       </div>

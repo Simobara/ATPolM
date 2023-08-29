@@ -1,27 +1,20 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-/* CSS */
+//* CSS
 import "./catTable.css";
 
-/* COMPONENTS */
+//* COMPONENTS
 import CatModalAdd from "../CatModalAdd/catModalAdd";
 import CatModalMod from "../CatModalMod/catModalMod";
 import CatModalDel from "../CatModalDel/catModalDel";
 import ProButton from "../../../../../../Global/ProButton/ProButton";
-// import ButtonPen from '../../../../../../../Global/ButtonPen/buttonPen';
 
-
-/*REACT VALIDATION*/
-// import Form from "react-validation/build/form";
-// import Input from "react-validation/build/input";
-// import CheckButton from "react-validation/build/button";
-// import CategoriaService from "../../../../../../../DataAPI/services/categoria.service";
-
-/* MUI MATERIAL ICONS */
+//* MUI MATERIAL ICONS
 import ModeIcon from "@mui/icons-material/Mode";
 import CloseIcon from "@mui/icons-material/Close";
 import AddIcon from "@mui/icons-material/Add";
+
 
 
 
@@ -47,20 +40,18 @@ const CatTable = () => {
   const itemsPerPage = 10;
   const [currentPage, setCurrentPage] = useState(1);
 
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
+  const handlePageChange = (pageNumber) => { setCurrentPage(pageNumber); };
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
   const currentItems = categorie?.slice(indexOfFirstItem, indexOfLastItem);
 
 
-
   const [id, setID] = useState("");
   const [isModalAddActive, setIsModalAddActive] = useState(false);
   const [isModalModActive, setIsModalModActive] = useState(false);
   const [isModalDelActive, setIsModalDelActive] = useState(false);
+
 
 
 
@@ -98,18 +89,15 @@ const CatTable = () => {
 
 
 
-
   const getColumnClassName = (columnIndex) => {
     if (columnIndex === 0) {
       return "col-2 px-2 text-center h5 justify-content-center";
     } else if (columnIndex === 1) {
       return "col-8 px-8 text-center h5 justify-content-center";
     } else if (columnIndex === 2) {
-      return "col-2 px-2 text-center h5 justify-content-center";
+      return "col-2 px-2 text-center h5  justify-content-center";
       // } else if (columnIndex === 3) {
       //     return 'col-2 px-2 text-center h5';
-      // } else if (columnIndex === 4) {
-      //     return 'col-4 px-4 text-center h5';
     } else {
       return "col-12 px-12 text-center h5 justify-content-center";
     }
@@ -121,21 +109,11 @@ const CatTable = () => {
 
   const getCategories = async () => {
     const result = await axios.get("http://localhost:8080/api/categorie");
-
     setCategorie(result?.data);
   };
   useEffect(() => {
     getCategories();
   }, [isModalAddActive, isModalModActive, isModalDelActive]);
-
-
-  // const { getCategorie } = CategoriaService();
-
-  // useEffect(() => {
-  //   getCategorie().then(result => {
-  //     setCategorie(result?.data);
-  //   })
-  // }, [getCategorie, isModalModActive, isModalDelActive, isModalAddActive]);
 
 
 
@@ -165,6 +143,7 @@ const CatTable = () => {
             {currentItems?.length > 0 && currentItems?.map((row, rowIndex) => (
               <tr key={rowIndex}>
                 <td className={getColumnClassName(0)}>
+
                   <button type="button" className="btn btn-primary button-modify" onClick={() => handleClickModOpen(row?.id)}>
                     <ModeIcon className="icon" />
                   </button>
@@ -201,7 +180,7 @@ const CatTable = () => {
         <div>{isModalAddActive && <CatModalAdd show={isModalAddActive} close={handleClickAddClose} />}</div>
         <div>{isModalModActive && <CatModalMod show={isModalModActive} close={handleClickModClose} id={id} />}</div>
         <div>{isModalDelActive && <CatModalDel show={isModalDelActive} close={handleClickDelClose} />}</div>
-      </div>
+      </div >
     </>
   );
 };

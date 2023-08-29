@@ -1,23 +1,19 @@
 import React, { useState } from "react";
-// import axios from "axios";
 
-/* CSS */
+//* CSS
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 
-/*REACT VALIDATION*/
-// import Form from "react-validation/build/form";
-// import Input from "react-validation/build/input";
-// import CheckButton from "react-validation/build/button";
+//*REACT VALIDATION
 import FormaGiuridicaService from "../../../../../../../DataAPI/services/formaGiuridica.service";
 
-/* COMPONENTS */
+//* COMPONENTS
 // import RegForm from '../RegForm/regForm';
 
-/* MUI MATERIAL ICONS */
+//* MUI MATERIAL ICONS
 import SaveIcon from '@mui/icons-material/Save';
 
 
@@ -27,26 +23,49 @@ import SaveIcon from '@mui/icons-material/Save';
 
 
 
-const AssModalMod = ({ show, close }) => {
-    // const [show, setShow] = useState(false);
-    // const handleClose = () => setShow(false);
-    // const handleShow = () => setShow(true);
+
+
+
+const FormGiurModalAdd = ({ show, close }) => {
+    const [descrizione, setDescrizione] = useState()
+    const { addFormaGiuridica } = FormaGiuridicaService();
 
     // eslint-disable-next-line
     const [loading, setLoading] = useState(false);
     // eslint-disable-next-line
     const [message, setMessage] = useState("");
 
-    const [descrizione, setDescrizione] = useState()
-    const { addFormaGiuridica } = FormaGiuridicaService();
+    const [errorMessage, setErrorMessage] = useState("");
+    const [showErrorMessage, setShowErrorMessage] = useState(false);
+
+
+
+
+
+
+
+
+    const handleInputChange = (e) => {
+        const { value } = e.target;
+        setDescrizione(value);
+        setShowErrorMessage(false); // Nascondi il messaggio di errore quando l'utente riprende a scrivere
+    };
+
+
 
     const handleAddFormGiur = async () => {
         try {
-            if (!descrizione) return alert("Aggiungi descrizione")
+            if (!descrizione) {
+                setErrorMessage("Valore non presente");
+                setShowErrorMessage(true);
+                return
+            }
             await addFormaGiuridica(descrizione);
 
-            setDescrizione()
-            console.log("set form data provincia --- dati salvati");
+            setDescrizione("");
+            setShowErrorMessage(false);
+
+            console.log("set form data formaGiuridica --- dati salvati");
             close();// Chiudi il modal dopo aver aggiunto l'associazione
         } catch (error) {
             // eslint-disable-next-line 
@@ -56,6 +75,17 @@ const AssModalMod = ({ show, close }) => {
             setLoading(false);
         }
     };
+
+
+
+
+
+
+
+
+
+
+
 
     return (
         <>
@@ -80,13 +110,15 @@ const AssModalMod = ({ show, close }) => {
                         <Col xs={12} md={6}>
                             <Form.Control
                                 id="descrizione"
-                                type="text"
-                                className="mt-2 form-control form_middle_pagenuovo custom-container"
                                 name="descrizione"
                                 value={descrizione}
+                                type="text"
+                                className={`mt-2 form-control form_middle_pagenuovo custom-container ${showErrorMessage ? "is-invalid" : ""}`}
+                                onChange={handleInputChange}
                                 placeholder=""
                                 autoFocus
-                                onChange={(e) => setDescrizione(e.target.value)} />
+                            />
+                            {showErrorMessage && (<div className="invalid-feedback"> <p className="text-danger text-lg font-weight-bold"> {errorMessage} </p> </div>)}
                         </Col>
                     </Row>
                     {/* <Row className="d-flex justify-content-start mb-4">
@@ -101,11 +133,11 @@ const AssModalMod = ({ show, close }) => {
                     </Row> */}
                 </Modal.Body>
                 <Modal.Footer className="d-flex justify-content-center mt-4">
-                    <Button onClick={() => handleAddFormGiur()} > {<SaveIcon />}Save and Close </Button>
+                    <Button onClick={handleAddFormGiur} > {<SaveIcon />}Save and Close </Button>
                 </Modal.Footer>
             </Modal>
         </>
     );
 }
 
-export default AssModalMod;
+export default FormGiurModalAdd;

@@ -1,23 +1,20 @@
 import React, { useState } from "react";
 
-/* CSS */
+//* CSS
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
-/*REACT VALIDATION*/
-// import Form from "react-validation/build/form";
-// import Input from "react-validation/build/input";
-// import CheckButton from "react-validation/build/button";
+//*REACT VALIDATION
 import RegioneService from "../../../../../../../../DataAPI/services/regione.service";
 
-/* COMPONENTS */
+//* COMPONENTS
 // import AbbrRegForm from "../AbbrRegForm/abbrRegForm";
 import RegioniForm from "../RegioniForm/regioniForm";
 import RegioneMappings from "../RegioneMappings/regioneMappings";
 
-/* MUI MATERIAL ICONS */
+//* MUI MATERIAL ICONS
 import SaveIcon from "@mui/icons-material/Save";
 
 
@@ -28,20 +25,19 @@ import SaveIcon from "@mui/icons-material/Save";
 
 
 
-const RegModalAdd = ({ show, close }) => {
-  // const [show, setShow] = useState(false);
-  // const handleClose = () => setShow(false);
-  // const handleShow = () => setShow(true);
+const RegModalAdd = ({ show, close, listaRegDescrAdded }) => {
+  const [formData, setFormData] = useState({
+    codice: "",
+    descrizione: "",
+  });
 
   // eslint-disable-next-line
   const [loading, setLoading] = useState(false);
   // eslint-disable-next-line
   const [message, setMessage] = useState("");
-  const [formData, setFormData] = useState({
-    codice: "",
-    descrizione: "",
-  });
   const [selectedRegionValue, setSelectedRegionValue] = useState("");
+  const [error, setError] = useState("");
+
 
 
   const { addRegione } = RegioneService();
@@ -62,32 +58,32 @@ const RegModalAdd = ({ show, close }) => {
 
 
 
+
+
   const handleAddRegione = async () => {
     try {
+      console.log("listaRegDescrAdded:", listaRegDescrAdded);/// IMP IMP IMP TOTALE VALORI (coppia valori)DENTRO GLI ARRAY
       if (!formData?.descrizione) {
-        return alert("Aggiungi valori per AggiungiRegione");
+        setError("Inserisci una regione");
+        return
       }
-
       const mappingRegione = RegioneMappings[selectedRegionValue];
-      console.log("mappingRegione:", mappingRegione);
-
+      // console.log("mappingRegione:", mappingRegione);
 
       let updatedFormData = { ...formData }; // Crea una nuova istanza di oggetto formData
-
       if (mappingRegione) {
         updatedFormData.codice = mappingRegione.codice;
         updatedFormData.descrizione = mappingRegione.descrizione;
       }
-      await addRegione(updatedFormData.codice, updatedFormData.descrizione);
+      await addRegione(updatedFormData.codice, updatedFormData.descrizione.toUpperCase());
 
-      console.log("updatedFormData:", updatedFormData);
+      // console.log("updatedFormData:", updatedFormData);// aggiornamento sul singolo valore inserito(coppia di valori)
+      // console.log("formData: ", formData)
+
       setFormData({
         codice: updatedFormData.codice,
         descrizione: ""
       });
-
-
-
       close();
     } catch (error) {
       const resMessage =
@@ -109,7 +105,7 @@ const RegModalAdd = ({ show, close }) => {
         // close={close}
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"
-        centered
+        top
       >
         <Modal.Header>
           <Modal.Title id="contained-modal-title-vcenter" className="font-weight-bold">
@@ -126,14 +122,14 @@ const RegModalAdd = ({ show, close }) => {
               <Row>
                 <Col>
                   <RegioniForm
-                    setFormRegioni={(reg) => {
-                      setFormData((prevState) => ({
-                        ...prevState,
-                        "descrizione": reg,
-                      }))
+                    FrmRegioni={(reg) => {
+                      setFormData((prevState) => ({ ...prevState, "descrizione": reg, }));
                       setSelectedRegionValue(reg)
+                      setError("");
                     }}
+                    listRegDescrAdded={listaRegDescrAdded}
                   />
+                  {error && (<p className="text-danger border-danger p-3 rounded fs-4" style={{ borderTop: "4px solid red" }}> {error} </p>)}
                 </Col>
               </Row>
               {/* <Form.Control

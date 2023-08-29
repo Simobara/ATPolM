@@ -15,10 +15,11 @@ import { useEffect } from "react";
 import axios from "axios";
 
 const UDMTable = () => {
-  const[id,setId]=useState()
-  const[udm,setUdm]=useState([])
+  const [id, setId] = useState()
+  const [udm, setUdm] = useState([])
   const columns = ["", "Unità di misura", ""];
 
+  // eslint-disable-next-line
   const rowsCatAziende = ["Nomi", "mian i love you", "akif shake pila dy", "D", "E", "F", "G"];
 
   const itemsPerPage = 10;
@@ -84,12 +85,12 @@ const UDMTable = () => {
 
   const getUdm = async () => {
     const result = await axios.get("http://localhost:8080/api/unita-di-misura");
-console.log(result)
+    console.log(result)
     setUdm(result?.data);
   };
   useEffect(() => {
     getUdm();
-  }, [isModalDelActive,isModalModActive,isModalAddActive]);
+  }, [isModalDelActive, isModalModActive, isModalAddActive]);
 
   return (
     <>
@@ -100,7 +101,7 @@ console.log(result)
               {columns.map((column, columnIndex) => (
                 <th key={columnIndex}>
                   {columnIndex === 0 && (
-                    <button type="button" className="btn button-modify icon-add" onClick={()=>handleClickAddOpen()}>
+                    <button type="button" className="btn button-modify icon-add" onClick={() => handleClickAddOpen()}>
                       <AddIcon className="icon" />
                     </button>
                   )}
@@ -113,14 +114,14 @@ console.log(result)
             {currentItems?.map((row, rowIndex) => (
               <tr key={rowIndex}>
                 <td className={getColumnClassName(0)}>
-                  <button type="button" className="btn btn-primary button-modify" onClick={()=>handleClickModOpen(row?.id)}>
+                  <button type="button" className="btn btn-primary button-modify" onClick={() => handleClickModOpen(row?.id)}>
                     <ModeIcon className="icon" />
                   </button>
-                 
+
                 </td>
                 <td className={getColumnClassName(1)}>{row?.descrizione}</td>
                 <td className={getColumnClassName(2)}>
-                  <button type="button" className="btn btn-danger button-close" onClick={()=>handleClickDelOpen()}>
+                  <button type="button" className="btn btn-danger button-close" onClick={() => handleClickDelOpen()}>
                     <CloseIcon className="icon-close" />
                   </button>
                 </td>
@@ -146,9 +147,9 @@ console.log(result)
             <ProButton text=">>" title="Next Page" disabled={indexOfLastItem >= udm.length} onClick={() => handlePageChange(currentPage + 1)} />
           </div>
         </div>
-        <div> {isModalAddActive && <UDMModalAdd show={isModalAddActive} close={()=>handleClickAddClose()} />}</div>
-        <div> {isModalModActive && <UDMModalMod show={isModalModActive} close={()=>handleClickModClose()} id={id}/>}</div>
-        <div> {isModalDelActive && <UDMModalDel show={isModalDelActive} close={()=>handleClickDelClose()} />}</div>
+        <div> {isModalAddActive && <UDMModalAdd show={isModalAddActive} close={() => handleClickAddClose()} />}</div>
+        <div> {isModalModActive && <UDMModalMod show={isModalModActive} close={() => handleClickModClose()} id={id} />}</div>
+        <div> {isModalDelActive && <UDMModalDel show={isModalDelActive} close={() => handleClickDelClose()} />}</div>
       </div>
     </>
   );

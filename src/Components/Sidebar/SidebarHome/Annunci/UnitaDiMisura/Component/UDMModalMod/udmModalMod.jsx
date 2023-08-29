@@ -16,27 +16,28 @@ import SaveIcon from '@mui/icons-material/Save';
 import UnitaDiMisuraService from "../../../../../../../DataAPI/services/unitaDiMisura.service";
 import { useState } from 'react';
 
-const UMDModalMod = ({ show, close,id }) => {
+const UMDModalMod = ({ show, close, id }) => {
     const { updatemisura } = UnitaDiMisuraService();
-    const [descrizione,setDescrizione]=useState()
+    const [descrizione, setDescrizione] = useState()
     // const [show, setShow] = useState(false);
     // const handleClose = () => setShow(false);
     // const handleShow = () => setShow(true);
     const handleAddUmd = async (e) => {
         try {
 
-          await updatemisura(id,descrizione);
-    
-          setDescrizione()
-          console.log("set form data provincia --- dati salvati");
-          close();
+            await updatemisura(id, descrizione);
+
+            setDescrizione()
+            console.log("set form data provincia --- dati salvati");
+            close();
         } catch (error) {
-          const resMessage = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
-         
+            // eslint-disable-next-line
+            const resMessage = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+
         } finally {
-      
+
         }
-      };
+    };
     return (
         <>
             <Modal
@@ -57,7 +58,7 @@ const UMDModalMod = ({ show, close,id }) => {
                 <Modal.Body>
                     <Row className="d-flex justify-content-start mb-4">
                         <Col xs={12} md={6}><h4>Nome Unità di misura</h4></Col>
-                        <Col xs={12} md={6}><Form.Control type="text" placeholder="" autoFocus value={descrizione} onChange={(e)=>setDescrizione(e.target.value)}/></Col>
+                        <Col xs={12} md={6}><Form.Control type="text" placeholder="" autoFocus value={descrizione} onChange={(e) => setDescrizione(e.target.value)} /></Col>
                     </Row>
                     {/* <Row className="d-flex justify-content-start mb-4">
                         <Col xs={12} md={6}><h4>Codice Regione</h4></Col>
@@ -71,7 +72,7 @@ const UMDModalMod = ({ show, close,id }) => {
                     </Row> */}
                 </Modal.Body>
                 <Modal.Footer className="d-flex justify-content-center mt-4">
-                    <Button onClick={()=>handleAddUmd()}>{<SaveIcon />}Save and Close</Button>
+                    <Button onClick={() => handleAddUmd()}>{<SaveIcon />}Save and Close</Button>
                 </Modal.Footer>
             </Modal>
         </>

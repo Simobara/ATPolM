@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-/* CSS */
+//* CSS
 import "./provTable.css";
 
-/* COMPONENTS */
+//* COMPONENTS
 import ProvModalAdd from "../ProvModalAdd/provModalAdd";
 import ProvModalMod from "../ProvModalMod/provModalMod";
 import ProvModalDel from "../ProvModalDel/provModalDel";
 import ProButton from "../../../../../../../Global/ProButton/ProButton";
-// import ButtonPen from '../../../../../../../Global/ButtonPen/buttonPen';
 
-/* MUI MATERIAL ICONS */
+//* MUI MATERIAL ICONS
 import ModeIcon from "@mui/icons-material/Mode";
 import CloseIcon from "@mui/icons-material/Close";
 import AddIcon from "@mui/icons-material/Add";
@@ -37,7 +36,7 @@ const ProvTable = () => {
 
 
   const [province, setProvince] = useState([]);
-
+  // eslint-disable-next-line 
   const [codIdProvinciaFiltered, setCodIdProvinciaFiltered] = useState([]);
 
 
@@ -67,6 +66,7 @@ const ProvTable = () => {
   const [isModalAddActive, setIsModalAddActive] = useState(false);
   const [isModalModActive, setIsModalModActive] = useState(false);
   const [isModalDelActive, setIsModalDelActive] = useState(false);
+  const [rowProvincia, setRowProvincia] = useState("");
 
 
 
@@ -83,7 +83,7 @@ const ProvTable = () => {
     }));
 
     setCodIdProvinciaFiltered(codIdProvinciaFiltered);
-    console.log("codIdProvinciaFiltered: ", codIdProvinciaFiltered);
+    console.log("codIdProvinciaFiltered PROVTABLE: ", codIdProvinciaFiltered);
   };
 
   useEffect(() => {
@@ -93,6 +93,11 @@ const ProvTable = () => {
 
 
 
+
+
+  const provCod = province.map(prov => prov.codice)
+
+  console.log("Descrizione Province PROVTABLE:", provCod);
 
 
 
@@ -107,9 +112,10 @@ const ProvTable = () => {
     console.log("modalAdd close");
   };
 
-  const handleClickModOpen = (idrow) => {
+  const handleClickModOpen = (idrow, codice) => {
     setIsModalModActive(true);
     setRowId(idrow);
+    setRowProvincia(codice)
     // console.log("modalModify open");
     // console.log("Row index:", rowIndex);
     // console.log("idRow:", idrow);
@@ -159,6 +165,7 @@ const ProvTable = () => {
 
 
 
+
   return (
     <>
       <div style={{ marginTop: "5rem" }}>
@@ -181,7 +188,7 @@ const ProvTable = () => {
             {currentRowsProv?.map((row, rowIndex) => (
               <tr key={rowIndex}>
                 <td className={getColumnClassName(0)}>
-                  <button type="button" className="btn btn-primary button" onClick={() => handleClickModOpen(row?.id)}>
+                  <button type="button" className="btn btn-primary button" onClick={() => handleClickModOpen(row?.id, row?.codice)}>
                     <ModeIcon className="icon" />
                   </button>
                   {/* <ButtonPen onClick={openModal} /> */}
@@ -216,10 +223,14 @@ const ProvTable = () => {
             <ProButton text=">>" title="Next Page" disabled={indexOfLastItem >= province?.length} clicked={() => handlePageChange(currentPage + 1)} />
           </div>
         </div>
-        <div>{isModalAddActive && <ProvModalAdd show={isModalAddActive} close={handleClickAddClose} />}</div>
+        <div>{isModalAddActive && <ProvModalAdd show={isModalAddActive} close={handleClickAddClose} listaProvCodAdded={provCod} />}</div>
         <div>{isModalModActive && <ProvModalMod show={isModalModActive} close={handleClickModClose}
           rowID={rowId}
-          codIdProvinFiltered={codIdProvinciaFiltered} />}
+          listaProvCodAdded={provCod}
+          rowProvincia={rowProvincia}
+        // codIdProvinFiltered={codIdProvinciaFiltered}
+        // listaProvDescrAdded={provCod}
+        />}
         </div>
         <div>{isModalDelActive && <ProvModalDel show={isModalDelActive} close={handleClickDelClose} />}</div>
       </div>

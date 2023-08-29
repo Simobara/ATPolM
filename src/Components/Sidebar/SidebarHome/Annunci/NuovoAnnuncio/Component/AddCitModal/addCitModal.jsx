@@ -10,22 +10,18 @@ import Form from "react-bootstrap/Form";
 // import Form from "react-validation/build/form";
 // import Input from "react-validation/build/input";
 // import CheckButton from "react-validation/build/button";
-import CittaService from "../../../../../../../../DataAPI/services/citta.service";
+
 
 /* COMPONENTS */
 // import RegForm from '../RegForm/regForm';
 
 /* MUI MATERIAL ICONS */
 import SaveIcon from "@mui/icons-material/Save";
-import CitForm from "../CitForm/citForm";
-
-
-
-
-
-
-
-
+import CitForm from "../../../../AnagrAz/Localita/Citta/Component/CitForm/citForm";
+import CittaService from "../../../../../../../DataAPI/services/citta.service";
+import AddProvModal from "./AddProvModal/addProvModal";
+import AddBoxIcon from '@mui/icons-material/AddBox'
+import axios from "axios";
 
 const CitModalAdd = ({ show, close, listaCitDescrAdded }) => {
   const [formData, setFormData] = useState({
@@ -39,13 +35,14 @@ const CitModalAdd = ({ show, close, listaCitDescrAdded }) => {
 
   const [errorCap, setErrorCap] = useState("");
   const [errorDescr, setErrorDescr] = useState("");
-
+  const [province, setProvince] = useState([]);
   const [isCapValid, setIsCapValid] = useState(false);
   const [isDescrValid, setIsDescrValid] = useState(false);
 
   const [timeoutCap, setTimeoutCap] = useState(null);
 
   const [isButtonDisable, setIsButtonDisable] = useState(true);
+  const [isModalAddProvActive, setIsModalAddProvActive] = useState(false);
 
 
 
@@ -62,7 +59,14 @@ const CitModalAdd = ({ show, close, listaCitDescrAdded }) => {
   };
 
 
+  const handleAddProvModalOpen = () => {
+    setIsModalAddProvActive(true)
+    console.log("modalAddLoc open");
+  };
+  const handleAddProvModalClose = () => {
+    setIsModalAddProvActive(false)
 
+  };
 
 
 
@@ -93,7 +97,31 @@ const CitModalAdd = ({ show, close, listaCitDescrAdded }) => {
   };
 
 
+  const getProvince = async () => {
+    const result = await axios.get("http://localhost:8080/api/province");
 
+    setProvince(result?.data);
+
+    // eslint-disable-next-line 
+    const codIdProvinciaFiltered = (result?.data).map((provincia) => ({
+      id: provincia.id,
+      codice: provincia.codice,
+    }));
+
+
+
+  };
+
+  useEffect(() => {
+    getProvince();
+    // eslint-disable-next-line 
+  }, [isModalAddProvActive]);
+
+
+
+
+
+  const provCod = province.map(prov => prov.codice)
 
 
 
@@ -101,7 +129,7 @@ const CitModalAdd = ({ show, close, listaCitDescrAdded }) => {
 
 
   const handleDescrChange = (val) => {
-console.log(val,listaCitDescrAdded,"valvalvalval")
+    console.log(val, listaCitDescrAdded, "valvalvalval")
     const cleanedValueUPPER = val.replace(/\s+/g, '').toUpperCase();
     const containsOnlyLettersUPPER = /^[A-Za-z\s]+$/.test(cleanedValueUPPER);
     // eslint-disable-next-line 
@@ -109,9 +137,9 @@ console.log(val,listaCitDescrAdded,"valvalvalval")
     const listaCitDescrAddedUPPER = listaCitDescrAdded.map((desc) => desc.replace(/\s+/g, '').toUpperCase());
 
     const isCityAlreadyAddedUPPER = listaCitDescrAddedUPPER.includes(cleanedValueUPPER);
-    console.log(-1,listaCitDescrAddedUPPER,containsOnlyLettersUPPER,containsSpecialCharsUPPER)
-  
-    
+    console.log(-1, listaCitDescrAddedUPPER, containsOnlyLettersUPPER, containsSpecialCharsUPPER)
+
+
     if (cleanedValueUPPER === "" && val.length <= 2) {
       console.log(0)
       setErrorDescr("");
@@ -170,7 +198,7 @@ console.log(val,listaCitDescrAdded,"valvalvalval")
 
 
   useEffect(() => {
-    console.log("calll",isCapValid,isDescrValid)
+    console.log("calll", isCapValid, isDescrValid)
     if (isCapValid && isDescrValid) {
       setIsButtonDisable(false);
     } else {
@@ -183,16 +211,17 @@ console.log(val,listaCitDescrAdded,"valvalvalval")
 
 
 
-console.log(isButtonDisable,"isButtonDisableisButtonDisableisButtonDisableisButtonDisable")
+  console.log(isButtonDisable, "isButtonDisableisButtonDisableisButtonDisableisButtonDisable")
 
   return (
     <>
       <Modal
         show={show}
         // close={close}
-        size="lg"
+        dialogClassName="custom-modal"
+        contentClassName="custom-modal-content"
         aria-labelledby="contained-modal-title-vcenter"
-        top
+        centered
       >
         <Modal.Header>
           <Modal.Title id="contained-modal-title-vcenter" className="font-weight-bold">
@@ -210,7 +239,7 @@ console.log(isButtonDisable,"isButtonDisableisButtonDisableisButtonDisableisButt
                 type="text"
                 placeholder=""
                 autoFocus
-                 value={formData?.descrizione}
+                value={formData?.descrizione}
                 name="descrizione"
                 onChange={handleInputChange}
               />
@@ -235,7 +264,7 @@ console.log(isButtonDisable,"isButtonDisableisButtonDisableisButtonDisableisButt
           </Row>
           <Row xs={12} md={6} className="d-flex justify-content-start mb-4">
             <Col xs={12} md={6}><h4>Provincia</h4></Col>
-            <Col xs={12} md={6}>
+            <Col xs={12} md={3}>
               <Row>
                 <Col>
                   <CitForm
@@ -248,12 +277,22 @@ console.log(isButtonDisable,"isButtonDisableisButtonDisableisButtonDisableisButt
                 </Col>
               </Row>
             </Col>
+            <Col xs={12} md={3}>
+              <div className="form-group">
+                <button className="btn btn-primary" onClick={() => handleAddProvModalOpen()}>
+                  {/* {loading && <span className="spinner-border spinner-border-sm"></span>} */}
+                  <span span > <AddBoxIcon />Aggiungi provincia</span>
+                </button>
+              </div>
+            </Col>
           </Row>
         </Modal.Body>
-        <Modal.Footer className="d-flex justify-content-center mt-4">
-          <Button onClick={() => handleUpdate()} className="justify-content-around" disabled={isButtonDisable}>{<SaveIcon />}Save and Close</Button>
+        <Modal.Footer className="d-flex justify-content-start mt-2">
+          <Button onClick={() => handleUpdate()} disabled={isButtonDisable} className="justify-content-around">{<SaveIcon />}Save and Close</Button>
         </Modal.Footer>
       </Modal >
+
+      <div>{isModalAddProvActive && <AddProvModal show={isModalAddProvActive} close={handleAddProvModalClose} listaProvCodAdded={provCod} />}</div>
     </>
   );
 };

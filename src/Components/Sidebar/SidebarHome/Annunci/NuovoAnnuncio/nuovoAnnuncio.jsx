@@ -1,21 +1,29 @@
 import React, { useState, useRef } from "react";
 
-/* CSS */
+//*CSS
 // import "./nuovoAnnuncio.css";
 
-/*REACT VALIDATION*/
+//*REACT VALIDATION
+// import CheckButton from "react-validation/build/button";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
-// import CheckButton from "react-validation/build/button";
+import withRouter from "../../../../../DataAPI/common/with-router";
+import AnnuncioService from "../../../../../DataAPI/services/annuncio.service";
 
-// /* COMPONENTS */
-import DropdownMenu from "./Component/DropdownMenu/dropdownMenu";
+//*COMPONENTS
 // import SaveButton from "./Component/SaveButton/saveButton";
 // import DeleteButton from "./Component/DeleteButton/deleteButton";
-import AnnuncioService from "../../../../../DataAPI/services/annuncio.service";
-import withRouter from "../../../../../DataAPI/common/with-router";
+import DropdownMenu from "./Component/DropdownMenu/dropdownMenu";
+import AddCitModal from "./Component/AddCitModal/addCitModal";
 
-/* MUI MATERIAL ICONS */
+//* MUI MATERIAL ICONS
+import AddBoxIcon from '@mui/icons-material/AddBox'
+import { useEffect } from "react";
+import axios from "axios";
+
+
+
+
 
 const NuovoAnnuncio = (props) => {
   const refForm = useRef(null);
@@ -28,7 +36,40 @@ const NuovoAnnuncio = (props) => {
     descrizione: "",
     quantita: "",
   });
+  const [citta, setCitta] = useState([]);
 
+  const [isModalAddCitActive, setIsModalAddCitActive] = useState(false);
+
+  function capitalizeText(text) {
+    return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
+  }
+
+  const getCitta = async () => {
+    const result = await axios.get("http://localhost:8080/api/localita");
+    console.log(result)
+    setCitta(result?.data);
+
+    // eslint-disable-next-line 
+    const descrIdCittaFiltered = (result?.data).map((citta) => ({
+      id: citta.id,
+      descrizione: capitalizeText(citta.descrizione),
+    }));
+
+
+    // console.log("descrIdCittaFiltered: ", descrIdCittaFiltered);
+  };
+
+
+  useEffect(() => {
+    getCitta();
+    // eslint-disable-next-line 
+  }, [isModalAddCitActive]);
+
+
+
+
+
+  const citDescr = citta.map(cit => cit.descrizione)
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     setSelectedImage(file);
@@ -60,7 +101,7 @@ const NuovoAnnuncio = (props) => {
     setLoading(true);
     refForm.current.validateAll();
 
-    if (refCheckBtn.current.context._errors.length === 0) {
+    if (refCheckBtn.current && refCheckBtn.current.context._errors.length === 0) {
       try {
         await addAnnuncio(formData.titolo, formData.descrizione, formData.quantita);
         // props.router.navigate("/");
@@ -82,6 +123,19 @@ const NuovoAnnuncio = (props) => {
     }
   };
 
+
+  const handleAddLocModalOpen = () => {
+    setIsModalAddCitActive(true)
+    console.log("modalAddLoc open");
+  };
+
+  const handleAddCitModalClose = () => {
+    setIsModalAddCitActive(false)
+    console.log("modalAddLoc close");
+  };
+
+
+
   return (
     <>
       <div className="pl-4" style={{ backgroundColor: "#f3f3f3", height: "100%", paddingTop: "40px", marginTop: "5rem" }}>
@@ -100,6 +154,7 @@ const NuovoAnnuncio = (props) => {
                     type="text"
                     className="mt-2 form-control form_middle_pagenuovo custom-container"
                     name="titolo"
+                    autoFocus
                     value={formData.titolo}
                     onChange={onChange}
                     validations={[required]}
@@ -141,7 +196,15 @@ const NuovoAnnuncio = (props) => {
                 {/* FORM' **********************************************************  */}
                 <div className="col-xl-9 col-md-9 col-lg-9 col-sm-12 col-12  d-flex">
                   <div className="flex-grow-1">
-                    <Input id="quantita" type="text" className="mt-2 form-control" name="quantita" value={formData.quantita} onChange={onChange} validations={[required]} />
+                    <Input
+                      id="quantita"
+                      type="text"
+                      className="mt-2 form-control"
+                      name="quantita"
+                      value={formData.quantita}
+                      onChange={onChange}
+                      validations={[required]}
+                    />
                   </div>
                   <div style={{ width: "200px", marginTop: "6px", fontSize: "24px" }}>
                     <DropdownMenu />
@@ -190,14 +253,21 @@ const NuovoAnnuncio = (props) => {
           <div className="row mt-4">
             <div className="col-10  col-lg-11 ml-4">
               <div className="row">
-                <div className="col-xl-3 col-md-3 col-lg-3 col-sm-12 col-12">
+                <div className="col-xl-3 col-md-3 col-lg-3 col-sm-12 col-12 ">
                   <label htmlFor="ubicazione" className="word-label">
                     Ubicazione
                   </label>
                 </div>
-                <div className="col-xl-9   col-md-9 col-lg-9 col-sm-12 col-12">
+                <div className="col-xl-9   col-md-9 col-lg-9 col-sm-12 col-12 d-flex">
                   <div style={{ fontSize: "24px", marginTop: "9px" }} className="form_middle_pagenuovo ">
                     <DropdownMenu />
+                  </div>
+
+                  <div className="form-group ml-2 mt-2">
+                    <button className="btn btn-primary" onClick={() => handleAddLocModalOpen()}>
+                      {/* {loading && <span className="spinner-border spinner-border-sm"></span>} */}
+                      <span><AddBoxIcon />Aggiungi citta'</span>
+                    </button>
                   </div>
                 </div>
               </div>
@@ -235,7 +305,7 @@ const NuovoAnnuncio = (props) => {
             <div className="form-group">
               <button className="btn btn-primary btn-block" disabled={loading}>
                 {loading && <span className="spinner-border spinner-border-sm"></span>}
-                <span>Aggiungi</span>
+                <span><AddBoxIcon />Aggiungi</span>
               </button>
             </div>
             {/* <DeleteButton /> */}
@@ -286,6 +356,7 @@ const NuovoAnnuncio = (props) => {
           </div> */}
         </Form>
       </div>
+      <div>{isModalAddCitActive && <AddCitModal show={isModalAddCitActive} close={handleAddCitModalClose} listaCitDescrAdded={citDescr} />}</div>
     </>
   );
 };

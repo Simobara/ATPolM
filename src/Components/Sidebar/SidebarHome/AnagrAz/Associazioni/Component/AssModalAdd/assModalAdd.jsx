@@ -1,24 +1,23 @@
 import React, { useState } from 'react';
-// import axios from "axios";
 
-/* CSS */
+//* CSS
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 
-/*REACT VALIDATION*/
-// import Form from "react-validation/build/form";
-// import Input from "react-validation/build/input";
-// import CheckButton from "react-validation/build/button";
+//*REACT VALIDATION
 import AssociazioneService from "../../../../../../../DataAPI/services/associazione.service";
 
-/* COMPONENTS */
+//* COMPONENTS
 // import RegForm from '../RegForm/regForm';
 
-/* MUI MATERIAL ICONS */
+//* MUI MATERIAL ICONS
 import SaveIcon from '@mui/icons-material/Save';
+
+
+
 
 
 
@@ -31,22 +30,58 @@ const AssModalAdd = ({ show, close }) => {
     const [descrizione, setDescrizione] = useState()
     const { addAssociazione } = AssociazioneService();
 
-    const handleAddAssociazione = async (e) => {
+    // eslint-disable-next-line
+    const [loading, setLoading] = useState(false);
+    // eslint-disable-next-line
+    const [message, setMessage] = useState("");
+
+    const [errorMessage, setErrorMessage] = useState("");
+    const [showErrorMessage, setShowErrorMessage] = useState(false);
+
+
+
+
+
+
+
+
+    const handleInputChange = (e) => {
+        const { value } = e.target;
+        setDescrizione(value);
+        setShowErrorMessage(false); // Nascondi il messaggio di errore quando l'utente riprende a scrivere
+    };
+
+
+
+
+
+    const handleAddAssociazione = async () => {
         try {
-            if (!descrizione) return alert("Aggiungi descrizione")
+            if (!descrizione) {
+                setErrorMessage("Valore non presente");
+                setShowErrorMessage(true);
+                return
+            }
             await addAssociazione(descrizione);
 
-            setDescrizione()
-            console.log("set form data provincia --- dati salvati");
-            close();
+            setDescrizione("");
+            setShowErrorMessage(false);
+
+            console.log("set form data associazione --- dati salvati");
+            close();// Chiudi il modal dopo aver aggiunto l'associazione
         } catch (error) {
             // eslint-disable-next-line 
             const resMessage = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
-
+            setMessage(resMessage);
         } finally {
-
+            setLoading(false);
         }
     };
+
+
+
+
+
 
 
 
@@ -75,13 +110,15 @@ const AssModalAdd = ({ show, close }) => {
                         <Col xs={12} md={6}>
                             <Form.Control
                                 id="descrizione"
-                                type="text"
-                                className="mt-2 form-control form_middle_pagenuovo custom-container"
                                 name="descrizione"
                                 value={descrizione}
+                                type="text"
+                                className={`mt-2 form-control form_middle_pagenuovo custom-container ${showErrorMessage ? "is-invalid" : ""}`}
+                                onChange={handleInputChange}
                                 placeholder=""
                                 autoFocus
-                                onChange={(e) => setDescrizione(e.target.value)} />
+                            />
+                            {showErrorMessage && (<div className="invalid-feedback"> <p className="text-danger text-lg font-weight-bold"> {errorMessage} </p> </div>)}
                         </Col>
                     </Row>
                     {/* <Row className="d-flex justify-content-start mb-4">
@@ -96,7 +133,7 @@ const AssModalAdd = ({ show, close }) => {
                     </Row> */}
                 </Modal.Body>
                 <Modal.Footer className="d-flex justify-content-center mt-4">
-                    <Button onClick={() => handleAddAssociazione()}>{<SaveIcon />}Save and Close</Button>
+                    <Button onClick={handleAddAssociazione}>{<SaveIcon />}Save and Close</Button>
                 </Modal.Footer>
             </Modal>
 

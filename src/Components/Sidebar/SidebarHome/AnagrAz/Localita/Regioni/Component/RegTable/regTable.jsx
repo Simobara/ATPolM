@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-/* CSS */
+//* CSS
 import "./regTable.css";
 
-/* COMPONENTS */
+//* COMPONENTS
 import RegModalAdd from "../RegModalAdd/regModalAdd";
 import RegModalMod from "../RegModalMod/regModalMod";
 import RegModalDel from "../RegModalDel/regModalDel";
 import ProButton from "../../../../../../../Global/ProButton/ProButton";
-// import ButtonPen from '../../../../../../../Global/ButtonPen/buttonPen';
 
-/* MUI MATERIAL ICONS */
+//* MUI MATERIAL ICONS
 import ModeIcon from "@mui/icons-material/Mode";
 import CloseIcon from "@mui/icons-material/Close";
 import AddIcon from "@mui/icons-material/Add";
@@ -30,8 +29,24 @@ import AddIcon from "@mui/icons-material/Add";
 const RegTable = () => {
   const columns = ["", "Descrizione Regione", "Codice Regione", ""];
   // const rowsCatAziende = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W"];
-  const [regioni, setRegioni] = useState([]);
+  const [regioniUPPER, setRegioniUPPER] = useState([]);
 
+  const [id, setID] = useState("");
+  const [isModalAddActive, setIsModalAddActive] = useState(false);
+  const [isModalModActive, setIsModalModActive] = useState(false);
+  const [isModalDelActive, setIsModalDelActive] = useState(false);
+
+
+
+
+
+  //********************** REGIONI=> DESCRIZIONE
+  const regDescrUPPER = regioniUPPER?.map(region => region.descrizione)
+  console.log("regDescrUPPER", regDescrUPPER);
+
+  //********************** REGIONI=> CODICI
+  const regCodUPPER = regioniUPPER?.map(region => region.codice)
+  console.log("regCodUPPER", regCodUPPER);
 
 
 
@@ -40,21 +55,11 @@ const RegTable = () => {
   const itemsPerPage = 10;
   const [currentPage, setCurrentPage] = useState(1);
 
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
+  const handlePageChange = (pageNumber) => { setCurrentPage(pageNumber); };
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
-  const currentItems = regioni.slice(indexOfFirstItem, indexOfLastItem);
-
-
-
-  const [id, setID] = useState("");
-  const [isModalAddActive, setIsModalAddActive] = useState(false);
-  const [isModalModActive, setIsModalModActive] = useState(false);
-  const [isModalDelActive, setIsModalDelActive] = useState(false);
-
+  const currentItems = regioniUPPER?.slice(indexOfFirstItem, indexOfLastItem);
 
 
   const handleClickAddOpen = () => {
@@ -114,13 +119,19 @@ const RegTable = () => {
 
   const getRegioni = async () => {
     const result = await axios.get("http://localhost:8080/api/regioni");
-
-    setRegioni(result?.data);
+    const updatedRegUPPER = result?.data.map(region => ({
+      ...region,
+      descrizione: region.descrizione.toUpperCase(),
+      codice: region.codice.toUpperCase()
+    }));
+    setRegioniUPPER(updatedRegUPPER);
   };
+
+
   useEffect(() => {
     getRegioni();
-    // eslint-disable-next-line 
-  }, [isModalModActive, isModalDelActive, isModalAddActive]);
+    // eslint-disable-next-line
+  }, [isModalAddActive, isModalModActive, isModalDelActive]);
 
 
 
@@ -172,7 +183,7 @@ const RegTable = () => {
             <span className="text-center text-sm">
               Pagina
               <strong className="mx-3 text-sm">
-                {currentPage} di {Math.ceil(regioni?.length / itemsPerPage)}
+                {currentPage} di {Math.ceil(regioniUPPER?.length / itemsPerPage)}
               </strong>
               {/* &nbsp; | &nbsp; Go To Page &nbsp;&nbsp;
             <input
@@ -181,11 +192,11 @@ const RegTable = () => {
               defaultValue={indexOfLastItem >= rowsCatAziende.length ? currentPage - 1 : currentPage + 1}
             /> */}
             </span>
-            <ProButton text=">>" title="Next Page" disabled={indexOfLastItem >= regioni?.length} clicked={() => handlePageChange(currentPage + 1)} />
+            <ProButton text=">>" title="Next Page" disabled={indexOfLastItem >= regioniUPPER?.length} clicked={() => handlePageChange(currentPage + 1)} />
           </div>
         </div>
-        <div>{isModalAddActive && <RegModalAdd show={isModalAddActive} close={handleClickAddClose} />}</div>
-        <div>{isModalModActive && <RegModalMod show={isModalModActive} close={handleClickModClose} id={id} />}</div>
+        <div>{isModalAddActive && <RegModalAdd show={isModalAddActive} close={handleClickAddClose} listaRegDescrAdded={regDescrUPPER} />}</div>
+        <div>{isModalModActive && <RegModalMod show={isModalModActive} close={handleClickModClose} id={id} listaRegDescrAdded={regDescrUPPER} />}</div>
         <div>{isModalDelActive && <RegModalDel show={isModalDelActive} close={handleClickDelClose} />}</div>
       </div>
     </>

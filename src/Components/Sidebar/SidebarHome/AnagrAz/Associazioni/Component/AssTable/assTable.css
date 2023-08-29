@@ -45,6 +45,8 @@
 .button-close {
   background-color: red !important;
   color: white;
+  margin: 1px;
+  z-index: 1;
 }
 
 .button-close:hover {

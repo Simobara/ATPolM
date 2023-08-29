@@ -36,7 +36,8 @@ import AggSingAz from "../Sidebar/SidebarHome/Aziende/AggSingAz/aggSingAz";
 import ImpDatiExc from "../Sidebar/SidebarHome/Aziende/ImpDatiExc/impDatiExc";
 // import Dati from "../Sidebar/SidebarHome/UtentiEsterni/Dati/dati";
 // import IntVersAnn from "../Sidebar/SidebarHome/UtentiEsterni/IntVersAnn/intVersAnn";
-// import IMieiAnnunci from "../Sidebar/SidebarHome/Annunci/IMieiAnnunci/iMieiAnnunci";
+import NuovoAnnuncio from "../Sidebar/SidebarHome/Annunci/NuovoAnnuncio/nuovoAnnuncio";
+import IMieiAnnunci from "../Sidebar/SidebarHome/Annunci/IMieiAnnunci/iMieiAnnunci";
 import Materiali from "../Sidebar/SidebarHome/Annunci/Materiali/materiali";
 import UnitaDiMisura from "../Sidebar/SidebarHome/Annunci/UnitaDiMisura/unitaDiMisura";
 // import Ruoli from "./Materiali/Ruoli";
@@ -57,8 +58,8 @@ const ProfileDel = React.lazy(() => import("./ThreeDots/Profile/Component/Profil
 const Dati = React.lazy(() => import("../Sidebar/SidebarHome/UtentiEsterni/Dati/dati"));
 const IntVersAnn = React.lazy(() => import("../Sidebar/SidebarHome/UtentiEsterni/IntVersAnn/intVersAnn"));
 
-const NuovoAnnuncio = React.lazy(() => import("../Sidebar/SidebarHome/Annunci/NuovoAnnuncio/nuovoAnnuncio"));
-const IMieiAnnunci = React.lazy(() => import("../Sidebar/SidebarHome/Annunci/IMieiAnnunci/iMieiAnnunci"));
+// const NuovoAnnuncio = React.lazy(() => import("../Sidebar/SidebarHome/Annunci/NuovoAnnuncio/nuovoAnnuncio"));
+// const IMieiAnnunci = React.lazy(() => import("../Sidebar/SidebarHome/Annunci/IMieiAnnunci/iMieiAnnunci"));
 
 const Categorie = React.lazy(() => import("../Sidebar/SidebarHome/AnagrAz/Categorie/categorie"));
 const Associazioni = React.lazy(() => import("../Sidebar/SidebarHome/AnagrAz/Associazioni/associazioni"));
@@ -87,8 +88,11 @@ const renderRoutes = () => {
 
       <Route path="/utEsterni/intVersAnn" element={<Suspense fallback={<Loader />}>{" "}<IntVersAnn />{" "} </Suspense>} />
 
-      <Route path="/annunci/nuovoAnnuncio" element={<Suspense fallback={<Loader />}>{" "}<NuovoAnnuncio />{" "}</Suspense>} />
-      <Route path="/annunci/iMieiAnnunci" element={<Suspense fallback={<Loader />}>{" "}<IMieiAnnunci />{" "}</Suspense>} />
+      {/* <Route path="/annunci/nuovoAnnuncio" element={<Suspense fallback={<Loader />}>{" "}<NuovoAnnuncio />{" "}</Suspense>} /> */}
+      {/* <Route path="/annunci/iMieiAnnunci" element={<Suspense fallback={<Loader />}>{" "}<IMieiAnnunci />{" "}</Suspense>} /> */}
+      <Route path="/annunci/nuovoAnnuncio" element={<NuovoAnnuncio />} />
+      <Route path="/annunci/iMieiAnnunci" element={<IMieiAnnunci />} />
+
       <Route path="/annunci/materiali" element={<Materiali />} />
       <Route path="/annunci/unitaDiMisura" element={<UnitaDiMisura />} />
 

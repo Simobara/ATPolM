@@ -5,18 +5,22 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-
+import AddBoxIcon from '@mui/icons-material/AddBox'
 //*REACT VALIDATION
 import ProvinciaService from "../../../../../../../../DataAPI/services/provincia.service";
 
 //* COMPONENTS
-import CodiceFormAdd from "../CodiceFormAdd/codiceFormAdd";
-import ProvForm from '../ProvForm/provForm';
+
+import AddRegModal from "./AddRegModal/addRegModal.jsx";
 
 //* MUI MATERIAL ICONS
 import SaveIcon from "@mui/icons-material/Save";
+import ProvForm from '../../../../../AnagrAz/Localita/Province/Component/ProvForm/provForm';
+import CodiceFormAdd from "../../../../../AnagrAz/Localita/Province/Component/CodiceFormAdd/codiceFormAdd";
 
-
+import "./addProvModal.css";
+import axios from "axios";
+import { useEffect } from "react";
 
 
 
@@ -38,7 +42,7 @@ const ProvModalAdd = ({ show, close, listaProvCodAdded }) => {
 
   const [errorRegione, setErrorRegione] = useState(""); // Stato errore per la Regione
   const [errorCodice, setErrorCodice] = useState(""); // Stato errore per il Codice
-
+  const [isModalAddRegActive, setIsModalAddRegActive] = useState(false);
   const [searchTerm, setSearchTerm] = useState(""); // Stato per il termine di ricerca
   const [errorDigit, setErrorDigit] = useState('');
 
@@ -53,7 +57,7 @@ const ProvModalAdd = ({ show, close, listaProvCodAdded }) => {
 
   const [provinceFound, setProvinceFound] = useState(false);
 
-
+  const [regioniUPPER, setRegioniUPPER] = useState([]);
 
 
   const { addProvincia } = ProvinciaService();
@@ -101,7 +105,25 @@ const ProvModalAdd = ({ show, close, listaProvCodAdded }) => {
 
 
 
+  const getRegioni = async () => {
+    const result = await axios.get("http://localhost:8080/api/regioni");
 
+    const updatedRegUPPER = result?.data.map(region => ({
+      ...region,
+      descrizione: region.descrizione.toUpperCase(),
+      codice: region.codice.toUpperCase()
+    }));
+    const data=updatedRegUPPER?.sort((a,b)=>a.codice>b.codice? 1:-1)
+   
+    setRegioniUPPER(data);
+  };
+
+
+  useEffect(() => {
+    getRegioni();
+    // eslint-disable-next-line
+  }, [isModalAddRegActive]);
+  const regDescrUPPER = regioniUPPER?.map(region => region.descrizione)
 
   const handleInputDigitChange = (e) => {
     const inputText = e.target.value.toUpperCase();
@@ -130,6 +152,15 @@ const ProvModalAdd = ({ show, close, listaProvCodAdded }) => {
 
 
 
+  const handleAddRegModalOpen = () => {
+    setIsModalAddRegActive(true)
+    console.log("modalAddLoc open");
+};
+
+const handleAddRegModalClose = () => {
+    setIsModalAddRegActive(false)
+    console.log("modalAddLoc close");
+};
 
 
 
@@ -154,10 +185,13 @@ const ProvModalAdd = ({ show, close, listaProvCodAdded }) => {
   return (
     <>
       <Modal
-        show={show}
-        size="lg"
-        aria-labelledby="contained-modal-title-vcenter"
-        top='true'
+       show={show}
+       // close={close}
+       // size="xl"
+       dialogClassName="custom-modal"
+       contentClassName="custom-modal-content"
+       aria-labelledby="contained-modal-title-vcenter"
+       centered
       >
         <Modal.Header>
           <Modal.Title id="contained-modal-title-vcenter" className="font-weight-bold">
@@ -170,6 +204,7 @@ const ProvModalAdd = ({ show, close, listaProvCodAdded }) => {
         <Modal.Body>
           <Row className="d-flex justify-content-start mb-4">
             <Col xs={12} md={2}> <h4>Codice Provincia</h4> </Col>
+            
             <Col xs={12} md={4}>
               <form>
                 <input
@@ -224,7 +259,7 @@ const ProvModalAdd = ({ show, close, listaProvCodAdded }) => {
 
           <Row xs={12} md={6} className="d-flex justify-content-start mb-4">
             <Col xs={12} md={2}><h4>Codice Regione</h4></Col>
-            <Col xs={12} md={4}></Col>
+            <Col  xs={12} md={1}></Col>
             <Col xs={12} md={6}>
               <Row>
                 <Col>
@@ -253,12 +288,20 @@ const ProvModalAdd = ({ show, close, listaProvCodAdded }) => {
                 </Col>
               </Row>
             </Col>
+            
+            <Col xs={12} md={3}> <div className="form-group">
+                                        <button className="btn btn-primary" onClick={() => handleAddRegModalOpen()}>
+                                            {/* {loading && <span className="spinner-border spinner-border-sm"></span>} */}
+                                            <span span > <AddBoxIcon />Aggiungi regione</span>
+                                        </button>
+                                    </div></Col>
           </Row>
         </Modal.Body>
         <Modal.Footer className="d-flex justify-content-center mt-4">
           <Button onClick={() => handleAddProvincia()}>{<SaveIcon />}Save and Close</Button>
         </Modal.Footer>
       </Modal >
+      <div>{isModalAddRegActive && <AddRegModal show={isModalAddRegActive} close={handleAddRegModalClose} listaRegDescrAdded={regDescrUPPER}/>}</div>
     </>
   );
 };
