@@ -23,7 +23,7 @@ import AddProvModal from "./AddProvModal/addProvModal";
 import AddBoxIcon from '@mui/icons-material/AddBox'
 import axios from "axios";
 
-const CitModalAdd = ({ show, close, listaCitDescrAdded }) => {
+const CitModalAdd = ({ propShow, propClose, propListaCitDescrAdded, estado = '' }) => {
   const [formData, setFormData] = useState({
     descrizione: "",
     cap: "",
@@ -100,17 +100,39 @@ const CitModalAdd = ({ show, close, listaCitDescrAdded }) => {
   const getProvince = async () => {
     const result = await axios.get("http://localhost:8080/api/province");
 
-    setProvince(result?.data);
-
-    // eslint-disable-next-line 
-    const codIdProvinciaFiltered = (result?.data).map((provincia) => ({
-      id: provincia.id,
-      codice: provincia.codice,
+    // Trasforma ogni codice di provincia in maiuscolo
+    const upperCasedProvince = result?.data?.map((province) => ({
+      ...province,
+      codice: province.codice.toUpperCase()
     }));
 
+    // Ordina le province
+    const sortedProvince = upperCasedProvince?.sort((a, b) => {
+      if (a.codice < b.codice) return -1;
+      if (a.codice > b.codice) return 1;
+      return 0;
+    });
 
-
+    setProvince(sortedProvince);
   };
+
+  useEffect(() => {
+    getProvince();
+  }, []);
+
+
+  useEffect(() => {
+    console.log("estadoProv", estado);
+    if (!estado) {
+      getProvince();
+    }
+  }, [estado]);
+
+
+
+
+
+
 
   useEffect(() => {
     getProvince();
@@ -129,12 +151,12 @@ const CitModalAdd = ({ show, close, listaCitDescrAdded }) => {
 
 
   const handleDescrChange = (val) => {
-    console.log(val, listaCitDescrAdded, "valvalvalval")
+    console.log(val, propListaCitDescrAdded, "valvalvalval")
     const cleanedValueUPPER = val.replace(/\s+/g, '').toUpperCase();
     const containsOnlyLettersUPPER = /^[A-Za-z\s]+$/.test(cleanedValueUPPER);
     // eslint-disable-next-line 
     const containsSpecialCharsUPPER = /[!@#$%^&*()[\]{}\-_+=|;:'",.<>?/\\]/.test(cleanedValueUPPER);
-    const listaCitDescrAddedUPPER = listaCitDescrAdded.map((desc) => desc.replace(/\s+/g, '').toUpperCase());
+    const listaCitDescrAddedUPPER = propListaCitDescrAdded.map((desc) => desc.replace(/\s+/g, '').toUpperCase());
 
     const isCityAlreadyAddedUPPER = listaCitDescrAddedUPPER.includes(cleanedValueUPPER);
     console.log(-1, listaCitDescrAddedUPPER, containsOnlyLettersUPPER, containsSpecialCharsUPPER)
@@ -186,7 +208,7 @@ const CitModalAdd = ({ show, close, listaCitDescrAdded }) => {
         idProvincia: ""
       })
       console.log("set form data citta --- dati salvati");
-      close();
+      propClose();
     } catch (error) {
       // eslint-disable-next-line
       const resMessage = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
@@ -216,7 +238,7 @@ const CitModalAdd = ({ show, close, listaCitDescrAdded }) => {
   return (
     <>
       <Modal
-        show={show}
+        show={propShow}
         // close={close}
         dialogClassName="custom-modal"
         contentClassName="custom-modal-content"
@@ -227,7 +249,7 @@ const CitModalAdd = ({ show, close, listaCitDescrAdded }) => {
           <Modal.Title id="contained-modal-title-vcenter" className="font-weight-bold">
             <h2>Aggiungi Citta'</h2>
           </Modal.Title>
-          <Button variant="danger" onClick={close} size="lg">
+          <Button variant="danger" onClick={propClose} size="lg">
             X
           </Button>
         </Modal.Header>
@@ -268,10 +290,11 @@ const CitModalAdd = ({ show, close, listaCitDescrAdded }) => {
               <Row>
                 <Col>
                   <CitForm
-                    FrmData={(e) => setFormData((prevState) => ({
+                    propFrmData={(e) => setFormData((prevState) => ({
                       ...prevState,
                       "idProvincia": e
                     }))}
+                    propIsModalAddProvActive={isModalAddProvActive}
                   />
                   {/* <Form.Control type="text" placeholder="" autoFocus className="d-flex justify-content-end /> */}
                 </Col>
@@ -287,12 +310,16 @@ const CitModalAdd = ({ show, close, listaCitDescrAdded }) => {
             </Col>
           </Row>
         </Modal.Body>
-        <Modal.Footer className="d-flex justify-content-start mt-2">
+        <Modal.Footer className="d-flex justify-content-center mt-2">
           <Button onClick={() => handleUpdate()} disabled={isButtonDisable} className="justify-content-around">{<SaveIcon />}Save and Close</Button>
         </Modal.Footer>
       </Modal >
 
-      <div>{isModalAddProvActive && <AddProvModal show={isModalAddProvActive} close={handleAddProvModalClose} listaProvCodAdded={provCod} />}</div>
+      <div>{isModalAddProvActive && <AddProvModal
+        propShow={isModalAddProvActive}
+        propClose={handleAddProvModalClose}
+        propListaProvCodAdded={provCod} />}
+      </div>
     </>
   );
 };

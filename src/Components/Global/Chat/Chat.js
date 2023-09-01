@@ -8,7 +8,7 @@ const Chat = () => {
   const toggleShow = () => setShowShow(!showShow);
   return (
     <div>
-      <MDBContainer fluid className="py-5" style={{marginRight:"20px"}}>
+      <MDBContainer fluid className="py-5" style={{ marginRight: "20px" }}>
         <MDBBtn
           style={{
             width: "70px",
@@ -16,19 +16,19 @@ const Chat = () => {
             position: "fixed",
             display: "flex",
             justifyContent: "center",
-            alignItems: "center",            
-            top:"50%",
+            alignItems: "center",
+            top: "50%",
             transform: "translateY(-50%)",
             zIndex: "9999999",
             bottom: "8rem",
             right: "20px;",
             background: "linear-gradient(to right, blue, pink)",
             borderRadius: "50%",
-            boxhadow: "0px 2px 6px rgba(0, 0, 0, 0.1)"          ,
-            padding:"40px",
-            marginLeft:"1px",
+            boxhadow: "0px 2px 6px rgba(0, 0, 0, 0.1)",
+            padding: "40px",
+            marginLeft: "1px",
             border: "none",
-            cursor: "pointer"            
+            cursor: "pointer"
           }}
           onClick={toggleShow}
           size="md"
@@ -36,33 +36,33 @@ const Chat = () => {
         >
           <div className="l-flex justify-content-center align-items-center" style={{ cursor: "pointer" }}>
             <span style={{ fontSize: "15px" }}>Chat</span>
-            { <MDBIcon fas icon="chevron-up" /> }
-          </div>        
+            {<MDBIcon fas icon="chevron-up" />}
+          </div>
         </MDBBtn>
         <MDBRow
           className="l-flex justify-content-end"
           style={{
-            height:"100%",
+            height: "100%",
             width: "40%",
-            position:"fixed",
-            top:"50%",
+            position: "fixed",
+            top: "50%",
             bottom: "40%",
             right: "50%",
-            left:"30%",
+            left: "30%",
             zIndex: "9999999",
-           
+
           }}
         >
           <MDBCol md="100" lg="100" xl="100">
-            <MDBCollapse show={showShow} style={{top: "-60%", bottom:"10%", left:"30%"}}>
-              <MDBCard id="chat4" style={{padding: "1px", marginRight: "2px"}}>
-                <div                
+            <MDBCollapse show={showShow} style={{ top: "-60%", bottom: "10%", left: "30%" }}>
+              <MDBCard id="chat4" style={{ padding: "1px", marginRight: "2px" }}>
+                <div
                   style={{
                     overflow: "scroll",
                     position: "relative",
                     height: "200px",
-                    lenght: "1000px", 
-                    bottom: "1rem"                 
+                    lenght: "1000px",
+                    bottom: "1rem"
                   }}
                 >
                   <div
@@ -71,24 +71,22 @@ const Chat = () => {
                       borderTopRightRadius: "6px",
                       height: "55px",
                       background: "linear-gradient(to right, pink, blue )"
-                    
-                    }} 
+
+                    }}
                   >
-                                        <div
-                      
-                    >
+                    <div >
                       <div style={{ display: "flex" }}>
-                        { <img
+                        {<img
                           img
                           src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava2-bg.webp"
                           alt="avatar 1"
                           style={{ width: "30px", height: "30px" }}
-                        /> }
+                        />}
                         <div
                           style={{
                             color: "#fff",
                             marginLeft: "20px",
-                            marginTop: "3px", 
+                            marginTop: "3px",
                           }}
                         >
                           <ForumIcon />
@@ -104,19 +102,19 @@ const Chat = () => {
                     </div>
                   </div>
                   <div
-                    style={{                                     
+                    style={{
                     }}
                   >
                     <div
-                     style={{
-                        
-                     }}
+                      style={{
+
+                      }}
                     >
                     </div>
                   </div>
                   <MDBCardBody>
                     <div /*className="d-flex flex-row justify-content-start"*/>
-                     
+
                       <div>
                         <p className="small p-2 ms-3 mb-1 rounded-3" style={{ backgroundColor: "#f5f6f7" }}>
                           Hi
@@ -165,11 +163,11 @@ const Chat = () => {
                         </p>
                         <p className="small me-3 mb-3 rounded-3 text-muted d-flex justify-content-end">00:06</p>
                       </div>
-                      
+
                     </div>
 
                     <div className="d-flex flex-row justify-content-start mb-4">
-                    
+
                       <div>
                         <p className="small p-2 ms-3 mb-1 rounded-3" style={{ backgroundColor: "#f5f6f7" }}>
                           Okay
@@ -209,7 +207,7 @@ const Chat = () => {
                         </p>
                         <p className="small me-3 mb-3 rounded-3 text-muted d-flex justify-content-end">00:09</p>
                       </div>
-                      
+
                     </div>
 
                     <div className="d-flex flex-row justify-content-start mb-4">
@@ -233,7 +231,7 @@ const Chat = () => {
                         </p>
                         <p className="small me-3 mb-3 rounded-3 text-muted d-flex justify-content-end">00:11</p>
                       </div>
-                      
+
                     </div>
 
                     <div className="d-flex flex-row justify-content-start mb-4">

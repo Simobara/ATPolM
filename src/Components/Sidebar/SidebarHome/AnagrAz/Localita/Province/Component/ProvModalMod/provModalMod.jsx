@@ -12,8 +12,6 @@ import ProvinciaService from "../../../../../../../../DataAPI/services/provincia
 //* COMPONENTS
 import CodiceFormMod from '../CodiceFormMod/codiceFormMod';
 import ProvForm from '../ProvForm/provForm';
-// eslint-disable-next-line
-import { provinceSigle, provinceNomiCompleti } from "../../ProvincSigle/provincSigle"
 
 //* MUI MATERIAL ICONS
 import SaveIcon from '@mui/icons-material/Save';
@@ -28,9 +26,9 @@ import SaveIcon from '@mui/icons-material/Save';
 
 
 
-const ProvModalMod = ({ show, close, rowID, listaProvCodAdded,rowProvincia }) => {
+const ProvModalMod = ({ propShow, propClose, propRowID, propListaProvCodAdded = [], propRowProvincia }) => {
   const [formData, setFormData] = useState({
-    id: rowID,
+    id: propRowID,
     idRegione: "",
     codice: "",
   });
@@ -75,26 +73,23 @@ const ProvModalMod = ({ show, close, rowID, listaProvCodAdded,rowProvincia }) =>
     try {
       setErrorRegione("");// Resetta l'errore per la Regione
       setErrorCodice("");// Resetta l'errore per il Codice
-
       if (!formData?.idRegione || !formData?.codice) {
         if (!formData?.idRegione) {
           setErrorRegione("Inserisci una Regione");
         }
-        if (!formData?.codice) {
+        if (!formData?.codice.toUpperCase()) {
           setErrorCodice("Inserisci un Codice");
         }
         return;
       }
       await updateProvincia(formData.id, formData.codice, formData.idRegione);
-
       setFormData(prevState => ({
         ...prevState,
         codice: "",
         idRegione: "",
       }));
-
       console.log("set form data UpdateProvincia --- dati salvati");
-      close();
+      propClose();
     } catch (error) {
       const resMessage = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
       setMessage(resMessage);
@@ -115,13 +110,11 @@ const ProvModalMod = ({ show, close, rowID, listaProvCodAdded,rowProvincia }) =>
     setInputValue(cleanedInput);
     setIsDefaultBorder(cleanedInput.length <= 2);
     setInputBorderClass("form-control is-invalid");
-
     if (cleanedInput.length === inputText.length) { // Verifica se non ci sono numeri o simboli
       setErrorDigit('');
     } else {
       setErrorDigit('Puoi inserire solo lettere');
     }
-
     // Aggiungi questa parte per gestire la reimpostazione del bordo
     if (cleanedInput.length <= 1) {
       setIsDefaultBorder(true);
@@ -141,10 +134,9 @@ const ProvModalMod = ({ show, close, rowID, listaProvCodAdded,rowProvincia }) =>
   };
 
 
-
+  // eslint-disable-next-line
   const formDataId = formData?.id;
-
-
+  // eslint-disable-next-line
   const handleProvSigleFiltrate = (provFiltr) => {
     console.log("COMP PADRE / PROV FILTRATE:", provFiltr);
   };
@@ -152,14 +144,11 @@ const ProvModalMod = ({ show, close, rowID, listaProvCodAdded,rowProvincia }) =>
 
 
 
-
-
   // ********** RETURN *****************************************
-
   return (
     <>
       <Modal
-        show={show}
+        show={propShow}
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"
         top
@@ -168,7 +157,7 @@ const ProvModalMod = ({ show, close, rowID, listaProvCodAdded,rowProvincia }) =>
           <Modal.Title id="contained-modal-title-vcenter" className="font-weight-bold">
             <h2>Modifica Provincia</h2>
           </Modal.Title>
-          <Button variant="danger" onClick={close} size="lg">
+          <Button variant="danger" onClick={propClose} size="lg">
             X
           </Button>
         </Modal.Header>
@@ -191,41 +180,35 @@ const ProvModalMod = ({ show, close, rowID, listaProvCodAdded,rowProvincia }) =>
                 <p style={{ color: 'green', fontSize: '18px' }}>TROVATA PROVINCIA {`-->`} </p>
               )}
             </Col>
-           
-             <Col xs={12} md={6}>
-
-
-
-<CodiceFormMod
-  FrmData={(e) => {
-    setFormData((prevState) => ({ ...prevState, "codice": e }));
-    setErrorCodice(""); // Reimposta l'errore quando una provincia viene selezionata
-  }}
-  // codIdProvFiltered={codIdProvinFiltered}
-  // formDatId={formDataId}
-  onBlur={() => {
-    if (formData.codice) {
-      setErrorCodice("");
-    }
-  }}
-  listProvCodAdded={listaProvCodAdded}
-  searchTerm={searchTerm}
-  onProvinceFound={handleProvinceFound} // Passa il termine di ricerca al componente figlio
-  // className={`form-control ${errorCodice ? "is-invalid" : ""}`}
-  rowProvincia={rowProvincia}
- 
- 
-  style={{
-    maxHeight: '80vh', // Imposta l'altezza massima a 80vh
-    overflowY: 'auto', // Abilita lo scrolling se il contenuto supera l'altezza massima
-  }}
-/>
-{errorCodice && (
-  <p className="text-danger border-danger p-3 rounded fs-4" style={{ borderTop: "4px solid red" }}>
-    {errorCodice}
-  </p>
-)}
-</Col>
+            <Col xs={12} md={6}>
+              <CodiceFormMod
+                propFrmData={(e) => {
+                  setFormData((prevState) => ({ ...prevState, "codice": e }));
+                  setErrorCodice(""); // Reimposta l'errore quando una provincia viene selezionata
+                }}
+                // codIdProvFiltered={codIdProvinFiltered}
+                // formDatId={formDataId}
+                propOnBlur={() => {
+                  if (formData.codice) {
+                    setErrorCodice("");
+                  }
+                }}
+                proplistProvCodAdded={propListaProvCodAdded}
+                propSearchTerm={searchTerm}
+                propOnProvinceFound={handleProvinceFound} // Passa il termine di ricerca al componente figlio
+                // className={`form-control ${errorCodice ? "is-invalid" : ""}`}
+                propRowProvincia={propRowProvincia}
+                style={{
+                  maxHeight: '80vh', // Imposta l'altezza massima a 80vh
+                  overflowY: 'auto', // Abilita lo scrolling se il contenuto supera l'altezza massima
+                }}
+              />
+              {errorCodice && (
+                <p className="text-danger border-danger p-3 rounded fs-4" style={{ borderTop: "4px solid red" }}>
+                  {errorCodice}
+                </p>
+              )}
+            </Col>
           </Row>
 
 
@@ -237,8 +220,8 @@ const ProvModalMod = ({ show, close, rowID, listaProvCodAdded,rowProvincia }) =>
               <Row>
                 <Col>
                   <ProvForm
-                    FrmData={(e) => setFormData((prevState) => ({ ...prevState, "idRegione": e }))}
-                    onBlur={() => {
+                    propFrmData={(e) => setFormData((prevState) => ({ ...prevState, "idRegione": e }))}
+                    propOnBlur={() => {
                       if (formData.idRegione) {
                         setErrorRegione("");
                       }

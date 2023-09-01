@@ -27,7 +27,7 @@ import CitForm from "../CitForm/citForm";
 
 
 
-const CitModalAdd = ({ show, close, listaCitDescrAdded }) => {
+const CitModalAdd = ({ propShow, propClose, propListaCitDescrAdded }) => {
   const [formData, setFormData] = useState({
     descrizione: "",
     cap: "",
@@ -101,17 +101,17 @@ const CitModalAdd = ({ show, close, listaCitDescrAdded }) => {
 
 
   const handleDescrChange = (val) => {
-console.log(val,listaCitDescrAdded,"valvalvalval")
+    console.log(val, propListaCitDescrAdded, "valvalvalval")
     const cleanedValueUPPER = val.replace(/\s+/g, '').toUpperCase();
     const containsOnlyLettersUPPER = /^[A-Za-z\s]+$/.test(cleanedValueUPPER);
     // eslint-disable-next-line 
     const containsSpecialCharsUPPER = /[!@#$%^&*()[\]{}\-_+=|;:'",.<>?/\\]/.test(cleanedValueUPPER);
-    const listaCitDescrAddedUPPER = listaCitDescrAdded.map((desc) => desc.replace(/\s+/g, '').toUpperCase());
+    const listaCitDescrAddedUPPER = propListaCitDescrAdded.map((desc) => desc.replace(/\s+/g, '').toUpperCase());
 
     const isCityAlreadyAddedUPPER = listaCitDescrAddedUPPER.includes(cleanedValueUPPER);
-    console.log(-1,listaCitDescrAddedUPPER,containsOnlyLettersUPPER,containsSpecialCharsUPPER)
-  
-    
+    console.log(-1, listaCitDescrAddedUPPER, containsOnlyLettersUPPER, containsSpecialCharsUPPER)
+
+
     if (cleanedValueUPPER === "" && val.length <= 2) {
       console.log(0)
       setErrorDescr("");
@@ -158,7 +158,7 @@ console.log(val,listaCitDescrAdded,"valvalvalval")
         idProvincia: ""
       })
       console.log("set form data citta --- dati salvati");
-      close();
+      propClose();
     } catch (error) {
       // eslint-disable-next-line
       const resMessage = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
@@ -170,7 +170,7 @@ console.log(val,listaCitDescrAdded,"valvalvalval")
 
 
   useEffect(() => {
-    console.log("calll",isCapValid,isDescrValid)
+    console.log("calll", isCapValid, isDescrValid)
     if (isCapValid && isDescrValid) {
       setIsButtonDisable(false);
     } else {
@@ -183,12 +183,12 @@ console.log(val,listaCitDescrAdded,"valvalvalval")
 
 
 
-console.log(isButtonDisable,"isButtonDisableisButtonDisableisButtonDisableisButtonDisable")
+  console.log(isButtonDisable, "isButtonDisableisButtonDisableisButtonDisableisButtonDisable")
 
   return (
     <>
       <Modal
-        show={show}
+        show={propShow}
         // close={close}
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"
@@ -198,7 +198,7 @@ console.log(isButtonDisable,"isButtonDisableisButtonDisableisButtonDisableisButt
           <Modal.Title id="contained-modal-title-vcenter" className="font-weight-bold">
             <h2>Aggiungi Citta'</h2>
           </Modal.Title>
-          <Button variant="danger" onClick={close} size="lg">
+          <Button variant="danger" onClick={propClose} size="lg">
             X
           </Button>
         </Modal.Header>
@@ -210,7 +210,7 @@ console.log(isButtonDisable,"isButtonDisableisButtonDisableisButtonDisableisButt
                 type="text"
                 placeholder=""
                 autoFocus
-                 value={formData?.descrizione}
+                value={formData?.descrizione}
                 name="descrizione"
                 onChange={handleInputChange}
               />
@@ -239,7 +239,7 @@ console.log(isButtonDisable,"isButtonDisableisButtonDisableisButtonDisableisButt
               <Row>
                 <Col>
                   <CitForm
-                    FrmData={(e) => setFormData((prevState) => ({
+                    propFrmData={(e) => setFormData((prevState) => ({
                       ...prevState,
                       "idProvincia": e
                     }))}

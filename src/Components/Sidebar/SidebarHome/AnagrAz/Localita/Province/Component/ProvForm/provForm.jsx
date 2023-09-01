@@ -1,49 +1,82 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
+
+//*REACT-BOOTSTRAP 
 import { Row, Form, Dropdown } from 'react-bootstrap';
+
+//*REACT VALIDATION
 import axios from 'axios';
 
 
 
-
 // eslint-disable-next-line 
-const provinceItaliane = [
-    'ABR', 'BAS', 'CAL', 'CAM', 'EMR', 'FVG', 'LAZ', 'LIG', 'LOM', 'MAR',
-    'MOL', 'PIE', 'PUG', 'SAR', 'SIC', 'TOS', 'TRE', 'UMB', 'VAO', 'VEN',
-];
+// const provinceItaliane = [
+//     'ABR', 'BAS', 'CAL', 'CAM', 'EMR', 'FVG', 'LAZ', 'LIG', 'LOM', 'MAR',
+//     'MOL', 'PIE', 'PUG', 'SAR', 'SIC', 'TOS', 'TRE', 'UMB', 'VAO', 'VEN',
+// ];
+//eslint-disable-next-line
+// const regioni = [
+//     'ABRUZZO', 'BASILICATA', 'CALABRIA', 'CAMPANIA', 'EMILIA-ROMAGNA', 'FRIULI-VENEZIA-GIULIA',
+//     'LAZIO', 'LIGURIA', 'LOMBARDIA', 'MARCHE', 'MOLISE', 'PIEMONTE', 'PUGLIA', 'SARDEGNA', 'SICILIA',
+//     'TOSCANA', 'TRENTINO', 'UMBRIA', 'VAL D\'AOSTA', 'VENETO',
+// ];
 
-
-const regioni = [
-    'ABRUZZO', 'BASILICATA', 'CALABRIA', 'CAMPANIA', 'EMILIA-ROMAGNA', 'FRIULI-VENEZIA-GIULIA',
-    'LAZIO', 'LIGURIA', 'LOMBARDIA', 'MARCHE', 'MOLISE', 'PIEMONTE', 'PUGLIA', 'SARDEGNA', 'SICILIA',
-    'TOSCANA', 'TRENTINO', 'UMBRIA', 'VAL D\'AOSTA', 'VENETO',
-];
-
-const ProvForm = ({ FrmData, estado }) => {
+const ProvForm = ({ propFrmData, propIsModalAddRegActive, propRegListCurrent = '', propRegionnSelected = '' }) => {
     const [selectedProv, setSelectedProv] = useState('');
+
     const [regioniData, setRegioniData] = useState([]);
 
-    const handleProvSelect = (province, index) => {
-        if (FrmData) {
-            FrmData(index)
+    // const [regListCurrnt, setRegListCurrnt] = useState([]);
+
+
+
+    const handleProvSelect = (provCod, provId) => {
+        if (propFrmData) {
+            console.log("INDEX", provId)
+            propFrmData(provId)
         }
-        setSelectedProv(province);
+        setSelectedProv(provCod);
     };
+
+    console.log("COMP FRATELLO / propRegionnSelected", propRegionnSelected)
+
 
     const getRegioniData = async () => {
         const result = await axios.get("http://localhost:8080/api/regioni");
-        const data=result?.data.sort((a,b)=>a.codice>b.codice? 1:-1)
+        const data = result?.data.sort((a, b) => a.codice > b.codice ? 1 : -1)
+
+        // console.log("data", data)
         setRegioniData(data);
+
+
+        const regListDescrUPPER = data?.map(regione => (regione.descrizione).toUpperCase());
+
+        // setRegListCurrnt(regListDescrUPPER)
+        // console.log("regListDescrUPPER", regListDescrUPPER);
+        if (typeof propRegListCurrent === 'function') {
+            propRegListCurrent(regListDescrUPPER)
+        }
+
     };
 
     useEffect(() => {
         getRegioniData();
-    }, []);
+        // eslint-disable-next-line 
+    }, [propIsModalAddRegActive]);
+
 
     useEffect(() => {
-        if (!estado) {
-            getRegioniData();
+        if (propRegionnSelected) {
+            const foundRegion = regioniData.find(region => region.descrizione.toUpperCase() === propRegionnSelected.toUpperCase());
+
+            if (foundRegion) {
+                // eslint-disable-next-line 
+                const index = regioniData.indexOf(foundRegion);
+                handleProvSelect(foundRegion.codice, foundRegion.id);
+            }
         }
-    }, [estado]);
+        // eslint-disable-next-line 
+    }, [propRegionnSelected, regioniData]);
+
 
     const renderProvForm = () => {
         if (selectedProv === '') {
@@ -63,10 +96,13 @@ const ProvForm = ({ FrmData, estado }) => {
         e.stopPropagation();
     };
 
+
+
+
     return (
         <Form>
             <Form.Group controlId="provinceSelect">
-                <Dropdown onScroll={handleDropdownScroll}>
+                <Dropdown onScroll={handleDropdownScroll} >
                     <Row>
                         <Dropdown.Toggle variant="primary" id="provinceDropdown">
                             Seleziona

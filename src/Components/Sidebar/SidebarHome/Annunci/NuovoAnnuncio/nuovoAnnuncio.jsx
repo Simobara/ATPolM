@@ -198,8 +198,8 @@ const NuovoAnnuncio = (props) => {
                   <div className="flex-grow-1">
                     <Input
                       id="quantita"
-                      type="text"
-                      className="mt-2 form-control"
+                      type="number"
+                      className="mt-2 p-4 form-control"
                       name="quantita"
                       value={formData.quantita}
                       onChange={onChange}
@@ -356,7 +356,7 @@ const NuovoAnnuncio = (props) => {
           </div> */}
         </Form>
       </div>
-      <div>{isModalAddCitActive && <AddCitModal show={isModalAddCitActive} close={handleAddCitModalClose} listaCitDescrAdded={citDescr} />}</div>
+      <div>{isModalAddCitActive && <AddCitModal propShow={isModalAddCitActive} propClose={handleAddCitModalClose} propListaCitDescrAdded={citDescr} />}</div>
     </>
   );
 };

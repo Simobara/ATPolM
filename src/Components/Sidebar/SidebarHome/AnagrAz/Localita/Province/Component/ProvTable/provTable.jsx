@@ -75,9 +75,17 @@ const ProvTable = () => {
   const getProvince = async () => {
     const result = await axios.get("http://localhost:8080/api/province");
 
-    setProvince(result?.data);
+    // Converti i dati in UPPERCASE prima di salvarli nello stato
+    const upperCaseData = result?.data.map((provincia) => ({
+      ...provincia,
+      codice: provincia.codice.toUpperCase(),
+      // Aggiungi altre chiavi qui se necessario
+    }));
 
-    const codIdProvinciaFiltered = (result?.data).map((provincia) => ({
+
+    setProvince(upperCaseData);
+
+    const codIdProvinciaFiltered = (upperCaseData).map((provincia) => ({
       id: provincia.id,
       codice: provincia.codice,
     }));
@@ -223,11 +231,17 @@ const ProvTable = () => {
             <ProButton text=">>" title="Next Page" disabled={indexOfLastItem >= province?.length} clicked={() => handlePageChange(currentPage + 1)} />
           </div>
         </div>
-        <div>{isModalAddActive && <ProvModalAdd show={isModalAddActive} close={handleClickAddClose} listaProvCodAdded={provCod} />}</div>
-        <div>{isModalModActive && <ProvModalMod show={isModalModActive} close={handleClickModClose}
-          rowID={rowId}
-          listaProvCodAdded={provCod}
-          rowProvincia={rowProvincia}
+        <div>{isModalAddActive && <ProvModalAdd
+          propShow={isModalAddActive}
+          propClose={handleClickAddClose}
+          propListaProvCodAdded={provCod} />}
+        </div>
+        <div>{isModalModActive && <ProvModalMod
+          propShow={isModalModActive}
+          propClose={handleClickModClose}
+          propRowID={rowId}
+          propListaProvCodAdded={provCod}
+          propRowProvincia={rowProvincia}
         // codIdProvinFiltered={codIdProvinciaFiltered}
         // listaProvDescrAdded={provCod}
         />}

@@ -46,8 +46,10 @@ const CatModalAdd = ({ show, close }) => {
 
 
   const handleInputChange = (e) => {
+    console.log("EVENTO!!!", e)
     const { value } = e.target;
     setDescrizione(value);
+    // console.log("eventPhase", e.eventPhase)
     setShowErrorMessage(false); // Nascondi il messaggio di errore quando l'utente riprende a scrivere
   };
 

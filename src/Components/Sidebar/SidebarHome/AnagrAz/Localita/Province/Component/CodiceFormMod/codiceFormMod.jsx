@@ -1,49 +1,42 @@
 import React, { useState } from 'react';
 import { Row, Form, Dropdown } from 'react-bootstrap';
 import diacritics from 'diacritics';
-import { provinceSigle, provinceNomiCompleti } from "../../ProvincSigle/provincSigle"
+import { provinceSigle, provinceNomiCompleti } from "../../ProvSigleNomi/provSigleNomi"
 
 
 
 
-const CodiceFormMod = ({ FrmData, listProvCodAdded = [], searchTerm = "", onProvinceFound,rowProvincia }) => {
+const CodiceFormMod = ({ propFrmData, proplistProvCodAdded = [], propSearchTerm = "", propOnProvinceFound = '', propRowProvincia = '' }) => {
     const [selectedProv, setSelectedProv] = useState('');
 
-
     const handleProvSelect = (provin) => {
-        if (FrmData) {
-            FrmData(provin);
+        if (propFrmData) {
+            propFrmData(provin);
         }
         setSelectedProv(provin);
     };
-
-    const searchTermWithoutAccents = diacritics.remove(searchTerm.toUpperCase());
-
+    const searchTermWithoutAccents = diacritics.remove(propSearchTerm.toUpperCase());
     let provinceSigleFiltrate = [];
-
     if (searchTermWithoutAccents.length <= 2) {
-        provinceSigleFiltrate = provinceSigle.filter(provincia =>{
-            let filterData=listProvCodAdded?.filter((data)=>data!=rowProvincia)
-            return  !filterData.includes(provincia) &&
-              provincia.toUpperCase().includes(searchTermWithoutAccents)
+        provinceSigleFiltrate = provinceSigle.filter(provincia => {
+            let filterData = proplistProvCodAdded?.filter((data) => data !== propRowProvincia)
+            return !filterData.includes(provincia) &&
+                provincia.toUpperCase().includes(searchTermWithoutAccents)
         }
         );
-        
     } else {
         provinceSigleFiltrate = provinceSigle.filter(provincia => {
-           
+
             const nomeCompleto = provinceNomiCompleti[provinceSigle.indexOf(provincia)];
-            let filterData=listProvCodAdded?.filter((data)=>data!=rowProvincia)
-            return !filterData.includes(provincia) && 
+            let filterData = proplistProvCodAdded?.filter((data) => data !== propRowProvincia)
+            return !filterData.includes(provincia) &&
                 diacritics.remove(nomeCompleto.toUpperCase()).includes(searchTermWithoutAccents);
         });
-      
     }
-
     if (provinceSigleFiltrate.length === 1) {
         const provincia = provinceSigleFiltrate[0];
         const nomeCompleto = provinceNomiCompleti[provinceSigle.indexOf(provincia)];
-        onProvinceFound(provincia, nomeCompleto);
+        propOnProvinceFound(provincia, nomeCompleto);
     }
 
 
@@ -58,11 +51,10 @@ const CodiceFormMod = ({ FrmData, listProvCodAdded = [], searchTerm = "", onProv
         if (selectedProv === '') {
             return null;
         }
-
         return (
             <Form.Group controlId="provinceDetails">
                 <Form.Label>{''}</Form.Label>
-                <Form.Control type="text" value={selectedProv || searchTerm} readOnly />
+                <Form.Control type="text" value={selectedProv || propSearchTerm} readOnly />
             </Form.Group>
         );
     };
@@ -118,15 +110,12 @@ const CodiceFormMod = ({ FrmData, listProvCodAdded = [], searchTerm = "", onProv
                                         {provinceNomiCompleti[provinceSigle.indexOf(provincia)]}
                                     </span>
                                 </Dropdown.Item>
-
-
                             ))}
                         </Dropdown.Menu>
                     </Row>
                 </Dropdown>
             </Form.Group>
             <div style={{ height: '20px' }} /> {/* Aggiungi uno spazio di 20px tra i due elementi */}
-
             {renderProvForm()}
         </Form>
     );

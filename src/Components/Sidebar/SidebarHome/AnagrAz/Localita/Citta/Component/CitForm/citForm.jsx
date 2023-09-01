@@ -1,36 +1,19 @@
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import React, { useState } from 'react';
-import { useEffect } from 'react';
 import { Row, Form, Dropdown } from 'react-bootstrap';
 
-// const provinceItaliane = [
-//     'AG', 'AL', 'AN', 'AO', 'AP', 'AQ', 'AR', 'AT', 'AV', 'BA',
-//     'BG', 'BI', 'BL', 'BN', 'BO', 'BR', 'BS', 'BT', 'BZ', 'CA',
-//     'CB', 'CE', 'CH', 'CI', 'CL', 'CN', 'CO', 'CR', 'CS', 'CT',
-//     'CZ', 'EN', 'FC', 'FE', 'FG', 'FI', 'FM', 'FR', 'GE', 'GO',
-//     'GR', 'IM', 'IS', 'KR', 'LC', 'LE', 'LI', 'LO', 'LT', 'LU',
-//     'MB', 'MC', 'ME', 'MI', 'MN', 'MO', 'MS', 'MT', 'NA', 'NO',
-//     'NU', 'OG', 'OR', 'OT', 'PA', 'PC', 'PD', 'PE', 'PG', 'PI',
-//     'PN', 'PO', 'PR', 'PT', 'PU', 'PV', 'PZ', 'RA', 'RC', 'RE',
-//     'RG', 'RI', 'RM', 'RN', 'RO', 'SA', 'SI', 'SO', 'SP', 'SR',
-//     'SS', 'SV', 'TA', 'TE', 'TN', 'TO', 'TP', 'TR', 'TS', 'TV',
-//     'UD', 'VA', 'VB', 'VC', 'VE', 'VI', 'VR', 'VS', 'VT', 'VV',
-// ];
 
-function CitForm({ FrmData, estado = '' }) {
+function CitForm({ propFrmData, propIsModalAddProvActive }) {
     const [selectedCit, setSelectedCit] = useState('');
     const [province, setProvince] = useState([]);
     const handleCitSelect = (citta, index) => {
-        FrmData(index)
+        propFrmData(index)
         setSelectedCit(citta);
     };
-
     const renderCitForm = () => {
         if (selectedCit === '') {
             return null;
         }
-
-
         return (
             <Form.Group controlId="provinceDetails">
                 <Form.Label>{''}</Form.Label>
@@ -41,19 +24,33 @@ function CitForm({ FrmData, estado = '' }) {
     };
     const getProvince = async () => {
         const result = await axios.get("http://localhost:8080/api/province");
-        setProvince(result?.data);
+        // Trasforma ogni codice di provincia in maiuscolo
+        const upperCasedProvince = result?.data?.map((province) => ({
+            ...province,
+            codice: province.codice.toUpperCase()
+        }));
+        // Ordina le province
+        const sortedProvince = upperCasedProvince?.sort((a, b) => {
+            if (a.codice < b.codice) return -1;
+            if (a.codice > b.codice) return 1;
+            return 0;
+        });
+        setProvince(sortedProvince);
     };
+
+
+
+
     useEffect(() => {
         getProvince();
-    }, []);
+    }, [propIsModalAddProvActive]);
 
-
-    useEffect(() => {
-        console.log("estadoProv", estado)
-        if (!estado) {
-            getProvince();
-        }
-    }, [estado])
+    // useEffect(() => {
+    //     console.log("estadoProv", estado);
+    //     if (!estado) {
+    //         getProvince();
+    //     }
+    // }, [estado]);
 
 
 

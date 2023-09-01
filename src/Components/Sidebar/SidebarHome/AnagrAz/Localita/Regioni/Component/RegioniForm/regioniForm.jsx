@@ -7,7 +7,7 @@ const regioni = [
     'TOSCANA', 'TRENTINO', 'UMBRIA', 'VAL D\'AOSTA', 'VENETO',
 ];
 
-const RegioniForm = ({ FrmRegioni, listRegDescrAdded = [] }) => {
+const RegioniForm = ({ propFrmRegioni, propListRegDescrAdded = [] }) => {
     const [selectedReg, setSelectedReg] = useState('');
 
 
@@ -15,8 +15,8 @@ const RegioniForm = ({ FrmRegioni, listRegDescrAdded = [] }) => {
 
 
     const handleRegSelect = (region) => {
-        if (FrmRegioni) {
-            FrmRegioni(region);
+        if (propFrmRegioni) {
+            propFrmRegioni(region);
         }
         setSelectedReg(region);
     };
@@ -36,9 +36,9 @@ const RegioniForm = ({ FrmRegioni, listRegDescrAdded = [] }) => {
         );
     };
 
-    console.log("listRegDescrAdded REGIONIFORM", listRegDescrAdded)
+    console.log("listRegDescrAdded REGIONIFORM", propListRegDescrAdded)
 
-    const availableRegions = regioni.filter(regione => !listRegDescrAdded.includes(regione));
+    const availableRegions = regioni.filter(regione => !propListRegDescrAdded.includes(regione));
 
 
 

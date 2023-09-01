@@ -1,49 +1,66 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Row, Form, Dropdown } from 'react-bootstrap';
 import diacritics from 'diacritics';
-import { provinceSigle, provinceNomiCompleti } from "../../ProvincSigle/provincSigle"
+import { provinceSigle, provinceNomiCompleti } from "../../ProvSigleNomi/provSigleNomi"
 
 
 
 
-const CodiceForm = ({ FrmData, listProvCodAdded = [], searchTerm = "", onProvinceFound }) => {
+const CodiceForm = ({ propFrmData, propListProvCodAdded = [], propSearchTerm = "", propOnProvinceFound,
+    propRemainingProvincesInList = '', propRegProvSiglFiltered = '', propProvSelected = '' }) => {
     const [selectedProv, setSelectedProv] = useState('');
-
+    const [isOpen, setIsOpen] = useState(false);
 
     const handleProvSelect = (provin) => {
-        if (FrmData) {
-            FrmData(provin);
+        console.log("COMP FORM ADD / Provincia selezionata:", provin);
+        propProvSelected(provin)
+        if (propFrmData) {
+            propFrmData(provin);
         }
         setSelectedProv(provin);
     };
 
-    const searchTermWithoutAccents = diacritics.remove(searchTerm.toUpperCase());
+    console.log('propRegProvSiglFiltered', propRegProvSiglFiltered)
+    const onlySigle = Object.values(propRegProvSiglFiltered);
+    console.log("Solo le sigle:", onlySigle);
 
+    const searchTermWithoutAccents = diacritics.remove(propSearchTerm.toUpperCase());
     let provinceSigleFiltrate = [];
 
+
     if (searchTermWithoutAccents.length <= 2) {
-        provinceSigleFiltrate = provinceSigle.filter(provincia =>
-            !listProvCodAdded.includes(provincia) &&
+        provinceSigleFiltrate = onlySigle.filter(provincia =>
+            !propListProvCodAdded.includes(provincia) &&
             provincia.toUpperCase().includes(searchTermWithoutAccents)
-        );
+        )
     } else {
-        provinceSigleFiltrate = provinceSigle.filter(provincia => {
+        provinceSigleFiltrate = onlySigle.filter(provincia => {
             const nomeCompleto = provinceNomiCompleti[provinceSigle.indexOf(provincia)];
-            return !listProvCodAdded.includes(provincia) &&
+            return !propListProvCodAdded.includes(provincia) &&
                 diacritics.remove(nomeCompleto.toUpperCase()).includes(searchTermWithoutAccents);
         });
     }
 
+
+    console.log("COMP FIGLIO / provinceSigleFiltrate", provinceSigleFiltrate)
     if (provinceSigleFiltrate.length === 1) {
         const provincia = provinceSigleFiltrate[0];
         const nomeCompleto = provinceNomiCompleti[provinceSigle.indexOf(provincia)];
-        onProvinceFound(provincia, nomeCompleto);
+        propOnProvinceFound(provincia, nomeCompleto);
     }
 
+    // console.log("provinceSigleFiltrate", provinceSigleFiltrate)
+    if (typeof propRemainingProvincesInList === 'function') {
+        propRemainingProvincesInList(provinceSigleFiltrate.length);
+    }
+
+    // const remainingProvincesInList = provinceSigleFiltrate?.filter(prov => prov.includes(propSearchTerm));
 
 
-
-
+    const siglaToNomeCompleto = {};
+    for (let i = 0; i < provinceSigle.length; i++) {
+        siglaToNomeCompleto[provinceSigle[i]] = provinceNomiCompleti[i];
+    }
 
 
 
@@ -52,24 +69,32 @@ const CodiceForm = ({ FrmData, listProvCodAdded = [], searchTerm = "", onProvinc
         if (selectedProv === '') {
             return null;
         }
-
         return (
             <Form.Group controlId="provinceDetails">
                 <Form.Label>{''}</Form.Label>
-                <Form.Control type="text" value={selectedProv || searchTerm} readOnly />
+                <Form.Control type="text" value={selectedProv || propSearchTerm} readOnly />
             </Form.Group>
         );
     };
+    useEffect(() => {
+        console.log("PropSearchTerm: ", propSearchTerm);
+        if (propSearchTerm && propSearchTerm.length > 0 && provinceSigleFiltrate.length > 0) {
+            setIsOpen(true);
+        } else {
+            setIsOpen(false);
+        }
+    }, [propSearchTerm, provinceSigleFiltrate.length]);
+
 
     return (
         <Form>
             <Form.Group controlId="provinceSelect">
-                <Dropdown>
+                <Dropdown show={isOpen} onToggle={(newIsOpen) => setIsOpen(newIsOpen)}>
                     <Row>
                         <Dropdown.Toggle variant="primary" id="provinceDropdown" >
                             Seleziona
                         </Dropdown.Toggle>
-                        <Dropdown.Menu>
+                        <Dropdown.Menu className={isOpen ? 'show' : ''}>
                             {provinceSigleFiltrate.map((provincia, index) => (
                                 <Dropdown.Item
                                     key={index}
@@ -109,7 +134,7 @@ const CodiceForm = ({ FrmData, listProvCodAdded = [], searchTerm = "", onProvinc
                                     <span style={{ color: '#808080' }}>{provincia}</span>
                                     -
                                     <span style={{ color: '#000000', fontWeight: 'bold' }}>
-                                        {provinceNomiCompleti[provinceSigle.indexOf(provincia)]}
+                                        {siglaToNomeCompleto[provincia]}
                                     </span>
                                 </Dropdown.Item>
 

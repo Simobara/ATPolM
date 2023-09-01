@@ -7,7 +7,7 @@ import arrowDown from "../../../../../Assets/Images/black-arrow-down.png";
 import Pagination from "../../../../Global/Pagination/Pagination";
 import InitMap from "../Map/map";
 import Search from "../Search/Search";
-import ProButton from "../../../../Global/ProButton/ProButton";
+// import ProButton from "../../../../Global/ProButton/ProButton";
 import ModalImage from "../../../../Global/Modal/modalImage";
 import ModalContact from "../../../../Global/ModalContact/modalContact";
 let isOpenDetailPanel = false;
@@ -102,8 +102,8 @@ const Table = ({ handleAddNewRecPopup, rowData = [], columnData = [] }) => {
         <tr className="detail-wrapper">
           <td className="detail-sections">
             <section className="info-section" >
-              
-              
+
+
               <span className="color-lightcoral">Id Annuncio : {id}</span>
               <div className="section-item">
                 <strong className="color-white"></strong>
@@ -115,30 +115,30 @@ const Table = ({ handleAddNewRecPopup, rowData = [], columnData = [] }) => {
               <div className="section-item">
                 <strong className="color-blue">Quantita:</strong>
                 <span>{quantita}</span>
-              </div>           
+              </div>
               <div className="section-item">
                 <strong className="color-blue">Classe Waste</strong>
                 <span>{classeWaste}</span>
-              </div>              
-            
-            
+              </div>
+
+
             </section>
             <section className="section-details">
-            
-            
-            <div className="section-item">
+
+
+              <div className="section-item">
                 <strong className="color-blue">Offerente:</strong>
                 <span>{ragioneSociale}</span>
                 <ModalContact sell={ragioneSociale} />
-              </div> 
+              </div>
               <div className="section-item">
                 <img src={immagine} alt="imagePic" />
                 <ModalImage igm={immagine} />
               </div>
-            
-            
+
+
             </section>
-            <section className="map-wrapper">           
+            <section className="map-wrapper">
               <div className="section-item">
                 <strong className="color-blue">Indirizzo</strong>
                 <span>{address}</span>
@@ -146,7 +146,7 @@ const Table = ({ handleAddNewRecPopup, rowData = [], columnData = [] }) => {
               <div className="map-wrapper">
                 <InitMap />
                 {/*<AddressToCoordinates/>*/}
-              </div>         
+              </div>
             </section>
           </td>
         </tr>
@@ -158,7 +158,7 @@ const Table = ({ handleAddNewRecPopup, rowData = [], columnData = [] }) => {
     <div className="h-[100%] ">
       <div className=" flex-search-input justify-content-between align-items-center addNewStyle">
         <Search filter={globalFilter} setFilter={setGlobalFilter} />
-        <ProButton text="+ AddNew" title="Add New Record" clicked={handleAddNewRecPopup} />
+        {/* <ProButton text="+ AddNew" title="Add New Record" clicked={handleAddNewRecPopup} /> */}
       </div>
       <div style={{ marginTop: "10px" }} className="table-responsive">
         <table {...getTableProps()} className="table">

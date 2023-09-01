@@ -42,11 +42,11 @@ const RegTable = () => {
 
   //********************** REGIONI=> DESCRIZIONE
   const regDescrUPPER = regioniUPPER?.map(region => region.descrizione)
-  console.log("regDescrUPPER", regDescrUPPER);
+  console.log("REG TABLE / regDescrUPPER", regDescrUPPER);
 
   //********************** REGIONI=> CODICI
   const regCodUPPER = regioniUPPER?.map(region => region.codice)
-  console.log("regCodUPPER", regCodUPPER);
+  console.log("REG TABLE / regCodUPPER", regCodUPPER);
 
 
 
@@ -195,8 +195,16 @@ const RegTable = () => {
             <ProButton text=">>" title="Next Page" disabled={indexOfLastItem >= regioniUPPER?.length} clicked={() => handlePageChange(currentPage + 1)} />
           </div>
         </div>
-        <div>{isModalAddActive && <RegModalAdd show={isModalAddActive} close={handleClickAddClose} listaRegDescrAdded={regDescrUPPER} />}</div>
-        <div>{isModalModActive && <RegModalMod show={isModalModActive} close={handleClickModClose} id={id} listaRegDescrAdded={regDescrUPPER} />}</div>
+        <div>{isModalAddActive && <RegModalAdd
+          propShow={isModalAddActive}
+          propClose={handleClickAddClose}
+          propListaRegDescrAdded={regDescrUPPER} />}
+        </div>
+        <div>{isModalModActive && <RegModalMod
+          propShow={isModalModActive}
+          propClose={handleClickModClose}
+          propId={id} propListaRegDescrAdded={regDescrUPPER} />}
+        </div>
         <div>{isModalDelActive && <RegModalDel show={isModalDelActive} close={handleClickDelClose} />}</div>
       </div>
     </>

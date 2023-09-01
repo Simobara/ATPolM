@@ -30,7 +30,7 @@ import { useEffect } from "react";
 
 
 
-const ProvModalAdd = ({ show, close, listaProvCodAdded }) => {
+const ProvModalAdd = ({ propShow, propClose, propListaProvCodAdded = [] }) => {
   const [formData, setFormData] = useState({
     idRegione: "",
     codice: "",
@@ -94,7 +94,7 @@ const ProvModalAdd = ({ show, close, listaProvCodAdded }) => {
       }));
 
       console.log("set form data AddProvincia --- dati salvati");
-      close();
+      propClose();
     } catch (error) {
       const resMessage = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
       setMessage(resMessage);
@@ -113,8 +113,8 @@ const ProvModalAdd = ({ show, close, listaProvCodAdded }) => {
       descrizione: region.descrizione.toUpperCase(),
       codice: region.codice.toUpperCase()
     }));
-    const data=updatedRegUPPER?.sort((a,b)=>a.codice>b.codice? 1:-1)
-   
+    const data = updatedRegUPPER?.sort((a, b) => a.codice > b.codice ? 1 : -1)
+
     setRegioniUPPER(data);
   };
 
@@ -155,12 +155,12 @@ const ProvModalAdd = ({ show, close, listaProvCodAdded }) => {
   const handleAddRegModalOpen = () => {
     setIsModalAddRegActive(true)
     console.log("modalAddLoc open");
-};
+  };
 
-const handleAddRegModalClose = () => {
+  const handleAddRegModalClose = () => {
     setIsModalAddRegActive(false)
     console.log("modalAddLoc close");
-};
+  };
 
 
 
@@ -185,27 +185,56 @@ const handleAddRegModalClose = () => {
   return (
     <>
       <Modal
-       show={show}
-       // close={close}
-       // size="xl"
-       dialogClassName="custom-modal"
-       contentClassName="custom-modal-content"
-       aria-labelledby="contained-modal-title-vcenter"
-       centered
+        show={propShow}
+        // close={close}
+        // size="xl"
+        dialogClassName="custom-modal"
+        contentClassName="custom-modal-content"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
       >
         <Modal.Header>
           <Modal.Title id="contained-modal-title-vcenter" className="font-weight-bold">
             <h2>Aggiungi Provincia</h2>
           </Modal.Title>
-          <Button variant="danger" onClick={close} size="lg">
+          <Button variant="danger" onClick={propClose} size="lg">
             X
           </Button>
         </Modal.Header>
+
         <Modal.Body>
           <Row className="d-flex justify-content-start mb-4">
             <Col xs={12} md={2}> <h4>Codice Provincia</h4> </Col>
-            
-            <Col xs={12} md={4}>
+            <Col xs={12} md={1}></Col>
+            <Col xs={12} md={6}>
+              <CodiceFormAdd
+                propFrmData={(e) => {
+                  setFormData((prevState) => ({ ...prevState, "codice": e }));
+                  setErrorCodice(""); // Reimposta l'errore quando una provincia viene selezionata
+                }}
+                // codIdProvFiltered={codIdProvinFiltered}
+                // formDatId={formDataId}
+                onBlur={() => {
+                  if (formData.codice) {
+                    setErrorCodice("");
+                  }
+                }}
+                propListProvCodAdded={propListaProvCodAdded}
+                propSearchTerm={searchTerm}
+                propOnProvinceFound={handleProvinceFound} // Passa il termine di ricerca al componente figlio
+                // className={`form-control ${errorCodice ? "is-invalid" : ""}`}
+                style={{
+                  maxHeight: '80vh', // Imposta l'altezza massima a 80vh
+                  overflowY: 'auto', // Abilita lo scrolling se il contenuto supera l'altezza massima
+                }}
+              />
+              {errorCodice && (
+                <p className="text-danger border-danger p-3 rounded fs-4" style={{ borderTop: "4px solid red" }}>
+                  {errorCodice}
+                </p>
+              )}
+            </Col>
+            <Col xs={12} md={3}>
               <form>
                 <input
                   type="text"
@@ -219,61 +248,29 @@ const handleAddRegModalClose = () => {
               </form>
               {errorDigit && <p style={{ color: 'red', fontSize: '18px' }}>{errorDigit}</p>}
               {provinceFound && inputBorderClass === "form-control is-valid" && (
-                <p style={{ color: 'green', fontSize: '18px' }}>TROVATA PROVINCIA {"-->"} </p>
-              )}
-            </Col>
-            <Col xs={12} md={6}>
-
-
-
-              <CodiceFormAdd
-                FrmData={(e) => {
-                  setFormData((prevState) => ({ ...prevState, "codice": e }));
-                  setErrorCodice(""); // Reimposta l'errore quando una provincia viene selezionata
-                }}
-                // codIdProvFiltered={codIdProvinFiltered}
-                // formDatId={formDataId}
-                onBlur={() => {
-                  if (formData.codice) {
-                    setErrorCodice("");
-                  }
-                }}
-                listProvCodAdded={listaProvCodAdded}
-                searchTerm={searchTerm}
-                onProvinceFound={handleProvinceFound} // Passa il termine di ricerca al componente figlio
-                // className={`form-control ${errorCodice ? "is-invalid" : ""}`}
-                style={{
-                  maxHeight: '80vh', // Imposta l'altezza massima a 80vh
-                  overflowY: 'auto', // Abilita lo scrolling se il contenuto supera l'altezza massima
-                }}
-              />
-              {errorCodice && (
-                <p className="text-danger border-danger p-3 rounded fs-4" style={{ borderTop: "4px solid red" }}>
-                  {errorCodice}
-                </p>
+                <p style={{ color: 'green', fontSize: '18px' }}>{"<--"} TROVATA PROVINCIA  </p>
               )}
             </Col>
           </Row>
 
-
-
           <Row xs={12} md={6} className="d-flex justify-content-start mb-4">
             <Col xs={12} md={2}><h4>Codice Regione</h4></Col>
-            <Col  xs={12} md={1}></Col>
+            <Col xs={12} md={1}></Col>
             <Col xs={12} md={6}>
               <Row>
                 <Col>
                   <ProvForm
-                    FrmData={(e) => {
+                    propFrmData={(e) => {
                       setFormData((prevState) => ({ ...prevState, "idRegione": e }));
                       setErrorRegione(""); // Resetta l'errore quando si seleziona una regione
                     }}
                     className={`form-control ${errorRegione ? "is-invalid" : ""}`}
-                    onBlur={() => {
+                    propOnBlur={() => {
                       if (formData.idRegione) {
                         setErrorRegione("");
                       }
                     }}
+                    propIsModalAddRegActive={isModalAddRegActive}
                     style={{
                       transform: 'scale(1.2)', // Modifica la scala del menu a discesa
                       maxHeight: '80vh', // Imposta l'altezza massima a 80vh
@@ -288,20 +285,22 @@ const handleAddRegModalClose = () => {
                 </Col>
               </Row>
             </Col>
-            
             <Col xs={12} md={3}> <div className="form-group">
-                                        <button className="btn btn-primary" onClick={() => handleAddRegModalOpen()}>
-                                            {/* {loading && <span className="spinner-border spinner-border-sm"></span>} */}
-                                            <span span > <AddBoxIcon />Aggiungi regione</span>
-                                        </button>
-                                    </div></Col>
+              <button className="btn btn-primary" onClick={() => handleAddRegModalOpen()}>
+                {/* {loading && <span className="spinner-border spinner-border-sm"></span>} */}
+                <span span > <AddBoxIcon />Aggiungi regione</span>
+              </button>
+            </div></Col>
           </Row>
         </Modal.Body>
         <Modal.Footer className="d-flex justify-content-center mt-4">
           <Button onClick={() => handleAddProvincia()}>{<SaveIcon />}Save and Close</Button>
         </Modal.Footer>
       </Modal >
-      <div>{isModalAddRegActive && <AddRegModal show={isModalAddRegActive} close={handleAddRegModalClose} listaRegDescrAdded={regDescrUPPER}/>}</div>
+      <div>{isModalAddRegActive && <AddRegModal
+        propShow={isModalAddRegActive}
+        propClose={handleAddRegModalClose}
+        propListaRegDescrAdded={regDescrUPPER} />}</div>
     </>
   );
 };

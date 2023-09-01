@@ -25,7 +25,7 @@ import SaveIcon from "@mui/icons-material/Save";
 
 
 
-const RegModalAdd = ({ show, close, listaRegDescrAdded }) => {
+const RegModalAdd = ({ propShow, propClose, propListaRegDescrAdded }) => {
   const [formData, setFormData] = useState({
     codice: "",
     descrizione: "",
@@ -62,7 +62,7 @@ const RegModalAdd = ({ show, close, listaRegDescrAdded }) => {
 
   const handleAddRegione = async () => {
     try {
-      console.log("listaRegDescrAdded:", listaRegDescrAdded);/// IMP IMP IMP TOTALE VALORI (coppia valori)DENTRO GLI ARRAY
+      console.log("listaRegDescrAdded:", propListaRegDescrAdded);/// IMP IMP IMP TOTALE VALORI (coppia valori)DENTRO GLI ARRAY
       if (!formData?.descrizione) {
         setError("Inserisci una regione");
         return
@@ -84,7 +84,7 @@ const RegModalAdd = ({ show, close, listaRegDescrAdded }) => {
         codice: updatedFormData.codice,
         descrizione: ""
       });
-      close();
+      propClose();
     } catch (error) {
       const resMessage =
         (error.response && error.response.data && error.response.data.message) ||
@@ -101,17 +101,17 @@ const RegModalAdd = ({ show, close, listaRegDescrAdded }) => {
   return (
     <>
       <Modal
-        show={show}
+        show={propShow}
         // close={close}
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"
-        top
+        top="true"
       >
         <Modal.Header>
           <Modal.Title id="contained-modal-title-vcenter" className="font-weight-bold">
             <h2>Aggiungi Regione</h2>
           </Modal.Title>
-          <Button variant="danger" onClick={close} size="lg">
+          <Button variant="danger" onClick={propClose} size="lg">
             X
           </Button>
         </Modal.Header>
@@ -122,12 +122,12 @@ const RegModalAdd = ({ show, close, listaRegDescrAdded }) => {
               <Row>
                 <Col>
                   <RegioniForm
-                    FrmRegioni={(reg) => {
+                    propFrmRegioni={(reg) => {
                       setFormData((prevState) => ({ ...prevState, "descrizione": reg, }));
                       setSelectedRegionValue(reg)
                       setError("");
                     }}
-                    listRegDescrAdded={listaRegDescrAdded}
+                    propListRegDescrAdded={propListaRegDescrAdded}
                   />
                   {error && (<p className="text-danger border-danger p-3 rounded fs-4" style={{ borderTop: "4px solid red" }}> {error} </p>)}
                 </Col>

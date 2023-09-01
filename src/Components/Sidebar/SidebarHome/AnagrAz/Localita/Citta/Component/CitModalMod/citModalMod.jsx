@@ -27,9 +27,9 @@ import CitForm from '../CitForm/citForm';
 
 
 
-const CitModalMod = ({ show, close, rowID, descIdCittaFiltered }) => {
+const CitModalMod = ({ propShow, propClose, propRowID, propDescIdCittaFiltered }) => {
   const [formData, setFormData] = useState({
-    id: rowID,
+    id: propRowID,
     descrizione: "",
     cap: "",
     idProvincia: ""
@@ -63,10 +63,10 @@ const CitModalMod = ({ show, close, rowID, descIdCittaFiltered }) => {
 
 
   // ************************************************************
-  const descIdCittaFilteredData = descIdCittaFiltered.filter(item => item.id !== formDataId);
+  const descIdCittaFilteredData = propDescIdCittaFiltered.filter(item => item.id !== formDataId);
   // **FUNZIONE PER TROVARE SOLO QUEI NOMI(DESCR) DELLE CITTA DA ESCLUDERE NELLA LISTA**
   const descrListaCitNoSpazUPPER = descIdCittaFilteredData.map(item => item.descrizione.replace(/\s+/g, '').toUpperCase());
- const handleInputChange = (e) => {
+  const handleInputChange = (e) => {
     const { name, value } = e.target;
 
     if (name === "cap") {
@@ -136,7 +136,7 @@ const CitModalMod = ({ show, close, rowID, descIdCittaFiltered }) => {
       setIsButtonDisable(true);
       setIsDescrValid(false)
       setErrorDescr("❌ Si possono inserire solo lettere");
-    } else if (isValueInList ) {
+    } else if (isValueInList) {
       setIsButtonDisable(true);
       setIsDescrValid(false);
       setErrorDescr("❌ Nome Citta' gia' presente in elenco");
@@ -163,15 +163,15 @@ const CitModalMod = ({ show, close, rowID, descIdCittaFiltered }) => {
       if (!formData.descrizione || !formData.cap || !formData.idProvincia) {
         return alert("Inserisci tutti i valori in: ModificaCitta'")
       }
-      await updateCitta(rowID, capitalizeText(formData.descrizione), formData.cap, formData.idProvincia);
+      await updateCitta(propRowID, capitalizeText(formData.descrizione), formData.cap, formData.idProvincia);
       setFormData({
-        id: rowID,
+        id: propRowID,
         descrizione: "",
         cap: "",
         idProvincia: ""
       })
       console.log("set form data citta --- dati salvati");
-      close();
+      propClose();
     } catch (error) {
       // eslint-disable-next-line
       const resMessage = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
@@ -186,10 +186,10 @@ const CitModalMod = ({ show, close, rowID, descIdCittaFiltered }) => {
 
   useEffect(() => {
     if (isCapValid && isDescrValid) {
-    
+
       setIsButtonDisable(false);
     } else {
-     
+
       setIsButtonDisable(true);
     }
   }, [isCapValid, isDescrValid]);
@@ -202,7 +202,7 @@ const CitModalMod = ({ show, close, rowID, descIdCittaFiltered }) => {
   return (
     <>
       <Modal
-        show={show}
+        show={propShow}
         // close={close}
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"
@@ -212,7 +212,7 @@ const CitModalMod = ({ show, close, rowID, descIdCittaFiltered }) => {
           <Modal.Title id="contained-modal-title-vcenter" className="font-weight-bold">
             <h2>Modifica Citta</h2>
           </Modal.Title>
-          <Button variant="danger" onClick={close} size="lg">
+          <Button variant="danger" onClick={propClose} size="lg">
             X
           </Button>
         </Modal.Header>
@@ -254,7 +254,7 @@ const CitModalMod = ({ show, close, rowID, descIdCittaFiltered }) => {
             <Col xs={12} md={6}>
               <Row>
                 <Col>
-                  <CitForm FrmData={(e) => setFormData((prevState) => ({
+                  <CitForm propFrmData={(e) => setFormData((prevState) => ({
                     ...prevState,
                     "idProvincia": e
                   }))}

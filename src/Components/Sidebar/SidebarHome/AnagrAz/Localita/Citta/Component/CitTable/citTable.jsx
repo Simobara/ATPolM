@@ -128,12 +128,12 @@ const CitTable = () => {
   }
   const getCitta = async () => {
     const result = await axios.get("http://localhost:8080/api/localita");
-console.log(result)
+    console.log(result)
     setCitta(result?.data);
 
     const descrIdCittaFiltered = (result?.data).map((citta) => ({
       id: citta.id,
-      descrizione:capitalizeText(citta.descrizione),
+      descrizione: capitalizeText(citta.descrizione),
     }));
 
     setDescrIdCittaFiltered(descrIdCittaFiltered);
@@ -188,7 +188,7 @@ console.log(result)
                 </td>
                 <td className={getColumnClassName(1)}>{capitalizeText(row?.descrizione)}</td>
                 <td className={getColumnClassName(2)}>{row?.cap}</td>
-                <td className={getColumnClassName(3)}>{row?.provinciaCodice}</td>
+                <td className={getColumnClassName(3)}>{row?.provinciaCodice.toUpperCase()}</td>
                 <td className={getColumnClassName(4)}>
                   <button type="button" className="btn btn-danger button-close " onClick={() => handleClickDelOpen()}>
                     <CloseIcon className="icon-close" />
@@ -216,10 +216,16 @@ console.log(result)
             <ProButton text=">>" title="Next Page" disabled={indexOfLastItem >= citta?.length} clicked={() => handlePageChange(currentPage + 1)} />
           </div>
         </div>
-        <div>{isModalAddActive && <CitModalAdd show={isModalAddActive} close={handleClickAddClose} listaCitDescrAdded={citDescr} />}</div>
-        <div>{isModalModActive && <CitModalMod show={isModalModActive} close={handleClickModClose}
-          rowID={rowId}
-          descIdCittaFiltered={descrIdCittaFiltered}
+        <div>{isModalAddActive && <CitModalAdd
+          propShow={isModalAddActive}
+          propClose={handleClickAddClose}
+          propListaCitDescrAdded={citDescr} />}
+        </div>
+        <div>{isModalModActive && <CitModalMod
+          propShow={isModalModActive}
+          propClose={handleClickModClose}
+          propRowID={rowId}
+          propDescIdCittaFiltered={descrIdCittaFiltered}
         // listaCitDescrAdded={citDescr}
         />}
         </div>
