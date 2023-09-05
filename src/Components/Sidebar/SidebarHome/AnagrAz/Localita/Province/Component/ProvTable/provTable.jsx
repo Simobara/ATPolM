@@ -157,9 +157,9 @@ const ProvTable = () => {
     if (columnIndex === 0) {
       return "col-2 px-2 text-center h5 justify-content-center";
     } else if (columnIndex === 1) {
-      return "col-8 px-8 text-center h5 justify-content-center";
+      return "col-6 px-6 text-center h5 justify-content-center";
     } else if (columnIndex === 2) {
-      return "col-2 px-2 text-center h5 justify-content-center";
+      return "col-4 px-4 text-center h5 justify-content-center";
     } else if (columnIndex === 3) {
       return 'col-2 px-2 text-center h5 justify-content-center';
       // } else if (columnIndex === 4) {

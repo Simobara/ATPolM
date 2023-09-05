@@ -43,10 +43,10 @@ const CodiceForm = ({ propFrmData, propListProvCodAdded = [], propSearchTerm = "
 
 
     console.log("COMP FIGLIO / provinceSigleFiltrate", provinceSigleFiltrate)
-    if (provinceSigleFiltrate.length === 1) {
+    if (provinceSigleFiltrate.length) {
         const provincia = provinceSigleFiltrate[0];
         const nomeCompleto = provinceNomiCompleti[provinceSigle.indexOf(provincia)];
-        propOnProvinceFound(provincia, nomeCompleto);
+        propOnProvinceFound(provincia, nomeCompleto, provinceSigleFiltrate.length);
     }
 
     // console.log("provinceSigleFiltrate", provinceSigleFiltrate)

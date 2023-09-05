@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Row, Form, Dropdown } from 'react-bootstrap';
 import diacritics from 'diacritics';
 import { provinceSigle, provinceNomiCompleti } from "../../ProvSigleNomi/provSigleNomi"
@@ -26,18 +26,24 @@ const CodiceFormMod = ({ propFrmData, proplistProvCodAdded = [], propSearchTerm 
         );
     } else {
         provinceSigleFiltrate = provinceSigle.filter(provincia => {
-
             const nomeCompleto = provinceNomiCompleti[provinceSigle.indexOf(provincia)];
             let filterData = proplistProvCodAdded?.filter((data) => data !== propRowProvincia)
             return !filterData.includes(provincia) &&
                 diacritics.remove(nomeCompleto.toUpperCase()).includes(searchTermWithoutAccents);
         });
     }
-    if (provinceSigleFiltrate.length === 1) {
-        const provincia = provinceSigleFiltrate[0];
-        const nomeCompleto = provinceNomiCompleti[provinceSigle.indexOf(provincia)];
-        propOnProvinceFound(provincia, nomeCompleto);
-    }
+
+
+
+
+    useEffect(() => {
+        if (provinceSigleFiltrate.length === 1) {
+            const provincia = provinceSigleFiltrate[0];
+            const nomeCompleto = provinceNomiCompleti[provinceSigle.indexOf(provincia)];
+            propOnProvinceFound(provincia, nomeCompleto);
+        }
+        // eslint-disable-next-line 
+    }, [provinceSigleFiltrate]);
 
 
 

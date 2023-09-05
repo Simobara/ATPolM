@@ -10,6 +10,8 @@ import Search from "../Search/Search";
 // import ProButton from "../../../../Global/ProButton/ProButton";
 import ModalImage from "../../../../Global/Modal/modalImage";
 import ModalContact from "../../../../Global/ModalContact/modalContact";
+// eslint-disable-next-line 
+import AnnuncioService from "../../../../../DataAPI/services/annuncio.service";
 let isOpenDetailPanel = false;
 
 
@@ -18,6 +20,7 @@ const Table = ({ handleAddNewRecPopup, rowData = [], columnData = [] }) => {
   const [selectedCell, setSelectedCell] = useState(null);
   const [rowsData, setRowsData] = useState([]);
   const [columns, setColumns] = useState([]);
+
   const [isArrowSelected, setIsArrowSelected] = useState(false);
 
   //USE EFFECT FOR RENDERING
@@ -95,7 +98,7 @@ const Table = ({ handleAddNewRecPopup, rowData = [], columnData = [] }) => {
     if (row?.id !== selectedCell?.id) return;
     // const rowId = row.id
     // if (row)
-    const { quantita, address, classeWaste, descrizione, id, immagine, ragioneSociale } = row.values;
+    const { quantita, address, classeWaste, descrizioneDetail, id, immagine, ragioneSociale } = row.values;
 
     return (
       <>
@@ -110,7 +113,7 @@ const Table = ({ handleAddNewRecPopup, rowData = [], columnData = [] }) => {
               </div>
               <div className="section-item">
                 <strong className="color-blue">Descrizione:</strong>
-                <span>{descrizione}</span>
+                <span dangerouslySetInnerHTML={{ __html: descrizioneDetail }}></span>
               </div>
               <div className="section-item">
                 <strong className="color-blue">Quantita:</strong>
@@ -153,6 +156,14 @@ const Table = ({ handleAddNewRecPopup, rowData = [], columnData = [] }) => {
       </>
     );
   };
+  console.log(headerGroups, "headerGroups")
+  const filterData = (data) => {
+    return data?.filter((val, index) => val.detail === false)
+
+  }
+  const filterColoumData = (data) => {
+    return data?.filter((val, index) => val?.column?.detail === false)
+  }
   //<<--------------------------------------RETURN------------------------------------------------------>>
   return (
     <div className="h-[100%] ">
@@ -163,9 +174,10 @@ const Table = ({ handleAddNewRecPopup, rowData = [], columnData = [] }) => {
       <div style={{ marginTop: "10px" }} className="table-responsive">
         <table {...getTableProps()} className="table">
           <thead>
-            {headerGroups.map((headerGroup, index) => (
+            {headerGroups?.map((headerGroup, index) => (
+
               <tr key={`headerGroup-${index}`} className="table-row" {...headerGroup.getHeaderGroupProps()}>
-                {headerGroup.headers.map((column, columnIndex) => (
+                {filterData(headerGroup.headers)?.map((column, columnIndex) => (
                   <th key={`column-${index}-${columnIndex}`} className="table-header-item" {...column.getHeaderProps()}>
                     {column.render("Header")}
                   </th>
@@ -176,10 +188,12 @@ const Table = ({ handleAddNewRecPopup, rowData = [], columnData = [] }) => {
           <tbody {...getTableBodyProps()}>
             {page.map((row, rowIndex) => {
               prepareRow(row);
+
               return (
                 <React.Fragment key={`row-${rowIndex}`}>
                   <tr {...row.getRowProps()} className="table-row">
-                    {row.cells.map((cell, cellIndex) => renderCellData(cell, cellIndex))}
+                    {filterColoumData(row.cells)?.map((cell, cellIndex) => (
+                      renderCellData(cell, cellIndex)))}
                   </tr>
                   {selectedCell && renderDetailPanel(row)}
                 </React.Fragment>

@@ -34,11 +34,19 @@ const CitModalAdd = ({ propShow, propClose, propListaCitDescrAdded }) => {
     idProvincia: ""
 
   })
-  const { addCitta } = CittaService();
+  // eslint-disable-next-line
+  const [loading, setLoading] = useState(false);
+  // eslint-disable-next-line
+  const [message, setMessage] = useState("");
+  // eslint-disable-next-line
+  const [errorProv, setErrorProv] = useState(""); // Stato errore per la Provincia
 
 
-  const [errorCap, setErrorCap] = useState("");
+
+
+
   const [errorDescr, setErrorDescr] = useState("");
+  const [errorCap, setErrorCap] = useState("");
 
   const [isCapValid, setIsCapValid] = useState(false);
   const [isDescrValid, setIsDescrValid] = useState(false);
@@ -49,7 +57,7 @@ const CitModalAdd = ({ propShow, propClose, propListaCitDescrAdded }) => {
 
 
 
-
+  const { addCitta } = CittaService();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -135,9 +143,10 @@ const CitModalAdd = ({ propShow, propClose, propListaCitDescrAdded }) => {
       setIsDescrValid(true)
       setErrorDescr("");
     }
-    const valUpFirst = cleanedValueUPPER.charAt(0).toUpperCase() + cleanedValueUPPER.slice(1).toLowerCase();
-    console.log("valUpFirst: ", valUpFirst)
-    setFormData((prevState) => ({ ...prevState, descrizione: valUpFirst }));
+
+
+
+    setFormData((prevState) => ({ ...prevState, descrizione: capitalizeText(val) }));
   }
 
 
@@ -146,11 +155,16 @@ const CitModalAdd = ({ propShow, propClose, propListaCitDescrAdded }) => {
     return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
   }
 
-  const handleUpdate = async () => {
+  const handleAddCitta = async () => {
     try {
-      if (!formData?.descrizione || !formData?.cap || !formData?.idProvincia) {
-        return alert("Inserisci tutti i valori in: AggiungiCitta'")
+      setErrorProv(""); // Resetta l'errore per la Provincia
+
+      if (!formData?.idProvincia) {
+        setErrorProv("Inserisci una Provincia");
+        return
       }
+
+
       await addCitta(capitalizeText(formData.descrizione), formData.cap, formData.idProvincia);
       setFormData({
         descrizione: "",
@@ -160,9 +174,10 @@ const CitModalAdd = ({ propShow, propClose, propListaCitDescrAdded }) => {
       console.log("set form data citta --- dati salvati");
       propClose();
     } catch (error) {
-      // eslint-disable-next-line
       const resMessage = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+      setMessage(resMessage);
     } finally {
+      setLoading(false);
     }
   };
   // console.log(formData, "formdata")
@@ -239,19 +254,27 @@ const CitModalAdd = ({ propShow, propClose, propListaCitDescrAdded }) => {
               <Row>
                 <Col>
                   <CitForm
-                    propFrmData={(e) => setFormData((prevState) => ({
-                      ...prevState,
-                      "idProvincia": e
-                    }))}
+                    propFrmData={(e) => {
+                      setFormData((prevState) => ({
+                        ...prevState,
+                        "idProvincia": e
+                      }))
+                      setErrorProv("");
+                    }}// Resetta l'errore quando si seleziona una regione
+                    onBlur={() => { if (formData.idProvincia) { setErrorProv(""); } }}
                   />
-                  {/* <Form.Control type="text" placeholder="" autoFocus className="d-flex justify-content-end /> */}
+                  {errorProv && (
+                    <p className="text-danger border-danger p-3 rounded fs-4" style={{ borderTop: "4px solid red" }}>
+                      {errorProv}
+                    </p>
+                  )}
                 </Col>
               </Row>
             </Col>
           </Row>
         </Modal.Body>
         <Modal.Footer className="d-flex justify-content-center mt-4">
-          <Button onClick={() => handleUpdate()} className="justify-content-around" disabled={isButtonDisable}>{<SaveIcon />}Save and Close</Button>
+          <Button onClick={() => handleAddCitta()} className="justify-content-around" disabled={isButtonDisable}>{<SaveIcon />}Save and Close</Button>
         </Modal.Footer>
       </Modal >
     </>

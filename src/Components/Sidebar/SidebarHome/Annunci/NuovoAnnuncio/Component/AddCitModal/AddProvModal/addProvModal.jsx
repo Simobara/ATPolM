@@ -30,7 +30,7 @@ import { useEffect } from "react";
 
 
 
-const ProvModalAdd = ({ propShow, propClose, propListaProvCodAdded = [] }) => {
+const ProvModalAdd = ({ propShow, propClose, propListaProvCodAdded }) => {
   const [formData, setFormData] = useState({
     idRegione: "",
     codice: "",

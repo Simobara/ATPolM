@@ -34,8 +34,13 @@ const CitModalMod = ({ propShow, propClose, propRowID, propDescIdCittaFiltered }
     cap: "",
     idProvincia: ""
   })
-  const { updateCitta } = CittaService();
 
+  // eslint-disable-next-line
+  const [loading, setLoading] = useState(false);
+  // eslint-disable-next-line
+  const [message, setMessage] = useState("");
+  // eslint-disable-next-line
+  const [errorProv, setErrorProv] = useState(""); // Stato errore per la Provincia
 
   const [errorDescr, setErrorDescr] = useState("");
   const [errorCap, setErrorCap] = useState("");
@@ -48,12 +53,12 @@ const CitModalMod = ({ propShow, propClose, propRowID, propDescIdCittaFiltered }
   const [isButtonDisable, setIsButtonDisable] = useState(true);
 
 
+  const { updateCitta } = CittaService();
 
   // eslint-disable-next-line
   const formDataId = formData?.id
   console.log("formDataId: ", formDataId)
   // console.log("formData?codice: ", formDataCodice)
-
 
 
 
@@ -144,7 +149,8 @@ const CitModalMod = ({ propShow, propClose, propRowID, propDescIdCittaFiltered }
       setIsDescrValid(true)
       setErrorDescr("");
     }
-    setFormData((prevState) => ({ ...prevState, descrizione: value }));
+
+    setFormData((prevState) => ({ ...prevState, descrizione: capitalizeText(value) }));
   }
 
 
@@ -157,11 +163,12 @@ const CitModalMod = ({ propShow, propClose, propRowID, propDescIdCittaFiltered }
   }
 
 
-
-  const handleUpdate = async () => {
+  const handleModCitta = async () => {
     try {
-      if (!formData.descrizione || !formData.cap || !formData.idProvincia) {
-        return alert("Inserisci tutti i valori in: ModificaCitta'")
+      setErrorProv(""); // Resetta l'errore per la Provincia
+      if (!formData?.idProvincia) {
+        setErrorProv("Inserisci una Provincia");
+        return
       }
       await updateCitta(propRowID, capitalizeText(formData.descrizione), formData.cap, formData.idProvincia);
       setFormData({
@@ -173,11 +180,10 @@ const CitModalMod = ({ propShow, propClose, propRowID, propDescIdCittaFiltered }
       console.log("set form data citta --- dati salvati");
       propClose();
     } catch (error) {
-      // eslint-disable-next-line
       const resMessage = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
-
+      setMessage(resMessage);
     } finally {
-
+      setLoading(false);
     }
   };
 
@@ -224,7 +230,7 @@ const CitModalMod = ({ propShow, propClose, propRowID, propDescIdCittaFiltered }
                 type="text"
                 placeholder=""
                 autoFocus
-                value={(formData?.descrizione).toUpperCase()}
+                value={(formData?.descrizione)}
                 name="descrizione"
                 onChange={handleInputChange}
                 style={{ border: '1px solid #ced4da' }}
@@ -254,19 +260,28 @@ const CitModalMod = ({ propShow, propClose, propRowID, propDescIdCittaFiltered }
             <Col xs={12} md={6}>
               <Row>
                 <Col>
-                  <CitForm propFrmData={(e) => setFormData((prevState) => ({
-                    ...prevState,
-                    "idProvincia": e
-                  }))}
+                  <CitForm
+                    propFrmData={(e) => {
+                      setFormData((prevState) => ({
+                        ...prevState,
+                        "idProvincia": e
+                      }))
+                      setErrorProv("");
+                    }}// Resetta l'errore quando si seleziona una regione
+                    onBlur={() => { if (formData.idProvincia) { setErrorProv(""); } }}
                   />
-                  {/* <Form.Control type="text" placeholder="" autoFocus className="d-flex justify-content-end /> */}
+                  {errorProv && (
+                    <p className="text-danger border-danger p-3 rounded fs-4" style={{ borderTop: "4px solid red" }}>
+                      {errorProv}
+                    </p>
+                  )}
                 </Col>
               </Row>
             </Col>
           </Row>
         </Modal.Body>
         <Modal.Footer className="d-flex justify-content-center mt-4">
-          <Button onClick={() => handleUpdate()} className="justify-content-around" disabled={isButtonDisable}>{<SaveIcon />}Save and Close</Button>
+          <Button onClick={() => handleModCitta()} className="justify-content-around" disabled={isButtonDisable}>{<SaveIcon />}Save and Close</Button>
         </Modal.Footer>
       </Modal>
     </>

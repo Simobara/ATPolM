@@ -1,35 +1,35 @@
-import React from 'react'
+import React, { useState } from 'react';
 import Select from 'react-select';
 
-class dropdownMenu extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            itemtitle: "",
-            multi: true,
-            multiValue: [],
-            options: [
-                { value: "Color", label: "Yellow1" },
-                { value: "Fruit", label: "Apple" },
-                { value: "Tool", label: "Spanner" }
-            ]
-        };
+const DropdownMenu = ({ propsData, setPropValue, propDropdownValue }) => {
+    const[value,setValue]=useState("")
+  console.log(propDropdownValue,"5678");
+
+  const handleOnChange = (selectedOption) => {
+    setValue(selectedOption)
+    console.log(selectedOption)
+    if (selectedOption) {
+      
+      setPropValue(
+        selectedOption
+      );
+    } else {
+     
+      setPropValue(null);
     }
-    handleOnChange(value) {
-        this.setState({ multiValue: value });
-    }
-    render() {
-        return (
-            <div className="dropdown_menu">
-                < Select
-                    isSearchable={false}
-                    closeMenuOnSelect
-                    options={this.state.options}
-                    onChange={this.handleOnChange.bind(this)}
-                    value={this.state.multiValue}
-                />
-            </div>
-        );
-    }
-}
-export default dropdownMenu
+  };
+
+  return (
+    <div className="dropdown_menu">
+      <Select
+        isSearchable={false}
+        closeMenuOnSelect
+        options={propsData}
+        onChange={handleOnChange}
+        value={value}
+      />
+    </div>
+  );
+};
+
+export default DropdownMenu;

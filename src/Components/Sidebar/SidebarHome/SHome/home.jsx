@@ -1,15 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 /* CSS */
 import "./home.css";
 /* COMPONENTS */
 import { newData } from "../../../../DataAPI/newData";
 import { tableColumn } from "./Data/MainTable/Columns";
 import Table from "./Table/table";
+import AnnuncioService from "../../../../DataAPI/services/annuncio.service";
 // import AddNewRecordForm from "./AddNewRecord/AddNewRecord";
 
 const SHome = () => {
   // const [showAddNewRecPopup, setShowAddNewRecPopup] = useState(false);
   const [rowsData, setRowsData] = useState([...newData]);
+  const [annunci, setAnnunci] = useState([]);
   // const [tableColumns, setTableColumns] = useState([...tableColumn])
 
   // const handleAddNewRecPopup = () => {
@@ -18,20 +20,32 @@ const SHome = () => {
   // const onClosePopup = () => {
   //   setShowAddNewRecPopup(false);
   // };
+
+  // eslint-disable-next-line
   const onSubmitForm = (formData) => {
     const data = [...rowsData];
     data.push({ ...formData });
     setRowsData(data);
     // onClosePopup();
   };
+  const { getAnnunci } = AnnuncioService();
+  const getAnnunciData = async () => {
+    const response = await getAnnunci()
+    console.log(response?.data?.map((data, index) => ({ ...data, classeWaste: data?.materiale?.descrizione })), "responseData")
+    setAnnunci(response?.data?.map((data) => ({ ...data, classeWaste: data?.materiale?.descrizione, descrizioneDetail: data?.descrizione })))
+  }
+  useEffect(() => {
+    getAnnunciData()
+    // eslint-disable-next-line 
+  }, [])
   return (
     <>
       <div className="elems-container" style={{ fontSize: "1.9rem", marginTop: "80px" }}>
         <div className="container-fluid">
           <div className="row row-overflow">
-            <Table columnData={[...tableColumn]} rowData={rowsData}
+            {annunci && <Table columnData={[...tableColumn]} rowData={annunci}
             // handleAddNewRecPopup={handleAddNewRecPopup}
-            />
+            />}
             {/*<MainTable*/}
             {/*    getTableProps={getTableProps}*/}
             {/*    getTableBodyProps={getTableBodyProps}*/}

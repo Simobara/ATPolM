@@ -31,6 +31,7 @@ const ProvModalAdd = ({ propShow, propClose, propListaProvCodAdded = [] }) => {
   const [errorCodice, setErrorCodice] = useState(""); // Stato errore per il Codice
 
   const [searchTerm, setSearchTerm] = useState(""); // Stato per il termine di ricerca
+  // eslint-disable-next-line
   const [errorDigit, setErrorDigit] = useState("");
 
 
@@ -65,6 +66,7 @@ const ProvModalAdd = ({ propShow, propClose, propListaProvCodAdded = [] }) => {
 
   const handleAddProvincia = async (e) => {
     try {
+
       setErrorRegione(""); // Resetta l'errore per la Regione
       setErrorCodice("");  // Resetta l'errore per il Codice
       if (!formData?.idRegione || !formData?.codice) {
@@ -76,6 +78,8 @@ const ProvModalAdd = ({ propShow, propClose, propListaProvCodAdded = [] }) => {
         }
         return;
       }
+
+
       await addProvincia(formData.codice, formData.idRegione);
       setFormData((prevState) => ({
         ...prevState,
@@ -103,55 +107,39 @@ const ProvModalAdd = ({ propShow, propClose, propListaProvCodAdded = [] }) => {
     setInputValue(cleanedInput);
 
     //*************** TO VERIFY
-    if (!cleanedInput || cleanedInput.length === 0) {
-      setIsProvinceFound(false);
+    if (!isProvinceFound && remainingProvincesInList > 0) {
+      setIsDefaultBorder(true);
       setInputBorderClass("form-control");
-    } else if (cleanedInput.length <= 1) {
+    }
+    if (!isProvinceFound && remainingProvincesInList === 0) {
       setIsDefaultBorder(false);
+      setInputBorderClass("form-control is-invalid");
+    }
+    if (cleanedInput.length <= 1) {
+      setIsDefaultBorder(true);
       setInputBorderClass("form-control");
-      if (isProvinceFound && remainingProvincesInList === 1) {
+    }
+    if (cleanedInput.length === 2 || (!isProvinceFound && remainingProvincesInList === 0)) {
+      setIsDefaultBorder(false);
+      setInputBorderClass("form-control is-invalid");
+    } else
+      if (remainingProvincesInList === 0) {
         setIsDefaultBorder(true);
         setInputBorderClass("form-control is-valid");
-      }
-      if (cleanedInput.length >= 3 || remainingProvincesInList === 1) {
+      } else if (remainingProvincesInList === 1) {
         setIsDefaultBorder(false);
         setInputBorderClass("form-control is-invalid");
       }
+    if (!isProvinceFound) {
+      setIsDefaultBorder(false);
+      setInputBorderClass("form-control is-invalid");
     }
-
-    // if (cleanedInput.length === 2 && isProvinceFound) {
-    //   setIsDefaultBorder(true);
-    //   setInputBorderClass("form-control is-valid");
-    // } else if (cleanedInput.length === 2 && (!isProvinceFound || remainingProvincesInList === 0)) {
-    //   setIsDefaultBorder(false);
-    //   setInputBorderClass("form-control is-invalid");
-    // }
-
-    // FUNZIONANTE NON IN USO
-    // setIsDefaultBorder(cleanedInput.length <= 2);          
-    // setInputBorderClass("form-control is-invalid");
-    // if (cleanedInput.length === inputText.length) { // Verifica se non ci sono numeri o simboli
+    // Logica per gestire errori di digitazione
+    // if (cleanedInput.length === inputText.length) {
     //   setErrorDigit('');
     // } else {
     //   setErrorDigit('Puoi inserire solo lettere');
     // }
-    // // Aggiungi questa parte per gestire la reimpostazione del bordo
-    // if (cleanedInput.length <= 1) {
-    //   setIsDefaultBorder(true);
-    //   setInputBorderClass("form-control");
-    // }
-    // if (!cleanedInput) {
-    //   setProvinceFound(false);
-    //}
-
-
-
-    // Logica per gestire errori di digitazione
-    if (cleanedInput.length === inputText.length) {
-      setErrorDigit('');
-    } else {
-      setErrorDigit('Puoi inserire solo lettere');
-    }
   };
 
 
@@ -183,10 +171,21 @@ const ProvModalAdd = ({ propShow, propClose, propListaProvCodAdded = [] }) => {
   }
 
 
-  const handleProvinceFound = (nomeProvinciaCompleto, nomeProvinciaItaliano) => {
+  const handleProvinceFound = (nomeProvinciaCompleto, nomeProvinciaItaliano, provLength) => {
     console.log("COMP ADD / PROV ADD TROVATA:", nomeProvinciaCompleto, nomeProvinciaItaliano);
     setIsProvinceFound(true);
-    setInputBorderClass("form-control is-valid");
+    if (provLength > 1) {
+      setIsProvinceFound(false);
+      setInputBorderClass("form-control")
+    }
+    else if (provLength === 1) {
+      setIsProvinceFound(true);
+      setInputBorderClass("form-control is-valid");
+    }
+    else if (provLength === 0) {
+      setIsProvinceFound(false);
+      setInputBorderClass("form-control is-invalid");
+    }
   };
 
 

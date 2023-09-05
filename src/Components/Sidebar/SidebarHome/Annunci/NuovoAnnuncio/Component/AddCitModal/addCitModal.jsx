@@ -185,10 +185,12 @@ const CitModalAdd = ({ propShow, propClose, propListaCitDescrAdded, estado = '' 
       setIsDescrValid(true)
       setErrorDescr("");
     }
-    const valUpFirst = cleanedValueUPPER.charAt(0).toUpperCase() + cleanedValueUPPER.slice(1).toLowerCase();
-    console.log("valUpFirst: ", valUpFirst)
-    setFormData((prevState) => ({ ...prevState, descrizione: valUpFirst }));
+    
+    
+ 
+    setFormData((prevState) => ({ ...prevState, descrizione: capitalizeText(val) }));
   }
+
 
 
 
