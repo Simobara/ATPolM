@@ -35,6 +35,7 @@ function CitForm({ propFrmData, propIsModalAddProvActive }) {
             if (a.codice > b.codice) return 1;
             return 0;
         });
+        console.log(sortedProvince,"sortedProvince")
         setProvince(sortedProvince);
     };
 

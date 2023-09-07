@@ -45,7 +45,12 @@ const NuovoAnnuncio = (props) => {
   const [date, setDate] = useState("");
   // eslint-disable-next-line 
   const [val, setVal] = useState("");
-  // eslint-disable-next-line 
+
+
+  const [base64File, setBase64File] = useState();
+
+
+  // eslint-disable-next-line
   const handlerChange = (value) => {
     setFormData((prevState) => ({
       ...prevState,
@@ -114,10 +119,20 @@ const NuovoAnnuncio = (props) => {
     })));
   };
   const citDescr = cittaData?.map(cit => cit.descrizione)
+
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     setSelectedImage(file);
+    var promise = getBase64(file);
+    promise.then(function (result) {  //Altrimenti non possiamo ottenere il codice base64 da collegare ad una variabile   
+      //console.log("Base64 async: " + result);
+      setBase64File(result);
+      console.log(result, "resultbn")
+    });
   };
+
+
+
   useEffect(() => {
     getCitta();
     getMaterial();
@@ -131,7 +146,7 @@ const NuovoAnnuncio = (props) => {
       [name]: value,
     }));
   };
-
+  // eslint-disable-next-line
   const required = (value) => {
     if (!value) {
       return (
@@ -154,8 +169,11 @@ const NuovoAnnuncio = (props) => {
       try {
 
         // (titolo, descrizione, quantita, file, dataDiScadenza, idLocalita, idMateriale, idUnitaDiMisura, currentUserId)
-        await addAnnuncio(formData.titolo, formData.descrizione, formData.quantita, selectedImage, date, dropdownValue.idLocalita, dropdownValue.idMateriale, dropdownValue.idUnitaDiMisura, 1);
-        props.router.navigate("/");
+        const response = await addAnnuncio(formData.titolo, formData.descrizione, formData.quantita, base64File, date, dropdownValue.idLocalita, dropdownValue.idMateriale, dropdownValue.idUnitaDiMisura, 1);
+
+        if (response) {
+          props.router.navigate("/");
+        }
         // window.location.reload();
         // setFormData({
         //   titolo: "",
@@ -169,7 +187,7 @@ const NuovoAnnuncio = (props) => {
       }
     }
     else {
-      alert("add all values")
+      alert("Ricorda di aggiungere tutti i valori ")
     }
   };
 
@@ -186,6 +204,18 @@ const NuovoAnnuncio = (props) => {
 
 
 
+  function getBase64(fileToConvert, onLoadCallback) {
+    return new Promise(function (resolve, reject) {
+      var reader = new FileReader();
+      reader.onload = function () { resolve(reader.result); };     //Qua restituisce il valore che ci serve
+      reader.onerror = reject;
+      reader.readAsDataURL(fileToConvert);
+    });
+  }
+
+
+console.log(formData.quantita,'formData.quantita')
+  //**************************************************************RETURN
   return (
     <>
       <div className="pl-4" style={{ backgroundColor: "#f3f3f3", height: "100%", paddingTop: "40px", marginTop: "5rem" }}>
@@ -209,7 +239,7 @@ const NuovoAnnuncio = (props) => {
                     autoFocus
                     value={formData.titolo}
                     onChange={onChange}
-                    validations={[required]}
+                  // validations={[required]}
                   />
                 </div>
               </div>
@@ -239,7 +269,6 @@ const NuovoAnnuncio = (props) => {
                     onChange={(value) => setFormData((prev) => ({ ...formData, "descrizione": value }))}
                     onBlur={(value, event) => console.log(event)}
                   />
-
                 </div>
 
               </div>
@@ -263,7 +292,7 @@ const NuovoAnnuncio = (props) => {
                       name="quantita"
                       value={formData.quantita}
                       onChange={onChange}
-                      validations={[required]}
+                    // validations={[required]}
                     />
                   </div>
                   <div style={{ width: "200px", marginTop: "6px", fontSize: "24px" }}>
@@ -330,7 +359,10 @@ const NuovoAnnuncio = (props) => {
                   </div>
 
                   <div className="form-group ml-2 mt-2">
-                    <button className="btn btn-primary" onClick={() => handleAddLocModalOpen()}>
+                    <button className="btn btn-primary" onClick={(e) => {
+                      e.preventDefault();
+                      handleAddLocModalOpen()
+                    }}>
                       {/* {loading && <span className="spinner-border spinner-border-sm"></span>} */}
                       <span><AddBoxIcon />Aggiungi citta'</span>
                     </button>
@@ -377,9 +409,9 @@ const NuovoAnnuncio = (props) => {
             {/* <DeleteButton /> */}
           </div>
 
-        </Form>
+        </Form >
 
-      </div>
+      </div >
       <div>{isModalAddCitActive && <AddCitModal propShow={isModalAddCitActive} propClose={handleAddCitModalClose} propListaCitDescrAdded={citDescr} />}</div>
     </>
   );

@@ -16,7 +16,7 @@ export const tableColumn = [
   {
     detail:false,
     Header: "Immagine",
-    accessor: "immagine",
+    accessor: "fotoStringata",
   },
   {
     detail:false,

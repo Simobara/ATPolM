@@ -10,12 +10,13 @@ export const editorConfig = {
 	showXPathInStatusbar: false,
 	askBeforePasteHTML: true,
 	askBeforePasteFromWord: true,
+	addNewLine: false,
 	//defaultActionOnPaste: "insert_clear_html",
 	// buttons: buttons,
 	uploader: {
 		insertImageAsBase64URI: true
 	},
-	
+
 	minHeight: 200,
 	controls: {
 		font: {

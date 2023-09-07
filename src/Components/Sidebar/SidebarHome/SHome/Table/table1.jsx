@@ -132,7 +132,7 @@ const Table = ({ handleAddNewRecPopup, rowData = [], columnData = [] }) => {
                 <ModalContact sell={ragioneSociale} />
               </div>
               <div className="section-item">
-                <img src={immagine} alt="imagePic" />
+                <img src={immagine} alt="imagePic" width={100} height={100} />
                 <ModalImage igm={immagine} />
               </div>
 

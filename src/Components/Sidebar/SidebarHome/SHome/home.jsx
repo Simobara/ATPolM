@@ -12,6 +12,7 @@ const SHome = () => {
   // const [showAddNewRecPopup, setShowAddNewRecPopup] = useState(false);
   const [rowsData, setRowsData] = useState([...newData]);
   const [annunci, setAnnunci] = useState([]);
+  const [loading, setLoading] = useState(true);
   // const [tableColumns, setTableColumns] = useState([...tableColumn])
 
   // const handleAddNewRecPopup = () => {
@@ -20,7 +21,6 @@ const SHome = () => {
   // const onClosePopup = () => {
   //   setShowAddNewRecPopup(false);
   // };
-
   // eslint-disable-next-line
   const onSubmitForm = (formData) => {
     const data = [...rowsData];
@@ -31,21 +31,24 @@ const SHome = () => {
   const { getAnnunci } = AnnuncioService();
   const getAnnunciData = async () => {
     const response = await getAnnunci()
-    console.log(response?.data?.map((data, index) => ({ ...data, classeWaste: data?.materiale?.descrizione })), "responseData")
     setAnnunci(response?.data?.map((data) => ({ ...data, classeWaste: data?.materiale?.descrizione, descrizioneDetail: data?.descrizione })))
+    if (response?.data) { setLoading(false) }
+
+
   }
   useEffect(() => {
     getAnnunciData()
-    // eslint-disable-next-line 
+    // eslint-disable-next-line
   }, [])
-  return (
+
+  return loading ? (null) : (
     <>
       <div className="elems-container" style={{ fontSize: "1.9rem", marginTop: "80px" }}>
         <div className="container-fluid">
           <div className="row row-overflow">
-            {annunci && <Table columnData={[...tableColumn]} rowData={annunci}
+            <Table columnData={[...tableColumn]} rowData={annunci}
             // handleAddNewRecPopup={handleAddNewRecPopup}
-            />}
+            />
             {/*<MainTable*/}
             {/*    getTableProps={getTableProps}*/}
             {/*    getTableBodyProps={getTableBodyProps}*/}

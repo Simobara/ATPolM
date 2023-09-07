@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useTable, usePagination, useGlobalFilter, useSortBy } from "react-table";
-/* CSS */
+//* CSS */
 import "./table.css";
-/* COMPONENTS */
+//* COMPONENTS */
 import arrowDown from "../../../../../Assets/Images/black-arrow-down.png";
 import Pagination from "../../../../Global/Pagination/Pagination";
 import InitMap from "../Map/map";
@@ -10,10 +10,10 @@ import Search from "../Search/Search";
 // import ProButton from "../../../../Global/ProButton/ProButton";
 import ModalImage from "../../../../Global/Modal/modalImage";
 import ModalContact from "../../../../Global/ModalContact/modalContact";
-// eslint-disable-next-line 
+// eslint-disable-next-line
 import AnnuncioService from "../../../../../DataAPI/services/annuncio.service";
-let isOpenDetailPanel = false;
 
+import FilterRegPrvCit from "./FilterRegPrvCit/filterRegPrvCit"
 
 
 const Table = ({ handleAddNewRecPopup, rowData = [], columnData = [] }) => {
@@ -22,6 +22,8 @@ const Table = ({ handleAddNewRecPopup, rowData = [], columnData = [] }) => {
   const [columns, setColumns] = useState([]);
 
   const [isArrowSelected, setIsArrowSelected] = useState(false);
+
+  let isOpenDetailPanel = false;
 
   //USE EFFECT FOR RENDERING
   useEffect(() => {
@@ -75,17 +77,19 @@ const Table = ({ handleAddNewRecPopup, rowData = [], columnData = [] }) => {
   };
 
   const renderCellData = (cell) => {
+
     const headerName = cell.column.id;
     const id = cell.row.id;
     const arrowContainerClass = selectedCell?.id === id && isArrowSelected ? "arrow-container selected" : "arrow-container";
-
+    console.log(headerName, "header")
+    // console.log(cell,"cell")
     return (
       <td {...cell.getCellProps()}>
         {headerName === "openDetail" ? (
           <div className={arrowContainerClass}>
             <img src={arrowDown} onClick={() => handleDetailPanel(cell.row)} className="arrow-down-btn" alt="imagePic" />
           </div>
-        ) : headerName === "immagine" ? (
+        ) : headerName === "fotoStringata" ? (
           <img src={cell.value} alt="imagePic" className="table-data-img" />
         ) : (
           <span>{cell.value}</span>
@@ -98,7 +102,7 @@ const Table = ({ handleAddNewRecPopup, rowData = [], columnData = [] }) => {
     if (row?.id !== selectedCell?.id) return;
     // const rowId = row.id
     // if (row)
-    const { quantita, address, classeWaste, descrizioneDetail, id, immagine, ragioneSociale } = row.values;
+    const { quantita, address, classeWaste, descrizioneDetail, id, fotoStringata, ragioneSociale } = row.values;
 
     return (
       <>
@@ -135,8 +139,8 @@ const Table = ({ handleAddNewRecPopup, rowData = [], columnData = [] }) => {
                 <ModalContact sell={ragioneSociale} />
               </div>
               <div className="section-item">
-                <img src={immagine} alt="imagePic" />
-                <ModalImage igm={immagine} />
+                <img src={fotoStringata} alt="imagePic" />
+                <ModalImage igm={fotoStringata} />
               </div>
 
 
@@ -171,6 +175,10 @@ const Table = ({ handleAddNewRecPopup, rowData = [], columnData = [] }) => {
         <Search filter={globalFilter} setFilter={setGlobalFilter} />
         {/* <ProButton text="+ AddNew" title="Add New Record" clicked={handleAddNewRecPopup} /> */}
       </div>
+      <div>
+        <FilterRegPrvCit />
+      </div>
+
       <div style={{ marginTop: "10px" }} className="table-responsive">
         <table {...getTableProps()} className="table">
           <thead>

@@ -120,3 +120,7 @@ button {
 .line {
   display: inline-block;
 }
+
+.jodit-status-bar-link{
+  display: none !important;
+}

@@ -112,7 +112,7 @@ const CitModalAdd = ({ propShow, propClose, propListaCitDescrAdded, estado = '' 
       if (a.codice > b.codice) return 1;
       return 0;
     });
-
+console.log(sortedProvince,"sortedProvince")
     setProvince(sortedProvince);
   };
 
@@ -185,9 +185,9 @@ const CitModalAdd = ({ propShow, propClose, propListaCitDescrAdded, estado = '' 
       setIsDescrValid(true)
       setErrorDescr("");
     }
-    
-    
- 
+
+
+
     setFormData((prevState) => ({ ...prevState, descrizione: capitalizeText(val) }));
   }
 
