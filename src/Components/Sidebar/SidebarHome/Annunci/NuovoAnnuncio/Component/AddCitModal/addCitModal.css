@@ -1,0 +1,44 @@
+.custom-modal {
+    max-width: 50%; /* Riduci la larghezza massima del modal */
+    max-height: 80vh;
+  }
+  
+  .custom-modal-content-height {
+    max-height: 90vh; /* Aumenta l'altezza massima del contenuto del modal */
+    overflow-y: auto; /* Abilita lo scrolling se il contenuto è più lungo dell'altezza massima */
+  }
+  
+  .custom-modal-content .dropdown-menu {
+    position: absolute;
+    z-index: 1000;
+    border: 1px solid #ccc; /* Aggiungi un bordo al menu delle tendine */
+    border-radius: 4px; /* Opzionale: aggiungi un bordo arrotondato */
+  }
+
+  /* Aggiungi questa classe per il colore del bottone */
+.btn-green {
+    background-color: limegreen;
+    color: blue;
+  }
+
+.form-align {
+    display: flex;
+    align-items: center;
+  }
+
+  .form-field-short {
+    flex: 0 0 50%; /* Imposta la larghezza fissa del campo */
+  }
+
+  .modal-header {
+    background-color: limegreen; /* Colore di sfondo desiderato */
+    color: white; /* Colore del testo nell'header */
+    border-bottom: none; /* Rimuove il bordo inferiore */
+  }
+
+  .modal-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+  }

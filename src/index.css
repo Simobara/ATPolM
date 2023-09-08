@@ -1,39 +1,27 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Sora&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
+/* Reset dei CSS di default */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Sora', sans-serif;
+  font-family: 'Nunito', sans-serif; 
 }
 
 html {
-  font-size: 12px;
+  font-size: 14px;
   color: #fff;
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow: hidden;
   min-height: 100vh;
-  /* background-color: dodgerblue; */
 }
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
-
-/* #root{
-  height: 100vh;
-  background-color: #f7f5f8;
-} */
-
 
 .App {
   display: flex;
@@ -45,33 +33,28 @@ code {
 }
 
 section {
-    width: 100%;
-    max-width: 420px;
-    min-height: 400px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    padding: 1rem;
-    background-color: rgb(199 161 161 / 40%);
+  width: 100%;
+  max-width: 420px;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 1rem;
+  background-color: rgb(199 161 161 / 40%);
 }
 
 form {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    flex-grow: 1;
-    padding-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  flex-grow: 1;
+  padding-bottom: 1rem;
 }
-
-/* a, a:visited {
-    color: #fff;
-} */
 
 input[type="text"],
 input[type="password"],
 button,
 textarea {
-  font-family: 'Nunito', sans-serif;
   font-size: 22px;
   padding: 0.25rem;
   border-radius: 0.5rem;
@@ -83,50 +66,61 @@ button {
 }
 
 button {
-  padding: 0.5rem;
+  padding: 0.1rem;
+  font-size: 32px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
 }
 
 .instructions {
-    font-size: 0.75rem;
-    border-radius: 0.5rem;
-    background: #000;
-    color: #fff;
-    padding: 0.25rem;
-    position: relative;
-    bottom: -10px;
+  font-size: 0.75rem;
+  border-radius: 0.5rem;
+  background: #000;
+  color: #fff;
+  padding: 0.25rem;
+  position: relative;
+  bottom: -10px;
 }
 
 .instructions > svg {
-    margin-right: 0.25rem;
+  margin-right: 0.25rem;
 }
 
 .offscreen {
-    position: absolute;
-    left: -9999px;
+  position: absolute;
+  left: -9999px;
 }
 
 .hide {
-    display: none;
+  display: none;
 }
 
 .valid {
-    color: limegreen;
-    margin-left: 0.25rem;
+  color: limegreen;
+  margin-left: 0.25rem;
 }
 
 .invalid {
-    color: red;
-    margin-left: 0.25rem;
+  color: red;
+  margin-left: 0.25rem;
 }
 
 .errmsg {
-    background-color: lightpink;
-    color: firebrick;
-    font-weight: bold;
-    padding: 0.5rem;
-    margin-bottom: 0.5rem;
+  background-color: lightpink;
+  color: firebrick;
+  font-weight: bold;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 
 .line {
-    display: inline-block;
+  display: inline-block;
+}
+
+.jodit-status-bar-link{
+  display: none !important;
 }

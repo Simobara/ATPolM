@@ -5,23 +5,24 @@ import "./iMieiAnnTable.css";
 // import ButtonPen from '../../../../../../../Global/ButtonPen/buttonPen';
 import ModDatiModVisAnn from "../ModDatiModVisAnn/modDatiModVisAnn";
 import ProButton from "../../../../../../Global/ProButton/ProButton";
+import { useEffect } from "react";
+import axios from "axios";
 /* MUI MATERIAL ICONS */
 // import ModeIcon from '@mui/icons-material/Mode';
 // import CloseIcon from '@mui/icons-material/Close';
 // import AddIcon from '@mui/icons-material/Add';
 
 const IMieiAnnTable = () => {
-  const columns = ["", "IdAnnuncio", "Data", "Email", "Telefono"];
+  // const columns = ["", "IdAnnuncio", "Data", "Email", "Telefono"];
+  const columns = ["", "IdAnnuncio", "titolo", "descrizione", "quantita"];
 
-  const rowsEmail = ["test1@gmail.com", "test2@gmail.com", "test3@gmail.com", "test4@gmail.com", "test5@gmail.com"];
-
-  const rowsData = ["01/01/0001 00:00:00", "01/01/0001 00:00:00", "01/01/0001 00:00:00", "01/01/0001 00:00:00", "01/01/0001 00:00:00"];
-
-  const rowsTelefono = ["1234567890", "1234567890", "1234567890", "1234567890", "1234567890", "1234567890", "1234567890"];
-
+  // const rowsEmail = ["test1@gmail.com", "test2@gmail.com", "test3@gmail.com", "test4@gmail.com", "test5@gmail.com"];
+  // const rowsData = ["01/01/0001 00:00:00", "01/01/0001 00:00:00", "01/01/0001 00:00:00", "01/01/0001 00:00:00", "01/01/0001 00:00:00"];
+  // const rowsTelefono = ["1234567890", "1234567890", "1234567890", "1234567890", "1234567890", "1234567890", "1234567890"];
   // const rowsData = ['123456701890', '1234567890', '0987654321'];
+  // const rowsIdAnnuncio = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"];
 
-  const rowsIdAnnuncio = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"];
+  const [categorie, setCategorie] = useState([]);
 
   const itemsPerPage = 10;
   const [currentPage, setCurrentPage] = useState(1);
@@ -32,12 +33,13 @@ const IMieiAnnTable = () => {
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
-  const currentRowsIdAnnuncio = rowsIdAnnuncio.slice(indexOfFirstItem, indexOfLastItem);
-  const currentRowsEmail = rowsEmail.slice(indexOfFirstItem, indexOfLastItem);
-  const currentRowsData = rowsData.slice(indexOfFirstItem, indexOfLastItem);
-  const currentRowsTelefono = rowsTelefono.slice(indexOfFirstItem, indexOfLastItem);
+  // const currentRowsIdAnnuncio = rowsIdAnnuncio.slice(indexOfFirstItem, indexOfLastItem);
+  // const currentRowsEmail = rowsEmail.slice(indexOfFirstItem, indexOfLastItem);
+  // const currentRowsData = rowsData.slice(indexOfFirstItem, indexOfLastItem);
+  const currentRowsCategory = categorie.slice(indexOfFirstItem, indexOfLastItem);
 
   const [isModalDatiVisIntActive, setIsModalDatiVisIntActive] = useState(false);
+  // const [categorie, setCategorie] = useState([]);
   // const [isModalModActive, setIsModalModActive] = useState(false);
   // const [isModalDelActive, setIsModalDelActive] = useState(false);
 
@@ -49,6 +51,14 @@ const IMieiAnnTable = () => {
     setIsModalDatiVisIntActive(false);
     console.log("modalVisInt close");
   };
+  const getCategories = async () => {
+    const result = await axios.get("http://localhost:8080/api/annunci");
+
+    setCategorie(result?.data);
+  };
+  useEffect(() => {
+    getCategories();
+  }, []);
 
   // const handleClickModOpen = () => {
   //     setIsModalModActive(true);
@@ -107,7 +117,7 @@ const IMieiAnnTable = () => {
             </tr>
           </thead>
           <tbody>
-            {currentRowsIdAnnuncio.map((row, rowIndex) => (
+            {currentRowsCategory?.map((row, rowIndex) => (
               <tr key={rowIndex}>
                 <td className={getColumnClassName(0)}>
                   <div>
@@ -117,10 +127,10 @@ const IMieiAnnTable = () => {
                   </div>
                   {/* <ButtonPen onClick={openModal} /> */}
                 </td>
-                <td className={getColumnClassName(1)}>{row}</td>
-                <td className={getColumnClassName(2)}>{currentRowsData[rowIndex]}</td>
-                <td className={getColumnClassName(3)}>{currentRowsEmail[rowIndex]}</td>
-                <td className={getColumnClassName(4)}>{currentRowsTelefono[rowIndex]}</td>
+                <td className={getColumnClassName(1)}>{row?.id}</td>
+                <td className={getColumnClassName(2)}>{row?.titolo}</td>
+                <td className={getColumnClassName(3)}>{row?.descrizione}</td>
+                <td className={getColumnClassName(4)}>{row?.quantita}</td>
                 {/* <div>
                                 <button type="button" className="btn btn-danger button-close" onClick={() => ("")}>
                                     <CloseIcon className="icon-close" />
@@ -136,7 +146,7 @@ const IMieiAnnTable = () => {
             <span className="text-center text-sm">
               Pagina
               <strong className="mx-3 text-sm">
-                {currentPage} di {Math.ceil(rowsIdAnnuncio.length / itemsPerPage)}
+                {currentPage} di {Math.ceil(categorie.length / itemsPerPage)}
               </strong>
               {/* &nbsp; | &nbsp; Go To Page &nbsp;&nbsp;
             <input
@@ -145,7 +155,7 @@ const IMieiAnnTable = () => {
               defaultValue={indexOfLastItem >= rowsCatAziende.length ? currentPage - 1 : currentPage + 1}
             /> */}
             </span>
-            <ProButton text=">>" title="Next Page" disabled={indexOfLastItem >= rowsIdAnnuncio.length} clicked={() => handlePageChange(currentPage + 1)} />
+            <ProButton text=">>" title="Next Page" disabled={indexOfLastItem >= categorie.length} clicked={() => handlePageChange(currentPage + 1)} />
           </div>
         </div>
         <div>{isModalDatiVisIntActive && <ModDatiModVisAnn show={isModalDatiVisIntActive} close={handleClickDatiModVisIntClose} />}</div>

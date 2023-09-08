@@ -1,26 +1,29 @@
 import React, { useEffect, useState } from "react";
 import { useTable, usePagination, useGlobalFilter, useSortBy } from "react-table";
-/* CSS */
+//* CSS */
 import "./table.css";
-/* COMPONENTS */
+//* COMPONENTS */
 import arrowDown from "../../../../../Assets/Images/black-arrow-down.png";
 import Pagination from "../../../../Global/Pagination/Pagination";
 import InitMap from "../Map/map";
 import Search from "../Search/Search";
-import ProButton from "../../../../Global/ProButton/ProButton";
+// import ProButton from "../../../../Global/ProButton/ProButton";
 import ModalImage from "../../../../Global/Modal/modalImage";
 import ModalContact from "../../../../Global/ModalContact/modalContact";
-import Chat from "../../../../Global/Chat/Chat";
-// import Loader from "../../../../Global/Loader/loader";
-let isOpenDetailPanel = false;
+// eslint-disable-next-line
+import AnnuncioService from "../../../../../DataAPI/services/annuncio.service";
 
+import FilterRegPrvCit from "./FilterRegPrvCit/filterRegPrvCit"
 
 
 const Table = ({ handleAddNewRecPopup, rowData = [], columnData = [] }) => {
   const [selectedCell, setSelectedCell] = useState(null);
   const [rowsData, setRowsData] = useState([]);
   const [columns, setColumns] = useState([]);
+
   const [isArrowSelected, setIsArrowSelected] = useState(false);
+
+  let isOpenDetailPanel = false;
 
   //USE EFFECT FOR RENDERING
   useEffect(() => {
@@ -74,17 +77,19 @@ const Table = ({ handleAddNewRecPopup, rowData = [], columnData = [] }) => {
   };
 
   const renderCellData = (cell) => {
+
     const headerName = cell.column.id;
     const id = cell.row.id;
     const arrowContainerClass = selectedCell?.id === id && isArrowSelected ? "arrow-container selected" : "arrow-container";
-
+    console.log(headerName, "header")
+    // console.log(cell,"cell")
     return (
       <td {...cell.getCellProps()}>
         {headerName === "openDetail" ? (
           <div className={arrowContainerClass}>
             <img src={arrowDown} onClick={() => handleDetailPanel(cell.row)} className="arrow-down-btn" alt="imagePic" />
           </div>
-        ) : headerName === "immagine" ? (
+        ) : headerName === "fotoStringata" ? (
           <img src={cell.value} alt="imagePic" className="table-data-img" />
         ) : (
           <span>{cell.value}</span>
@@ -97,41 +102,48 @@ const Table = ({ handleAddNewRecPopup, rowData = [], columnData = [] }) => {
     if (row?.id !== selectedCell?.id) return;
     // const rowId = row.id
     // if (row)
-    const { quantita, address, classeWaste, descrizione, id, immagine, ragioneSociale } = row.values;
+    const { quantita, address, classeWaste, descrizioneDetail, id, fotoStringata, ragioneSociale } = row.values;
 
     return (
       <>
         <tr className="detail-wrapper">
           <td className="detail-sections">
-            <section>
+            <section className="info-section" >
+
+
               <span className="color-lightcoral">Id Annuncio : {id}</span>
               <div className="section-item">
-                <strong className="color-red"></strong>
+                <strong className="color-white"></strong>
+              </div>
+              <div className="section-item">
+                <strong className="color-blue">Descrizione:</strong>
+                <span dangerouslySetInnerHTML={{ __html: descrizioneDetail }}></span>
               </div>
               <div className="section-item">
                 <strong className="color-blue">Quantita:</strong>
                 <span>{quantita}</span>
               </div>
-              <div className="section-item position-relative">
-                <strong className="color-blue">Offerente:</strong>
-                <span>{ragioneSociale}</span>
-                <ModalContact sell={ragioneSociale} />
-                <Chat />
-              </div>
-            </section>
-            <section className="">
-              <div className="section-item">
-                <strong className="color-blue">Descrizione:</strong>
-                <span>{descrizione}</span>
-              </div>
               <div className="section-item">
                 <strong className="color-blue">Classe Waste</strong>
                 <span>{classeWaste}</span>
               </div>
+
+
+            </section>
+            <section className="section-details">
+
+
               <div className="section-item">
-                <img src={immagine} alt="imagePic" />
-                <ModalImage igm={immagine} />
+                <strong className="color-blue">Offerente:</strong>
+                <span>{ragioneSociale}</span>
+                <ModalContact sell={ragioneSociale} />
               </div>
+              <div className="section-item">
+                <img src={fotoStringata} alt="imagePic" />
+                <ModalImage igm={fotoStringata} />
+              </div>
+
+
             </section>
             <section className="map-wrapper">
               <div className="section-item">
@@ -148,19 +160,32 @@ const Table = ({ handleAddNewRecPopup, rowData = [], columnData = [] }) => {
       </>
     );
   };
+  console.log(headerGroups, "headerGroups")
+  const filterData = (data) => {
+    return data?.filter((val, index) => val.detail === false)
+
+  }
+  const filterColoumData = (data) => {
+    return data?.filter((val, index) => val?.column?.detail === false)
+  }
   //<<--------------------------------------RETURN------------------------------------------------------>>
   return (
     <div className="h-[100%] ">
       <div className=" flex-search-input justify-content-between align-items-center addNewStyle">
         <Search filter={globalFilter} setFilter={setGlobalFilter} />
-        <ProButton text="+ AddNew" title="Add New Record" clicked={handleAddNewRecPopup} />
+        {/* <ProButton text="+ AddNew" title="Add New Record" clicked={handleAddNewRecPopup} /> */}
       </div>
+      <div>
+        <FilterRegPrvCit />
+      </div>
+
       <div style={{ marginTop: "10px" }} className="table-responsive">
         <table {...getTableProps()} className="table">
           <thead>
-            {headerGroups.map((headerGroup, index) => (
+            {headerGroups?.map((headerGroup, index) => (
+
               <tr key={`headerGroup-${index}`} className="table-row" {...headerGroup.getHeaderGroupProps()}>
-                {headerGroup.headers.map((column, columnIndex) => (
+                {filterData(headerGroup.headers)?.map((column, columnIndex) => (
                   <th key={`column-${index}-${columnIndex}`} className="table-header-item" {...column.getHeaderProps()}>
                     {column.render("Header")}
                   </th>
@@ -171,10 +196,12 @@ const Table = ({ handleAddNewRecPopup, rowData = [], columnData = [] }) => {
           <tbody {...getTableBodyProps()}>
             {page.map((row, rowIndex) => {
               prepareRow(row);
+
               return (
                 <React.Fragment key={`row-${rowIndex}`}>
                   <tr {...row.getRowProps()} className="table-row">
-                    {row.cells.map((cell, cellIndex) => renderCellData(cell, cellIndex))}
+                    {filterColoumData(row.cells)?.map((cell, cellIndex) => (
+                      renderCellData(cell, cellIndex)))}
                   </tr>
                   {selectedCell && renderDetailPanel(row)}
                 </React.Fragment>

@@ -1,36 +1,59 @@
-import React, { useState } from "react";
-/* CSS */
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+
+//* CSS
 import "./catTable.css";
-/* COMPONENTS */
-// import ButtonPen from '../../../../../../../Global/ButtonPen/buttonPen';
+
+//* COMPONENTS
 import CatModalAdd from "../CatModalAdd/catModalAdd";
 import CatModalMod from "../CatModalMod/catModalMod";
 import CatModalDel from "../CatModalDel/catModalDel";
 import ProButton from "../../../../../../Global/ProButton/ProButton";
-/* MUI MATERIAL ICONS */
+
+//* MUI MATERIAL ICONS
 import ModeIcon from "@mui/icons-material/Mode";
 import CloseIcon from "@mui/icons-material/Close";
 import AddIcon from "@mui/icons-material/Add";
 
+
+
+
+
+
+
+
+
+
+
+
+
 const CatTable = () => {
   const columns = ["", "Descrizione", ""];
-  const rowsCatAziende = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W"];
+  // const rowsCatAziende = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W"];
+  const [categorie, setCategorie] = useState([]);
+
+
+
+
+
 
   const itemsPerPage = 10;
   const [currentPage, setCurrentPage] = useState(1);
 
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
+  const handlePageChange = (pageNumber) => { setCurrentPage(pageNumber); };
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
-  const currentItems = rowsCatAziende.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = categorie?.slice(indexOfFirstItem, indexOfLastItem);
 
+
+  const [id, setID] = useState("");
   const [isModalAddActive, setIsModalAddActive] = useState(false);
   const [isModalModActive, setIsModalModActive] = useState(false);
   const [isModalDelActive, setIsModalDelActive] = useState(false);
-  // const [pages, setPages] = useState([]);
+
+
+
 
   const handleClickAddOpen = () => {
     setIsModalAddActive(true);
@@ -41,8 +64,9 @@ const CatTable = () => {
     console.log("modalAdd close");
   };
 
-  const handleClickModOpen = () => {
+  const handleClickModOpen = (id) => {
     setIsModalModActive(true);
+    setID(id);
     console.log("modalModify open");
   };
 
@@ -61,21 +85,41 @@ const CatTable = () => {
     console.log("modalDel close");
   };
 
+
+
+
+
   const getColumnClassName = (columnIndex) => {
     if (columnIndex === 0) {
       return "col-2 px-2 text-center h5 justify-content-center";
     } else if (columnIndex === 1) {
       return "col-8 px-8 text-center h5 justify-content-center";
     } else if (columnIndex === 2) {
-      return "col-2 px-2 text-center h5 justify-content-center";
+      return "col-2 px-2 text-center h5  justify-content-center";
       // } else if (columnIndex === 3) {
       //     return 'col-2 px-2 text-center h5';
-      // } else if (columnIndex === 4) {
-      //     return 'col-4 px-4 text-center h5';
     } else {
       return "col-12 px-12 text-center h5 justify-content-center";
     }
   };
+
+
+
+
+
+  const getCategories = async () => {
+    const result = await axios.get("http://localhost:8080/api/categorie");
+    setCategorie(result?.data);
+  };
+  useEffect(() => {
+    getCategories();
+  }, [isModalAddActive, isModalModActive, isModalDelActive]);
+
+
+
+
+
+
 
   return (
     <>
@@ -86,7 +130,7 @@ const CatTable = () => {
               {columns.map((column, columnIndex) => (
                 <th key={columnIndex}>
                   {columnIndex === 0 && (
-                    <button type="button" className="btn button-modify icon-add" onClick={handleClickAddOpen}>
+                    <button type="button" className="btn button-modify icon-add" onClick={() => handleClickAddOpen()}>
                       <AddIcon className="icon" />
                     </button>
                   )}
@@ -96,15 +140,16 @@ const CatTable = () => {
             </tr>
           </thead>
           <tbody>
-            {currentItems.map((row, rowIndex) => (
+            {currentItems?.length > 0 && currentItems?.map((row, rowIndex) => (
               <tr key={rowIndex}>
                 <td className={getColumnClassName(0)}>
-                  <button type="button" className="btn btn-primary button-modify" onClick={handleClickModOpen}>
+
+                  <button type="button" className="btn btn-primary button-modify" onClick={() => handleClickModOpen(row?.id)}>
                     <ModeIcon className="icon" />
                   </button>
                   {/* <ButtonPen onClick={openModal} /> */}
                 </td>
-                <td className={getColumnClassName(1)}>{row}</td>
+                <td className={getColumnClassName(1)}>{row?.descrizione}</td>
                 <td className={getColumnClassName(2)}>
                   <button type="button" className="btn btn-danger button-close " onClick={handleClickDelOpen}>
                     <CloseIcon className="icon-close" />
@@ -120,7 +165,7 @@ const CatTable = () => {
             <span className="text-center text-sm">
               Pagina
               <strong className="mx-3 text-sm">
-                {currentPage} di {Math.ceil(rowsCatAziende.length / itemsPerPage)}
+                {currentPage} di {Math.ceil(categorie?.length / itemsPerPage)}
               </strong>
               {/* &nbsp; | &nbsp; Go To Page &nbsp;&nbsp;
             <input
@@ -129,13 +174,13 @@ const CatTable = () => {
               defaultValue={indexOfLastItem >= rowsCatAziende.length ? currentPage - 1 : currentPage + 1}
             /> */}
             </span>
-            <ProButton text=">>" title="Next Page" disabled={indexOfLastItem >= rowsCatAziende.length} clicked={() => handlePageChange(currentPage + 1)} />
+            <ProButton text=">>" title="Next Page" disabled={indexOfLastItem >= categorie?.length} clicked={() => handlePageChange(currentPage + 1)} />
           </div>
         </div>
         <div>{isModalAddActive && <CatModalAdd show={isModalAddActive} close={handleClickAddClose} />}</div>
-        <div>{isModalModActive && <CatModalMod show={isModalModActive} close={handleClickModClose} />}</div>
+        <div>{isModalModActive && <CatModalMod show={isModalModActive} close={handleClickModClose} id={id} />}</div>
         <div>{isModalDelActive && <CatModalDel show={isModalDelActive} close={handleClickDelClose} />}</div>
-      </div>
+      </div >
     </>
   );
 };

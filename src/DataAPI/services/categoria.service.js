@@ -2,6 +2,11 @@ import axios from 'axios';
 
 const API_URL = 'http://localhost:8080/api/';
 
+
+
+
+
+
 const CategoriaService = () => {
     const getCategorie = async () => {
         try {
@@ -11,6 +16,11 @@ const CategoriaService = () => {
             console.error('Error while fetching categorie:', error);
         }
     };
+
+
+
+
+
 
     const addCategoria = async (descrizione) => {
         try {
@@ -28,9 +38,40 @@ const CategoriaService = () => {
         }
     };
 
+    const updateCategoria = async (id, descrizione) => {
+        try {
+            const response = await axios.put(API_URL + `update-categoria/${id}`, {
+                descrizione,
+            });
+            if (response.data.accessToken) {
+                localStorage.setItem('categoria', JSON.stringify(response.data));
+                // setAccessToken(response.data.accessToken);
+            }
+            return response.data;
+        } catch (error) {
+            console.error('Error while modifing categoria:', error);
+        }
+    };
+
+    //     updateCategoria(id, descrizione) {
+    //     return axios.put(API_URL + `update-categoria/${id}`, {
+    //         id,
+    //         descrizione
+    //     })
+    //     .then(response => {
+    //         if (response.data.accessToken) {
+    //             localStorage.setItem("categoria", JSON.stringify(response.data));
+    //         }
+    //         return response.data;
+    //     });
+    // }
+
+
+
+
     const deleteCategoria = async (id) => {
         try {
-            const response = await axios.delete(`${API_URL}categorie/${id}`, {
+            const response = await axios.delete(`${API_URL}categoria/${id}`, {
                 id,
             });
 
@@ -44,7 +85,7 @@ const CategoriaService = () => {
         }
     };
 
-    return { getCategorie, addCategoria, deleteCategoria };
+    return { getCategorie, addCategoria, updateCategoria, deleteCategoria };
 };
 
 export default CategoriaService;

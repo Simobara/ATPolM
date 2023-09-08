@@ -1,7 +1,7 @@
-import React, { useState, useMemo } from 'react'
+import React, { useMemo } from 'react'
 import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
 import './map.css'
-import Spinner from '../../../../Global/Spinner/spinner';
+// import Spinner from '../../../../Global/Spinner/spinner';
 
 /* 
 REM: Aggiorna index html con lo script google api 
@@ -32,36 +32,33 @@ const InitMap = ({ lat, lng, zoom = 10 }) => {
     });
     const center = useMemo(() => ({ lat: lat || 41.902782, lng: lng || 12.496366 }), [lat, lng]);
 
+    // const [isImgLoaded, setIsImageLoaded] = useState(true) // Commentato perché non necessario
 
-    const [isImgLoaded, setIsImageLoaded] = useState(true)
-
-    const handleClickNoClick = () => {
-        setIsImageLoaded(!isImgLoaded)
-    }
-
+    // const handleClickNoClick = () => { // Commentato perché non necessario
+    //     setIsImageLoaded(!isImgLoaded)
+    // }
 
     return (
         <>
             {
-                (isLoaded && isImgLoaded) ? (
-                    <div onClick={handleClickNoClick}>
+                isLoaded ? ( // Rimossa la condizione isImgLoaded
+                    // <div onClick={handleClickNoClick}> // Commentato perché non necessario
+                    <div>
                         <GoogleMap zoom={zoom} center={center} mapContainerClassName='map-container' >
                             < Marker position={center} />
                         </GoogleMap >
                     </div>
                 ) :
                     (
-                        <div onClick={handleClickNoClick} style={{ border: '2px solid black' }}>
+                        // <div onClick={handleClickNoClick} style={{ border: '2px solid black' }}> // Commentato perché non necessario
+                        <div style={{ border: '2px solid black' }}>
                             Loading MAP PAGE...
-                            <Spinner />
+                            {/* <Spinner /> */} {/* Commentato perché non necessario */}
                         </div>
                     )
-
             }
         </>
     )
 }
-
-
 
 export default InitMap;

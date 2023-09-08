@@ -10,12 +10,31 @@ import Form from "react-bootstrap/Form";
 
 /* MUI MATERIAL ICONS */
 import SaveIcon from "@mui/icons-material/Save";
+import MaterialeService from "../../../../../../../DataAPI/services/materiale.service";
+import { useState } from 'react';
 
 const MaterModalAdd = ({ show, close }) => {
+  const [descrizione, setDescrizione] = useState()
+  const { addMateriale } = MaterialeService();
   // const [show, setShow] = useState(false);
   // const handleClose = () => setShow(false);
   // const handleShow = () => setShow(true);
+  const handleAddmaterial = async (e) => {
+    try {
+      if (!descrizione) return alert("add descrizione")
+      await addMateriale(descrizione);
 
+      setDescrizione()
+      console.log("set form data provincia --- dati salvati");
+      close();
+    } catch (error) {
+      // eslint-disable-next-line
+      const resMessage = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+
+    } finally {
+
+    }
+  };
   return (
     <>
       <Modal
@@ -39,7 +58,7 @@ const MaterModalAdd = ({ show, close }) => {
               <h4>Tipo di Materiale</h4>
             </Col>
             <Col xs={12} md={6}>
-              <Form.Control type="text" placeholder="" autoFocus />
+              <Form.Control type="text" placeholder="" autoFocus value={descrizione} onChange={(e) => setDescrizione(e.target.value)} />
             </Col>
           </Row>
           {/* <Row className="d-flex justify-content-start mb-4">
@@ -54,7 +73,7 @@ const MaterModalAdd = ({ show, close }) => {
                     </Row> */}
         </Modal.Body>
         <Modal.Footer className="d-flex justify-content-center mt-4">
-          <Button onClick={close}>{<SaveIcon />}Save and Close</Button>
+          <Button onClick={() => handleAddmaterial()}>{<SaveIcon />}Save and Close</Button>
         </Modal.Footer>
       </Modal>
     </>

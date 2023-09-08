@@ -1,25 +1,30 @@
 import React, { useState } from 'react';
 import { Row, Form, Dropdown } from 'react-bootstrap';
 
-const regioniItaliane = [
+const abbrRegioni = [
     'ABR', 'BAS', 'CAL', 'CAM', 'EMR', 'FVG', 'LAZ', 'LIG', 'LOM', 'MAR',
     'MOL', 'PIE', 'PUG', 'SAR', 'SIC', 'TOS', 'TRE', 'UMB', 'VAO', 'VEN',
 ];
 
-const RegForm = () => {
+const AbbrRegForm = ({ setFormAbbrRegioni, selectedRegVal }) => {
     const [selectedReg, setSelectedReg] = useState('');
 
-    const handleRegSelect = (province) => {
-        setSelectedReg(province);
+
+
+    const handleRegSelect = (region) => {
+        if (setFormAbbrRegioni) {
+            setFormAbbrRegioni(region);
+        }
+        setSelectedReg(selectedRegVal);
     };
 
-    const renderRegForm = () => {
+    const renderAbbrRegForm = () => {
         if (selectedReg === '') {
             return null;
         }
 
         return (
-            <Form.Group controlId="provinceDetails">
+            <Form.Group controlId="regioneDetails">
                 <Form.Label>{''}</Form.Label>
                 <Form.Control type="text" value={selectedReg} readOnly />
                 {/* Aggiungi altri campi del form per i dettagli della provincia qui */}
@@ -27,16 +32,21 @@ const RegForm = () => {
         );
     };
 
+
+
+
+
+
     return (
         <Form>
-            <Form.Group controlId="provinceSelect">
+            <Form.Group controlId="regioneSelect">
                 <Dropdown>
                     <Row>
-                        <Dropdown.Toggle variant="primary" id="provinceDropdown">
+                        <Dropdown.Toggle variant="primary" id="regioneDropdown">
                             Seleziona
                         </Dropdown.Toggle>
                         <Dropdown.Menu>
-                            {regioniItaliane.map((regione, index) => (
+                            {abbrRegioni?.map((regione, index) => (
                                 <Dropdown.Item key={index} onClick={() => handleRegSelect(regione)}>
                                     {regione}
                                 </Dropdown.Item>
@@ -45,9 +55,9 @@ const RegForm = () => {
                     </Row>
                 </Dropdown>
             </Form.Group>
-            {renderRegForm()}
+            {renderAbbrRegForm()}
         </Form>
     );
 }
 
-export default RegForm;
+export default AbbrRegForm;
