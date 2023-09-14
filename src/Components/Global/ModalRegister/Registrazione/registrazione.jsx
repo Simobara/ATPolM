@@ -1,29 +1,28 @@
-import React, { useState } from 'react';
+import React from 'react';
 // eslint-disable-next-line
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
 //*COMPONENT
-import "./modalContact.css";
-import Chat from '../Chat/chat';
+import "./registrazione.css";
 
 
 
 
 
 
-const ModalContact = ({ propShow, propClose }) => {
+const Registrazione = ({ propShow, propClose }) => {
 
-    const [isChatModalOpen, setIsChatModalOpen] = useState(false);
+    // const [isRegistrazionetModalOpen, setIsChatModalOpen] = useState(false);
 
 
-    const handleOpenChatModal = () => {
-        setIsChatModalOpen(true);
-    }
+    // const handleOpenChatModal = () => {
+    //     setIsChatModalOpen(true);
+    // }
 
-    const handleCloseChatModal = () => {
-        setIsChatModalOpen(false);
-    }
+    // const handleCloseChatModal = () => {
+    //     setIsChatModalOpen(false);
+    // }
 
     return (
         <>
@@ -56,14 +55,14 @@ const ModalContact = ({ propShow, propClose }) => {
                     </div>
                 </Modal.Body>
                 <Modal.Footer>
-                    <button onClick={() => handleOpenChatModal()} className="btn btn-primary mt-2">APRI LA CHAT</button>
-                    {isChatModalOpen && (
+                    {/* <button onClick={() => handleOpenChatModal()} className="btn btn-primary mt-2">APRI LA CHAT</button> */}
+                    {/* {isChatModalOpen && (
                         <Chat propShow={isChatModalOpen} propClose={handleCloseChatModal} />
-                    )}
+                    )} */}
                 </Modal.Footer>
             </Modal>
         </>
     );
 }
 
-export default ModalContact;
+export default Registrazione;

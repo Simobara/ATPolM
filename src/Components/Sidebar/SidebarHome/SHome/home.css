@@ -1,3 +1,8 @@
+.elems-container {
+  /* background-color: #030947 !important; */
+  min-height: 100vh;
+}
+
 .row-overflow {
   overflow-x: auto;
   white-space: nowrap;

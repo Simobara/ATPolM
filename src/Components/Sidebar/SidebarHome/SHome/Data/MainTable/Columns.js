@@ -1,11 +1,12 @@
 export const tableColumn = [
   {
-    detail:false,
+    detail: false,
     Header: "",
     accessor: "openDetail",
   },
+
   {
-    detail:false,
+    detail: false,
     Header: "Id Annuncio",
     accessor: "id",
   },
@@ -14,26 +15,31 @@ export const tableColumn = [
   //   accessor: "ragioneSociale",
   // },
   {
-    detail:false,
+    detail: false,
     Header: "Immagine",
     accessor: "fotoStringata",
   },
   {
-    detail:false,
+    detail: false,
     Header: "Classe Waste",
     accessor: "classeWaste",
   },
   {
-    detail:false,
+    detail: false,
     Header: "Quantita",
     accessor: "quantita",
+  },
+  {
+    detail: false,
+    Header: "Scadenza",
+    accessor: "dataDiScadenza",
   },
   // {
   //   Header: "Address",
   //   accessor: "address",
   // },
   {
-    detail:true,
+    detail: true,
     Header: "descrizioneDetail",
     accessor: "descrizioneDetail",
   },

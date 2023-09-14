@@ -11,7 +11,7 @@ import withRouter from "../../../../../DataAPI/common/with-router";
 import AnnuncioService from "../../../../../DataAPI/services/annuncio.service";
 import axios from "axios";
 import JoditEditor from "jodit-react";
-import { editorConfig } from './EditorConfig';
+import { editorConfig } from './Component/EditorConfig/EditorConfig';
 
 //*COMPONENTS
 // import SaveButton from "./Component/SaveButton/saveButton";
@@ -214,7 +214,7 @@ const NuovoAnnuncio = (props) => {
   }
 
 
-console.log(formData.quantita,'formData.quantita')
+  console.log(formData.quantita, 'formData.quantita')
   //**************************************************************RETURN
   return (
     <>

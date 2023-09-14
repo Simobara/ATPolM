@@ -1,0 +1,83 @@
+.modal {
+    border: 3px solid black;
+    background-color: rgba(0, 0, 0, 0.289);
+}
+
+.modal-close-button {
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    font-size: 3.5rem;
+    line-height: 1;
+    color: red;
+    opacity: 0.9;
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    z-index: 100;
+    transition: opacity 0.15s ease;
+}
+
+.modal-close-button:hover {
+    opacity: 1;
+}
+
+.modal-title {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.modal-body {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    /* justify-content: flex-end; */
+}
+
+.form-containeer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    /* text-align: right; */
+}
+
+.input-group {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.form-wrapper {
+    max-width: 400px;
+}
+
+.content-container {
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    height: 100%;
+    font-size: larger !important;
+}
+
+.label-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    text-align: left;
+    padding-right: 10px;
+    font-size: larger;
+}
+
+.modal-footer-button-container {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    width: 100%;
+}
+
+.modal-footer-button {
+    flex: 1;
+    max-width: 200px;
+}

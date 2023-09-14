@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Form } from "react-bootstrap";
-import DropdownMenu from "./Component/DropdownMenu/dropdownMenu";
-import SaveButton from "./Component/SaveButton/saveButton";
-import DeleteButton from "./Component/DeleteButton/deleteButton";
+import DropdownMenu from "../Component/DropdownMenu/dropdownMenu";
+import SaveButton from "../Component/SaveButton/saveButton";
+import DeleteButton from "../Component/DeleteButton/deleteButton";
 import "./nuovoAnnuncio.css";
 
 

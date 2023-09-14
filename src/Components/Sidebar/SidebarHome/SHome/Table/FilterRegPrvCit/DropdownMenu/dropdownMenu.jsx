@@ -1,17 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Select from 'react-select';
 
-const DropdownMenu = ({ propsData, setPropValue, propDropdownValue, placeholder }) => {
-  console.log("propsData", propsData)
+const DropdownMenu = ({ propsData, propSetValue, propDropdownValue, placeholder }) => {
+  console.log("propsData", propDropdownValue)
 
   const [value, setValue] = useState(null); // Impostato su null per evitare conflitti con il placeholder
 
+  useEffect(() => { setValue(propDropdownValue) }, [propDropdownValue])
   const handleOnChange = (selectedOption) => {
     setValue(selectedOption);
     if (selectedOption) {
-      setPropValue(selectedOption);
+      console.log(selectedOption, "selectedOption")
+      propSetValue(selectedOption);
     } else {
-      setPropValue(null);
+      propSetValue(null);
     }
   };
 
@@ -23,7 +25,7 @@ const DropdownMenu = ({ propsData, setPropValue, propDropdownValue, placeholder 
         options={propsData}
         onChange={handleOnChange}
         value={value}
-        placeholder={placeholder || "Seleziona.."} // Usa il placeholder passato come prop o un testo di default
+        placeholder={propDropdownValue || "Seleziona.."} // Usa il placeholder passato come prop o un testo di default
       />
     </div>
   );

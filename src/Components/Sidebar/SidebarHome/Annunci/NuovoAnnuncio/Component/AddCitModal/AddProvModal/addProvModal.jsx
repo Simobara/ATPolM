@@ -21,7 +21,7 @@ import CodiceFormAdd from "../../../../../AnagrAz/Localita/Province/Component/Co
 import "./addProvModal.css";
 import axios from "axios";
 import { useEffect } from "react";
-import { provinceSigle , provinceNomiCompleti, provinciaRegione} from "../../../../../AnagrAz/Localita/Province/ProvSigleNomi/provSigleNomi";
+import { provinceSigle, provinceNomiCompleti, provinciaRegione } from "../../../../../AnagrAz/Localita/Province/ProvSigleNomi/provSigleNomi";
 
 
 
@@ -40,11 +40,13 @@ const ProvModalAdd = ({ propShow, propClose, propListaProvCodAdded }) => {
   const [loading, setLoading] = useState(false);
   // eslint-disable-next-line
   const [message, setMessage] = useState("");
+  // eslint-disable-next-line
   const [regSelected, setRegSelected] = useState('')
   const [errorRegione, setErrorRegione] = useState(""); // Stato errore per la Regione
   const [errorCodice, setErrorCodice] = useState(""); // Stato errore per il Codice
   const [isModalAddRegActive, setIsModalAddRegActive] = useState(false);
   const [searchTerm, setSearchTerm] = useState(""); // Stato per il termine di ricerca
+  // eslint-disable-next-line
   const [errorDigit, setErrorDigit] = useState('');
 
 
@@ -56,9 +58,11 @@ const ProvModalAdd = ({ propShow, propClose, propListaProvCodAdded }) => {
   const [isDefaultBorder, setIsDefaultBorder] = useState(true);
   const [inputBorderClass, setInputBorderClass] = useState("form-control");
   const [isProvinceFound, setIsProvinceFound] = useState(false);
+  // eslint-disable-next-line
   const [provinceFound, setProvinceFound] = useState(false);
   const [listRegProvSiglFiltered, setListRegProvSiglFiltered] = useState('')
   const [regioniUPPER, setRegioniUPPER] = useState([]);
+  // eslint-disable-next-line
   const [regListCurrent, setRegListCurrent] = useState([]);
 
   const { addProvincia } = ProvinciaService();
@@ -252,25 +256,25 @@ const ProvModalAdd = ({ propShow, propClose, propListaProvCodAdded }) => {
 
 
 
-  const handleProvinceFound = (nomeProvinciaCompleto, nomeProvinciaItaliano,provLength) => {
-    if(provLength>1){
+  const handleProvinceFound = (nomeProvinciaCompleto, nomeProvinciaItaliano, provLength) => {
+    if (provLength > 1) {
       setIsProvinceFound(false);
-      setInputBorderClass("form-control") 
+      setInputBorderClass("form-control")
     }
-    else if(provLength==1){
+    else if (provLength === 1) {
       setIsProvinceFound(true);
       setInputBorderClass("form-control is-valid");
     }
-    else if(provLength==0){
+    else if (provLength === 0) {
       setIsProvinceFound(false);
       setInputBorderClass("form-control is-invalid");
     }
-   };
+  };
 
 
 
 
-console.log(propListaProvCodAdded,"propListaProvCodAdded")
+  console.log(propListaProvCodAdded, "propListaProvCodAdded")
 
   return (
     <>
@@ -294,10 +298,10 @@ console.log(propListaProvCodAdded,"propListaProvCodAdded")
 
         <Modal.Body>
           <Row className="d-flex justify-content-start mb-4">
-          <Col xs={12} md={2}> <h4>Codice Provincia</h4> </Col>
-          <Col xs={12} md={1}></Col>
+            <Col xs={12} md={2}> <h4>Codice Provincia</h4> </Col>
+            <Col xs={12} md={1}></Col>
             <Col xs={12} md={6}>
-            <CodiceFormAdd
+              <CodiceFormAdd
                 propFrmData={(val) => {
                   setFormData((prevState) => ({ ...prevState, "codice": val }));
                   setErrorCodice(""); // Reimposta l'errore quando una provincia viene selezionata

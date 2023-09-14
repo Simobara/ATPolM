@@ -31,23 +31,31 @@ const SHome = () => {
   const { getAnnunci } = AnnuncioService();
   const getAnnunciData = async () => {
     const response = await getAnnunci()
-    setAnnunci(response?.data?.map((data) => ({ ...data, classeWaste: data?.materiale?.descrizione, descrizioneDetail: data?.descrizione })))
-    if (response?.data) { setLoading(false) }
+    setAnnunci(response?.data?.map((data) => ({
+      ...data,
+      classeWaste: data?.materiale?.descrizione,
+      descrizioneDetail: data?.descrizione
+    })))
 
-
+    if (response?.data) {
+      setLoading(false)
+    }
   }
   useEffect(() => {
     getAnnunciData()
     // eslint-disable-next-line
   }, [])
 
+
   return loading ? (null) : (
     <>
       <div className="elems-container" style={{ fontSize: "1.9rem", marginTop: "80px" }}>
         <div className="container-fluid">
           <div className="row row-overflow">
-            <Table columnData={[...tableColumn]} rowData={annunci}
-            // handleAddNewRecPopup={handleAddNewRecPopup}
+            <Table
+              propColumnData={[...tableColumn]}
+              propRowData={annunci}
+            //  {/* handleAddNewRecPopup={handleAddNewRecPopup} */}
             />
             {/*<MainTable*/}
             {/*    getTableProps={getTableProps}*/}
