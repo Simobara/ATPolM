@@ -94,9 +94,9 @@ const CatModalAdd = ({ show, close }) => {
       <Modal
         show={show}
         // close={close}
-        size="lg"
+        size="md"
         aria-labelledby="contained-modal-title-vcenter"
-        centered
+        top="true"
       >
         <Modal.Header>
           <Modal.Title id="contained-modal-title-vcenter" className="font-weight-bold">
@@ -137,7 +137,7 @@ const CatModalAdd = ({ show, close }) => {
         <Modal.Footer className="d-flex justify-content-center mt-4">
           <Button onClick={handleAddCategoria}>{<SaveIcon />}Save and Close</Button>
         </Modal.Footer>
-      </Modal>
+      </Modal >
     </>
   );
 };

@@ -12,12 +12,12 @@ import { required, email } from "./Validations/validations"; //(e' di supporto)
 
 
 
-const FormInput = ({ id, label, type, options = [], propOnChange, propValue }) => {
+const FormInput = ({ id, label, type, options = [], propOnChange, propValue, propIsFormReset }) => {
     const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState(null);
 
     const handleTogglePasswordVisibility = () => {
-        setShowPassword(!showPassword);
+        setShowPassword(!showPassword)
     };
 
 
@@ -30,7 +30,11 @@ const FormInput = ({ id, label, type, options = [], propOnChange, propValue }) =
         }
     }
 
-
+    useEffect(() => {
+        if (propIsFormReset) {
+            setError(null);
+        }
+    }, [propIsFormReset]);
 
     useEffect(() => {
         if (propValue) handleValidation(propValue);
@@ -83,7 +87,7 @@ const FormInput = ({ id, label, type, options = [], propOnChange, propValue }) =
                         onChange={handleChange}
                         value={propValue}
                     >
-                        <option value="" disabled selected>Seleziona</option>
+                        <option value="" disabled>Seleziona</option>
                         {options.map((option, index) => (
                             <option key={index} value={option}>{option}</option>
                         ))}
@@ -101,7 +105,8 @@ const FormInput = ({ id, label, type, options = [], propOnChange, propValue }) =
                             className="mt-2 form-control form_middle_pagenuovo custom-container"
                             onChange={handleChange}
                             value={propValue}
-                            style={{ flex: '1', fontSize: '18px', height: '40px' }}  // Assicura che l'input occupi tutto lo spazio disponibile
+                            style={{ flex: '1', fontSize: '18px', height: '40px' }}
+                        // Assicura che l'input occupi tutto lo spazio disponibile
                         />
                     </div>
                 );

@@ -103,7 +103,7 @@ const RegModalAdd = ({ propShow, propClose, propListaRegDescrAdded }) => {
       <Modal
         show={propShow}
         // close={close}
-        size="lg"
+        size="md"
         aria-labelledby="contained-modal-title-vcenter"
         top="true"
       >

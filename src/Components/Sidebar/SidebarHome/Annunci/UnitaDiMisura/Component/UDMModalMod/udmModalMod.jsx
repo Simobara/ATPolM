@@ -43,9 +43,9 @@ const UMDModalMod = ({ show, close, id }) => {
             <Modal
                 show={show}
                 // close={close}
-                size="lg"
+                size="md"
                 aria-labelledby="contained-modal-title-vcenter"
-                centered
+                top="true"
             >
                 <Modal.Header >
                     <Modal.Title id="contained-modal-title-vcenter" className="font-weight-bold">
@@ -57,7 +57,7 @@ const UMDModalMod = ({ show, close, id }) => {
                 </Modal.Header>
                 <Modal.Body>
                     <Row className="d-flex justify-content-start mb-4">
-                        <Col xs={12} md={6}><h4>Nome Unità di misura</h4></Col>
+                        <Col xs={12} md={6}><h4>Nome</h4></Col>
                         <Col xs={12} md={6}><Form.Control type="text" placeholder="" autoFocus value={descrizione} onChange={(e) => setDescrizione(e.target.value)} /></Col>
                     </Row>
                     {/* <Row className="d-flex justify-content-start mb-4">
@@ -72,7 +72,7 @@ const UMDModalMod = ({ show, close, id }) => {
                     </Row> */}
                 </Modal.Body>
                 <Modal.Footer className="d-flex justify-content-center mt-4">
-                    <Button onClick={() => handleAddUmd()}>{<SaveIcon />}Save and Close</Button>
+                    <Button onClick={() => handleAddUmd()}>{<SaveIcon />}Salva e Chiudi</Button>
                 </Modal.Footer>
             </Modal>
         </>

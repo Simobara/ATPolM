@@ -23,6 +23,7 @@ import AddCitModal from "./Component/AddCitModal/addCitModal";
 import AddBoxIcon from '@mui/icons-material/AddBox'
 
 import SaveIcon from '@mui/icons-material/Save';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 
 
@@ -61,6 +62,11 @@ const NuovoAnnuncio = (props) => {
     titolo: "",
     descrizione: "",
     quantita: "",
+    classewaste: "",
+    ubicazione: "",
+    idUnitaDiMisura: "",
+    idMateriale: "",
+    idLocalita: "",
   });
   // eslint-disable-next-line 
   const editor = useRef(null);
@@ -71,6 +77,8 @@ const NuovoAnnuncio = (props) => {
   const [material, setMaterial] = useState([]);
   const [udm, setUdm] = useState([]);
   const [dropdownValue, setDropdownValue] = useState({
+    titolo: "",
+    descrizione: "",
     quantita: "",
     classewaste: "",
     Ubicazione: "",
@@ -79,9 +87,24 @@ const NuovoAnnuncio = (props) => {
     idLocalita: "",
   })
 
+
+  const handleResetForm = (e) => {
+    e.preventDefault()
+    setFormData({
+      quantita: "",
+      classewaste: "",
+      ubicazione: "",
+      idUnitaDiMisura: "",
+      idMateriale: "",
+      idLocalita: "",
+    });
+  };
+
+
+
   const [isModalAddCitActive, setIsModalAddCitActive] = useState(false);
 
-  function capitalizeText(text) {
+  const capitalizeText = (text) => {
     return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
   }
 
@@ -103,13 +126,13 @@ const NuovoAnnuncio = (props) => {
   };
   const getMaterial = async () => {
     const result = await axios.get("http://localhost:8080/api/materiali");
-
     setMaterial(result?.data?.map((data) => ({
       id: data.id,
       label: data.descrizione,
       value: data.descrizione,
     })));
   };
+
   const getUdm = async () => {
     const result = await axios.get("http://localhost:8080/api/unita-di-misura");
     setUdm(result?.data?.map((data) => ({
@@ -120,17 +143,27 @@ const NuovoAnnuncio = (props) => {
   };
   const citDescr = cittaData?.map(cit => cit.descrizione)
 
-  const handleImageChange = (event) => {
+  const handleImageChange = async (event) => {
     const file = event.target.files[0];
     setSelectedImage(file);
-    var promise = getBase64(file);
-    promise.then(function (result) {  //Altrimenti non possiamo ottenere il codice base64 da collegare ad una variabile   
-      //console.log("Base64 async: " + result);
+    try {
+      const result = await getBase64(file);
       setBase64File(result);
-      console.log(result, "resultbn")
-    });
+      console.log(result, "resultbn");
+    } catch (error) {
+      console.error("Errore nella conversione in base64:", error);
+    }
   };
 
+
+  const getBase64 = (fileToConvert, onLoadCallback) => {
+    return new Promise(function (resolve, reject) {
+      var reader = new FileReader();
+      reader.onload = function () { resolve(reader.result); };     //Qua restituisce il valore che ci serve
+      reader.onerror = reject;
+      reader.readAsDataURL(fileToConvert);
+    });
+  }
 
 
   useEffect(() => {
@@ -139,6 +172,8 @@ const NuovoAnnuncio = (props) => {
     getUdm();
     // eslint-disable-next-line 
   }, [isModalAddCitActive]);
+
+
   const onChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({
@@ -146,6 +181,7 @@ const NuovoAnnuncio = (props) => {
       [name]: value,
     }));
   };
+
   // eslint-disable-next-line
   const required = (value) => {
     if (!value) {
@@ -170,20 +206,10 @@ const NuovoAnnuncio = (props) => {
 
         // (titolo, descrizione, quantita, file, dataDiScadenza, idLocalita, idMateriale, idUnitaDiMisura, currentUserId)
         const response = await addAnnuncio(formData.titolo, formData.descrizione, formData.quantita, base64File, date, dropdownValue.idLocalita, dropdownValue.idMateriale, dropdownValue.idUnitaDiMisura, 1);
-
         if (response) {
           props.router.navigate("/");
         }
-        // window.location.reload();
-        // setFormData({
-        //   titolo: "",
-        //   descrizione: "",
-        //   quantita: "",
-        // });
-        // console.log("set form data annunci --- dati salvati");
       } catch (error) {
-        // const resMessage = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
-        // setMessage(resMessage);
       }
     }
     else {
@@ -191,30 +217,24 @@ const NuovoAnnuncio = (props) => {
     }
   };
 
-
   const handleAddLocModalOpen = () => {
     setIsModalAddCitActive(true)
-    console.log("modalAddLoc open");
+    // console.log("modalAddLoc open");
   };
 
   const handleAddCitModalClose = () => {
     setIsModalAddCitActive(false)
-    console.log("modalAddLoc close");
+    // console.log("modalAddLoc close");
   };
 
 
 
-  function getBase64(fileToConvert, onLoadCallback) {
-    return new Promise(function (resolve, reject) {
-      var reader = new FileReader();
-      reader.onload = function () { resolve(reader.result); };     //Qua restituisce il valore che ci serve
-      reader.onerror = reject;
-      reader.readAsDataURL(fileToConvert);
-    });
-  }
 
 
-  console.log(formData.quantita, 'formData.quantita')
+  // console.log(formData.quantita, 'formData.quantita')
+
+
+
   //**************************************************************RETURN
   return (
     <>
@@ -237,7 +257,7 @@ const NuovoAnnuncio = (props) => {
                     className="mt-2 form-control form_middle_pagenuovo custom-container"
                     name="titolo"
                     autoFocus
-                    value={formData.titolo}
+                    value={formData?.titolo}
                     onChange={onChange}
                   // validations={[required]}
                   />
@@ -264,7 +284,7 @@ const NuovoAnnuncio = (props) => {
                     validations={[required]}
                   /> */}
                   <JoditEditor
-                    value={formData.descrizione}
+                    value={formData?.descrizione}
                     config={editorConfig}
                     onChange={(value) => setFormData((prev) => ({ ...formData, "descrizione": value }))}
                     onBlur={(value, event) => console.log(event)}
@@ -290,7 +310,7 @@ const NuovoAnnuncio = (props) => {
                       type="number"
                       className="mt-2 p-4 form-control"
                       name="quantita"
-                      value={formData.quantita}
+                      value={formData?.quantita}
                       onChange={onChange}
                     // validations={[required]}
                     />
@@ -398,12 +418,18 @@ const NuovoAnnuncio = (props) => {
             {/* <CheckButton style={{ display: "none" }} ref={refCheckBtn} /> */}
           </div>
 
-          <div className="d-flex justify-content-center form_middle_page_btn" style={{ marginRight: "20%", marginTop: "80px", paddingBottom: "130px" }}>
-            {/* <SaveButton isDisabled={loading} handleAdd={saveAnnuncio} /> */}
-            <div className="form-group">
-              <button className="btn btn-primary btn-block" disabled={loading} onClick={handleAddAnnuncio}>
-                {loading && <span className="spinner-border spinner-border-sm"></span>}
+          <div className="row justify-content-center form_middle_page_btn" style={{ marginTop: "80px", paddingBottom: "130px" }}>
+            <div className="form-group col-md-2 mr-3">
+              <button className="btn btn-primary btn-block"
+              // onClick={"#"}
+              >
+                {/* {loading && <span className="spinner-border spinner-border-sm"></span>} */}
                 <span><SaveIcon />Salva</span>
+              </button>
+            </div>
+            <div className="form-group col-md-2 ml-5">
+              <button className="btn btn-danger btn-block" onClick={handleResetForm}>
+                <span><DeleteIcon /> Cancella</span>
               </button>
             </div>
             {/* <DeleteButton /> */}
@@ -419,4 +445,3 @@ const NuovoAnnuncio = (props) => {
 
 export default withRouter(NuovoAnnuncio);
 
-// export default NuovoAnnuncio;

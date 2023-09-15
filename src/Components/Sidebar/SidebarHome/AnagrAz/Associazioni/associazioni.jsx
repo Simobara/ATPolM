@@ -1,5 +1,6 @@
 import React from "react";
-/* COMPONENTS */
+
+//* COMPONENTS */
 import AssTable from "./Component/AssTable/assTable";
 
 const Associazioni = () => {

@@ -1,7 +1,8 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 //* VALIDATIONS
 import AziendaService from "../../../../../DataAPI/services/azienda.service";
+// eslint-disable-next-line
 import CheckButton from "react-validation/build/button";
 
 //* COMPONENTS
@@ -13,6 +14,7 @@ import "./aggSingAz.css";
 
 //* MUI MATERIAL ICONS
 import SaveIcon from '@mui/icons-material/Save';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 
 
@@ -22,6 +24,8 @@ const AggSingAz = () => {
   const refCheckBtn = useRef(null);
   // eslint-disable-next-line
   const [message, setMessage] = useState("");
+  const [isFormReset, setIsFormReset] = useState(false);
+
   const [formData, setFormData] = useState({
     Email: "",
     Ruoli: "",
@@ -45,6 +49,32 @@ const AggSingAz = () => {
     "Attivita'Secondaria": ""
   });
 
+  const handleResetForm = (e) => {
+    e.preventDefault()
+    setFormData({
+      Email: "",
+      Ruoli: "",
+      Password: "",
+      ConfermaPassword: "",
+      RagioneSociale: "",
+      RappresentanteLegale: "",
+      Indirizzo: "",
+      CodiceFiscale: "",
+      PartitaIva: "",
+      Telefono1: "",
+      Telefono2: "",
+      DescrizioneTelefoni: "",
+      Fax: "",
+      Pec: "",
+      FormaGiuridica: "",
+      Associazione: "",
+      Localita: "",
+      Categoria: "",
+      "Attivita'Principale": "",
+      "Attivita'Secondaria": ""
+    });
+    setIsFormReset(true);
+  };
 
 
   // OPTIONS
@@ -99,6 +129,7 @@ const AggSingAz = () => {
             {...inputData}
             propOnChange={handleChange}
             propValue={formData[inputData.id]}
+            propIsFormReset={isFormReset}
           />
         ))}
       </div>
@@ -115,7 +146,8 @@ const AggSingAz = () => {
     setMessage("");
     refForm.current.validateAll();
 
-    if (refCheckBtn.current.context._errors.length === 0) {
+    // if (refCheckBtn.current.context._errors.length === 0) {
+    if (refCheckBtn.current && refCheckBtn.current.context && refCheckBtn.current.context._errors && refCheckBtn.current.context._errors.length === 0) {
       try {
         // Aggiorna questa chiamata con i parametri corretti
         await addAzienda(formData);
@@ -150,8 +182,11 @@ const AggSingAz = () => {
   };
 
 
-
-
+  useEffect(() => {
+    if (isFormReset) {
+      setIsFormReset(false);
+    }
+  }, [isFormReset]);
 
 
 
@@ -163,14 +198,20 @@ const AggSingAz = () => {
             {handleSection("DATI LOGIN", formDatiLogin)}
             {handleSection("DATI AZIENDA", formDatiAzienda)}
           </div>
-          <div className="d-flex justify-content-center form_middle_page_btn"
-            style={{ marginRight: "20%", marginTop: "80px", paddingBottom: "130px" }}>
-            <div className="form-group">
-              <button className="btn btn-primary btn-block" type="submit">
+          <div className="row justify-content-center form_middle_page_btn" style={{ marginTop: "80px", paddingBottom: "130px" }}>
+            <div className="form-group col-md-2 mr-3">
+              <button className="btn btn-primary btn-block"
+              // onClick={"#"}
+              >
+                {/* {loading && <span className="spinner-border spinner-border-sm"></span>} */}
                 <span><SaveIcon />Salva</span>
               </button>
             </div>
-            <CheckButton style={{ display: "none" }} ref={refCheckBtn} />
+            <div className="form-group col-md-2 ml-5">
+              <button className="btn btn-danger btn-block" onClick={handleResetForm}>
+                <span><DeleteIcon /> Cancella</span>
+              </button>
+            </div>
           </div>
         </Form>
       </div>
@@ -179,3 +220,7 @@ const AggSingAz = () => {
 };
 
 export default AggSingAz;
+
+
+
+

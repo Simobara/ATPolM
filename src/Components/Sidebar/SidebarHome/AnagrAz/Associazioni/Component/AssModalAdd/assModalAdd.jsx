@@ -92,9 +92,9 @@ const AssModalAdd = ({ show, close }) => {
             <Modal
                 show={show}
                 // close={close}
-                size="lg"
+                size="md"
                 aria-labelledby="contained-modal-title-vcenter"
-                centered
+                top="true"
             >
                 <Modal.Header >
                     <Modal.Title id="contained-modal-title-vcenter" className="font-weight-bold">

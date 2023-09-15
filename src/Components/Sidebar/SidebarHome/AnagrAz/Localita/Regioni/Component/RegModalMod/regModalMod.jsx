@@ -110,9 +110,9 @@ const RegModalMod = ({ propShow, propClose, propId, propListaRegDescrAdded }) =>
       <Modal
         show={propShow}
         // close={close}
-        size="lg"
+        size="md"
         aria-labelledby="contained-modal-title-vcenter"
-        top
+        top="true"
       >
         <Modal.Header>
           <Modal.Title id="contained-modal-title-vcenter" className="font-weight-bold"> <h2>Modifica Regione</h2> </Modal.Title>
@@ -122,8 +122,8 @@ const RegModalMod = ({ propShow, propClose, propId, propListaRegDescrAdded }) =>
         </Modal.Header>
         <Modal.Body>
           <Row className="d-flex justify-content-start mb-4">
-            <Col xs={12} md={6}> <h4>Nome Regione</h4> </Col>
-            <Col xs={12} md={6}>
+            <Col xs={12} md={4}> <h4>Nome Regione</h4> </Col>
+            <Col xs={12} md={8} className="justify-content-end">
               <Row>
                 <Col>
                   <RegioniForm
