@@ -1,0 +1,28 @@
+.custom-modal {
+  max-width: 50%;
+  max-height: 80vh;
+}
+
+.custom-modal-content {
+  max-height: 100vh; /* Regola l'altezza massima del contenuto del modal */
+  overflow-y: auto; /* Abilita lo scrolling se il contenuto è più lungo dell'altezza massima */
+}
+
+.custom-modal-content .dropdown-menu {
+  position: absolute;
+  z-index: 1000;
+  border: 1px solid #ccc; /* Aggiungi un bordo al menu delle tendine */
+  border-radius: 4px; /* Opzionale: aggiungi un bordo arrotondato */
+}
+.modal-header {
+  background-color: limegreen; /* Colore di sfondo desiderato */
+  color: white; /* Colore del testo nell'header */
+  border-bottom: none; /* Rimuove il bordo inferiore */
+}
+
+.modal-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+}

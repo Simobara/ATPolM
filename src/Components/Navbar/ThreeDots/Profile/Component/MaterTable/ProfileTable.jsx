@@ -1,22 +1,27 @@
 import React, { useState } from "react";
 
 import { useNavigate } from "react-router-dom";
-/* CSS */
-import "./materTable.css";
-/* COMPONENTS */
+//* CSS */
+import "./profileTable.css";
+//* COMPONENTS */
 // import ButtonPen from '../../../../../../../Global/ButtonPen/buttonPen';
 // import MaterModalAdd from "../MaterModalAdd/materModalAdd";
 // import MaterModalMod from "../MaterModalMod/materModalMod";
 // import MaterModalDel from "../MaterModalDel/materModalDel";
 import ProButton from "../../../../../Global/ProButton/ProButton";
-/* MUI MATERIAL ICONS */
+//* MUI MATERIAL ICONS */
 import ModeIcon from "@mui/icons-material/Mode";
+// eslint-disable-next-line
+import AddIcon from "@mui/icons-material/Add";
+
+
+
 
 
 const ProfileNavTable = () => {
   const navigate = useNavigate();
   // const columns = ["", "Materiali", ""];
-
+  const columns = ["", "Citta", "Cap", "Provincia"];
   const rowsCatAziende = ["A", "B", "C", "D", "E", "F", "G"];
   // const rowsCita = ["Aa", "Bc", "Cc", "Dd", "Ee", "Ff", "Gg"];
 
@@ -71,16 +76,10 @@ const ProfileNavTable = () => {
       return "col-4  h5 justify-content-center";
     } else if (columnIndex === 2) {
       return "col-3   h5 justify-content-center";
-      // } else if (columnIndex === 3) {
-      //     return 'col-2 px-2 text-center h5';
-      // } else if (columnIndex === 4) {
-      //     return 'col-4 px-4 text-center h5';
     } else if (columnIndex === 3) {
       return "col-3 h5 justify-content-center";
       // } else if (columnIndex === 3) {
       //     return 'col-2 px-2 text-center h5';
-      // } else if (columnIndex === 4) {
-      //     return 'col-4 px-4 text-center h5';
     } else {
       return "col-3 px-12  h5";
     }
@@ -88,26 +87,21 @@ const ProfileNavTable = () => {
 
   return (
     <>
-      <div style={{ marginTop: "5.6rem" }}>
+      <div style={{ marginTop: "5rem" }}>
         <table className="table table-bordered w-100">
           <thead>
-            {/* <tr className="bold-columns text-center">
+            <tr className="bold-columns text-center">
               {columns.map((column, columnIndex) => (
                 <th key={columnIndex}>
                   {columnIndex === 0 && (
-                    <button type="button" className="btn button-modify icon-add" onClick={handleClickAddOpen}>
+                    <button type="button" className="btn button-modify icon-add" onClick={() => (console.log("button open"))}
+                    >
                       <AddIcon className="icon" />
                     </button>
                   )}
                   {column}
                 </th>
               ))}
-            </tr> */}
-            <tr>
-              <th className="th-BorderNone"></th>
-              <th className="th-BorderNone">Citta</th>
-              <th className="th-BorderNone">Cap</th>
-              <th className="th-BorderNone">Provincia</th>
             </tr>
           </thead>
           <tbody>
@@ -138,7 +132,7 @@ const ProfileNavTable = () => {
               </tr>
             ))}
           </tbody>
-        </table>
+        </table >
         <div style={{ marginBottom: "100px" }} className="d-flex justify-content-center w-100 text-sm page-text-input">
           <div className="widthSmall d-flex justify-content-around align-items-center my-1">
             <ProButton text="<<"
@@ -169,7 +163,7 @@ const ProfileNavTable = () => {
         {/* <div>{isModalAddActive && <MaterModalAdd show={isModalAddActive} close={handleClickAddClose} />}</div>
         <div>{isModalModActive && <MaterModalMod show={isModalModActive} close={handleClickModClose} />}</div>
         <div>{isModalDelActive && <MaterModalDel show={isModalDelActive} close={handleClickDelClose} />}</div> */}
-      </div>
+      </div >
     </>
   );
 };

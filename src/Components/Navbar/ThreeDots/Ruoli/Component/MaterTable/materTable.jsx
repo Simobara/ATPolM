@@ -79,7 +79,7 @@ const MaterTable = () => {
 
   return (
     <>
-      <div style={{ marginTop: "5.6rem" }}>
+      <div style={{ marginTop: "5rem" }}>
         <table className="table table-bordered w-100">
           <thead>
             <tr className="bold-columns text-center">
@@ -94,10 +94,10 @@ const MaterTable = () => {
                 </th>
               ))}
             </tr>
-            <tr>
+            {/* <tr>
               <th style={{ border: "none", textAlign: "center", fontSize: "16px", fontWeight: "600" }}>Name</th>
               <th style={{ border: "none" }}></th>
-            </tr>
+            </tr> */}
           </thead>
           <tbody>
             {currentItems.map((row, rowIndex) => (

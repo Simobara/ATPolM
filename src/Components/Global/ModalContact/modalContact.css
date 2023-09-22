@@ -1,65 +1,68 @@
 .modal {
-    /* top:30%; */
-    border: 3px solid black;
-    background-color: rgba(0, 0, 0, 0.289);
+  /* top:30%; */
+  border: 3px solid black;
+  background-color: rgba(0, 0, 0, 0.289);
 }
 
 .modal-close-button {
-    cursor: pointer;
-    border: none;
-    background: transparent;
-    font-size: 3.5rem; /* Rendiamo la X più grande */
-    line-height: 1;
-    color: red; /* Cambiamo il colore in rosso */
-    opacity: 0.9; /* Opacità leggermente più alta */
-    position: absolute;
-    right: 20px;
-    top: 10px;
-    z-index: 100;
-    transition: opacity 0.15s ease;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  font-size: 3.5rem; /* Rendiamo la X più grande */
+  line-height: 1;
+  color: red; /* Cambiamo il colore in rosso */
+  opacity: 0.9; /* Opacità leggermente più alta */
+  position: absolute;
+  right: 20px;
+  top: 10px;
+  z-index: 100;
+  transition: opacity 0.15s ease;
 }
 
 .modal-close-button:hover {
-    opacity: 1; /* Opacità piena al passaggio del mouse */
+  opacity: 1; /* Opacità piena al passaggio del mouse */
 }
-
 
 .modal-title {
-    font-size: 2rem; /* Rendiamo il titolo più grande */
-    font-weight: bold; /* Rendiamo il titolo in grassetto */
+  font-size: 2rem; /* Rendiamo il titolo più grande */
+  font-weight: bold; /* Rendiamo il titolo in grassetto */
 }
 
-
-
 .modal-body .mt-3 {
-    display: flex;
-    flex-direction: column;
-    /* justify-content: center; */
-    align-items: center;
-    height: 100%;  /* assumendo che tu voglia che occupi l'intera altezza del modal-body */
-    /* font-size: 3rem; */
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
+  height: 100%; /* assumendo che tu voglia che occupi l'intera altezza del modal-body */
+  /* font-size: 3rem; */
 }
 
 .content-container {
-    display: flex;
-    justify-content: center;
-    align-items: center; 
-    height: 100%;
-    font-size: larger !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  font-size: larger !important;
 }
 
 .label-container {
-    flex: 1;  /* occupa metà dello spazio disponibile */
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start; /* Allinea gli elementi all'inizio del container */
-    text-align: left; /* Allinea il testo a sinistra */
-    padding-right: 10px;  /* un piccolo spazio tra le label e i dati */
+  flex: 1; /* occupa metà dello spazio disponibile */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Allinea gli elementi all'inizio del container */
+  text-align: left; /* Allinea il testo a sinistra */
+  padding-right: 10px; /* un piccolo spazio tra le label e i dati */
 }
 
 .data-container {
-    flex: 1;  /* occupa l'altra metà dello spazio disponibile */
-    display: flex;
-    flex-direction: column;
-    justify-content: center; /* Centra verticalmente */
+  flex: 1; /* occupa l'altra metà dello spazio disponibile */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centra verticalmente */
+}
+.overflow_Chat {
+  overflow: auto;
+}
+.overflow_Chat::-webkit-scrollbar {
+  display: none;
 }

@@ -13,7 +13,7 @@ import Card from "@mui/material/Card";
 // import ModeIcon from "@mui/icons-material/Mode";
 import CloseIcon from "@mui/icons-material/Close";
 import AddIcon from "@mui/icons-material/Add";
-import Search from "../../../../../Sidebar/SidebarHome/SHome/Search/Search";
+import Search from "../../../../../Sidebar/SidebarAdmin/SHome/Search/Search";
 
 
 const AziendeTable = () => {

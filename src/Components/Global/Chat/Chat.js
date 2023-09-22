@@ -1,313 +1,274 @@
 import React, { useState } from "react";
 import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBIcon, MDBBtn, MDBCardFooter, MDBCollapse } from "mdb-react-ui-kit";
-
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 //*CSS
 import ForumIcon from "@mui/icons-material/Forum";
-
-
-
-
-
-const Chat = (propShow, propClose) => {
+import { FaMinus } from "react-icons/fa";
+const Chat = ({ propShow, setChatOpen, completeData, setCompleteData }) => {
+  const getLocalStorageData = JSON.parse(localStorage.getItem(`value`));
   const [showChat, setShowChat] = useState(propShow);
 
   const toggleShow = () => {
     setShowChat(!showChat);
-    if (propClose && typeof propClose === "function") {
-      propClose();
+    setChatOpen(false);
+    if (setChatOpen && typeof propClose === "function") {
+      setChatOpen();
     }
   };
+
   return (
-    <div>
-      <MDBContainer fluid className="py-5">
-        <MDBBtn
-          style={{
-            width: "80px",
-            position: "fixed",
-            zIndex: "9999999",
-            bottom: "4px",
-            right: "10px",
-            background: "linear-gradient(to right, #7c1f64, #552257)",
-          }}
-          onClick={toggleShow}
-          size="md"
-          block
-        >
-          <div className="d-flex justify-content-center align-items-center" style={{ cursor: "pointer" }}>
-            <span style={{ fontSize: "15px" }}>Chat</span>
-            {/* <MDBIcon fas icon="chevron-up" /> */}
-          </div>
-        </MDBBtn>
-        <MDBRow
-          className="d-flex justify-content-end"
-          style={{
-            width: "100%",
-            position: "absolute",
-            bottom: "60px",
-            right: "15px",
-            zIndex: "9999999",
-          }}
-        >
-          <MDBCol md="8" lg="6" xl="3">
-            <MDBCollapse show={showChat}>
-              <MDBCard id="chat4">
+    <MDBContainer fluid style={{ position: "relative" }}>
+      <MDBRow style={{ width: "100%" }} className="d-flex justify-content-end">
+        <MDBCol sx="6" xs="6" sm="6" md="6" lg="5" xl="4" style={{ position: "absolute", top: "-135px" }}>
+          <MDBCollapse show={showChat}>
+            <MDBCard id="chat4" style={{ border: "2px solid rgb(154 16 155)" }}>
+              <div
+                className="overflow_Chat"
+                style={{
+                  height: "460px",
+                  borderTopLeftRadius: "5px",
+                  borderTopRightRadius: "5px",
+                }}
+              >
                 <div
-                  // suppressScrollX={false}
                   style={{
-                    overflow: "scroll",
-                    position: "relative",
-                    height: "500px",
+                    borderTopLeftRadius: "6px",
+                    borderTopRightRadius: "6px",
+                    height: "110px",
+                    background: "rgb(79 136 222)",
+                    paddingLeft: "20px",
+                    paddingRight: "20px",
+                    position: "absolute",
+                    zIndex: "1",
+                    width: "100%",
                   }}
                 >
                   <div
                     style={{
-                      borderTopLeftRadius: "6px",
-                      borderTopRightRadius: "6px",
-                      height: "55px",
-                      background: "linear-gradient(to right, #7c1f64, #552257)",
-                      paddingLeft: "20px",
-                      paddingRight: "20px",
+                      display: "flex",
+                      justifyContent: "space-between",
+                      marginTop: "10px",
                     }}
                   >
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                        textAlign: "center",
-                        height: "100%",
-                      }}
-                    >
-                      <div style={{ display: "flex" }}>
-                        {/* <img
-                          img
-                          src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava5-bg.webp"
-                          alt="avatar 1"
-                          style={{ width: "30px", height: "30px" }}
-                        /> */}
-                        <div
-                          style={{
-                            color: "#fff",
-                            marginLeft: "20px",
-                            marginTop: "3px",
-                          }}
-                        >
-                          <ForumIcon />
-                        </div>
-                      </div>
+                    <div style={{ display: "flex" }}>
                       <div
                         style={{
                           color: "#fff",
-                          fontSize: "60px",
-                          fontWeight: "300",
-                          cursor: "pointer",
+                          marginLeft: "-5px",
+                          marginTop: "3px",
                         }}
-                        onClick={toggleShow}
                       >
-                        -
+                        <ForumIcon />
                       </div>
                     </div>
+                    <FaMinus
+                      style={{
+                        color: "#fff",
+                        cursor: "pointer",
+                        height: "20px",
+                        width: "20px",
+                      }}
+                      onClick={toggleShow}
+                    />
                   </div>
                   <div
+                    className="small mt-1"
                     style={{
-                      marginBottom: "45px",
-                      backgroundColor: "#f5f5f5",
-                      height: "50px",
-                      position: "relative",
+                      fontSize: "14px",
+                      fontWeight: "600",
+                      color: "#fff",
                     }}
                   >
-                    <div
-                      style={{
-                        backgroundColor: "#e0e0e0",
-                        height: "60px",
-                        width: "60px",
-                        borderRadius: "50%",
-                        position: "absolute",
-                        top: "32%",
-                        left: "20px",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        textAlign: "center",
-                      }}
-                    >
-                      <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava5-bg.webp" alt="avatar 1" style={{ width: "30px", height: "30px" }} />
+                    {getLocalStorageData ? getLocalStorageData?.email : ""}
+                  </div>
+                  <div
+                    className="small mt-1 "
+                    style={{
+                      fontSize: "12px",
+                      fontWeight: "600",
+                      color: "#fff",
+                    }}
+                  >
+                    {getLocalStorageData ? getLocalStorageData?.phone : ""}
+                  </div>
+                  <div
+                    className="small mt-1 "
+                    style={{
+                      fontSize: "12px",
+                      fontWeight: "600",
+                      color: "#fff",
+                    }}
+                  >
+                    {getLocalStorageData ? getLocalStorageData?.alternatePhone : ""}
+                  </div>
+                </div>
+
+                <MDBCardBody style={{ paddingLeft: "10px", paddingRight: "10px", marginTop: "110px" }}>
+                  <div className="d-flex flex-row justify-content-start">
+                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava5-bg.webp" alt="avatar 1" style={{ width: "32px", height: "100%", borderRadius: "100px" }} />
+                    <div>
+                      <p className="small p-2 ms-3 mb-1 rounded-3" style={{ backgroundColor: "#f5f6f7", fontSize: "14px" }}>
+                        Hi
+                      </p>
+                      <p className="small p-2 ms-3 mb-1 rounded-3" style={{ backgroundColor: "#f5f6f7", fontSize: "14px" }}>
+                        How are you ...???
+                      </p>
+
+                      <p className="small ms-3 mb-3 rounded-3 text-muted">23:58</p>
                     </div>
                   </div>
-                  <MDBCardBody>
-                    <div className="d-flex flex-row justify-content-start">
-                      <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava5-bg.webp" alt="avatar 1" style={{ width: "45px", height: "100%" }} />
-                      <div>
-                        <p className="small p-2 ms-3 mb-1 rounded-3" style={{ backgroundColor: "#f5f6f7" }}>
-                          Hi
-                        </p>
-                        <p className="small p-2 ms-3 mb-1 rounded-3" style={{ backgroundColor: "#f5f6f7" }}>
-                          How are you ...???
-                        </p>
-                        <p className="small p-2 ms-3 mb-1 rounded-3" style={{ backgroundColor: "#f5f6f7" }}>
-                          What are you doing tomorrow? Can we come up a bar?
-                        </p>
-                        <p className="small ms-3 mb-3 rounded-3 text-muted">23:58</p>
-                      </div>
-                    </div>
 
-                    <div className="divider d-flex align-items-center mb-4">
-                      <p className="text-center mx-3 mb-0" style={{ color: "#a2aab7" }}>
-                        Today
+                  <div className="divider d-flex align-items-center mb-4">
+                    <p className="text-center mx-3 mb-0" style={{ color: "#a2aab7" }}>
+                      Today
+                    </p>
+                  </div>
+
+                  <div className="d-flex flex-row justify-content-end mb-4 pt-1">
+                    <div>
+                      <p
+                        className="small p-2 me-3 mb-1 text-white rounded-3"
+                        style={{
+                          background: "rgb(79 136 222)",
+                        }}
+                      >
+                        Hiii, I'm good.
                       </p>
-                    </div>
 
-                    <div className="d-flex flex-row justify-content-end mb-4 pt-1">
-                      <div>
-                        <p
-                          className="small p-2 me-3 mb-1 text-white rounded-3"
-                          style={{
-                            background: "linear-gradient(to right, #7c1f64, #552257)",
-                          }}
-                        >
-                          Hiii, I'm good.
-                        </p>
-                        <p
-                          className="small p-2 me-3 mb-1 text-white rounded-3"
-                          style={{
-                            background: "linear-gradient(to right, #7c1f64, #552257)",
-                          }}
-                        >
-                          How are you doing?
-                        </p>
-                        <p
-                          className="small p-2 me-3 mb-1 text-white rounded-3"
-                          style={{
-                            background: "linear-gradient(to right, #7c1f64, #552257)",
-                          }}
-                        >
-                          Long time no see! Tomorrow office. will be free on sunday.
-                        </p>
-                        <p className="small me-3 mb-3 rounded-3 text-muted d-flex justify-content-end">00:06</p>
-                      </div>
-                      <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava2-bg.webp" alt="avatar 1" style={{ width: "45px", height: "100%" }} />
+                      <p className="small me-3 mb-3 rounded-3 text-muted d-flex justify-content-end">00:06</p>
                     </div>
+                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava2-bg.webp" alt="avatar 1" style={{ width: "35px", height: "100%" }} />
+                  </div>
 
-                    <div className="d-flex flex-row justify-content-start mb-4">
-                      <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava5-bg.webp" alt="avatar 1" style={{ width: "45px", height: "100%" }} />
-                      <div>
-                        <p className="small p-2 ms-3 mb-1 rounded-3" style={{ backgroundColor: "#f5f6f7" }}>
-                          Okay
-                        </p>
-                        <p className="small p-2 ms-3 mb-1 rounded-3" style={{ backgroundColor: "#f5f6f7" }}>
-                          We will go on Sunday?
-                        </p>
-                        <p className="small ms-3 mb-3 rounded-3 text-muted">00:07</p>
-                      </div>
+                  <div className="d-flex flex-row justify-content-start mb-4">
+                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava5-bg.webp" alt="avatar 1" style={{ width: "32px", height: "100%", borderRadius: "100px" }} />
+                    <div>
+                      <p className="small p-2 ms-3 mb-1 rounded-3" style={{ backgroundColor: "#f5f6f7", fontSize: "14px" }}>
+                        Okay
+                      </p>
+                      <p className="small p-2 ms-3 mb-1 rounded-3" style={{ backgroundColor: "#f5f6f7", fontSize: "14px" }}>
+                        We will go on Sunday?
+                      </p>
+                      <p className="small ms-3 mb-3 rounded-3 text-muted">00:07</p>
                     </div>
+                  </div>
 
-                    <div className="d-flex flex-row justify-content-end mb-4">
-                      <div>
-                        <p
-                          className="small p-2 me-3 mb-1 text-white rounded-3 "
-                          style={{
-                            background: "linear-gradient(to right, #7c1f64, #552257)",
-                          }}
-                        >
-                          That's awesome!
-                        </p>
-                        <p
-                          className="small p-2 me-3 mb-1 text-white rounded-3 "
-                          style={{
-                            background: "linear-gradient(to right, #7c1f64, #552257)",
-                          }}
-                        >
-                          I will meet you Sandon Square sharp at 10 AM
-                        </p>
-                        <p
-                          className="small p-2 me-3 mb-1 text-white rounded-3 "
-                          style={{
-                            background: "linear-gradient(to right, #7c1f64, #552257)",
-                          }}
-                        >
-                          Is that okay?
-                        </p>
-                        <p className="small me-3 mb-3 rounded-3 text-muted d-flex justify-content-end">00:09</p>
-                      </div>
-                      <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava2-bg.webp" alt="avatar 1" style={{ width: "45px", height: "100%" }} />
+                  <div className="d-flex flex-row justify-content-end mb-4">
+                    <div>
+                      <p
+                        className="small p-2 me-3 mb-1 text-white rounded-3 "
+                        style={{
+                          background: "rgb(79 136 222)",
+                          fontSize: "14px",
+                        }}
+                      >
+                        That's awesome!
+                      </p>
+                      <p
+                        className="small p-2 me-3 mb-1 text-white rounded-3 "
+                        style={{
+                          background: "rgb(79 136 222)",
+                          fontSize: "14px",
+                        }}
+                      >
+                        I will meet you sharp at 10 AM
+                      </p>
+                      <p
+                        className="small p-2 me-3 mb-1 text-white rounded-3 "
+                        style={{
+                          background: "rgb(79 136 222)",
+                          fontSize: "14px",
+                        }}
+                      >
+                        Is that okay?
+                      </p>
+                      <p className="small me-3 mb-3 rounded-3 text-muted d-flex justify-content-end">00:09</p>
                     </div>
+                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava2-bg.webp" alt="avatar 1" style={{ width: "35px", height: "100%" }} />
+                  </div>
 
-                    <div className="d-flex flex-row justify-content-start mb-4">
-                      <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava5-bg.webp" alt="avatar 1" style={{ width: "45px", height: "100%" }} />
-                      <div>
-                        <p className="small p-2 ms-3 mb-1 rounded-3" style={{ backgroundColor: "#f5f6f7" }}>
-                          Okay i will meet you on Sandon Square
-                        </p>
-                        <p className="small ms-3 mb-3 rounded-3 text-muted">00:11</p>
-                      </div>
+                  <div className="d-flex flex-row justify-content-start mb-4">
+                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava5-bg.webp" alt="avatar 1" style={{ width: "32px", height: "100%", borderRadius: "100px" }} />
+                    <div>
+                      <p className="small p-2 ms-3 mb-1 rounded-3" style={{ backgroundColor: "#f5f6f7", fontSize: "14px" }}>
+                        Okay i will meet you on Sandon Square
+                      </p>
+                      <p className="small ms-3 mb-3 rounded-3 text-muted">00:11</p>
                     </div>
+                  </div>
 
-                    <div className="d-flex flex-row justify-content-end mb-4">
-                      <div>
-                        <p
-                          className="small p-2 me-3 mb-1 text-white rounded-3 "
-                          style={{
-                            background: "linear-gradient(to right, #7c1f64, #552257)",
-                          }}
-                        >
-                          Do you have pictures of Matley Marriage?
-                        </p>
-                        <p className="small me-3 mb-3 rounded-3 text-muted d-flex justify-content-end">00:11</p>
-                      </div>
-                      <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava2-bg.webp" alt="avatar 1" style={{ width: "45px", height: "100%" }} />
+                  <div className="d-flex flex-row justify-content-end mb-4">
+                    <div>
+                      <p
+                        className="small p-2 me-3 mb-1 text-white rounded-3 "
+                        style={{
+                          background: "rgb(79 136 222)",
+                          fontSize: "14px",
+                        }}
+                      >
+                        Do you have pictures of Matley?
+                      </p>
+                      <p className="small me-3 mb-3 rounded-3 text-muted d-flex justify-content-end">00:11</p>
                     </div>
+                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava2-bg.webp" alt="avatar 1" style={{ width: "37px", height: "100%" }} />
+                  </div>
 
-                    <div className="d-flex flex-row justify-content-start mb-4">
-                      <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava5-bg.webp" alt="avatar 1" style={{ width: "45px", height: "100%" }} />
-                      <div>
-                        <p className="small p-2 ms-3 mb-1 rounded-3" style={{ backgroundColor: "#f5f6f7" }}>
-                          Sorry I don't have. i changed my phone.
-                        </p>
-                        <p className="small ms-3 mb-3 rounded-3 text-muted">00:13</p>
-                      </div>
+                  <div className="d-flex flex-row justify-content-start mb-4">
+                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava5-bg.webp" alt="avatar 1" style={{ width: "32px", height: "100%", borderRadius: "100px" }} />
+                    <div>
+                      <p className="small p-2 ms-3 mb-1 rounded-3" style={{ backgroundColor: "#f5f6f7", fontSize: "14px" }}>
+                        Sorry I don't have. i changed my phone.
+                      </p>
+                      <p className="small ms-3 mb-3 rounded-3 text-muted">00:13</p>
                     </div>
+                  </div>
 
-                    <div className="d-flex flex-row justify-content-end">
-                      <div>
-                        <p
-                          className="small p-2 me-3 mb-1 text-white rounded-3 "
-                          style={{
-                            background: "linear-gradient(to right, #7c1f64, #552257)",
-                          }}
-                        >
-                          Okay then see you on sunday!!
-                        </p>
-                        <p className="small me-3 mb-3 rounded-3 text-muted d-flex justify-content-end">00:15</p>
-                      </div>
-                      <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava2-bg.webp" alt="avatar 1" style={{ width: "45px", height: "100%" }} />
+                  <div className="d-flex flex-row justify-content-end">
+                    <div>
+                      <p
+                        className="small p-2 me-3 mb-1 text-white rounded-3 "
+                        style={{
+                          background: "rgb(79 136 222)",
+                          fontSize: "14px",
+                        }}
+                      >
+                        Okay then see you on sunday!!
+                      </p>
+                      <p className="small me-3 mb-3 rounded-3 text-muted d-flex justify-content-end">00:15</p>
                     </div>
-                  </MDBCardBody>
-                </div>
-                <MDBCardFooter className="text-muted d-flex justify-content-start align-items-center p-3">
-                  <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava5-bg.webp" alt="avatar 3" style={{ width: "45px", height: "100%" }} />
-                  <input type="text" className="form-control form-control-lg" id="exampleFormControlInput3" placeholder="Type message" />
-                  <a className="ms-1 text-muted" href="#!">
-                    <MDBIcon fas icon="paperclip" />
-                  </a>
-                  <a className="ms-3 text-muted" href="#!">
-                    <MDBIcon fas icon="smile" />
-                  </a>
-                  <a className="ms-3 link-info" href="#!">
-                    <MDBIcon
-                      fas
-                      icon="paper-plane"
-                      style={{
-                        color: "#7c1f64",
-                      }}
-                    />
-                  </a>
-                </MDBCardFooter>
-              </MDBCard>
-            </MDBCollapse>
-          </MDBCol>
-        </MDBRow>
-      </MDBContainer>
-    </div>
+                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava2-bg.webp" alt="avatar 1" style={{ width: "37px", height: "100%" }} />
+                  </div>
+                </MDBCardBody>
+              </div>
+              <MDBCardFooter className="text-muted d-flex justify-content-start align-items-center p-3">
+                <img
+                  src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava5-bg.webp"
+                  alt="avatar 3"
+                  style={{ width: "32px", height: "100%", borderRadius: "100px", marginRight: "8px" }}
+                />
+                <input type="text" className="form-control form-control-lg" id="exampleFormControlInput3" style={{ fontSize: "18px", marginRight: "5px" }} placeholder="Type message" />
+                <a className="ms-1 text-muted" href="#!" style={{ fontSize: "19px" }}>
+                  <MDBIcon fas icon="paperclip" />
+                </a>
+                <a className="ms-3 text-muted" href="#!" style={{ fontSize: "19px" }}>
+                  <MDBIcon fas icon="smile" />
+                </a>
+                <a className="ms-3 link-info" href="#!" style={{ fontSize: "19px" }}>
+                  <MDBIcon
+                    fas
+                    icon="paper-plane"
+                    style={{
+                      color: "rgb(79 136 222)",
+                    }}
+                  />
+                </a>
+              </MDBCardFooter>
+            </MDBCard>
+          </MDBCollapse>
+        </MDBCol>
+      </MDBRow>
+    </MDBContainer>
   );
 };
 export default Chat;

@@ -1,0 +1,19 @@
+.search-wrapper {
+  color: #4f4e4e;
+}
+.search-input {
+  padding: 0.2rem;
+  outline: none;
+  font-size: 0.8rem;
+  border: 1px solid #acacac;
+  border-radius: 2px;
+  color: #535252;
+}
+.flex-search-input {
+  display: flex;
+}
+@media only screen and (max-width: 768px) {
+  .flex-search-input {
+    display: block;
+  }
+}
