@@ -61,14 +61,15 @@ const AssModalAdd = ({ show, close }) => {
                 setErrorMessage("Valore non presente");
                 setShowErrorMessage(true);
                 return
+            } else {
+                await addAssociazione(descrizione);
+
+                setDescrizione("");
+                setShowErrorMessage(false);
+
+                console.log("set form data associazione --- dati salvati");
+                close();// Chiudi il modal dopo aver aggiunto l'associazione
             }
-            await addAssociazione(descrizione);
-
-            setDescrizione("");
-            setShowErrorMessage(false);
-
-            console.log("set form data associazione --- dati salvati");
-            close();// Chiudi il modal dopo aver aggiunto l'associazione
         } catch (error) {
             // eslint-disable-next-line 
             const resMessage = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();

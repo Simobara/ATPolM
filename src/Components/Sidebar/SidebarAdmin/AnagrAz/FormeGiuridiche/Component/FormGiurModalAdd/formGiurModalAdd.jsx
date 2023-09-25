@@ -59,14 +59,14 @@ const FormGiurModalAdd = ({ show, close }) => {
                 setErrorMessage("Valore non presente");
                 setShowErrorMessage(true);
                 return
+            } else {
+                await addFormaGiuridica(descrizione);
+
+                setDescrizione("");
+                setShowErrorMessage(false);
+                console.log("set form data formaGiuridica --- dati salvati");
+                close();// Chiudi il modal dopo aver aggiunto l'associazione
             }
-            await addFormaGiuridica(descrizione);
-
-            setDescrizione("");
-            setShowErrorMessage(false);
-
-            console.log("set form data formaGiuridica --- dati salvati");
-            close();// Chiudi il modal dopo aver aggiunto l'associazione
         } catch (error) {
             // eslint-disable-next-line 
             const resMessage = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();

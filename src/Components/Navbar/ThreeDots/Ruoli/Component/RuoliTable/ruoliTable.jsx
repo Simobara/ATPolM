@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 /* CSS */
-import "./materTable.css";
+import "./ruoliTable.css";
 /* COMPONENTS */
 // import ButtonPen from '../../../../../../../Global/ButtonPen/buttonPen';
 import MaterModalAdd from "../MaterModalAdd/materModalAdd";
@@ -12,7 +12,7 @@ import ProButton from "../../../../../Global/ProButton/ProButton";
 import CloseIcon from "@mui/icons-material/Close";
 import AddIcon from "@mui/icons-material/Add";
 
-const MaterTable = () => {
+const RuoliTable = () => {
   const columns = ["", "Ruoli", ""];
 
   const rowsCatAziende = ["A", "B", "C", "D", "E", "F", "G"];
@@ -140,4 +140,4 @@ const MaterTable = () => {
   );
 };
 
-export default MaterTable;
+export default RuoliTable;

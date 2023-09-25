@@ -22,10 +22,6 @@ import SaveIcon from "@mui/icons-material/Save";
 
 
 
-
-
-
-
 const CatModalMod = ({ show, close, id }) => {
   const [descrizione, setDescrizione] = useState()
   const { updateCategoria } = CategoriaService();
@@ -41,10 +37,6 @@ const CatModalMod = ({ show, close, id }) => {
 
 
 
-
-
-
-
   const handleInputChange = (e) => {
     const { value } = e.target;
     setDescrizione(value);
@@ -55,20 +47,20 @@ const CatModalMod = ({ show, close, id }) => {
 
 
 
-  const handleUpdate = async () => {
+  const handleModCat = async () => {
     try {
       if (!descrizione) {
         setErrorMessage("Valore non presente");
         setShowErrorMessage(true);
         return
+      } else {
+        await updateCategoria(id, descrizione);
+
+        setDescrizione("");
+        setShowErrorMessage(false);
+        console.log("set form data provincia --- dati salvati");
+        close();
       }
-      await updateCategoria(id, descrizione);
-
-      setDescrizione("");
-      setShowErrorMessage(false);
-
-      console.log("set form data provincia --- dati salvati");
-      close();
     } catch (error) {
       // eslint-disable-next-line
       const resMessage = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
@@ -127,7 +119,7 @@ const CatModalMod = ({ show, close, id }) => {
                     </Row> */}
         </Modal.Body>
         <Modal.Footer className="d-flex justify-content-center mt-4">
-          <Button onClick={() => handleUpdate()}>{<SaveIcon />}Save and Close</Button>
+          <Button onClick={() => handleModCat()}>{<SaveIcon />}Save and Close</Button>
         </Modal.Footer>
       </Modal>
     </>

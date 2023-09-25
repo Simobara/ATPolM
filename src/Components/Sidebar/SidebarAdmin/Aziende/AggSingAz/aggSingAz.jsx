@@ -188,7 +188,7 @@ const AggSingAz = () => {
             <div className="form-group col-md-2 mr-3">
               <button
                 className="btn btn-primary btn-block"
-                // onClick={"#"}
+              // onClick={"#"}
               >
                 {/* {loading && <span className="spinner-border spinner-border-sm"></span>} */}
                 <span>

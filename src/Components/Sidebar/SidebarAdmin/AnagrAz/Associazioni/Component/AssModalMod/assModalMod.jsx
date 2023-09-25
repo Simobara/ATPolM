@@ -63,14 +63,15 @@ const AssModalMod = ({ show, close, id }) => {
                 setErrorMessage("Valore non presente");
                 setShowErrorMessage(true);
                 return
+            } else {
+                await updateAssociazione(id, descrizione);
+
+                setDescrizione("");
+                setShowErrorMessage(false);
+
+                console.log("set form data provincia --- dati salvati");
+                close();
             }
-            await updateAssociazione(id, descrizione);
-
-            setDescrizione("");
-            setShowErrorMessage(false);
-
-            console.log("set form data provincia --- dati salvati");
-            close();
         } catch (error) {
             // eslint-disable-next-line
             const resMessage = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();

@@ -39,6 +39,7 @@ const ModalRegister = ({ propShow, propClose, setShowChatModal }) => {
   };
   // eslint-disable-next-line 
   const isButtonActive = email && !emailError && phone;
+  // eslint-disable-next-line
   const handleOpenChatModal = () => {
     setChatOpen(true);
   };

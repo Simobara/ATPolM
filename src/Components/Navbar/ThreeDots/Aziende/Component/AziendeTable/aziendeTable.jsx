@@ -1,14 +1,16 @@
 import React, { useState } from "react";
-/* CSS */
+
+//* CSS */
 import "./aziendeTable.css";
-/* COMPONENTS */
+
+//* COMPONENTS */
 // import ButtonPen from '../../../../../../../Global/ButtonPen/buttonPen';
 import AziendeModalAdd from "../AziendeModalAdd/aziendeModalAdd";
 import AziendeModalMod from "../AziendeModalMod/aziendeModalMod";
 import AziendeModalDel from "../AziendeModalDel/aziendeModalDel";
 import ProButton from "../../../../../Global/ProButton/ProButton";
-/* MUI MATERIAL ICONS */
 
+//* MUI MATERIAL ICONS */
 import Card from "@mui/material/Card";
 // import ModeIcon from "@mui/icons-material/Mode";
 import CloseIcon from "@mui/icons-material/Close";
@@ -17,7 +19,7 @@ import Search from "../../../../../Sidebar/SidebarAdmin/SHome/Search/Search";
 
 
 const AziendeTable = () => {
-  const columns = ["", "Ruoli", ""];
+  const columns = ["", "Email", ""];
 
   const rowsCatAziende = ["info@info", "info@info", "info@info", "info@info", "info@info", "info@info", "info@info", "info@info", "info@info", "info@info", "info@info", "info@info"];
 
@@ -70,15 +72,15 @@ const AziendeTable = () => {
     if (columnIndex === 0) {
       return "col-2 px-2 text-center h5 justify-content-center";
     } else if (columnIndex === 1) {
-      return "col-4 px-8  h5 justify-content-center";
+      return "col-8 px-8  text-center h5 justify-content-center";
     } else if (columnIndex === 2) {
-      return "col-4 px-2 h5 justify-content-center";
+      return "col-2 px-2 h5 text-center justify-content-center";
       // } else if (columnIndex === 3) {
       //     return 'col-2 px-2 text-center h5';
       // } else if (columnIndex === 4) {
       //     return 'col-4 px-4 text-center h5';
     } else if (columnIndex === 3) {
-      return "col-2 px-2 text-center h5 justify-content-center";
+      return "col-12 px-12 text-center h5 justify-content-center";
       // } else if (columnIndex === 3) {
       //     return 'col-2 px-2 text-center h5';
       // } else if (columnIndex === 4) {
@@ -98,30 +100,26 @@ const AziendeTable = () => {
           <div className="table-responsive">
             <table className="table table-bordered w-100">
               <thead>
-                <tr className="bold-columns">
-                  <th>
-                    {columns.map((column, columnIndex) => (
-                      <>
-                        {columnIndex === 0 && (
-                          <button type="button" className="btn button-modify icon-add" onClick={handleClickAddOpen}>
-                            <AddIcon className="icon" />
-                          </button>
-                        )}
-                      </>
-                    ))}
-                  </th>
-                  <th>User Name</th>
-                  <th>Email</th>
-                  <th></th>
+                <tr className="bold-columns text-center">
+                  {columns.map((column, columnIndex) => (
+                    <th key={columnIndex}>
+                      {columnIndex === 0 && (
+                        <button type="button" className="btn button-modify icon-add" onClick={() => handleClickAddOpen()}>
+                          <AddIcon className="icon" />
+                        </button>
+                      )}
+                      {column}
+                    </th>
+                  ))}
                 </tr>
               </thead>
               <tbody>
                 {currentItems.map((row, rowIndex) => (
                   <tr key={rowIndex}>
-                    <td className={getColumnClassName(0)}></td>
+                    <td className={getColumnClassName(0)}>{row}</td>
                     <td className={getColumnClassName(1)}>{row}</td>
-                    <td className={getColumnClassName(2)}>{row}</td>
-                    <td className={getColumnClassName(3)}>
+                    {/* <td className={getColumnClassName(2)}>{row}</td> */}
+                    <td className={getColumnClassName(2)}>
                       <button type="button" className="btn btn-danger button-close" onClick={handleClickDelOpen}>
                         <CloseIcon className="icon-close" />
                       </button>

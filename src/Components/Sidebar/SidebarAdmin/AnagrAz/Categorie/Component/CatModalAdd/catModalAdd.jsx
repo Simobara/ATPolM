@@ -17,15 +17,6 @@ import CategoriaService from "../../../../../../../DataAPI/services/categoria.se
 import SaveIcon from "@mui/icons-material/Save";
 
 
-
-
-
-
-
-
-
-
-
 const CatModalAdd = ({ show, close }) => {
   const [descrizione, setDescrizione] = useState()
   const { addCategoria } = CategoriaService();
@@ -41,10 +32,6 @@ const CatModalAdd = ({ show, close }) => {
 
 
 
-
-
-
-
   const handleInputChange = (e) => {
     console.log("EVENTO!!!", e)
     const { value } = e.target;
@@ -55,22 +42,20 @@ const CatModalAdd = ({ show, close }) => {
 
 
 
-
-
   const handleAddCategoria = async () => {
     try {
       if (!descrizione) {
         setErrorMessage("Valore non presente");
         setShowErrorMessage(true);
         return
+      } else {
+        await addCategoria(descrizione);
+
+        setDescrizione("");
+        setShowErrorMessage(false);
+        console.log("set form data categoria --- dati salvati");
+        close(); // Chiudi il modal dopo aver aggiunto l'associazione
       }
-      await addCategoria(descrizione);
-
-      setDescrizione("");
-      setShowErrorMessage(false);
-
-      console.log("set form data categoria --- dati salvati");
-      close(); // Chiudi il modal dopo aver aggiunto l'associazione
     } catch (error) {
       // eslint-disable-next-line 
       const resMessage = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
@@ -79,11 +64,6 @@ const CatModalAdd = ({ show, close }) => {
       setLoading(false);
     }
   };
-
-
-
-
-
 
 
 

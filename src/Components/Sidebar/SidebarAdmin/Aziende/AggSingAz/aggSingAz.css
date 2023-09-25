@@ -45,9 +45,10 @@
 }
 
 .titolo-blu {
-  background-color: blue;
+  background-color:  #030947 !important;
+  margin:5px;
   color: white; /* Cambia il colore del testo in bianco per una migliore leggibilità sullo sfondo blu */
-  padding: 5px 10px; /* Un po' di padding intorno al testo */
+  padding: 18px 10px; /* Un po' di padding intorno al testo */
 }
 
 .titolo-sezione {

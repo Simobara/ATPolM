@@ -71,13 +71,13 @@ const ProfileNavTable = () => {
 
   const getColumnClassName = (columnIndex) => {
     if (columnIndex === 0) {
-      return "col-2 px-2 text-center h5 justify-content-center";
+      return "col-2 px-2 h5 text-center justify-content-center";
     } else if (columnIndex === 1) {
-      return "col-4  h5 justify-content-center";
+      return "col-4 h5 text-center justify-content-center";
     } else if (columnIndex === 2) {
-      return "col-3   h5 justify-content-center";
+      return "col-3 h5 text-center justify-content-center";
     } else if (columnIndex === 3) {
-      return "col-3 h5 justify-content-center";
+      return "col-3 h5 text-center justify-content-center";
       // } else if (columnIndex === 3) {
       //     return 'col-2 px-2 text-center h5';
     } else {

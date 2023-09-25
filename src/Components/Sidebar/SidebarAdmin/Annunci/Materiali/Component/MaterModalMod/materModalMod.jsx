@@ -19,33 +19,62 @@ import { useState } from 'react';
 const MaterModalMod = ({ show, close, id }) => {
     const [descrizione, setDescrizione] = useState()
     const { updateMaterial } = MaterialeService();
-    // const [show, setShow] = useState(false);
-    // const handleClose = () => setShow(false);
-    // const handleShow = () => setShow(true);
-    const handleAddUmd = async (e) => {
-        try {
-            if (!descrizione) return alert("add descrizione")
-            await updateMaterial(id, descrizione);
 
-            setDescrizione()
-            console.log("set form data provincia --- dati salvati");
-            close();
+
+
+    // eslint-disable-next-line
+    const [loading, setLoading] = useState(false);
+    // eslint-disable-next-line
+    const [message, setMessage] = useState("");
+
+    const [errorMessage, setErrorMessage] = useState("");
+    const [showErrorMessage, setShowErrorMessage] = useState(false);
+
+
+
+
+    const handleInputChange = (e) => {
+        const { value } = e.target;
+        setDescrizione(value);
+        setShowErrorMessage(false); // Nascondi il messaggio di errore quando l'utente riprende a scrivere
+    };
+
+
+    const handleModUmd = async () => {
+        try {
+            if (!descrizione) {
+                setErrorMessage("Valore non presente");
+                setShowErrorMessage(true);
+                return
+            } else {
+                await updateMaterial(id, descrizione);
+
+                setDescrizione("")
+                setShowErrorMessage(false);
+                console.log("set form data provincia --- dati salvati");
+                close();
+            }
         } catch (error) {
             // eslint-disable-next-line
             const resMessage = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
-
+            setMessage(resMessage);
         } finally {
-
+            setLoading(false);
         }
     };
+
+
+
+
+
     return (
         <>
             <Modal
                 show={show}
                 // close={close}
-                size="lg"
+                size="md"
                 aria-labelledby="contained-modal-title-vcenter"
-                centered
+                top="true"
             >
                 <Modal.Header >
                     <Modal.Title id="contained-modal-title-vcenter" className="font-weight-bold">
@@ -58,7 +87,19 @@ const MaterModalMod = ({ show, close, id }) => {
                 <Modal.Body>
                     <Row className="d-flex justify-content-start mb-4">
                         <Col xs={12} md={6}><h4>Nome Materiale</h4></Col>
-                        <Col xs={12} md={6}><Form.Control type="text" placeholder="" autoFocus value={descrizione} onChange={(e) => setDescrizione(e.target.value)} /></Col>
+                        <Col xs={12} md={6}>
+                            <Form.Control
+                                id="descrizione"
+                                name="descrizione"
+                                value={descrizione}
+                                type="text"
+                                className={`mt-2 form-control form_middle_pagenuovo custom-container ${showErrorMessage ? "is-invalid" : ""}`}
+                                onChange={handleInputChange}
+                                placeholder=""
+                                autoFocus
+                            />
+                            {showErrorMessage && (<div className="invalid-feedback"> <p className="text-danger text-lg font-weight-bold"> {errorMessage} </p> </div>)}
+                        </Col>
                     </Row>
                     {/* <Row className="d-flex justify-content-start mb-4">
                         <Col xs={12} md={6}><h4>Codice Regione</h4></Col>
@@ -72,7 +113,7 @@ const MaterModalMod = ({ show, close, id }) => {
                     </Row> */}
                 </Modal.Body>
                 <Modal.Footer className="d-flex justify-content-center mt-4">
-                    <Button onClick={() => handleAddUmd()}>{<SaveIcon />}Save and Close</Button>
+                    <Button onClick={() => handleModUmd()}>{<SaveIcon />}Save and Close</Button>
                 </Modal.Footer>
             </Modal>
         </>

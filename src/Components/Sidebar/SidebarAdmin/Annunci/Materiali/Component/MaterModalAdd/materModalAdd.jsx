@@ -1,40 +1,74 @@
 import React from "react";
-/* CSS */
+//* CSS */
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
-/* COMPONENTS */
+
+//* COMPONENTS */
 // import RegForm from '../RegForm/regForm';
 
-/* MUI MATERIAL ICONS */
+//* MUI MATERIAL ICONS */
 import SaveIcon from "@mui/icons-material/Save";
 import MaterialeService from "../../../../../../../DataAPI/services/materiale.service";
 import { useState } from 'react';
 
+
+
+
 const MaterModalAdd = ({ show, close }) => {
   const [descrizione, setDescrizione] = useState()
   const { addMateriale } = MaterialeService();
-  // const [show, setShow] = useState(false);
-  // const handleClose = () => setShow(false);
-  // const handleShow = () => setShow(true);
-  const handleAddmaterial = async (e) => {
+
+  // eslint-disable-next-line
+  const [loading, setLoading] = useState(false);
+  // eslint-disable-next-line
+  const [message, setMessage] = useState("");
+
+
+  const [errorMessage, setErrorMessage] = useState("");
+  const [showErrorMessage, setShowErrorMessage] = useState(false);
+
+
+
+  const handleInputChange = (e) => {
+    console.log("EVENTO!!!", e)
+    const { value } = e.target;
+    setDescrizione(value);
+    // console.log("eventPhase", e.eventPhase)
+    setShowErrorMessage(false); // Nascondi il messaggio di errore quando l'utente riprende a scrivere
+  };
+
+
+
+  const handleAddmaterial = async () => {
     try {
-      if (!descrizione) return alert("add descrizione")
-      await addMateriale(descrizione);
+      if (!descrizione) {
+        setErrorMessage("Valore non presente");
+        setShowErrorMessage(true);
+        return
+      } else {
+        await addMateriale(descrizione);
 
-      setDescrizione()
-      console.log("set form data provincia --- dati salvati");
-      close();
+        setDescrizione("")
+        setShowErrorMessage(false);
+        console.log("set form data materiale --- dati salvati");
+        close();
+      }
     } catch (error) {
-      // eslint-disable-next-line
+      // eslint-disable-next-line 
       const resMessage = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
-
+      setMessage(resMessage);
     } finally {
-
+      setLoading(false);
     }
   };
+
+
+
+
+
   return (
     <>
       <Modal
@@ -58,7 +92,17 @@ const MaterModalAdd = ({ show, close }) => {
               <h4>Tipo di Materiale</h4>
             </Col>
             <Col xs={12} md={6}>
-              <Form.Control type="text" placeholder="" autoFocus value={descrizione} onChange={(e) => setDescrizione(e.target.value)} />
+              <Form.Control
+                id="descrizione"
+                name="descrizione"
+                value={descrizione}
+                type="text"
+                placeholder=""
+                className={`mt-2 form-control form_middle_pagenuovo custom-container ${showErrorMessage ? "is-invalid" : ""}`}
+                onChange={handleInputChange}
+                autoFocus
+              />
+              {showErrorMessage && (<div className="invalid-feedback"> <p className="text-danger text-lg font-weight-bold"> {errorMessage} </p> </div>)}
             </Col>
           </Row>
           {/* <Row className="d-flex justify-content-start mb-4">

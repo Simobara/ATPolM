@@ -259,7 +259,7 @@ const Sidebar = () => {
                             Forme Giuridiche
                           </NavLink>
                         </div>
-                        <div className=" menu-content" style={{ paddingLeft: "10px" }}>
+                        <div className=" menu-content" style={{ paddingLeft: "5px", margin: "10px auto" }}>
                           <Typography variant="body2" className="ListItemTypo" component="span">
                             <div className="item-arrow">
                               <div className="item">Localita'</div>
@@ -309,8 +309,8 @@ const Sidebar = () => {
                 Copyright <span style={{ MarginTop: "20px" }}>©</span> 2023
               </div>
             </div>
-          </div>
-        </div>
+          </div >
+        </div >
       )}
       <div className="menu-Documents-open" style={{ marginTop: "64px" }}>
         <div>
@@ -490,7 +490,7 @@ const Sidebar = () => {
                           </NavLink>
                         </div>
                       </NavLink>
-                      <div className=" menu-content" style={{ paddingLeft: "10px" }}>
+                      <div className=" menu-content" style={{ paddingLeft: "5px", margin: "10px auto" }}>
                         <Typography variant="body2" className="ListItemTypo" component="span">
                           <div onClick={() => setIsArrowLocalitaOpen(!isArrowLocalitaOpen)}>
                             <div className="item-arrow">
