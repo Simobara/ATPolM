@@ -8,7 +8,7 @@ import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 
 //* REACT-VALIDATION
-import CittaService from "../../../../../../../../DataAPI/services/citta.service";
+import CittaService from "../../../../../../../../DataAPI/services/aggiuntaCitta.service";
 
 //* COMPONENTS
 // import RegForm from '../RegForm/regForm';

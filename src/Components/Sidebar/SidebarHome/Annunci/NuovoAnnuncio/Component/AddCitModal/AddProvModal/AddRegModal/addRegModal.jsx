@@ -18,6 +18,8 @@ import RegioneService from "../../../../../../../../../DataAPI/services/regione.
 import RegioniForm from "../../../../../../AnagrAz/Localita/Regioni/Component/RegioniForm/regioniForm";
 import RegioneMappings from "../../../../../../AnagrAz/Localita/Regioni/Component/RegioneMappings/regioneMappings"
 
+import AggiuntaRegioneService from "../../../../../../../../../DataAPI/services/aggiuntaRegione.service";
+
 
 
 
@@ -42,6 +44,7 @@ const RegModalAdd = ({ propShow, propClose, propListaRegDescrAdded }) => {
 
 
   const { addRegione } = RegioneService();
+  const { addAggiuntaRegione } = AggiuntaRegioneService();
 
 
 
@@ -76,9 +79,33 @@ const RegModalAdd = ({ propShow, propClose, propListaRegDescrAdded }) => {
         updatedFormData.codice = mappingRegione.codice;
         updatedFormData.descrizione = mappingRegione.descrizione;
       }
-      await addRegione(updatedFormData.codice, updatedFormData.descrizione);
+      //await addRegione(updatedFormData.codice, updatedFormData.descrizione);
+      //await AggiuntaRegioneService.addAggiuntaRegione(updatedFormData.codice, updatedFormData.descrizione);
+
+      //const response = await addAggiuntaRegione(updatedFormData.codice, updatedFormData.descrizione)
+      await addAggiuntaRegione(updatedFormData.codice, updatedFormData.descrizione)
+
       // console.log("updatedFormData:", updatedFormData);// aggiornamento sul singolo valore inserito(coppia di valori)
       // console.log("formData: ", formData)
+
+      //console.log(response.headers['segnale-per-admin']);
+
+      //Controlla che la chiave errore sia giusta
+      //if (response.headers["segnale-per-admin"]) {
+        //Controlla poi che il valore dell'errore sia quello corretto
+      /*  if (response.headers["segnale-per-admin"] === "Via libera notifica richiesta aggiunta REGIONE per admin") {
+            
+          //Qua andrà il codice che attiva la procedura di notifica all'admin in FE
+          //setErroreGiusto(true)
+          console.log("è quella là")
+
+        } else {
+          console.log("NON è l'errore giusto!");
+        }
+      } else {
+        console.log("A monte è sbagliato!")
+      }*/
+
 
       setFormData({
         codice: updatedFormData.codice,

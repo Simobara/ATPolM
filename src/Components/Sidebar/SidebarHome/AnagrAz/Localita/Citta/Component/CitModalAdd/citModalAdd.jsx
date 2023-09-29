@@ -10,7 +10,7 @@ import Form from "react-bootstrap/Form";
 // import Form from "react-validation/build/form";
 // import Input from "react-validation/build/input";
 // import CheckButton from "react-validation/build/button";
-import CittaService from "../../../../../../../../DataAPI/services/citta.service";
+import CittaService from "../../../../../../../../DataAPI/services/aggiuntaCitta.service";
 
 /* COMPONENTS */
 // import RegForm from '../RegForm/regForm';

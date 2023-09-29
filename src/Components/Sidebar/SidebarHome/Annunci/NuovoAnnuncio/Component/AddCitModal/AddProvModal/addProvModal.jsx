@@ -22,7 +22,7 @@ import "./addProvModal.css";
 import axios from "axios";
 import { useEffect } from "react";
 import { provinceSigle , provinceNomiCompleti, provinciaRegione} from "../../../../../AnagrAz/Localita/Province/ProvSigleNomi/provSigleNomi";
-
+import AggiuntaProvinciaService from "../../../../../../../../DataAPI/services/aggiuntaProvincia.service";
 
 
 
@@ -61,7 +61,8 @@ const ProvModalAdd = ({ propShow, propClose, propListaProvCodAdded }) => {
   const [regioniUPPER, setRegioniUPPER] = useState([]);
   const [regListCurrent, setRegListCurrent] = useState([]);
 
-  const { addProvincia } = ProvinciaService();
+  //const { addProvincia } = ProvinciaService();
+  const { addAggiuntaProvincia } = AggiuntaProvinciaService();
 
   // eslint-disable-next-line
   const onChange = (e) => {
@@ -86,7 +87,11 @@ const ProvModalAdd = ({ propShow, propClose, propListaProvCodAdded }) => {
         }
         return;
       }
-      await addProvincia(formData.codice, formData.idRegione);
+
+      console.log("Il codice? " + formData.codice);
+      //await addProvincia(formData.codice, formData.idRegione);
+      await addAggiuntaProvincia(formData.codice, formData.idRegione);
+
 
       setFormData((prevState) => ({
         ...prevState,

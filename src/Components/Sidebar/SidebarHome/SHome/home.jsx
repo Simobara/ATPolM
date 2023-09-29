@@ -4,7 +4,7 @@ import "./home.css";
 /* COMPONENTS */
 import { newData } from "../../../../DataAPI/newData";
 import { tableColumn } from "./Data/MainTable/Columns";
-import Table from "./Table/table";
+import Table from "./Table/Table";
 import AnnuncioService from "../../../../DataAPI/services/annuncio.service";
 // import AddNewRecordForm from "./AddNewRecord/AddNewRecord";
 

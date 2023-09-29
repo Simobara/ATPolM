@@ -18,7 +18,7 @@ import Form from "react-bootstrap/Form";
 /* MUI MATERIAL ICONS */
 import SaveIcon from "@mui/icons-material/Save";
 import CitForm from "../../../../AnagrAz/Localita/Citta/Component/CitForm/citForm";
-import CittaService from "../../../../../../../DataAPI/services/citta.service";
+import AggiuntaCittaService from "../../../../../../../DataAPI/services/aggiuntaCitta.service";
 import AddProvModal from "./AddProvModal/addProvModal";
 import AddBoxIcon from '@mui/icons-material/AddBox'
 import axios from "axios";
@@ -30,7 +30,7 @@ const CitModalAdd = ({ propShow, propClose, propListaCitDescrAdded, estado = '' 
     idProvincia: ""
 
   })
-  const { addCitta } = CittaService();
+  const { addAggiuntaCitta } = AggiuntaCittaService();
 
 
   const [errorCap, setErrorCap] = useState("");
@@ -203,7 +203,7 @@ console.log(sortedProvince,"sortedProvince")
       if (!formData?.descrizione || !formData?.cap || !formData?.idProvincia) {
         return alert("Inserisci tutti i valori in: AggiungiCitta'")
       }
-      await addCitta(capitalizeText(formData.descrizione), formData.cap, formData.idProvincia);
+      await addAggiuntaCitta(capitalizeText(formData.descrizione), formData.cap, formData.idProvincia);
       setFormData({
         descrizione: "",
         cap: "",

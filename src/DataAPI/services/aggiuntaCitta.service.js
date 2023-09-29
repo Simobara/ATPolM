@@ -7,26 +7,26 @@ const API_URL = 'http://localhost:8080/api/';
 
 
 
-const CittaService = () => {
-    const getCitta = async () => {
+const AggiuntaCittaService = () => {
+    const getAggiuntaCitta = async () => {
         try {
-            const response = await axios.get(API_URL + 'localita');
+            const response = await axios.get(API_URL + 'aggiunta-localita');
             return response.data;
         } catch (error) {
             console.error('Error while fetching localita:', error);
         }
     };
 
-    const addCitta = async (descrizione, cap, idProvincia) => {
+    const addAggiuntaCitta = async (descrizione, cap, idProvincia) => {
         try {
-            const response = await axios.post(API_URL + `add-localita/${idProvincia}`, {
+            const response = await axios.post(API_URL + `add-aggiunta-localita/${idProvincia}`, {
                 descrizione,
                 cap,
                 idProvincia
             });
 
             if (response.data.accessToken) {
-                localStorage.setItem('localita', JSON.stringify(response.data));
+                localStorage.setItem('aggiunta-localita', JSON.stringify(response.data));
             }
 
             return response.data;
@@ -36,8 +36,8 @@ const CittaService = () => {
     };
 
 
-    const updateCitta = async (id, descrizione, cap, idProvincia) => {
-        return axios.put(API_URL + `update-localita/${id}/${idProvincia}`, {
+    const updateAggiuntaCitta = async (id, descrizione, cap, idProvincia) => {
+        return axios.put(API_URL + `update-aggiunta-localita/${id}/${idProvincia}`, {
             id,
             descrizione,
             cap,
@@ -45,7 +45,7 @@ const CittaService = () => {
         })
             .then(response => {
                 if (response.data.accessToken) {
-                    localStorage.setItem("localita", JSON.stringify(response.data));
+                    localStorage.setItem("aggiunta-localita", JSON.stringify(response.data));
                 }
                 return response.data;
             });
@@ -53,7 +53,7 @@ const CittaService = () => {
 
 
 
-    const deleteCitta = async (id) => {
+    const deleteAggiuntaCitta = async (id) => {
         try {
             const response = await axios.delete(API_URL + `localita/${id}`, {
                 id,
@@ -69,7 +69,7 @@ const CittaService = () => {
         }
     };
 
-    return { getCitta, addCitta, deleteCitta, updateCitta };
+    return { getAggiuntaCitta, addAggiuntaCitta, deleteAggiuntaCitta, updateAggiuntaCitta };
 };
 
-export default CittaService;
+export default AggiuntaCittaService;
