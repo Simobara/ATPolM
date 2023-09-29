@@ -111,27 +111,41 @@
   cursor: pointer;
   color: #161513 !important;
 }
+.arrow-navigation {
+  position: absolute;
+  margin-left: 220px;
+  /* margin-top: -28px; */
+}
+.arrow-Menu-navigation {
+  position: absolute;
+  margin-left: 205px;
+
+  /* margin-top: -25px; */
+}
 .arrow {
   position: absolute;
   margin-left: 220px;
+  margin-top: -28px;
 }
 .arrow-Menu {
   position: absolute;
   margin-left: 205px;
+
+  margin-top: -25px;
 }
 .submenu {
   padding-top: 10px;
   padding-bottom: 10px;
   color: #60619e !important ;
   font-size: 15px;
-  width: 228px !important;
+  width: 214px !important;
   margin-left: 1rem !important;
 }
 .submenu:hover {
   background-color: #e4e6f4;
   color: #60619e;
   border-radius: 4px;
-  width: 228px !important;
+  width: 214px !important;
 }
 .sidebar-text-link {
   background-color: #f7fdeb !important;
@@ -143,6 +157,9 @@
 .arrow-down-btn:hover {
   background-color: #007ffd !important;
 }
+.ListItemTypo {
+  width: 100%;
+}
 .ListItemTypo > .item-arrow {
   display: flex;
   align-items: center;
@@ -153,9 +170,13 @@
 .arrow .arrow-localita {
   margin-left: 10rem !important;
 }
+.arrow-navigation .arrow-localita {
+  margin-left: 10rem !important;
+}
 .item {
   margin-right: auto;
   font-size: 18px;
+  width: 100%;
 }
 .submenu-open {
   border-left: 4px solid blue;
@@ -417,10 +438,10 @@
 }
 @media only screen and (min-width: 550px) and (max-width: 700px) {
   .submenu {
-    width: 185px !important;
+    width: 180px !important;
   }
   .submenu:hover {
-    width: 185px !important;
+    width: 180px !important;
   }
 }
 @media only screen and (min-width: 300px) and (max-width: 550px) {
@@ -461,6 +482,9 @@
     margin-top: 10px !important;
   }
   .arrow .arrow-localita {
+    margin-left: 10rem !important;
+  }
+  .arrow-navigation .arrow-localita {
     margin-left: 10rem !important;
   }
 }
@@ -507,10 +531,10 @@
 }
 @media only screen and (min-width: 701px) and (max-width: 1300px) {
   .submenu {
-    width: 200px !important;
+    width: 190px !important;
   }
   .submenu:hover {
-    width: 200px !important;
+    width: 190px !important;
   }
 }
 @media only screen and (min-width: 1700px) and (max-width: 2550px) {
@@ -522,6 +546,12 @@
   }
 }
 @media only screen and (min-width: 550px) and (max-width: 649px) {
+  .arrow-navigation {
+    margin-left: 170px;
+  }
+  .arrow-Menu-navigation {
+    margin-left: 156px;
+  }
   .arrow {
     margin-left: 170px;
   }
@@ -529,13 +559,19 @@
     margin-left: 156px;
   }
   .submenu {
-    width: 172px !important;
+    width: 168px !important;
   }
   .submenu:hover {
-    width: 172px !important;
+    width: 168px !important;
   }
 }
 @media only screen and (min-width: 650px) and (max-width: 1000px) {
+  .arrow-navigation {
+    margin-left: 190px;
+  }
+  .arrow-Menu-navigation {
+    margin-left: 178px;
+  }
   .arrow {
     margin-left: 190px;
   }
@@ -543,10 +579,10 @@
     margin-left: 178px;
   }
   .submenu {
-    width: 185px !important;
+    width: 175px !important;
   }
   .submenu:hover {
-    width: 185px !important;
+    width: 175px !important;
   }
 }
 @media only screen and (min-width: 1001px) and (max-width: 1100px) {
@@ -556,8 +592,20 @@
   .arrow-Menu {
     margin-left: 190px;
   }
+  .arrow-navigation {
+    margin-left: 200px;
+  }
+  .arrow-Menu-navigation {
+    margin-left: 190px;
+  }
 }
 @media only screen and (min-width: 1101px) and (max-width: 1300px) {
+  .arrow-navigation {
+    margin-left: 200px;
+  }
+  .arrow-Menu-navigation {
+    margin-left: 190px;
+  }
   .arrow {
     margin-left: 200px;
   }
@@ -566,6 +614,12 @@
   }
 }
 @media only screen and (min-width: 300px) and (max-width: 550px) {
+  .arrow-navigation {
+    margin-left: 220px;
+  }
+  .arrow-Menu-navigation {
+    margin-left: 207px;
+  }
   .arrow {
     margin-left: 220px;
   }

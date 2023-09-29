@@ -1,11 +1,11 @@
 import React from "react";
 /* COMPONENTS */
-import MaterTable from "./Component/MaterTable/materTable";
+import RuoliTable from "./Component/RuoliTable/ruoliTable";
 
 const Ruoli = () => {
   return (
     <div>
-      <MaterTable />
+      <RuoliTable />
     </div>
   );
 };

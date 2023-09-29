@@ -32,14 +32,19 @@ import NavigationItem from "./NavigationItem/navigationItem";
 import Sidebar from "../Sidebar/sidebar";
 import NotFoundPage from "../Global/NotFoundPage/notFoundPage";
 
-import AggSingAz from "../Sidebar/SidebarHome/Aziende/AggSingAz/aggSingAz";
-import ImpDatiExc from "../Sidebar/SidebarHome/Aziende/ImpDatiExc/impDatiExc";
+import AggSingAz from "../Sidebar/SidebarAdmin/Aziende/AggSingAz/aggSingAz";
+import ImpDatiExc from "../Sidebar/SidebarAdmin/Aziende/ImpDatiExc/impDatiExc";
 // import Dati from "../Sidebar/SidebarHome/UtentiEsterni/Dati/dati";
 // import IntVersAnn from "../Sidebar/SidebarHome/UtentiEsterni/IntVersAnn/intVersAnn";
-import NuovoAnnuncio from "../Sidebar/SidebarHome/Annunci/NuovoAnnuncio/nuovoAnnuncio";
-import IMieiAnnunci from "../Sidebar/SidebarHome/Annunci/IMieiAnnunci/iMieiAnnunci";
-import Materiali from "../Sidebar/SidebarHome/Annunci/Materiali/materiali";
-import UnitaDiMisura from "../Sidebar/SidebarHome/Annunci/UnitaDiMisura/unitaDiMisura";
+import NuovoAnnuncio from "../Sidebar/SidebarAdmin/Annunci/NuovoAnnuncio/nuovoAnnuncio";
+import IMieiAnnunci from "../Sidebar/SidebarAdmin/Annunci/IMieiAnnunci/iMieiAnnunci";
+import Materiali from "../Sidebar/SidebarAdmin/Annunci/Materiali/materiali";
+import UnitaDiMisura from "../Sidebar/SidebarAdmin/Annunci/UnitaDiMisura/unitaDiMisura";
+
+import Partec from "../Sidebar/SidebarBandi/partec";
+import PartecBando from "../Sidebar/SidebarBandi/PartecBando/partecBando";
+import LeMiePartec from "../Sidebar/SidebarBandi/LeMiePartec/leMiePartec";
+
 // import Ruoli from "./Materiali/Ruoli";
 // import Categorie from "../Sidebar/SidebarHome/AnagrAz/Categorie/categorie";
 // import Associazioni from "../Sidebar/SidebarHome/AnagrAz/Associazioni/associazioni";
@@ -48,26 +53,26 @@ import UnitaDiMisura from "../Sidebar/SidebarHome/Annunci/UnitaDiMisura/unitaDiM
 // import ProfileDel from "./Profile/Component/ProfileDel/ProfileDel";
 // import AziendeHome from "./Azindia/Aziende";
 
-const SHome = React.lazy(() => import("../Sidebar/SidebarHome/SHome/home"));
+const SHome = React.lazy(() => import("../Sidebar/SidebarAdmin/SHome/home"));
 
 const Ruoli = React.lazy(() => import("./ThreeDots/Ruoli/Ruoli"));
 const AziendeHome = React.lazy(() => import("./ThreeDots/Aziende/Aziende"));
 const ProfileNav = React.lazy(() => import("./ThreeDots/Profile/ProfileNav"));
 const ProfileDel = React.lazy(() => import("./ThreeDots/Profile/Component/ProfileDel/ProfileDel"));
 
-const Dati = React.lazy(() => import("../Sidebar/SidebarHome/UtentiEsterni/Dati/dati"));
-const IntVersAnn = React.lazy(() => import("../Sidebar/SidebarHome/UtentiEsterni/IntVersAnn/intVersAnn"));
+const Dati = React.lazy(() => import("../Sidebar/SidebarAdmin/UtentiEsterni/Dati/dati"));
+const IntVersAnn = React.lazy(() => import("../Sidebar/SidebarAdmin/UtentiEsterni/IntVersAnn/intVersAnn"));
 
 // const NuovoAnnuncio = React.lazy(() => import("../Sidebar/SidebarHome/Annunci/NuovoAnnuncio/nuovoAnnuncio"));
 // const IMieiAnnunci = React.lazy(() => import("../Sidebar/SidebarHome/Annunci/IMieiAnnunci/iMieiAnnunci"));
 
-const Categorie = React.lazy(() => import("../Sidebar/SidebarHome/AnagrAz/Categorie/categorie"));
-const Associazioni = React.lazy(() => import("../Sidebar/SidebarHome/AnagrAz/Associazioni/associazioni"));
-const FormeGiuridiche = React.lazy(() => import("../Sidebar/SidebarHome/AnagrAz/FormeGiuridiche/formeGiuridiche"));
+const Categorie = React.lazy(() => import("../Sidebar/SidebarAdmin/AnagrAz/Categorie/categorie"));
+const Associazioni = React.lazy(() => import("../Sidebar/SidebarAdmin/AnagrAz/Associazioni/associazioni"));
+const FormeGiuridiche = React.lazy(() => import("../Sidebar/SidebarAdmin/AnagrAz/FormeGiuridiche/formeGiuridiche"));
 
-const Regioni = React.lazy(() => import("../Sidebar/SidebarHome/AnagrAz/Localita/Regioni/regioni"));
-const Province = React.lazy(() => import("../Sidebar/SidebarHome/AnagrAz/Localita/Province/province"));
-const Citta = React.lazy(() => import("../Sidebar/SidebarHome/AnagrAz/Localita/Citta/citta"));
+const Regioni = React.lazy(() => import("../Sidebar/SidebarAdmin/AnagrAz/Localita/Regioni/regioni"));
+const Province = React.lazy(() => import("../Sidebar/SidebarAdmin/AnagrAz/Localita/Province/province"));
+const Citta = React.lazy(() => import("../Sidebar/SidebarAdmin/AnagrAz/Localita/Citta/citta"));
 
 
 
@@ -106,6 +111,10 @@ const renderRoutes = () => {
       <Route path="/anagrAz/Localita/regioni" element={<Suspense fallback={<Loader />}> {" "} <Regioni />{" "} </Suspense>} />
       <Route path="/anagrAz/Localita/province" element={<Suspense fallback={<Loader />}> {" "} <Province />{" "} </Suspense>} />
       <Route path="/anagrAz/Localita/citta" element={<Suspense fallback={<Loader />}> {" "} <Citta />{" "} </Suspense>} />
+
+      <Route path="/partec" element={<Partec />} />
+      <Route path="/partecBando" element={<PartecBando />} />
+      <Route path="/leMiePartec" element={<LeMiePartec />} />
 
       <Route path="/*" element={<NotFoundPage />} />
     </Routes>
