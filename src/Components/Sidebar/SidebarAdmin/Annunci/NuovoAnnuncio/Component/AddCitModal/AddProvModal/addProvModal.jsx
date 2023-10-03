@@ -5,7 +5,7 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import AddBoxIcon from "@mui/icons-material/AddBox";
+import AddBoxIcon from '@mui/icons-material/AddBox'
 //*REACT VALIDATION
 import ProvinciaService from "../../../../../../../../DataAPI/services/provincia.service";
 
@@ -15,13 +15,21 @@ import AddRegModal from "./AddRegModal/addRegModal.jsx";
 
 //* MUI MATERIAL ICONS
 import SaveIcon from "@mui/icons-material/Save";
-import ProvForm from "../../../../../AnagrAz/Localita/Province/Component/ProvForm/provForm";
+import ProvForm from '../../../../../AnagrAz/Localita/Province/Component/ProvForm/provForm';
 import CodiceFormAdd from "../../../../../AnagrAz/Localita/Province/Component/CodiceFormAdd/codiceFormAdd";
 
 import "./addProvModal.css";
 import axios from "axios";
 import { useEffect } from "react";
-import { provinceSigle, provinceNomiCompleti, provinciaRegione } from "../../../../../AnagrAz/Localita/Province/ProvSigleNomi/provSigleNomi";
+import { provinceSigle , provinceNomiCompleti, provinciaRegione} from "../../../../../AnagrAz/Localita/Province/ProvSigleNomi/provSigleNomi";
+import AggiuntaProvinciaService from "../../../../../../../../DataAPI/services/aggiuntaProvincia.service";
+
+
+
+
+
+
+
 
 const ProvModalAdd = ({ propShow, propClose, propListaProvCodAdded }) => {
   const [formData, setFormData] = useState({
@@ -32,14 +40,13 @@ const ProvModalAdd = ({ propShow, propClose, propListaProvCodAdded }) => {
   const [loading, setLoading] = useState(false);
   // eslint-disable-next-line
   const [message, setMessage] = useState("");
-  // eslint-disable-next-line
-  const [regSelected, setRegSelected] = useState("");
+  const [regSelected, setRegSelected] = useState('')
   const [errorRegione, setErrorRegione] = useState(""); // Stato errore per la Regione
   const [errorCodice, setErrorCodice] = useState(""); // Stato errore per il Codice
   const [isModalAddRegActive, setIsModalAddRegActive] = useState(false);
   const [searchTerm, setSearchTerm] = useState(""); // Stato per il termine di ricerca
-  // eslint-disable-next-line
-  const [errorDigit, setErrorDigit] = useState("");
+  const [errorDigit, setErrorDigit] = useState('');
+
 
   // eslint-disable-next-line
   const [inputCount, setInputCount] = useState(0);
@@ -49,26 +56,27 @@ const ProvModalAdd = ({ propShow, propClose, propListaProvCodAdded }) => {
   const [isDefaultBorder, setIsDefaultBorder] = useState(true);
   const [inputBorderClass, setInputBorderClass] = useState("form-control");
   const [isProvinceFound, setIsProvinceFound] = useState(false);
-  // eslint-disable-next-line
   const [provinceFound, setProvinceFound] = useState(false);
-  const [listRegProvSiglFiltered, setListRegProvSiglFiltered] = useState("");
+  const [listRegProvSiglFiltered, setListRegProvSiglFiltered] = useState('')
   const [regioniUPPER, setRegioniUPPER] = useState([]);
-  // eslint-disable-next-line
   const [regListCurrent, setRegListCurrent] = useState([]);
 
-  const { addProvincia } = ProvinciaService();
+  //const { addProvincia } = ProvinciaService();
+  const { addAggiuntaProvincia } = AggiuntaProvinciaService();
 
   // eslint-disable-next-line
   const onChange = (e) => {
     console.log("CHANGE");
     const { name, value } = e.target;
-    setFormData((prevState) => ({ ...prevState, [name]: value }));
+    setFormData((prevState) => ({ ...prevState, [name]: value, }));
   };
+
+
 
   const handleAddProvincia = async (e) => {
     try {
       setErrorRegione(""); // Resetta l'errore per la Regione
-      setErrorCodice(""); // Resetta l'errore per il Codice
+      setErrorCodice("");  // Resetta l'errore per il Codice
 
       if (!formData?.idRegione || !formData?.codice) {
         if (!formData?.idRegione) {
@@ -79,12 +87,16 @@ const ProvModalAdd = ({ propShow, propClose, propListaProvCodAdded }) => {
         }
         return;
       }
-      await addProvincia(formData.codice, formData.idRegione);
+
+      console.log("Il codice? " + formData.codice);
+      //await addProvincia(formData.codice, formData.idRegione);
+      await addAggiuntaProvincia(formData.codice, formData.idRegione);
+
 
       setFormData((prevState) => ({
         ...prevState,
         idRegione: "",
-        codice: "",
+        codice: ''
       }));
 
       console.log("set form data AddProvincia --- dati salvati");
@@ -96,15 +108,14 @@ const ProvModalAdd = ({ propShow, propClose, propListaProvCodAdded }) => {
       setLoading(false);
     }
   };
-  const transformRegionNamesToUpper = (provinciaRegione) => {
-    ///PRENDE I NOMI DEL JSON E LI METTE IN MAIUSCOLO
+  const transformRegionNamesToUpper = (provinciaRegione) => {///PRENDE I NOMI DEL JSON E LI METTE IN MAIUSCOLO
     const transformedProvinciaRegione = {};
 
     for (const [provincia, regione] of Object.entries(provinciaRegione)) {
       transformedProvinciaRegione[provincia] = regione.toUpperCase();
     }
     return transformedProvinciaRegione;
-  };
+  }
   const handleRegListCurrent = (regList) => {
     setRegListCurrent(regList);
     console.log("COMP ADD / REG", regList);
@@ -136,7 +147,7 @@ const ProvModalAdd = ({ propShow, propClose, propListaProvCodAdded }) => {
 
     // Aggiornare lo stato o fare altre operazioni necessarie
     // setListRegProvFiltered(filteredProvinciaRegione);
-    setListRegProvSiglFiltered(regProvAndSigle);
+    setListRegProvSiglFiltered(regProvAndSigle)
   };
   const handleProvSelected = (provSel) => {
     // setProvSelected(provSel)
@@ -150,41 +161,42 @@ const ProvModalAdd = ({ propShow, propClose, propListaProvCodAdded }) => {
     // 3. Utilizzare il nome completo per trovare la regione corrispondente
     const regioneCorrispondente = provinciaRegione[nomeCompleto];
 
-    console.log("regioneCorrispondente", regioneCorrispondente);
+    console.log("regioneCorrispondente", regioneCorrispondente)
 
     if (regioneCorrispondente) {
       setRegSelected(regioneCorrispondente.toUpperCase());
     }
-  };
+  }
 
   const getRegioni = async () => {
     const result = await axios.get("http://localhost:8080/api/regioni");
 
-    const updatedRegUPPER = result?.data.map((region) => ({
+    const updatedRegUPPER = result?.data.map(region => ({
       ...region,
       descrizione: region.descrizione.toUpperCase(),
-      codice: region.codice.toUpperCase(),
+      codice: region.codice.toUpperCase()
     }));
-    const data = updatedRegUPPER?.sort((a, b) => (a.codice > b.codice ? 1 : -1));
+    const data = updatedRegUPPER?.sort((a, b) => a.codice > b.codice ? 1 : -1)
 
     setRegioniUPPER(data);
   };
+
 
   useEffect(() => {
     getRegioni();
     // eslint-disable-next-line
   }, [isModalAddRegActive]);
-  const regDescrUPPER = regioniUPPER?.map((region) => region.descrizione);
+  const regDescrUPPER = regioniUPPER?.map(region => region.descrizione)
   const handleRemainProvInList = (list) => {
     // console.log("list", list)
-    setRemainingProvincesInList(list);
-    console.log("PROV TABLE / REMAINING PROV", remainingProvincesInList);
-  };
+    setRemainingProvincesInList(list)
+    console.log("PROV TABLE / REMAINING PROV", remainingProvincesInList)
+  }
   const handleInputDigitChange = (e) => {
     handleRemainProvInList(); // Assicurati che questa funzione aggiorni 'remainingProvincesInList'
 
     const inputText = e.target.value.toUpperCase();
-    const cleanedInput = inputText.replace(/[^A-Z]/g, ""); // Rimuovi numeri e simboli
+    const cleanedInput = inputText.replace(/[^A-Z]/g, ''); // Rimuovi numeri e simboli
     setSearchTerm(cleanedInput);
     setInputValue(cleanedInput);
 
@@ -204,13 +216,14 @@ const ProvModalAdd = ({ propShow, propClose, propListaProvCodAdded }) => {
     if (cleanedInput.length === 2 || (!isProvinceFound && remainingProvincesInList === 0)) {
       setIsDefaultBorder(false);
       setInputBorderClass("form-control is-invalid");
-    } else if (remainingProvincesInList === 0) {
-      setIsDefaultBorder(true);
-      setInputBorderClass("form-control is-valid");
-    } else if (remainingProvincesInList === 1) {
-      setIsDefaultBorder(false);
-      setInputBorderClass("form-control is-invalid");
-    }
+    } else
+      if (remainingProvincesInList === 0) {
+        setIsDefaultBorder(true);
+        setInputBorderClass("form-control is-valid");
+      } else if (remainingProvincesInList === 1) {
+        setIsDefaultBorder(false);
+        setInputBorderClass("form-control is-invalid");
+      }
     if (!isProvinceFound) {
       setIsDefaultBorder(false);
       setInputBorderClass("form-control is-invalid");
@@ -223,30 +236,46 @@ const ProvModalAdd = ({ propShow, propClose, propListaProvCodAdded }) => {
     // }
   };
 
+
+
   const handleAddRegModalOpen = () => {
-    setIsModalAddRegActive(true);
+    setIsModalAddRegActive(true)
     console.log("modalAddLoc open");
   };
 
   const handleAddRegModalClose = () => {
-    setIsModalAddRegActive(false);
+    setIsModalAddRegActive(false)
     console.log("modalAddLoc close");
   };
 
-  const handleProvinceFound = (nomeProvinciaCompleto, nomeProvinciaItaliano, provLength) => {
-    if (provLength > 1) {
+
+
+
+
+
+
+
+
+
+  const handleProvinceFound = (nomeProvinciaCompleto, nomeProvinciaItaliano,provLength) => {
+    if(provLength>1){
       setIsProvinceFound(false);
-      setInputBorderClass("form-control");
-    } else if (provLength === 1) {
+      setInputBorderClass("form-control") 
+    }
+    else if(provLength==1){
       setIsProvinceFound(true);
       setInputBorderClass("form-control is-valid");
-    } else if (provLength === 0) {
+    }
+    else if(provLength==0){
       setIsProvinceFound(false);
       setInputBorderClass("form-control is-invalid");
     }
-  };
+   };
 
-  console.log(propListaProvCodAdded, "propListaProvCodAdded");
+
+
+
+console.log(propListaProvCodAdded,"propListaProvCodAdded")
 
   return (
     <>
@@ -269,118 +298,108 @@ const ProvModalAdd = ({ propShow, propClose, propListaProvCodAdded }) => {
         </Modal.Header>
 
         <Modal.Body>
-          <Row>
-            <Col sm={12} md={12} className=" mb-4">
+          <Row className="d-flex justify-content-start mb-4">
+          <Col xs={12} md={2}> <h4>Codice Provincia</h4> </Col>
+          <Col xs={12} md={1}></Col>
+            <Col xs={12} md={6}>
+            <CodiceFormAdd
+                propFrmData={(val) => {
+                  setFormData((prevState) => ({ ...prevState, "codice": val }));
+                  setErrorCodice(""); // Reimposta l'errore quando una provincia viene selezionata
+                }}
+                // codIdProvFiltered={codIdProvinFiltered}
+                // formDatId={formDataId}
+                onBlur={() => {
+                  if (formData.codice) {
+                    setErrorCodice("");
+                  }
+                }}
+                propListProvCodAdded={propListaProvCodAdded}//  QUESTO IL COMPONENTE CHE PASSA LE PROVINCE FINALMENTE
+                propSearchTerm={searchTerm}
+                propOnProvinceFound={handleProvinceFound} // Passa il termine di ricerca al componente figlio
+                propRemainingProvincesInList={handleRemainProvInList}
+                propRegProvSiglFiltered={listRegProvSiglFiltered}
+                propProvSelected={handleProvSelected}
+                // className={`form-control ${errorCodice ? "is-invalid" : ""}`}
+                style={{
+                  maxHeight: '80vh', // Imposta l'altezza massima a 80vh
+                  overflowY: 'auto', // Abilita lo scrolling se il contenuto supera l'altezza massima
+                }}
+              />
+              {errorCodice && (
+                <p className="text-danger border-danger p-3 rounded fs-4" style={{ borderTop: "4px solid red" }}>
+                  {errorCodice}
+                </p>
+              )}
+            </Col>
+            <Col xs={12} md={3}>
+              <form>
+                <input
+                  type="text"
+                  placeholder="Cerca Provincia..."
+                  // value={searchTerm}
+                  onChange={handleInputDigitChange}
+                  autoFocus
+                  className={inputBorderClass}
+                  value={inputValue}
+                />
+              </form>
+              {errorDigit && <p style={{ color: 'red', fontSize: '18px' }}>{errorDigit}</p>}
+              {isProvinceFound && inputBorderClass === "form-control is-valid" && (
+                <p style={{ color: 'green', fontSize: '18px' }}> {"<--"} TROVATA PROVINCIA  </p>
+              )}
+            </Col>
+          </Row>
+
+          <Row xs={12} md={6} className="d-flex justify-content-start mb-4">
+            <Col xs={12} md={2}><h4>Codice Regione</h4></Col>
+            <Col xs={12} md={1}></Col>
+            <Col xs={12} md={6}>
               <Row>
-                <Col xs={12} md={2}>
-                  {" "}
-                  <h4>Codice Provincia</h4>{" "}
-                </Col>
-                <Col xs={12} md={1}></Col>
-                <Col xs={12} md={6}>
-                  <CodiceFormAdd
-                    propFrmData={(val) => {
-                      setFormData((prevState) => ({ ...prevState, codice: val }));
-                      setErrorCodice("");
+                <Col>
+                  <ProvForm
+                    propFrmData={(e) => {
+                      setFormData((prevState) => ({ ...prevState, "idRegione": e }));
+                      setErrorRegione(""); // Resetta l'errore quando si seleziona una regione
                     }}
-                    onBlur={() => {
-                      if (formData.codice) {
-                        setErrorCodice("");
+                    className={`form-control ${errorRegione ? "is-invalid" : ""}`}
+                    propOnBlur={() => {
+                      if (formData.idRegione) {
+                        setErrorRegione("");
                       }
                     }}
-                    propListProvCodAdded={propListaProvCodAdded} //  QUESTO IL COMPONENTE CHE PASSA LE PROVINCE FINALMENTE
-                    propSearchTerm={searchTerm}
-                    propOnProvinceFound={handleProvinceFound} // Passa il termine di ricerca al componente figlio
-                    propRemainingProvincesInList={handleRemainProvInList}
-                    propRegProvSiglFiltered={listRegProvSiglFiltered}
-                    propProvSelected={handleProvSelected}
-                    // className={`form-control ${errorCodice ? "is-invalid" : ""}`}
+                    propRegListCurrent={handleRegListCurrent}
+                    propIsModalAddRegActive={isModalAddRegActive}
                     style={{
-                      maxHeight: "80vh", // Imposta l'altezza massima a 80vh
-                      overflowY: "auto", // Abilita lo scrolling se il contenuto supera l'altezza massima
+                      transform: 'scale(1.2)', // Modifica la scala del menu a discesa
+                      maxHeight: '80vh', // Imposta l'altezza massima a 80vh
+                      overflowY: 'auto', // Abilita lo scrolling se il contenuto supera l'altezza massima
                     }}
                   />
-                  {errorCodice && (
+                  {errorRegione && (
                     <p className="text-danger border-danger p-3 rounded fs-4" style={{ borderTop: "4px solid red" }}>
-                      {errorCodice}
+                      {errorRegione}
                     </p>
                   )}
                 </Col>
-                <Col xs={12} md={3}>
-                  <form>
-                    <input
-                      type="text"
-                      placeholder="Cerca Provincia..."
-                      // value={searchTerm}
-                      onChange={handleInputDigitChange}
-                      autoFocus
-                      className={inputBorderClass}
-                      value={inputValue}
-                    />
-                  </form>
-                  {errorDigit && <p style={{ color: "red", fontSize: "18px" }}>{errorDigit}</p>}
-                  {isProvinceFound && inputBorderClass === "form-control is-valid" && <p style={{ color: "green", fontSize: "18px" }}> {"<--"} TROVATA PROVINCIA </p>}
-                </Col>
               </Row>
             </Col>
-            <Col sm={12} md={12}>
-              <Row>
-                <Col xs={12} md={2}>
-                  <h4>Codice Regione</h4>
-                </Col>
-                <Col xs={12} md={1}></Col>
-                <Col xs={12} md={6}>
-                  <Row>
-                    <Col>
-                      <ProvForm
-                        propFrmData={(e) => {
-                          setFormData((prevState) => ({ ...prevState, idRegione: e }));
-                          setErrorRegione(""); // Resetta l'errore quando si seleziona una regione
-                        }}
-                        className={`form-control ${errorRegione ? "is-invalid" : ""}`}
-                        propOnBlur={() => {
-                          if (formData.idRegione) {
-                            setErrorRegione("");
-                          }
-                        }}
-                        propRegListCurrent={handleRegListCurrent}
-                        propIsModalAddRegActive={isModalAddRegActive}
-                        style={{
-                          transform: "scale(1.2)", // Modifica la scala del menu a discesa
-                          maxHeight: "80vh", // Imposta l'altezza massima a 80vh
-                          overflowY: "auto", // Abilita lo scrolling se il contenuto supera l'altezza massima
-                        }}
-                      />
-                      {errorRegione && (
-                        <p className="text-danger border-danger p-3 rounded fs-4" style={{ borderTop: "4px solid red" }}>
-                          {errorRegione}
-                        </p>
-                      )}
-                    </Col>
-                  </Row>
-                </Col>
-                <Col xs={12} md={3}>
-                  {" "}
-                  <div className="form-group">
-                    <button className="btn btn-primary" onClick={() => handleAddRegModalOpen()}>
-                      {/* {loading && <span className="spinner-border spinner-border-sm"></span>} */}
-                      <span span>
-                        {" "}
-                        <AddBoxIcon />
-                        Aggiungi regione
-                      </span>
-                    </button>
-                  </div>
-                </Col>
-              </Row>
-            </Col>
+            <Col xs={12} md={3}> <div className="form-group">
+              <button className="btn btn-primary" onClick={() => handleAddRegModalOpen()}>
+                {/* {loading && <span className="spinner-border spinner-border-sm"></span>} */}
+                <span span > <AddBoxIcon />Aggiungi regione</span>
+              </button>
+            </div></Col>
           </Row>
         </Modal.Body>
         <Modal.Footer className="d-flex justify-content-center mt-4">
           <Button onClick={() => handleAddProvincia()}>{<SaveIcon />}Save and Close</Button>
         </Modal.Footer>
-      </Modal>
-      <div>{isModalAddRegActive && <AddRegModal propShow={isModalAddRegActive} propClose={handleAddRegModalClose} propListaRegDescrAdded={regDescrUPPER} />}</div>
+      </Modal >
+      <div>{isModalAddRegActive && <AddRegModal
+        propShow={isModalAddRegActive}
+        propClose={handleAddRegModalClose}
+        propListaRegDescrAdded={regDescrUPPER} />}</div>
     </>
   );
 };

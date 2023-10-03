@@ -4,7 +4,8 @@ import "./home.css";
 /* COMPONENTS */
 import { newData } from "../../../../DataAPI/newData";
 import { tableColumn } from "./Data/MainTable/Columns";
-import Table from "./Table/Table";
+import Table from "./Table/table";
+//import Table from "./Table";
 import AnnuncioService from "../../../../DataAPI/services/annuncio.service";
 // import AddNewRecordForm from "./AddNewRecord/AddNewRecord";
 
@@ -31,31 +32,23 @@ const SHome = () => {
   const { getAnnunci } = AnnuncioService();
   const getAnnunciData = async () => {
     const response = await getAnnunci()
-    setAnnunci(response?.data?.map((data) => ({
-      ...data,
-      classeWaste: data?.materiale?.descrizione,
-      descrizioneDetail: data?.descrizione
-    })))
+    setAnnunci(response?.data?.map((data) => ({ ...data, classeWaste: data?.materiale?.descrizione, descrizioneDetail: data?.descrizione })))
+    if (response?.data) { setLoading(false) }
 
-    if (response?.data) {
-      setLoading(false)
-    }
+
   }
   useEffect(() => {
     getAnnunciData()
     // eslint-disable-next-line
   }, [])
 
-
   return loading ? (null) : (
     <>
       <div className="elems-container" style={{ fontSize: "1.9rem", marginTop: "80px" }}>
         <div className="container-fluid">
           <div className="row row-overflow">
-            <Table
-              propColumnData={[...tableColumn]}
-              propRowData={annunci}
-            //  {/* handleAddNewRecPopup={handleAddNewRecPopup} */}
+            <Table columnData={[...tableColumn]} rowData={annunci}
+            // handleAddNewRecPopup={handleAddNewRecPopup}
             />
             {/*<MainTable*/}
             {/*    getTableProps={getTableProps}*/}

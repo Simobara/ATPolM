@@ -1,7 +1,7 @@
 // import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8080/views/';
+const API_URL = 'http://localhost:8080/api/';
 
 
 
@@ -20,13 +20,30 @@ const AziendaService = () => {
     }
 
 
-    const addAzienda = async (email, indirizzo, ragioneSociale, telefono1) => {
+    const addAzienda = async (id, email, fax, password, indirizzo, ragioneSociale, rappresentanteLegale, telefono1, telefono2,
+        descrizioneTelefoni, pec, idFormaGiuridica, idAssociazione, idLocalità, idCategoria, idAttivitaPrincipale,
+        idAttivitaSecondaria, idRuolo) => {
         try {
-            const response = await axios.post(API_URL + 'add-azienda', {
+            const response = await axios.post(`${API_URL}add-azienda/${id}/${idLocalità}/${idCategoria}
+            /${idAttivitaPrincipale}/${idAttivitaSecondaria}/${idAssociazione}/${idFormaGiuridica}/${idRuolo}`, {
+                id,
                 email,
+                fax,
+                password,
                 indirizzo,
                 ragioneSociale,
+                rappresentanteLegale,
                 telefono1,
+                telefono2,
+                descrizioneTelefoni,
+                pec,
+                idFormaGiuridica,
+                idAssociazione,
+                idLocalità,
+                idCategoria,
+                idAttivitaPrincipale,
+                idAttivitaSecondaria,
+                idRuolo
             });
             if (response.data.accessToken) {
                 localStorage.setItem('azienda', JSON.stringify(response.data));
