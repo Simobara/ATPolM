@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Select from 'react-select';
-
+import "./dropdownMenu.css";
 const DropdownMenu = ({ propsData, propSetValue, propDropdownValue, placeholder }) => {
   console.log("propsData", propDropdownValue)
 
@@ -20,6 +20,7 @@ const DropdownMenu = ({ propsData, propSetValue, propDropdownValue, placeholder 
   return (
     <div className="dropdown_menu">
       <Select
+      className='dropdownPlaceHolder'
         isSearchable={false}
         closeMenuOnSelect
         options={propsData}

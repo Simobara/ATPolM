@@ -7,7 +7,8 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 //* VALIDATIONS
 import { required, email } from "./Validations/validations"; //(e' di supporto)
 
-
+//* CSS
+import './formInput.css'
 
 
 
@@ -15,6 +16,8 @@ import { required, email } from "./Validations/validations"; //(e' di supporto)
 const FormInput = ({ id, label, type, options = [], propOnChange, propValue, propIsFormReset }) => {
     const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState(null);
+    const [isFocused, setIsFocused] = useState(false);
+
 
     const handleTogglePasswordVisibility = () => {
         setShowPassword(!showPassword)
@@ -46,6 +49,10 @@ const FormInput = ({ id, label, type, options = [], propOnChange, propValue, pro
         handleValidation(e.target.value);
     }
 
+
+
+    //* -------------------------RENDER ERROR------------------------------------------
+
     const renderError = () => {
         if (error) {
             // Personalizza lo stile del messaggio di errore qui
@@ -65,27 +72,34 @@ const FormInput = ({ id, label, type, options = [], propOnChange, propValue, pro
 
 
 
-
+    //* ----------------------------RENDER INPUT------------------------------------------
 
     const renderInput = () => {
         switch (type) {
             case "email":
                 return (
                     <input
-                        type={type}
                         id={id}
-                        className="mt-2 form-control form_middle_pagenuovo custom-container"
-                        onChange={handleChange}
+                        type={type}
                         value={propValue}
+                        className="mt-2 form-control form_middle_pagenuovo custom-container borderField"
+                        onChange={handleChange}
+                        onFocus={() => setIsFocused(true)}
+                        onBlur={() => setIsFocused(false)}
+
                     />
                 );
             case "select":
                 return (
                     <select
                         id={id}
-                        className="mt-2 form-control form_middle_pagenuovo custom-container"
-                        onChange={handleChange}
+                        type={type}
                         value={propValue}
+                        className="mt-2 form-control form_middle_pagenuovo custom-container borderField"
+                        onChange={handleChange}
+                        onFocus={() => setIsFocused(true)}
+                        onBlur={() => setIsFocused(false)}
+
                     >
                         <option value="" disabled>Seleziona</option>
                         {options.map((option, index) => (
@@ -100,13 +114,14 @@ const FormInput = ({ id, label, type, options = [], propOnChange, propValue, pro
                             {showPassword ? <VisibilityOff fontSize="large" /> : <Visibility fontSize="large" />}
                         </span>
                         <input
-                            type={showPassword ? 'text' : 'password'}
                             id={id}
-                            className="mt-2 form-control form_middle_pagenuovo custom-container"
-                            onChange={handleChange}
+                            type={showPassword ? 'text' : 'password'}
                             value={propValue}
+                            className="mt-2 form-control form_middle_pagenuovo custom-container borderField"
                             style={{ flex: '1', fontSize: '18px', height: '40px' }}
-                        // Assicura che l'input occupi tutto lo spazio disponibile
+                            onChange={handleChange}
+                            onFocus={() => setIsFocused(true)}
+                            onBlur={() => setIsFocused(false)}
                         />
                     </div>
                 );
@@ -115,26 +130,33 @@ const FormInput = ({ id, label, type, options = [], propOnChange, propValue, pro
                     <input
                         type={type}
                         id={id}
-                        className="mt-2 form-control form_middle_pagenuovo custom-container"
-                        onChange={handleChange}
                         value={propValue}
+                        className="mt-2 form-control form_middle_pagenuovo custom-container borderField"
+                        onChange={handleChange}
+                        onFocus={() => setIsFocused(true)}
+                        onBlur={() => setIsFocused(false)}
                     />
                 );
         }
     }
 
+
+    //* ----------------------------------------- RETURN -------------------------------------------------------
     return (
-        <div className="row mt-3 mb-3">
-            <div className="col-xl-3 col-md-3 col-lg-3 col-sm-4 col-4">
-                <label htmlFor={id} className="word-label">
+        // <div className="centered-form">
+        <div className="row mt-3 mb-3 ">
+            {/* <div className={`col-xl-2 col-md-2 col-lg-2 col-sm-6 col-6 text-label-style-azinde ${isFocused ? "text-label-Focus" : "text-label-NoFocus"}`}> */}
+            <div className={`col-xl-2 col-md-2 col-lg-2 col-sm-6 col-6 text-label-style-azinde`}>
+                <label htmlFor={id}>
                     {label}
                 </label>
             </div>
-            <div className="col-xl-9 col-md-9 col-lg-9 col-sm-8 col-8">
+            <div className="col-xl-8 col-md-8 col-lg-8 col-sm-12 col-12 shift-right">
                 {renderInput()}
                 {renderError()}
             </div>
         </div>
+        // </div>
     );
 }
 

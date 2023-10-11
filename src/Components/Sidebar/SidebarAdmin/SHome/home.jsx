@@ -49,31 +49,45 @@ const SHome = () => {
 
   return loading ? (null) : (
     <>
-      <div className="elems-container" style={{ fontSize: "1.9rem", marginTop: "80px" }}>
-        <div className="container-fluid">
-          <div className="row row-overflow">
-            <Table
-              propColumnData={[...tableColumn]}
-              propRowData={annunci}
-            //  {/* handleAddNewRecPopup={handleAddNewRecPopup} */}
-            />
-            {/*<MainTable*/}
-            {/*    getTableProps={getTableProps}*/}
-            {/*    getTableBodyProps={getTableBodyProps}*/}
-            {/*    headerGroups={headerGroups}*/}
-            {/*    prepareRow={prepareRow}*/}
-            {/*    page={page} //rows was replaced by page for pagination*/}
-            {/*/>*/}
+      <div className="elems-container">
+        <div style={{ fontSize: '20px', marginBottom: '10px', marginTop: '5rem' }}>
+          <div style={{
+            height: '70px',
+            backgroundColor: '#030947',
+            width: '100%',
+           
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            fontWeight: 'bold'
+          }} className="bold-columns text-center text-white">
+            HOME
           </div>
-          {/*<div className="container-fluid">*/}
-          {/*    <div className="row row-overflow">*/}
-          {/*        <Map/>*/}
-          {/*    </div>*/}
-          {/*</div>*/}
-        </div>
-        {/* <div className="chat-container"> */}
+          <div className="" style={{ backgroundColor: "#f3f3f3",paddingTop:"20px",paddingLeft:"30px",paddingRight:"30px" }}>
+            <div className="row row-overflow">
+              <Table
+                propColumnData={[...tableColumn]}
+                propRowData={annunci}
+              //  {/* handleAddNewRecPopup={handleAddNewRecPopup} */}
+              />
+              {/*<MainTable*/}
+              {/*    getTableProps={getTableProps}*/}
+              {/*    getTableBodyProps={getTableBodyProps}*/}
+              {/*    headerGroups={headerGroups}*/}
+              {/*    prepareRow={prepareRow}*/}
+              {/*    page={page} //rows was replaced by page for pagination*/}
+              {/*/>*/}
+            </div>
+            {/*<div className="container-fluid">*/}
+            {/*    <div className="row row-overflow">*/}
+            {/*        <Map/>*/}
+            {/*    </div>*/}
+            {/*</div>*/}
+          </div>
+          {/* <div className="chat-container"> */}
 
-        {/* {showAddNewRecPopup && <AddNewRecordForm rowsLength={rowsData?.length || ''} onClosePopup={onClosePopup} onCancel={onClosePopup} onSubmitForm={onSubmitForm} />} */}
+          {/* {showAddNewRecPopup && <AddNewRecordForm rowsLength={rowsData?.length || ''} onClosePopup={onClosePopup} onCancel={onClosePopup} onSubmitForm={onSubmitForm} />} */}
+        </div>
       </div>
     </>
   );

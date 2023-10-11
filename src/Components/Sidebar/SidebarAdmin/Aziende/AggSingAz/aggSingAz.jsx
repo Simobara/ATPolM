@@ -112,14 +112,12 @@ const AggSingAz = () => {
 
   const handleSection = (sectionTitle, sectionData) => (
     <>
-      <div className="word-label ml-2 mb-4 titolo-sezione titolo-blu">{sectionTitle}</div>
-      <div className="col-9 ml-2">
-        {sectionData.map(
-          (
-            inputData //SECTION DATA ==> {FORM DATI LOGIN}, {FORM DATA AZIENDE}
-          ) => (
-            <FormInput key={inputData.id} {...inputData} propOnChange={handleChange} propValue={formData[inputData.id]} propIsFormReset={isFormReset} />
-          )
+      {/* //SECTION DATA ==> {FORM DATI LOGIN}, {FORM DATA AZIENDE} */}
+      <div className="word-label  mb-4 titolo-sezione mt-0 title-label-style" >{sectionTitle}</div>
+      <div className="title-form-size">
+        {sectionData.map((inputData) => (
+          <FormInput key={inputData.id} {...inputData} propOnChange={handleChange} propValue={formData[inputData.id]} propIsFormReset={isFormReset} />
+        )
         )}
       </div>
     </>
@@ -178,34 +176,48 @@ const AggSingAz = () => {
 
   return (
     <>
-      <div className="container custom-container mt-5" style={{ backgroundColor: "#f3f3f3" }}>
-        <Form onSubmit={handleAddAzienda} ref={refForm}>
-          <div className="row mt-5">
-            {handleSection("DATI LOGIN", formDatiLogin)}
-            {handleSection("DATI AZIENDA", formDatiAzienda)}
-          </div>
-          <div className="row justify-content-center form_middle_page_btn" style={{ marginTop: "80px", paddingBottom: "130px" }}>
-            <div className="form-group col-md-2 mr-3">
-              <button
-                className="btn btn-primary btn-block"
-              // onClick={"#"}
-              >
-                {/* {loading && <span className="spinner-border spinner-border-sm"></span>} */}
-                <span>
-                  <SaveIcon />
-                  Salva
-                </span>
-              </button>
+      <div style={{ fontSize: '20px', marginTop: '5rem' }}>
+        <div style={{
+          height: '70px',
+          backgroundColor: '#030947',
+          width: '100%',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          marginBottom:"40px",
+          fontWeight: 'bold',
+        }} className="bold-columns text-center text-white">
+          AGGIUNGI AZIENDA
+        </div>
+        <div className="container custom-container">
+          <Form onSubmit={handleAddAzienda} ref={refForm}>
+            {/* <div className="row mt-5"> */}
+              {handleSection("DATI LOGIN", formDatiLogin)}
+              {handleSection("DATI AZIENDA", formDatiAzienda)}
+            {/* </div> */}
+            <div className="row justify-content-center form_middle_page_btn" style={{ marginTop: "80px", paddingBottom: "130px" }}>
+              <div className="form-group col-md-2 mr-mt-0">
+                <button
+                  className="btn btn-primary btn-block"
+                // onClick={"#"}
+                >
+                  {/* {loading && <span className="spinner-border spinner-border-sm"></span>} */}
+                  <span>
+                    <SaveIcon />
+                    Salva
+                  </span>
+                </button>
+              </div>
+              <div className="form-group col-md-2 ml-mt-0">
+                <button className="btn btn-danger btn-block" onClick={handleResetForm}>
+                  <span>
+                    <DeleteIcon /> Cancella
+                  </span>
+                </button>
+              </div>
             </div>
-            <div className="form-group col-md-2 ml-5">
-              <button className="btn btn-danger btn-block" onClick={handleResetForm}>
-                <span>
-                  <DeleteIcon /> Cancella
-                </span>
-              </button>
-            </div>
-          </div>
-        </Form>
+          </Form>
+        </div>
       </div>
     </>
   );

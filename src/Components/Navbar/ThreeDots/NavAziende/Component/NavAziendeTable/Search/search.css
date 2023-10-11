@@ -1,0 +1,23 @@
+.search-wrapper {
+  color: #4f4e4e;
+}
+.search-input {
+  padding: 0.2rem;
+  outline: none;
+  font-size: 0.8rem;
+  border: 1px solid #acacac;
+  border-radius: 2px;
+  color: #535252;
+}
+.search-input::placeholder {
+  font-size: 12px !important;
+}
+.flex-search-input {
+  display: flex;
+  align-items: center;
+}
+@media only screen and (max-width: 768px) {
+  .flex-search-input {
+    display: block;
+  }
+}

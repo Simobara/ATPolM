@@ -82,7 +82,8 @@ const RegModalAdd = ({ propShow, propClose, propListaRegDescrAdded }) => {
         // close={close}
         size="md"
         aria-labelledby="contained-modal-title-vcenter"
-        top="true"
+        top="true" centered
+        
       >
         <Modal.Header>
           <Modal.Title id="contained-modal-title-vcenter" className="font-weight-bold">
@@ -96,28 +97,26 @@ const RegModalAdd = ({ propShow, propClose, propListaRegDescrAdded }) => {
           <Row className="mb-4 regModal" style={{ width: "100%" }}>
             <Col xs={12} sm={12}>
               <Row>
-                <Col xs={12} md={6}>
+                <Col xs={12} md={5}>
                   <h4>Nome Regione</h4>{" "}
                 </Col>
-                <Col xs={12} md={6}>
+                <Col xs={12} md={7} className="justify-content-end">
                   <Row>
                     <Col>
-                      <div style={{ height: "200px" }}>
-                        <RegioniForm
-                          propFrmRegioni={(reg) => {
-                            setFormData((prevState) => ({ ...prevState, descrizione: reg }));
-                            setSelectedRegionValue(reg);
-                            setError("");
-                          }}
-                          propListRegDescrAdded={propListaRegDescrAdded}
-                        />
-                        {error && (
-                          <p className="text-danger border-danger p-3 rounded fs-4" style={{ borderTop: "4px solid red" }}>
-                            {" "}
-                            {error}{" "}
-                          </p>
-                        )}
-                      </div>
+                      <RegioniForm
+                        propFrmRegioni={(reg) => {
+                          setFormData((prevState) => ({ ...prevState, descrizione: reg }));
+                          setSelectedRegionValue(reg);
+                          setError("");
+                        }}
+                        propListRegDescrAdded={propListaRegDescrAdded}
+                      />
+                      {error && (
+                        <p className="text-danger border-danger p-3 rounded fs-4" style={{ borderTop: "4px solid red" }}>
+                          {" "}
+                          {error}{" "}
+                        </p>
+                      )}
                     </Col>
                   </Row>
                   {/* <Form.Control
@@ -152,7 +151,10 @@ const RegModalAdd = ({ propShow, propClose, propListaRegDescrAdded }) => {
           </Row> */}
         </Modal.Body>
         <Modal.Footer className="d-flex justify-content-center mt-4">
-          <Button onClick={() => handleAddRegione()}>{<SaveIcon />}Save and Close</Button>
+          <Button onClick={() => handleAddRegione()} className="justify-content-around">
+            {" "}
+            {<SaveIcon />}Save and Close{" "}
+          </Button>
         </Modal.Footer>
       </Modal>
     </>

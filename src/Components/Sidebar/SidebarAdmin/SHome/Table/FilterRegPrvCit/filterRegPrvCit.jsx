@@ -215,9 +215,9 @@ const FilterRegPrvCit = ({ propFilterRowData, propFilterDataCitta, propFilterReg
     return (
         console.log(dropdownValue),
         <>
-            <div style={{ display: 'inline-flex', flexDirection: 'row', alignItems: 'center' }}>
+            <div style={{ display: 'inline-flex', flexDirection: 'row', alignItems: 'center',flexWrap:"wrap" }}>
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', marginRight: '20px' }}>
-                    <span style={{ fontSize: '14px' }}>Regione</span>
+                    <span style={{ fontSize: '15px',fontWeight:"700" }}>Regione</span>
                     <div style={{ width: "170px", fontSize: "20px" }}>
                         <DropdownMenu
                             propsData={regioni}
@@ -230,7 +230,7 @@ const FilterRegPrvCit = ({ propFilterRowData, propFilterDataCitta, propFilterReg
 
                 {dropdownValue.regione && (
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', marginRight: '20px' }}>
-                        <span style={{ fontSize: '14px' }}>Provincia</span>
+                        <span style={{ fontSize: '15px' ,fontWeight:"700"}}>Provincia</span>
                         <div style={{ width: "170px", fontSize: "20px" }}>
                             <DropdownMenu
                                 propsData={filteredProvincia}
@@ -245,7 +245,7 @@ const FilterRegPrvCit = ({ propFilterRowData, propFilterDataCitta, propFilterReg
 
                 {dropdownValue.provincia && (
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', marginRight: '20px' }}>
-                        <span style={{ fontSize: '14px' }}>Città</span>
+                        <span style={{ fontSize: '15px',fontWeight:"700" }}>Città</span>
                         <div style={{ width: "170px", fontSize: "20px" }}>
                             <DropdownMenu
                                 propsData={filteredCitta}

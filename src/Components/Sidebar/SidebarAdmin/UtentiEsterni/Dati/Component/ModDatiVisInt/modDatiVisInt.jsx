@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
-/* CSS */
+
+//* CSS */
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 // import Row from 'react-bootstrap/Row';
 // import Col from 'react-bootstrap/Col';
 // import Form from 'react-bootstrap/Form';
-/* COMPONENTS */
+
+//* COMPONENTS */
 import ModDatiModVisAnn from "../ModDatiModVisAnn/modDatiModVisAnn";
 // import RegForm from '../RegForm/regForm';
 
-/* MUI MATERIAL ICONS */
+//* MUI MATERIAL ICONS */
 // import SaveIcon from '@mui/icons-material/Save';
 
 
@@ -58,11 +60,11 @@ const DatVisInt = ({ show, close }) => {
                 // close={close}
                 size="lg"
                 aria-labelledby="contained-modal-title-vcenter"
-                top="true"
+                top="true" centered
             >
                 <Modal.Header >
                     <Modal.Title id="contained-modal-title-vcenter" className="font-weight-bold">
-                        <h2>VISUALIZZA INTERESSI</h2>
+                        <h2>INTERESSI</h2>
                     </Modal.Title>
                     <Button variant="danger" onClick={close} size="lg">
                         X
@@ -90,7 +92,7 @@ const DatVisInt = ({ show, close }) => {
                             <tr key={rowIndex}>
                                 <td className={getColumnClassName(0)}>
                                     <div>
-                                        <button type="button" className="btn btn-primary button-modify" onClick={handleClickModDatVisAnnOpen}>
+                                        <button type="button" className="btn btn-primary button-modify largeTextButton" onClick={handleClickModDatVisAnnOpen} style={{ paddingLeft: '10px', paddingRight: '10px' }}>
                                             Vedi Annuncio
                                         </button>
                                     </div>

@@ -69,7 +69,7 @@ const ModalRegister = ({ propShow, propClose, setShowChatModal }) => {
         // keyboard={false}
         // size="lg"
         aria-labelledby="contained-modal-title-vcenter"
-        top="true"
+        top="true" centered
       >
         <Modal.Header>
           <Modal.Title>Dati di contatto richiesti</Modal.Title>

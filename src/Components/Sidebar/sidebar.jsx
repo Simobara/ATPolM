@@ -55,7 +55,13 @@ const Sidebar = () => {
       }
     }
   }, [isSelectedLink]);
-
+  useEffect(() => {
+    if (window.location.pathname === "/aziende/AggSingAz") {
+      setActive("")
+      setIsSelectedLink("")
+    }
+    // eslint-disable-next-line
+  }, [window.location.pathname])
   return (
     <>
       <MenuIcon className="MenuIcon-toggle" onClick={() => setDisplayMenu(!displayMenu)} />
@@ -105,34 +111,44 @@ const Sidebar = () => {
                 <StartOutlinedIcon fontSize="small" locali/>
               </ListItemIcon> */}
                 <Typography variant="body2" className="ListItemTypo" component="span">
-                  <div className="item-arrow">
+                  <div className="item-arrow" onClick={() => setIsArrowAziendeOpen(!isArrowAziendeOpen)}>
                     <div className="item">Aziende</div>
                     <div className="arrow-navigation">
                       {isArrowAziendeOpen === true ? (
-                        <IoIosArrowUp style={{ color: "#fff" }} onClick={() => setIsArrowAziendeOpen(!isArrowAziendeOpen)} />
+                        <IoIosArrowUp style={{ color: "#fff" }} />
                       ) : (
-                        <IoIosArrowDown style={{ color: "#fff" }} onClick={() => setIsArrowAziendeOpen(!isArrowAziendeOpen)} />
+                        <IoIosArrowDown style={{ color: "#fff" }} />
                       )}
                     </div>
                   </div>
                   {isArrowAziendeOpen && (
                     <>
                       <div className="submenu-open">
-                        <div className="submenu menu-content">
+                        <div className={`submenu sub-submenu menu-content  ${active === "Visualizza Azienda" ? "activeSubTab " : ""}`} onClick={() => setActive("Visualizza Azienda")}>
+                          <NavLink
+                            id="aggSingAz"
+                            to="/aziende"
+                            className={`submenu menu-link sott ${isSelectedLink === "visAzienda" ? "" : ""}`}
+                            onClick={handleClickLinkSidebar}
+                          >
+                            Visualizza Azienda
+                          </NavLink>
+                        </div>
+                        <div className={`submenu sub-submenu menu-content  ${active === "Aggiungi azienda" ? "activeSubTab " : ""}`} onClick={() => setActive("Aggiungi azienda")}>
                           <NavLink
                             id="aggSingAz"
                             to="/aziende/aggSingAz"
-                            className={`submenu menu-link sott ${isSelectedLink === "aggSingAz" ? "sidebar-text-link" : ""}`}
+                            className={`submenu menu-link sott ${isSelectedLink === "aggSingAz" || window.location.pathname === "/aziende/AggSingAz" ? "" : ""}`}
                             onClick={handleClickLinkSidebar}
                           >
                             Aggiungi azienda
                           </NavLink>
                         </div>
-                        <div className="submenu menu-content">
+                        <div className={`submenu sub-submenu menu-content  ${active === "Importa Dati Excel" ? "activeSubTab " : ""}`} onClick={() => setActive("Importa Dati Excel")}>
                           <NavLink
                             id="impDatiExc"
                             to="/aziende/impDatiExc"
-                            className={`submenu menu-link sott ${isSelectedLink === "impDatiExc" ? "sidebar-text-link" : ""}`}
+                            className={`submenu menu-link sott ${isSelectedLink === "impDatiExc" ? "" : ""}`}
                             onClick={handleClickLinkSidebar}
                           >
                             Importa Dati Excel
@@ -145,29 +161,29 @@ const Sidebar = () => {
               </MenuItem>
               <MenuItem className="MenuMainItem">
                 <Typography variant="body2" className="ListItemTypo" component="span">
-                  <div className="item-arrow">
+                  <div className="item-arrow" onClick={() => setIsArrowUtEsterniOpen(!isArrowUtEsterniOpen)}>
                     <div className="item">Utenti Esterni</div>
                     <div className="arrow-navigation">
                       {isArrowUtEsterniOpen === true ? (
-                        <IoIosArrowUp style={{ color: "#fff" }} onClick={() => setIsArrowUtEsterniOpen(!isArrowUtEsterniOpen)} />
+                        <IoIosArrowUp style={{ color: "#fff" }} />
                       ) : (
-                        <IoIosArrowDown style={{ color: "#fff" }} onClick={() => setIsArrowUtEsterniOpen(!isArrowUtEsterniOpen)} />
+                        <IoIosArrowDown style={{ color: "#fff" }} />
                       )}
                     </div>
                   </div>
                   {isArrowUtEsterniOpen && (
                     <>
                       <div className="submenu-open">
-                        <div className="submenu menu-content">
-                          <NavLink id="dati" to="/utEsterni/dati" className={`submenu menu-link sott ${isSelectedLink === "impDatiExc" ? "sidebar-text-link" : ""}`} onClick={handleClickLinkSidebar}>
+                        <div className={`submenu sub-submenu menu-content  ${active === "Dati" ? "activeSubTab " : ""}`} onClick={() => setActive("Dati")}>
+                          <NavLink id="dati" to="/utEsterni/dati" className={`submenu menu-link sott ${isSelectedLink === "impDatiExc" ? "" : ""}`} onClick={handleClickLinkSidebar}>
                             Dati
                           </NavLink>
                         </div>
-                        <div className="submenu menu-content">
+                        <div className={`submenu sub-submenu menu-content  ${active === "Interessi su Annunci" ? "activeSubTab " : ""}`} onClick={() => setActive("Interessi su Annunci")}>
                           <NavLink
                             id="intVersAnn"
                             to="/utEsterni/intVersAnn"
-                            className={`submenu menu-link sott ${isSelectedLink === "impDatiExc" ? "sidebar-text-link" : ""}`}
+                            className={`submenu menu-link sott ${isSelectedLink === "impDatiExc" ? "" : ""}`}
                             onClick={handleClickLinkSidebar}
                           >
                             Interessi su Annunci
@@ -181,40 +197,40 @@ const Sidebar = () => {
 
               <MenuItem className="MenuMainItem">
                 <Typography variant="body2" className="ListItemTypo" component="span">
-                  <div className="item-arrow">
+                  <div className="item-arrow" onClick={() => setIsArrowAnnunciOpen(!isArrowAnnunciOpen)}>
                     <div className="item">Annunci</div>
                     <div className="arrow-navigation">
                       {isArrowAnnunciOpen === true ? (
-                        <IoIosArrowUp style={{ color: "#fff" }} onClick={() => setIsArrowAnnunciOpen(!isArrowAnnunciOpen)} />
+                        <IoIosArrowUp style={{ color: "#fff" }} />
                       ) : (
-                        <IoIosArrowDown style={{ color: "#fff" }} onClick={() => setIsArrowAnnunciOpen(!isArrowAnnunciOpen)} />
+                        <IoIosArrowDown style={{ color: "#fff" }} />
                       )}
                     </div>
                   </div>
                   {isArrowAnnunciOpen && (
                     <>
                       <div className="submenu-open">
-                        <div className="submenu menu-content">
+                        <div className={`submenu sub-submenu menu-content  ${active === "Nuovo Annuncio" ? "activeSubTab " : ""}`} onClick={() => setActive("Nuovo Annuncio")}>
                           <NavLink
                             id="nuovoAnnuncio"
                             to="/annunci/nuovoAnnuncio"
-                            className={`submenu menu-link sott ${isSelectedLink === "nuovoAnnuncio" ? "sidebar-text-link" : ""}`}
+                            className={`submenu menu-link sott ${isSelectedLink === "nuovoAnnuncio" ? "" : ""}`}
                             onClick={handleClickLinkSidebar}
                           >
                             Nuovo Annuncio
                           </NavLink>
                         </div>
-                        <div className="submenu menu-content">
+                        <div className={`submenu sub-submenu menu-content  ${active === "I miei Annunci" ? "activeSubTab " : ""}`} onClick={() => setActive("I miei Annunci")}>
                           <NavLink id="iMieiAnnunci" onClick={() => setDisplayMenu(false)} to="/annunci/iMieiAnnunci" className="submenu menu-link">
                             I miei Annunci
                           </NavLink>
                         </div>
-                        <div className="submenu menu-content">
+                        <div className={`submenu sub-submenu menu-content  ${active === "Materiali" ? "activeSubTab " : ""}`} onClick={() => setActive("Materiali")}>
                           <NavLink id="materiali" onClick={() => setDisplayMenu(false)} to="/annunci/materiali" className="submenu menu-link">
                             Materiali
                           </NavLink>
                         </div>
-                        <div className="submenu menu-content">
+                        <div className={`submenu sub-submenu menu-content  ${active === "Unita' di misura" ? "activeSubTab " : ""}`} onClick={() => setActive("Unita' di misura")}>
                           <NavLink id="unitaDiMisura" onClick={() => setDisplayMenu(false)} to="/annunci/unitaDiMisura" className="submenu menu-link">
                             Unita' di misura
                           </NavLink>
@@ -231,61 +247,62 @@ const Sidebar = () => {
                 className="MenuMainItem"
               >
                 <Typography variant="body2" className="ListItemTypo" component="span">
-                  <div className="item-arrow">
+                  <div className="item-arrow" onClick={() => setIsArrowAnagrAzOpen(!isArrowAnagrAzOpen)}>
                     <div className="item">Anagrafica aziende</div>
                     <div className="arrow-navigation">
                       {isArrowAnagrAzOpen === true ? (
-                        <IoIosArrowUp style={{ color: "#fff" }} onClick={() => setIsArrowAnagrAzOpen(!isArrowAnagrAzOpen)} />
+                        <IoIosArrowUp style={{ color: "#fff" }} />
                       ) : (
-                        <IoIosArrowDown style={{ color: "#fff" }} onClick={() => setIsArrowAnagrAzOpen(!isArrowAnagrAzOpen)} />
+                        <IoIosArrowDown style={{ color: "#fff" }} />
                       )}
                     </div>
                   </div>
                   {isArrowAnagrAzOpen && (
                     <>
                       <div className="submenu-open submenu-open-height">
-                        <div className="submenu menu-content">
-                          <NavLink id="categorie" onClick={() => setDisplayMenu(false)} to="/anagrAz/categorie" className="menu-link">
+                        <div className={`submenu sub-submenu menu-content  ${active === "Categorie" ? "activeSubTab " : ""}`} onClick={() => setActive("Categorie")}>
+                          <NavLink id="categorie" onClick={() => setDisplayMenu(false)} to="/anagrAz/categorie" className=" submenu menu-link">
                             Categorie
                           </NavLink>
                         </div>
-                        <div className="submenu menu-content">
+                        <div className={`submenu sub-submenu menu-content  ${active === "Associazioni" ? "activeSubTab " : ""}`} onClick={() => setActive("Associazioni")}>
+
                           <NavLink id="associazioni" onClick={() => setDisplayMenu(false)} to="/anagrAz/associazioni" className="submenu menu-link">
                             Associazioni
                           </NavLink>
                         </div>
-                        <div className="submenu menu-content">
+                        <div className={`submenu sub-submenu menu-content  ${active === "Forme Giuridiche" ? "activeSubTab " : ""}`} onClick={() => setActive("Forme Giuridiche")}>
                           <NavLink id="formeGiuridiche" onClick={() => setDisplayMenu(false)} to="/anagrAz/formeGiuridiche" className="submenu menu-link">
                             Forme Giuridiche
                           </NavLink>
                         </div>
                         <div className=" menu-content" style={{ paddingLeft: "5px", margin: "10px auto" }}>
                           <Typography variant="body2" className="ListItemTypo" component="span">
-                            <div className="item-arrow">
+                            <div className="item-arrow" onClick={() => setIsArrowLocalitaOpen(!isArrowLocalitaOpen)}>
                               <div className="item">Localita'</div>
                               <div className="arrow-Menu-navigation">
                                 {isArrowLocalitaOpen === true ? (
-                                  <IoIosArrowUp style={{ color: "#fff" }} onClick={() => setIsArrowLocalitaOpen(!isArrowLocalitaOpen)} />
+                                  <IoIosArrowUp style={{ color: "#fff" }} />
                                 ) : (
-                                  <IoIosArrowDown style={{ color: "#fff" }} onClick={() => setIsArrowLocalitaOpen(!isArrowLocalitaOpen)} />
+                                  <IoIosArrowDown style={{ color: "#fff" }} />
                                 )}
                               </div>
                             </div>
                             {isArrowLocalitaOpen && (
                               <>
                                 <div className="submenu-open">
-                                  <div className="submenu sub-submenu menu-content">
-                                    <NavLink id="regioni" onClick={() => setDisplayMenu(false)} to="/anagrAz/Localita/regioni" className="sub-menu-link">
+                                  <div className={`submenu sub-submenu menu-content  ${active === "Regioni" ? "activeSubTab " : ""}`} onClick={() => setActive("Regioni")}>
+                                    <NavLink id="regioni" onClick={() => setDisplayMenu(false)} to="/anagrAz/Localita/regioni" className="sub-menu-link submenuu">
                                       Regioni
                                     </NavLink>
                                   </div>
-                                  <div className="submenu sub-submenu menu-content">
-                                    <NavLink id="province" onClick={() => setDisplayMenu(false)} to="/anagrAz/Localita/province" className="sub-menu-link">
+                                  <div className={`submenu sub-submenu menu-content  ${active === "Province" ? "activeSubTab " : ""}`} onClick={() => setActive("Province")}>
+                                    <NavLink id="province" onClick={() => setDisplayMenu(false)} to="/anagrAz/Localita/province" className="sub-menu-link submenuu">
                                       Province
                                     </NavLink>
                                   </div>
-                                  <div className="submenu sub-submenu menu-content">
-                                    <NavLink id="citta" onClick={() => setDisplayMenu(false)} to="/anagrAz/Localita/citta" className="sub-menu-link">
+                                  <div className={`submenu sub-submenu menu-content  ${active === "Citta'" ? "activeSubTab " : ""}`} onClick={() => setActive("Citta'")}>
+                                    <NavLink id="citta" onClick={() => setDisplayMenu(false)} to="/anagrAz/Localita/citta" className="sub-menu-link submenuu">
                                       Citta'
                                     </NavLink>
                                   </div>
@@ -365,8 +382,15 @@ const Sidebar = () => {
                 {isArrowAziendeOpen && (
                   <>
                     <div className="submenu-open">
+                      <NavLink to="/aziende">
+                        <div className={`submenu menu-content  ${active === "VisAziende" ? "activeTab " : ""}`} onClick={() => setActive("VisAziende")}>
+                          <NavLink id="aggSingAz" to="/aziende" className="submenu menu-link">
+                            Visualizza Aziende
+                          </NavLink>
+                        </div>
+                      </NavLink>
                       <NavLink to="/aziende/aggSingAz">
-                        <div className={`submenu menu-content  ${active === "Aggiungi azienda" ? "activeTab " : ""}`} onClick={() => setActive("Aggiungi azienda")}>
+                        <div className={`submenu menu-content  ${active === "Aggiungi azienda" || window.location.pathname === "/aziende/AggSingAz" ? "activeTab " : ""}`} onClick={() => setActive("Aggiungi azienda")}>
                           <NavLink id="aggSingAz" to="/aziende/aggSingAz" className="submenu menu-link">
                             Aggiungi azienda
                           </NavLink>
@@ -470,7 +494,7 @@ const Sidebar = () => {
                   <>
                     <div className="submenu-open submenu-open-height">
                       <NavLink to="/anagrAz/categorie">
-                        <div className={`submenu menu-content  ${active === "Categorie" ? "activeTab " : ""}`} onClick={() => setActive("Categorie")}>
+                        <div className={`submenu menu-content  ${active === "Categorie" ? "activeTab " : ""}`} onClick={() => setActive("Categorie")} >
                           <NavLink id="categorie" to="/anagrAz/categorie" className="menu-link" style={{ paddingLeft: "10px" }}>
                             Categorie
                           </NavLink>

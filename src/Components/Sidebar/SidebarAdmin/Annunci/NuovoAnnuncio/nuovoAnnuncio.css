@@ -1,86 +1,42 @@
-.form_middle_pagenuovo {
-  position: relative;
-  left: 20rem;
-  width: 100%;
-  cursor: pointer;
+/* .header-bar {
+    height: 70px;
+    background-color:  #030947 !important;
+    width: 100%;
+    margin-bottom: 20px;
 }
 
-.form_middle_page_btn {
-  margin-top: 2em;
-  left: 1em;
-}
-
-/* .form-control-wrapper{
-    position: relative;
+.header-title {
+    font-size: 20px;
+    margin-bottom: 10px;
 } */
 
-.items-icon {
-  position: absolute;
-  /* border-left: 5px solid blue; */
-  z-index: 10;
-  left: 15rem;
+.text-label-style{
+    width: 140px;
+    margin-top: 10px;
+    background-color: #1926b6 !important; 
+    color: white;
+    font-weight: bolder;
+    padding: 0px 10px;
+    border-radius: 5px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    text-transform: uppercase;    
 }
-
-.word-label {
-  font-weight: bolder;
+.text-label-style-azinde{
+    /* width: 140px; */
+    margin-top: 10px;
+    background-color: #1926b6 !important; 
+    color: white;
+    font-weight: bolder;
+    padding: 0px 10px;
+    border-radius: 5px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    text-transform: uppercase;    
 }
-
-/* -------------------- */
-
-@media (min-width: 768px) and (max-width: 1024px) {
-  .form_middle_pagenuovo {
-    left: 1rem;
-    max-width: 100%;
-  }
-
-  .form_middle_page_btn {
-    margin-top: 2rem;
-    left: 2rem;
-  }
-
-  .items-icon {
-    position: absolute;
-    border-left: 5px solid blue;
-    z-index: 10;
-    left: 15rem;
-  }
-}
-
-@media (min-width: 480px) and (max-width: 767px) {
-  .form_middle_pagenuovo {
-    left: 1rem;
-    max-width: 50%;
-  }
-
-  .form_middle_page_btn {
-    margin-top: 2rem;
-    left: 2rem;
-  }
-  .items-icon {
-    position: absolute;
-    border-left: 5px solid blue;
-    z-index: 10;
-    left: 15rem;
-  }
-}
-
 @media screen and (max-width: 480px) {
-  .form_middle_pagenuovo {
-    left: 1rem;
-    max-width: 30%;
+    .text-label-style-azinde{
+        margin-left: 10px;
+    }
+    .input-selexiona{
+        width: 100% !important;
+    }
   }
-
-  .form_middle_page_btn {
-    margin-top: 2rem;
-    left: 2rem;
-  }
-  .items-icon {
-    position: absolute;
-    border-left: 5px solid blue;
-    left: 15rem;
-    z-index: 10;
-  }
-}
-.marginTopcol {
-  margin-top: 1.5rem !important;
-}

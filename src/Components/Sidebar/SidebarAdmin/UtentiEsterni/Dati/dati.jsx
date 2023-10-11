@@ -1,6 +1,8 @@
 import React from 'react'
-/* COMPONENTS */
+
+//* COMPONENTS */
 import DatiTable from './Component/DatiTable/datiTable';
+
 
 const Dati = () => {
     return (

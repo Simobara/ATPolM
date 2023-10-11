@@ -128,8 +128,21 @@ const AssTable = () => {
 
   return (
     <>
-      <div style={{ marginTop: "5rem" }}>
-        <table className="table table-bordered w-100">
+      <div style={{ fontSize: '20px', marginBottom: '10px', marginTop: '5rem' }}>
+        <div style={{
+          height: '70px',
+          backgroundColor: '#030947',
+          width: '100%',
+         
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          fontWeight: 'bold'
+        }}className="bold-columns text-center text-white header-hieght">
+          ASSOCIAZIONI
+        </div>
+        <div className="container custom-container" style={{ backgroundColor: "#f3f3f3" }}>
+        <div className="table-responsive tabel-Button"> <table className="table table-bordered w-100">
           <thead>
             <tr className="bold-columns text-center">
               {columns.map((column, columnIndex) => (
@@ -162,7 +175,8 @@ const AssTable = () => {
               </tr>
             ))}
           </tbody>
-        </table>
+        </table></div>
+       
         <div style={{ marginBottom: "100px" }} className="d-flex justify-content-center w-100 text-sm page-text-input">
           <div className="widthSmall d-flex justify-content-around align-items-center my-1">
             <ProButton text="<<" title="Previous Page" disabled={currentPage === 1} clicked={() => handlePageChange(currentPage - 1)} />
@@ -181,6 +195,7 @@ const AssTable = () => {
             </span>
             <ProButton text=">>" title="Next Page" disabled={indexOfLastItem >= associazioni?.length} clicked={() => handlePageChange(currentPage + 1)} />
           </div>
+        </div>
         </div>
 
         <div> {isModalAddActive && <AssModalAdd show={isModalAddActive} close={handleClickAddClose} />}</div>

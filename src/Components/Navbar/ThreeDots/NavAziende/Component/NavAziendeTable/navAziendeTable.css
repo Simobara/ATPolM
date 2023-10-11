@@ -1,0 +1,84 @@
+.bold {
+  font-weight: bold;
+}
+
+.bold-columns th:nth-child(n + 1) {
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 1.2rem;
+  border-top: 5px solid black;
+  background-color: rgb(164, 246, 39);
+}
+
+.button .icon {
+  cursor: pointer !important;
+}
+
+.button-modify {
+  border: 5px solid #1926b6;
+  background-color:#1926b6;
+  color: white;
+  margin: 1px;
+  /* width: 40px;
+        height: 6px; */
+  z-index: 1;
+}
+
+.button-modify:hover {
+  background-color: white !important;
+  border: 5px solid blue;
+  color: #1926b6 !important;
+}
+
+.icon-add {
+  background-color: #dc86d8 !important;
+  color: #1926b6;
+  border: 5px solid #1926b6;
+}
+
+.icon-add:hover {
+  background-color: rgb(253, 69, 217) !important;
+  border: 5px dotted #1926b6;
+}
+
+.button-close {
+  background-color: red !important;
+  color: white;
+}
+
+.button-close:hover {
+  background-color: pink !important;
+  border: 3px dotted red;
+  color: red;
+}
+
+tr {
+  border-top: 1px dashed black;
+  border-bottom: 1px dashed black;
+}
+.aziendeTableMargin {
+  margin-top: 80px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+@media only screen and (min-width: 280px) and (max-width: 600px) {
+  .aziendeTableMargin {
+    margin-left: 5px !important;
+    margin-right: 5px !important;
+  }
+  .bold-columns th:nth-child(n+1) {
+   
+    font-size: 1rem;
+    
+    
+  }
+  .tabel-Button .btn {
+    --mdb-btn-padding-top: 0rem; 
+    --mdb-btn-padding-bottom: 0rem;
+     --mdb-btn-border-width: 0; 
+     --mdb-btn-padding-x: 0rem;
+  }
+  .text-sm{
+    font-size: 16px;
+  }
+}

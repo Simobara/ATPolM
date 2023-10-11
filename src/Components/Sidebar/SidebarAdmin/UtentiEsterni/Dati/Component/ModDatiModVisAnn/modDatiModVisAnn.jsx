@@ -24,14 +24,14 @@ const CatModalAdd = ({ show, close }) => {
             <Modal
                 show={show}
                 // close={close}
-                size="xl"
+                size="md"
                 aria-labelledby="contained-modal-title-vcenter"
-                center
+                center="true"
                 dialogClassName="custom-modal"
             >
                 <Modal.Header >
                     <Modal.Title id="contained-modal-title-vcenter" className="font-weight-bold">
-                        <h2>VISUALIZZA ANNUNCIO</h2>
+                        <h2>VEDI ANNUNCIO</h2>
                     </Modal.Title>
                     <Button variant="danger" onClick={close} size="lg">
                         X
@@ -40,6 +40,7 @@ const CatModalAdd = ({ show, close }) => {
                 <Modal.Body>
                     <Row className="d-flex justify-content-start mb-4">
                         <Col xs={12} md={6}><h4>IdBando</h4></Col>
+                        <Col xs={12} md={6}><Form.Control type="text" placeholder="" autoFocus /></Col>
                         <Col xs={12} md={6}><h4>DataChiusura</h4></Col>
                         <Col xs={12} md={6}><Form.Control type="text" placeholder="" autoFocus /></Col>
                     </Row>

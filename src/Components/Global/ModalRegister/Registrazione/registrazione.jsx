@@ -32,7 +32,7 @@ const Registrazione = ({ propShow, propClose }) => {
                 // keyboard={false}
                 // size="lg"
                 aria-labelledby="contained-modal-title-vcenter"
-                top="true"
+                top="true" centered
             >
                 <Modal.Header>
                     <Modal.Title>Contatta Il Venditore</Modal.Title>

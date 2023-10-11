@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 
 //*CSS
-// import "./nuovoAnnuncio.css";
+import "./nuovoAnnuncio.css";
 
 //*REACT VALIDATION
 // import CheckButton from "react-validation/build/button";
@@ -11,7 +11,7 @@ import withRouter from "../../../../../DataAPI/common/with-router";
 import AnnuncioService from "../../../../../DataAPI/services/annuncio.service";
 import axios from "axios";
 import JoditEditor from "jodit-react";
-import { editorConfig } from "./Component/EditorConfig/EditorConfig";
+import { editorConfig } from "./Component/EditorConfig/editorConfig";
 
 //*COMPONENTS
 // import SaveButton from "./Component/SaveButton/saveButton";
@@ -24,6 +24,13 @@ import AddBoxIcon from "@mui/icons-material/AddBox";
 
 import SaveIcon from "@mui/icons-material/Save";
 import DeleteIcon from "@mui/icons-material/Delete";
+
+
+
+
+
+
+
 
 const NuovoAnnuncio = (props) => {
   // eslint-disable-next-line
@@ -233,7 +240,7 @@ const NuovoAnnuncio = (props) => {
         if (response) {
           props.router.navigate("/");
         }
-      } catch (error) {}
+      } catch (error) { }
     } else {
       alert("Ricorda di aggiungere tutti i valori ");
     }
@@ -254,41 +261,59 @@ const NuovoAnnuncio = (props) => {
   //**************************************************************RETURN
   return (
     <>
-      <div className="pl-4" style={{ backgroundColor: "#f3f3f3", height: "100%", paddingTop: "40px", marginTop: "5rem" }}>
-        <Form onSubmit={handleAddAnnuncio}>
-          <div className="row mt-4">
-            <div className="col-10 col-lg-11 ml-4">
-              <div className="row">
-                <div className="col-xl-3 col-md-3 col-lg-3 col-sm-12 col-12">
-                  <label htmlFor="titolo" className="word-label">
-                    Titolo
-                  </label>
-                </div>
-                <div className="col-xl-9   col-md-9 col-lg-9 col-sm-12 col-12">
-                  <Input
-                    id="titolo"
-                    type="text"
-                    className="mt-2 form-control form_middle_pagenuovo custom-container"
-                    name="titolo"
-                    autoFocus
-                    value={formData?.titolo}
-                    onChange={onChange}
+      <div style={{ fontSize: '20px', marginBottom: '10px', marginTop: '5rem' }}>
+        <div style={{
+          height: '70px',
+          backgroundColor: '#030947',
+          width: '100%',
+          marginBottom: '20px',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          fontWeight: 'bold'
+        }} className="bold-columns text-center text-white">
+          NUOVO ANNUNCIO
+        </div>
+        <div className="container custom-container" style={{ backgroundColor: "#f3f3f3" }}>
+          <Form onSubmit={handleAddAnnuncio}>
+            <div className="row mt-4">
+              <div className="col-10 col-lg-11 ml-4">
+                <div className="row">
+                
+                  <div className="col-xl-3 col-md-12 col-lg-3 col-sm-12 col-12">
+                    <div className="text-label-style">
+                      <label htmlFor="titolo" className="word-label">
+                        Titolo
+                      </label>
+                    </div>
+                  </div>
+                  <div className="col-xl-9   col-md-12 col-lg-9 col-sm-12 col-12">
+                    <Input
+                      id="titolo"
+                      type="text"
+                      className="mt-2 form-control form_middle_pagenuovo custom-container"
+                      name="titolo"
+                      autoFocus
+                      value={formData?.titolo}
+                      onChange={onChange}
                     // validations={[required]}
-                  />
+                    />
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div className="row mt-4">
-            <div className="col-10  col-lg-11 ml-4">
-              <div className="row">
-                <div className="col-xl-3 col-md-3 col-lg-3 col-sm-12 col-12">
-                  <label htmlFor="descrizione" className="word-label">
-                    Descrizione
-                  </label>
-                </div>
-                <div className="col-xl-9 col-md-9 col-lg-9 col-sm-12 col-12">
-                  {/* <Input
+            <div className="row mt-4">
+              <div className="col-10  col-lg-11 ml-4">
+                <div className="row">
+                  <div className="col-xl-3 col-md-12 col-lg-3 col-sm-12 col-12">
+                    <div className="text-label-style">
+                      <label htmlFor="descrizione" className="word-label" >
+                        Descrizione
+                      </label>
+                    </div>
+                  </div>
+                  <div className="col-xl-9 col-md-12 col-lg-9 col-sm-12 col-12 mt-2">
+                    {/* <Input
                     id="descrizione"
                     type="text"
                     className="mt-2 form-control form_middle_pagenuovo custom-container"
@@ -297,191 +322,197 @@ const NuovoAnnuncio = (props) => {
                     onChange={onChange}
                     validations={[required]}
                   /> */}
-                  <JoditEditor
-                    value={formData?.descrizione}
-                    config={editorConfig}
-                    onChange={(value) => setFormData((prev) => ({ ...formData, descrizione: value }))}
-                    onBlur={(value, event) => console.log(event)}
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="row mt-4">
-            <div className="col-10  col-lg-11 ml-4">
-              <div className="row">
-                <div className="col-xl-3 col-md-3 col-lg-3 col-sm-12 col-12">
-                  <label htmlFor="quantita" className="word-label">
-                    Quantità
-                  </label>
-                </div>
-                {/* FORM' **********************************************************  */}
-                <div className="col-xl-9 col-md-9 col-lg-9 col-sm-12 col-12  d-flex">
-                  <div className="flex-grow-1">
-                    <Input
-                      id="quantita"
-                      type="number"
-                      className="mt-2 p-4 form-control"
-                      name="quantita"
-                      value={formData?.quantita}
-                      onChange={onChange}
-                      // validations={[required]}
-                    />
-                  </div>
-                  <div style={{ width: "200px", marginTop: "6px", fontSize: "24px" }}>
-                    <DropdownMenu
-                      propsData={udm}
-                      setPropValue={(e) => setDropdownValue((prev) => ({ ...prev, quantita: e.value, idUnitaDiMisura: e.id }))}
-                      propDropdownValue={dropdownValue?.quantita}
-                      isCancella={isCancella}
-                      setIsCancella={setIsCancella}
+                    <JoditEditor
+                      value={formData?.descrizione}
+                      config={editorConfig}
+                      onChange={(value) => setFormData((prev) => ({ ...formData, descrizione: value }))}
+                      onBlur={(value, event) => console.log(event)}
                     />
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div className="row mt-4">
-            <div className="col-10  col-lg-11 ml-4">
-              <div className="row">
-                <div className="col-xl-3 col-md-3 col-lg-3 col-sm-12 col-12">
-                  <label htmlFor="classewaste" className="word-label">
-                    Classe waste
-                  </label>
-                </div>
-                <div className="col-xl-9   col-md-9 col-lg-9 col-sm-12 col-12">
-                  <div style={{ fontSize: "24px", marginTop: "9px" }} className="form_middle_pagenuovo ">
-                    <DropdownMenu
-                      propsData={material}
-                      setPropValue={(e) =>
-                        setDropdownValue((prev) => ({
-                          ...prev,
-                          // eslint-disable-next-line
-                          ["classewaste"]: e.value,
-                          idMateriale: e.id,
-                        }))
-                      }
-                      propDropdownValue={dropdownValue?.classewaste}
-                      isCancella={isCancella}
-                      setIsCancella={setIsCancella}
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="row mt-3">
-            <div className="col-10  col-lg-11 ml-4">
-              <div className="row">
-                <div className="col-xl-3 col-md-3 col-lg-3 col-sm-12 col-12">
-                  <label htmlFor="foto" className="word-label" style={{ marginRight: "10px" }}>
-                    Foto
-                  </label>
-                </div>
-                <div className="col-xl-9   col-md-9 col-lg-9 col-sm-12 col-12">
-                  <input type="file" id="file-input" style={{ fontSize: "16px", marginTop: "12px" }} onChange={handleImageChange} accept="image/*" className="scegli_menu" />
-                  {selectedImage && (
-                    <div>
-                      {/* <p> </p>
-                      <img src={URL.createObjectURL(selectedImage)} alt="Selected" /> */}
+            <div className="row mt-4">
+              <div className="col-10  col-lg-11 ml-4">
+                <div className="row">
+                  <div className="col-xl-3 col-md-12 col-lg-3 col-sm-12 col-12">
+                    <div className="text-label-style">
+                      <label htmlFor="quantita" className="word-label ">
+                        Quantità
+                      </label>
                     </div>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="row mt-4">
-            <div className="col-10  col-lg-11 ml-4">
-              <div className="row">
-                <div className="col-xl-3 col-md-3 col-lg-3 col-sm-12 col-12 ">
-                  <label htmlFor="ubicazione" className="word-label">
-                    Ubicazione
-                  </label>
-                </div>
-                <div className="col-xl-9   col-md-9 col-lg-9 col-sm-12 col-12 d-flex">
-                  <div className="flex-grow-1">
-                    <div style={{ fontSize: "24px", marginTop: "9px" }} className="form_middle_pagenuovo ">
+                  </div>
+                  {/* FORM' **********************************************************  */}
+                  <div className="col-xl-9 col-md-12 col-lg-9 col-sm-12 col-12  d-flex">
+                    <div className="flex-grow-1">
+                      <Input
+                        id="quantita"
+                        type="number"
+                        className="mt-2 p-4 form-control"
+                        name="quantita"
+                        value={formData?.quantita}
+                        onChange={onChange}
+                      // validations={[required]}
+                      />
+                    </div>
+                    <div style={{ width: "200px", marginTop: "6px", fontSize: "24px" }}>
                       <DropdownMenu
-                        propsData={citta}
-                        setPropValue={(e) => setDropdownValue((prev) => ({ ...prev, Ubicazione: e.value, idLocalita: e.id }))}
-                        propDropdownValue={dropdownValue?.Ubicazione}
+                        propsData={udm}
+                        setPropValue={(e) => setDropdownValue((prev) => ({ ...prev, quantita: e.value, idUnitaDiMisura: e.id }))}
+                        propDropdownValue={dropdownValue?.quantita}
                         isCancella={isCancella}
                         setIsCancella={setIsCancella}
                       />
                     </div>
                   </div>
-
-                  <div className="form-group ml-2 mt-2">
-                    <button
-                      className="btn btn-primary"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        handleAddLocModalOpen();
-                      }}
-                    >
-                      {/* {loading && <span className="spinner-border spinner-border-sm"></span>} */}
-                      <span>
-                        <AddBoxIcon />
-                        Aggiungi citta'
-                      </span>
-                    </button>
+                </div>
+              </div>
+            </div>
+            <div className="row mt-4">
+              <div className="col-10  col-lg-11 ml-4">
+                <div className="row">
+                  <div className="col-xl-3 col-md-12 col-lg-3 col-sm-12 col-12">
+                    <div className="text-label-style">
+                      <label htmlFor="classewaste" className="word-label">
+                        Classe waste
+                      </label>
+                    </div>
+                  </div>
+                  <div className="col-xl-9   col-md-12 col-lg-9 col-sm-12 col-12">
+                    <div style={{ fontSize: "24px", marginTop: "9px" }} className="form_middle_pagenuovo ">
+                      <DropdownMenu
+                        propsData={material}
+                        setPropValue={(e) =>
+                          setDropdownValue((prev) => ({
+                            ...prev,
+                            // eslint-disable-next-line
+                            ["classewaste"]: e.value,
+                            idMateriale: e.id,
+                          }))
+                        }
+                        propDropdownValue={dropdownValue?.classewaste}
+                        isCancella={isCancella}
+                        setIsCancella={setIsCancella}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div className="row mt-4">
-            <div className="col-10  col-lg-11 ml-4">
-              <div className="row">
-                <div className="col-xl-3 col-md-3 col-lg-3 col-sm-12 col-12">
-                  <label htmlFor="scadenza" className="word-label">
-                    Scadenza
-                  </label>
-                </div>
-                <div className="col-xl-9   col-md-9 col-lg-9 col-sm-12 col-12">
-                  <input type="date" id="scadenza" style={{ height: "40px" }} onChange={(e) => setDate(e.target.value)} value={date} className="form-control form_middle_pagenuovo mt-2 " />
+
+            <div className="row mt-3">
+              <div className="col-10  col-lg-11 ml-4">
+                <div className="row">
+                  <div className="col-xl-3 col-md-12 col-lg-3 col-sm-12 col-12">
+                    <div className="text-label-style">
+                      <label htmlFor="foto" className="word-label" style={{ marginRight: "10px" }}>
+                        Foto
+                      </label>
+                    </div>
+                  </div>
+                  <div className="col-xl-9   col-md-12 col-lg-9 col-sm-12 col-12">
+                    <input type="file" id="file-input" style={{ fontSize: "16px", marginTop: "12px" }} onChange={handleImageChange} accept="image/*" className="scegli_menu" />
+                    {selectedImage && (
+                      <div>
+                        {/* <p> </p>
+                      <img src={URL.createObjectURL(selectedImage)} alt="Selected" /> */}
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+            <div className="row mt-4">
+              <div className="col-10  col-lg-11 ml-4">
+                <div className="row">
+                  <div className="col-xl-3 col-md-12 col-lg-3 col-sm-12 col-12 ">
+                    <div className="text-label-style">
+                      <label htmlFor="ubicazione" className="word-label ">
+                        Ubicazione
+                      </label>
+                    </div>
+                  </div>
+                  <div className="col-xl-9   col-md-12 col-lg-9 col-sm-12 col-12 d-flex flex-wrap">
+                    <div className="flex-grow-1">
+                      <div style={{ fontSize: "24px", marginTop: "9px" }} className="form_middle_pagenuovo ">
+                        <DropdownMenu
+                          propsData={citta}
+                          setPropValue={(e) => setDropdownValue((prev) => ({ ...prev, Ubicazione: e.value, idLocalita: e.id }))}
+                          propDropdownValue={dropdownValue?.Ubicazione}
+                          isCancella={isCancella}
+                          setIsCancella={setIsCancella}
+                        />
+                      </div>
+                    </div>
 
-          <div className="col-md-6 mx-auto mt-4">
-            {message && (
-              <div className="form-group">
-                <div className="alert alert-danger" role="alert">
-                  {message}
+                    <div className="form-group ml-2 mt-3">
+                      <button
+                        className="btn btn-primary"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          handleAddLocModalOpen();
+                        }}
+                      >
+                        {/* {loading && <span className="spinner-border spinner-border-sm"></span>} */}
+                        <span>
+                          <AddBoxIcon />
+                          Aggiungi citta'
+                        </span>
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
-            )}
+            </div>
+            <div className="row mt-4">
+              <div className="col-10  col-lg-11 ml-4">
+                <div className="row">
+                  <div className="col-xl-3 col-md-12 col-lg-3 col-sm-12 col-12">
+                    <div className="text-label-style">
+                      <label htmlFor="scadenza" className="word-label">
+                        Scadenza
+                      </label>
+                    </div>
+                  </div>
+                  <div className="col-xl-9   col-md-12 col-lg-9 col-sm-12 col-12">
+                    <input type="date" id="scadenza" style={{ height: "40px" }} onChange={(e) => setDate(e.target.value)} value={date} className="form-control form_middle_pagenuovo mt-2 " />
+                  </div>
+                </div>
+              </div>
+            </div>
 
-            {/* <CheckButton style={{ display: "none" }} ref={refCheckBtn} /> */}
-          </div>
+            <div className="col-md-6 mx-auto mt-4">
+              {message && (
+                <div className="form-group">
+                  <div className="alert alert-danger" role="alert">
+                    {message}
+                  </div>
+                </div>
+              )}
 
-          <div className="row justify-content-center form_middle_page_btn" style={{ marginTop: "80px", paddingBottom: "130px" }}>
-            <div className="form-group col-md-2 mr-3">
-              <button
-                className="btn btn-primary btn-block"
+              {/* <CheckButton style={{ display: "none" }} ref={refCheckBtn} /> */}
+            </div>
+
+            <div className="row justify-content-center form_middle_page_btn" style={{ marginTop: "50px", paddingBottom: "130px" }}>
+              <div className="form-group col-md-2 mt-md-0">
+                <button
+                  className="btn btn-primary btn-block"
                 // onClick={"#"}
-              >
-                {/* {loading && <span className="spinner-border spinner-border-sm"></span>} */}
-                <span>
-                  <SaveIcon />
-                  Salva
-                </span>
-              </button>
+                >
+                  {/* {loading && <span className="spinner-border spinner-border-sm"></span>} */}
+                  <span> <SaveIcon /> Salva </span>
+                </button>
+              </div>
+              <div className="form-group col-md-2 mt-md-0">
+                <button className="btn btn-danger btn-block" onClick={handleResetForm}>
+                  <span> <DeleteIcon /> Cancella </span>
+                </button>
+              </div>
+              {/* <DeleteButton /> */}
             </div>
-            <div className="form-group col-md-2 ml-5">
-              <button className="btn btn-danger btn-block" onClick={handleResetForm}>
-                <span>
-                  <DeleteIcon /> Cancella
-                </span>
-              </button>
-            </div>
-            {/* <DeleteButton /> */}
-          </div>
-        </Form>
-      </div>
+          </Form>
+        </div >
+      </div >
       <div>{isModalAddCitActive && <AddCitModal propShow={isModalAddCitActive} propClose={handleAddCitModalClose} propListaCitDescrAdded={citDescr} />}</div>
     </>
   );

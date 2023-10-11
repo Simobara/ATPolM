@@ -22,6 +22,11 @@ import AnnuncioService from "../../../../../DataAPI/services/annuncio.service";
 
 import FilterRegPrvCit from "./FilterRegPrvCit/filterRegPrvCit";
 import Chat from "../../../../Global/Chat/Chat";
+
+
+
+
+
 const Table = ({ handleAddNewRecPopup, propRowData = [], propColumnData = [] }) => {
   const [selectedCell, setSelectedCell] = useState(null);
   const [rowsData, setRowsData] = useState([]);
@@ -282,14 +287,14 @@ const Table = ({ handleAddNewRecPopup, propRowData = [], propColumnData = [] }) 
   //**--------------------------------------RETURN------------------------------------------------------**
   return (
     <div className="h-[100%] ">
-      <div className="row">
-        <div className="col">
+      <div className="row" style={{display:"flex",alignItems:"end"}}>
+        <div className="col-lg-5 col-md-12 col-sm-12 col-12">
           <div className="flex-search-input justify-content-between align-items-center addNewStyle">
             <Search filter={globalFilter} setFilter={setGlobalFilter} />
             {/* <ProButton text="+ AddNew" title="Add New Record" clicked={handleAddNewRecPopup} /> */}
           </div>
         </div>
-        <div className="col">
+        <div className="col-lg-7 col-md-12 col-sm-12 col-12">
           <div className="flex-search-input justify-content-between align-items-center addNewStyle">
             <FilterRegPrvCit
               propFilterRowData={handleFilterRowData}
@@ -300,7 +305,7 @@ const Table = ({ handleAddNewRecPopup, propRowData = [], propColumnData = [] }) 
           </div>
         </div>
       </div>
-
+     
       <div style={{ marginTop: "10px" }} className="table-responsive">
         <table {...getTableProps()} className="table">
           <thead>
@@ -339,6 +344,7 @@ const Table = ({ handleAddNewRecPopup, propRowData = [], propColumnData = [] }) 
       <div style={{ marginBottom: "25px" }}>
         <Pagination nextPage={nextPage} previousPage={previousPage} canPreviousPage={canPreviousPage} canNextPage={canNextPage} pageOptions={pageOptions} pageIndex={pageIndex} gotoPage={gotoPage} />
       </div>
+     
     </div>
   );
 };

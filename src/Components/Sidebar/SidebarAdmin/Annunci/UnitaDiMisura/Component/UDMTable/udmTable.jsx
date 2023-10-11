@@ -1,13 +1,16 @@
 import React, { useState } from "react";
-/* CSS */
+
+//* CSS */
 import "./udmTable.css";
-/* COMPONENTS */
+
+//* COMPONENTS */
 // import ButtonPen from '../../../../../../../Global/ButtonPen/buttonPen';
 import UDMModalAdd from "../UDMModalAdd/udmModalAdd";
 import UDMModalMod from "../UDMModalMod/udmModalMod";
 import UDMModalDel from "../UDMModalDel/udmModalDel";
 import ProButton from "../../../../../../Global/ProButton/ProButton";
-/* MUI MATERIAL ICONS */
+
+//* MUI MATERIAL ICONS */
 import ModeIcon from "@mui/icons-material/Mode";
 import CloseIcon from "@mui/icons-material/Close";
 import AddIcon from "@mui/icons-material/Add";
@@ -17,7 +20,7 @@ import axios from "axios";
 const UDMTable = () => {
   const [id, setId] = useState()
   const [udm, setUdm] = useState([])
-  const columns = ["", "Unità di misura", ""];
+  const columns = ["", "Descrizione", ""];
 
   // eslint-disable-next-line
   const rowsCatAziende = ["Nomi", "mian i love you", "akif shake pila dy", "D", "E", "F", "G"];
@@ -94,7 +97,21 @@ const UDMTable = () => {
 
   return (
     <>
-      <div style={{ marginTop: "5rem" }}>
+      <div style={{ fontSize: '20px', marginBottom: '10px', marginTop: '5rem' }}>
+        <div style={{
+          height: '70px',
+          backgroundColor: '#030947',
+          width: '100%',
+         
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          fontWeight: 'bold'
+        }} className="bold-columns text-center text-white header-hieght">
+          UNITA' DI MISURA
+        </div>
+        <div className="container custom-container" style={{ backgroundColor: "#f3f3f3" }}>
+        <div className="table-responsive tabel-Button">
         <table className="table table-bordered w-100">
           <thead>
             <tr className="bold-columns text-center">
@@ -129,6 +146,8 @@ const UDMTable = () => {
             ))}
           </tbody>
         </table>
+        </div>
+        
         <div style={{ marginBottom: "100px" }} className="d-flex justify-content-center w-100 text-sm page-text-input">
           <div className="widthSmall d-flex justify-content-around align-items-center my-1">
             <ProButton text="<<" title="Previous Page" disabled={currentPage === 1} onClick={() => handlePageChange(currentPage - 1)} />
@@ -146,6 +165,7 @@ const UDMTable = () => {
             </span>
             <ProButton text=">>" title="Next Page" disabled={indexOfLastItem >= udm.length} onClick={() => handlePageChange(currentPage + 1)} />
           </div>
+        </div>
         </div>
         <div> {isModalAddActive && <UDMModalAdd show={isModalAddActive} close={() => handleClickAddClose()} />}</div>
         <div> {isModalModActive && <UDMModalMod show={isModalModActive} close={() => handleClickModClose()} id={id} />}</div>

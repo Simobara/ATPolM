@@ -1,0 +1,13 @@
+@media (max-width:500px){
+    
+    .bold-columns th:nth-child(n+1) {
+     
+      font-size: 1rem;
+      
+      
+    }
+    .text-sm{
+        font-size: 16px;
+      }
+    
+  }

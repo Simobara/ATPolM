@@ -35,7 +35,7 @@ const ProvModalAdd = ({ propShow, propClose, propListaProvCodAdded = [] }) => {
   const [errorDigit, setErrorDigit] = useState("");
 
   // eslint-disable-next-line
-  const [inputCount, setInputCount] = useState(0);
+  // const [inputCount, setInputCount] = useState(0);
   const [inputValue, setInputValue] = useState("");
 
   // eslint-disable-next-line
@@ -45,14 +45,15 @@ const ProvModalAdd = ({ propShow, propClose, propListaProvCodAdded = [] }) => {
   const [isProvinceFound, setIsProvinceFound] = useState(false);
   const [remainingProvincesInList, setRemainingProvincesInList] = useState(0);
 
+  const [listRegProvSiglFiltered, setListRegProvSiglFiltered] = useState("");
   // eslint-disable-next-line
   const [regListCurrent, setRegListCurrent] = useState([]);
-  // eslint-disable-next-line
-  const [listRegProvSiglFiltered, setListRegProvSiglFiltered] = useState("");
+
   // const [provSelected, setProvSelected] = useState('')
   const [regSelected, setRegSelected] = useState("");
 
   const { addProvincia } = ProvinciaService();
+
   // eslint-disable-next-line
   const onChange = (e) => {
     console.log("CHANGE");
@@ -75,12 +76,13 @@ const ProvModalAdd = ({ propShow, propClose, propListaProvCodAdded = [] }) => {
       }
 
       await addProvincia(formData.codice, formData.idRegione);
+
       setFormData((prevState) => ({
         ...prevState,
         idRegione: "",
         codice: "",
       }));
-      console.log("set form data AddProvincia --- dati salvati");
+      // console.log("set form data AddProvincia --- dati salvati");
       propClose();
     } catch (error) {
       const resMessage = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
@@ -99,7 +101,7 @@ const ProvModalAdd = ({ propShow, propClose, propListaProvCodAdded = [] }) => {
     setSearchTerm(cleanedInput);
     setInputValue(cleanedInput);
 
-    //*************** TO VERIFY
+
     if (!isProvinceFound && remainingProvincesInList > 0) {
       setIsDefaultBorder(true);
       setInputBorderClass("form-control");
@@ -165,6 +167,11 @@ const ProvModalAdd = ({ propShow, propClose, propListaProvCodAdded = [] }) => {
     }
   };
 
+
+
+
+
+
   const handleRegListCurrent = (regList) => {
     setRegListCurrent(regList);
     console.log("COMP ADD / REG", regList);
@@ -192,12 +199,18 @@ const ProvModalAdd = ({ propShow, propClose, propListaProvCodAdded = [] }) => {
       }
     });
 
-    console.log("COMP ADD / regProvAndSigle:", regProvAndSigle);
+    console.log("COMP ADD / REG-PROV:SIGLE:", regProvAndSigle);
 
     // Aggiornare lo stato o fare altre operazioni necessarie
     // setListRegProvFiltered(filteredProvinciaRegione);
     setListRegProvSiglFiltered(regProvAndSigle);
   };
+
+
+
+
+
+
 
   const handleProvSelected = (provSel) => {
     // setProvSelected(provSel)
@@ -220,7 +233,7 @@ const ProvModalAdd = ({ propShow, propClose, propListaProvCodAdded = [] }) => {
 
   return (
     <>
-      <Modal show={propShow} size="lg" aria-labelledby="contained-modal-title-vcenter" top="true">
+      <Modal show={propShow} size="lg" aria-labelledby="contained-modal-title-vcenter" top="true"  centered>
         <Modal.Header>
           <Modal.Title id="contained-modal-title-vcenter" className="font-weight-bold">
             <h2>Aggiungi Provincia</h2>
@@ -300,18 +313,18 @@ const ProvModalAdd = ({ propShow, propClose, propListaProvCodAdded = [] }) => {
                           setErrorRegione("");
                         }} // Resetta l'errore quando si seleziona una regione
                         className={`form-control ${errorRegione ? "is-invalid" : ""}`}
-                        onBlur={() => {
+                        propOnBlur={() => {
                           if (formData.idRegione) {
                             setErrorRegione("");
                           }
                         }}
+                        propRegListCurrent={handleRegListCurrent}
+                        propRegionnSelected={regSelected}
                         style={{
                           transform: "scale(1.2)", // Modifica la scala del menu a discesa
                           maxHeight: "80vh", // Imposta l'altezza massima a 80vh
                           overflowY: "auto", // Abilita lo scrolling se il contenuto supera l'altezza massima
                         }}
-                        propRegListCurrent={handleRegListCurrent}
-                        propRegionnSelected={regSelected}
                       />
                       {errorRegione && (
                         <p className="text-danger border-danger p-3 rounded fs-4" style={{ borderTop: "4px solid red" }}>

@@ -6,3 +6,8 @@
   .custom-modal .modal-content {
     height: 500px; /* Adjust the height as needed */
   }
+
+  .largeTextButton {
+    font-size: 1rem; /* Adatta la dimensione del font come preferisci */
+    /* padding: 0 !important; Rimuove il padding */
+  }

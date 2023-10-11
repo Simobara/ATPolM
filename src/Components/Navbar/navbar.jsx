@@ -1,12 +1,12 @@
 import React, { useState, useEffect, Suspense } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 
-/* CSS */
+//* CSS */
 import "./navbar.css";
 import mainlogo from "../../Assets/Images/main.png";
 import Loader from "../Global/Loader/loader";
 
-/* MUI */
+//* MUI */
 import Box from "@mui/material/Box";
 // import Avatar from "@mui/material/Avatar";
 import Menu from "@mui/material/Menu";
@@ -19,7 +19,9 @@ import Tooltip from "@mui/material/Tooltip";
 // import PersonAdd from "@mui/icons-material/PersonAdd";
 import Settings from "@mui/icons-material/Settings";
 // import Logout from "@mui/icons-material/Logout";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
+import MenuIcon from '@mui/icons-material/Menu';
+// import MoreVertIcon from "@mui/icons-material/MoreVert";
+// eslint-disable-next-line 
 import PersonIcon from "@mui/icons-material/Person";
 // import AccessibilityIcon from "@mui/icons-material/Accessibility";
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
@@ -27,11 +29,12 @@ import LocalPoliceIcon from "@mui/icons-material/LocalPolice";
 import Fade from '@mui/material/Fade';
 
 
-/* COMPONENTS */
+//* COMPONENTS */
 import NavigationItem from "./NavigationItem/navigationItem";
 import Sidebar from "../Sidebar/sidebar";
 import NotFoundPage from "../Global/NotFoundPage/notFoundPage";
 
+import Aziende from "../Navbar/ThreeDots/NavAziende/navAziende"
 import AggSingAz from "../Sidebar/SidebarAdmin/Aziende/AggSingAz/aggSingAz";
 import ImpDatiExc from "../Sidebar/SidebarAdmin/Aziende/ImpDatiExc/impDatiExc";
 // import Dati from "../Sidebar/SidebarHome/UtentiEsterni/Dati/dati";
@@ -41,24 +44,24 @@ import IMieiAnnunci from "../Sidebar/SidebarAdmin/Annunci/IMieiAnnunci/iMieiAnnu
 import Materiali from "../Sidebar/SidebarAdmin/Annunci/Materiali/materiali";
 import UnitaDiMisura from "../Sidebar/SidebarAdmin/Annunci/UnitaDiMisura/unitaDiMisura";
 
-import Partec from "../Sidebar/SidebarBandi/partec";
-import PartecBando from "../Sidebar/SidebarBandi/PartecBando/partecBando";
+import HomePartec from "../Sidebar/SidebarBandi/homePartec";
+import HomePartecBandi from "../Sidebar/SidebarBandi/HomePartec/homePartecBandi";
 import LeMiePartec from "../Sidebar/SidebarBandi/LeMiePartec/leMiePartec";
 
 // import Ruoli from "./Materiali/Ruoli";
 // import Categorie from "../Sidebar/SidebarHome/AnagrAz/Categorie/categorie";
 // import Associazioni from "../Sidebar/SidebarHome/AnagrAz/Associazioni/associazioni";
 // import FormeGiuridiche from "../Sidebar/SidebarHome/AnagrAz/FormeGiuridiche/formeGiuridiche";
-// import ProfileNav from "./Profile/ProfileNav";
-// import ProfileDel from "./Profile/Component/ProfileDel/ProfileDel";
-// import AziendeHome from "./Azindia/Aziende";
+
 
 const SHome = React.lazy(() => import("../Sidebar/SidebarAdmin/SHome/home"));
 
-const Ruoli = React.lazy(() => import("./ThreeDots/Ruoli/Ruoli"));
-const AziendeHome = React.lazy(() => import("./ThreeDots/Aziende/Aziende"));
-const ProfileNav = React.lazy(() => import("./ThreeDots/Profile/ProfileNav"));
-const ProfileDel = React.lazy(() => import("./ThreeDots/Profile/Component/ProfileDel/ProfileDel"));
+const NavProfile = React.lazy(() => import("./ThreeDots/NavProfile/navProfile"));
+const NavProfileModify = React.lazy(() => import("./ThreeDots/NavProfile/Component/NavProfileModify/navProfileModify"));
+// eslint-disable-next-line 
+const NavAziende = React.lazy(() => import("./ThreeDots/NavAziende/navAziende"));
+const NavRuoli = React.lazy(() => import("./ThreeDots/NavRuoli/navRuoli"));
+
 
 const Dati = React.lazy(() => import("../Sidebar/SidebarAdmin/UtentiEsterni/Dati/dati"));
 const IntVersAnn = React.lazy(() => import("../Sidebar/SidebarAdmin/UtentiEsterni/IntVersAnn/intVersAnn"));
@@ -76,20 +79,29 @@ const Citta = React.lazy(() => import("../Sidebar/SidebarAdmin/AnagrAz/Localita/
 
 
 
+
+
+
+
+
+//* -------------------------------------------------------RENDER ROUTES---------------------------------------------------------
+
 const renderRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<Suspense fallback={<Loader />}> {" "} <SHome />{" "} </Suspense>} />
 
+      <Route path="/aziende" element={<Aziende />} />
       <Route path="/aziende/AggSingAz" element={<AggSingAz />} />
       <Route path="/aziende/impDatiExc" element={<ImpDatiExc />} />
 
       <Route path="/utEsterni/dati" element={<Suspense fallback={<Loader />}>{" "} <Dati />{" "}</Suspense>} />
 
-      <Route path="/aziende" element={<Suspense fallback={<Loader />}> {" "}<AziendeHome />{" "} </Suspense>} />
-      <Route path="/ruoli" element={<Suspense fallback={<Loader />}> {" "}<Ruoli />{" "} </Suspense>} />
-      <Route path="/profile/del" element={<Suspense fallback={<Loader />}> {" "} <ProfileDel />{" "}</Suspense>} />
-      <Route path="/profile" element={<Suspense fallback={<Loader />}> {" "}<ProfileNav />{" "}</Suspense>} />
+      {/* <Route path="/aziende" element={<Suspense fallback={<Loader />}> {" "}<NavAziende />{" "} </Suspense>} /> */}
+
+      <Route path="/profileModify" element={<Suspense fallback={<Loader />}> {" "} <NavProfileModify />{" "}</Suspense>} />
+      <Route path="/profile" element={<Suspense fallback={<Loader />}> {" "}<NavProfile />{" "}</Suspense>} />
+      <Route path="/ruoli" element={<Suspense fallback={<Loader />}> {" "}<NavRuoli />{" "} </Suspense>} />
 
       <Route path="/utEsterni/intVersAnn" element={<Suspense fallback={<Loader />}>{" "}<IntVersAnn />{" "} </Suspense>} />
 
@@ -112,14 +124,19 @@ const renderRoutes = () => {
       <Route path="/anagrAz/Localita/province" element={<Suspense fallback={<Loader />}> {" "} <Province />{" "} </Suspense>} />
       <Route path="/anagrAz/Localita/citta" element={<Suspense fallback={<Loader />}> {" "} <Citta />{" "} </Suspense>} />
 
-      <Route path="/partec" element={<Partec />} />
-      <Route path="/partecBando" element={<PartecBando />} />
+      <Route path="/partec" element={<HomePartec />} />
+      <Route path="/partecBandi" element={<HomePartecBandi />} />
       <Route path="/leMiePartec" element={<LeMiePartec />} />
 
       <Route path="/*" element={<NotFoundPage />} />
     </Routes>
   );
 };
+
+
+
+
+
 
 const Navbar = ({ emailProp }) => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -191,7 +208,7 @@ const Navbar = ({ emailProp }) => {
                     aria-haspopup="true"
                     aria-expanded={open ? "true" : undefined}
                   >
-                    <MoreVertIcon style={{ color: "#fff", fontSize: "22px" }} />
+                    <MenuIcon style={{ color: "#e121e1", fontSize: "22px" }} />
                   </IconButton>
                 </Tooltip>
               </Box>
@@ -235,10 +252,10 @@ const Navbar = ({ emailProp }) => {
                   <ListItemIcon> <Settings className="menuNavDropdown" /> </ListItemIcon>
                   <span className="menuWidth"> Profile</span>
                 </MenuItem>
-                <MenuItem sx={{ fontSize: "14px" }} onClick={() => navigate("/aziende")}>
+                {/* <MenuItem sx={{ fontSize: "14px" }} onClick={() => navigate("/aziende")}>
                   <ListItemIcon> <PersonIcon className="menuNavDropdown" /> </ListItemIcon>
                   Aziende
-                </MenuItem>
+                </MenuItem> */}
                 <MenuItem sx={{ fontSize: "14px" }} onClick={() => navigate("/ruoli")}>
                   <ListItemIcon> <LocalPoliceIcon className="menuNavDropdown" /> </ListItemIcon>
                   Ruoli

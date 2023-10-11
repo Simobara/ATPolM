@@ -1,0 +1,73 @@
+
+.text-label-style{
+    height: 50px;
+    /* width: 400px !important; */
+    /* width: 100%; */
+    display: flex;
+    align-items:center;
+    justify-content:flex-start;
+    background-color: #3b4fe4;
+    color: white;
+    /* margin: 0px 20px; */
+    font-weight: bolder;
+    font-size: 20px !important;
+    padding: 0px 10px;
+    border-radius: 5px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.55); /* ombra più sfumata */
+    text-transform: uppercase;
+}
+.text-label-style-azinde{
+    height: 40px;
+    /* width: 400px !important; */
+    /* width: 100%; */
+    display: flex;
+    align-items:center;
+    justify-content:flex-start;
+    background-color: #3b4fe4;
+    color: white;
+    /* margin: 0px 20px; */
+    font-weight: bolder;
+    font-size: 13px !important;
+    padding: 0px 10px;
+    border-radius: 5px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.55); /* ombra più sfumata */
+    text-transform: uppercase;
+}
+@media screen and (max-width: 480px) {
+    .text-label-style-azinde{
+        height: 40px;
+        /* width: 400px !important; */
+        /* width: 100%; */
+        display: flex;
+        align-items:center;
+        justify-content:flex-start;
+        background-color: #3b4fe4;
+        color: white;
+        /* margin: 0px 20px; */
+        font-weight: bolder;
+        font-size: 12px !important;
+        padding: 0px 10px;
+        border-radius: 5px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.55); /* ombra più sfumata */
+        text-transform: uppercase;
+    }
+  }
+  @media screen and (min-width: 480px) and (max-width:1300px){
+    .text-label-style-azinde{
+        height: 40px;
+        /* width: 400px !important; */
+        /* width: 100%; */
+        display: flex;
+        align-items:center;
+        justify-content:flex-start;
+        background-color: #3b4fe4;
+        color: white;
+        /* margin: 0px 20px; */
+        font-weight: bolder;
+        font-size: 11px !important;
+        padding: 0px 10px;
+        border-radius: 5px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.55); /* ombra più sfumata */
+        text-transform: uppercase;
+    }
+  }

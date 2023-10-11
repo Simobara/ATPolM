@@ -166,7 +166,7 @@ const CitModalMod = ({ propShow, propClose, propRowID, propDescIdCittaFiltered }
         // close={close}
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"
-        top
+        centered
       >
         <Modal.Header>
           <Modal.Title id="contained-modal-title-vcenter" className="font-weight-bold">

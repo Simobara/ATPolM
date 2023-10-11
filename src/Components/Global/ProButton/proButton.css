@@ -2,7 +2,7 @@
   border: 0;
   /* margin-bottom: 10px; */
   background-color: #d7e6f1;
-  color: rgb(0, 59, 236);
+  color: #1926b6;
   padding: 5px 8px;
   border-radius: 4px;
   cursor: pointer;
@@ -11,6 +11,6 @@
 }
 
 .page-btn:hover {
-  background-color: #4396d0;
+  background-color: #1926b6;
   color: white;
 }

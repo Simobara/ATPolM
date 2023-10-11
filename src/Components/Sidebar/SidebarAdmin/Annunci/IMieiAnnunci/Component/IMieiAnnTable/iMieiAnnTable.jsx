@@ -14,7 +14,7 @@ import axios from "axios";
 
 const IMieiAnnTable = () => {
   // const columns = ["", "IdAnnuncio", "Data", "Email", "Telefono"];
-  const columns = ["", "IdAnnuncio", "titolo", "descrizione", "quantita"];
+  const columns = ["", "Id ", "titolo", "descrizione", "quantita"];
 
   // const rowsEmail = ["test1@gmail.com", "test2@gmail.com", "test3@gmail.com", "test4@gmail.com", "test5@gmail.com"];
   // const rowsData = ["01/01/0001 00:00:00", "01/01/0001 00:00:00", "01/01/0001 00:00:00", "01/01/0001 00:00:00", "01/01/0001 00:00:00"];
@@ -98,8 +98,21 @@ const IMieiAnnTable = () => {
 
   return (
     <>
-      <div style={{ marginTop: "5rem" }}>
-        <table className="table table-bordered w-100">
+      <div style={{ fontSize: '20px', marginBottom: '10px', marginTop: '5rem' }}>
+        <div style={{
+          height: '70px',
+          backgroundColor: '#030947',
+          width: '100%',
+         
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          fontWeight: 'bold'
+        }} className="bold-columns text-center text-white header-hieght">
+          I MIEI ANNUNCI
+        </div>
+        <div className="container custom-container" style={{ backgroundColor: "#f3f3f3" }}>
+        <div className="table-responsive tabel-Button"> <table className="table table-bordered w-100">
           <thead>
             <tr className="bold-columns text-center">
               {columns.map((column, columnIndex) => (
@@ -121,7 +134,7 @@ const IMieiAnnTable = () => {
               <tr key={rowIndex}>
                 <td className={getColumnClassName(0)}>
                   <div>
-                    <button type="button" className="btn button-modify" onClick={handleClickDatiModVisIntOpen}>
+                    <button type="button" className="btn btn-primary button-modify largeTextButton" onClick={handleClickDatiModVisIntOpen} style={{ paddingLeft: '10px', paddingRight: '10px' }}>
                       Visualizza Annuncio
                     </button>
                   </div>
@@ -139,7 +152,8 @@ const IMieiAnnTable = () => {
               </tr>
             ))}
           </tbody>
-        </table>
+        </table></div>
+       
         <div style={{ marginBottom: "100px" }} className="d-flex justify-content-center w-100 text-sm page-text-input">
           <div className="widthSmall d-flex justify-content-around align-items-center my-1">
             <ProButton text="<<" title="Previous Page" disabled={currentPage === 1} clicked={() => handlePageChange(currentPage - 1)} />
@@ -157,6 +171,7 @@ const IMieiAnnTable = () => {
             </span>
             <ProButton text=">>" title="Next Page" disabled={indexOfLastItem >= categorie.length} clicked={() => handlePageChange(currentPage + 1)} />
           </div>
+        </div>
         </div>
         <div>{isModalDatiVisIntActive && <ModDatiModVisAnn show={isModalDatiVisIntActive} close={handleClickDatiModVisIntClose} />}</div>
       </div>

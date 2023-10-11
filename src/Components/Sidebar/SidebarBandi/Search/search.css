@@ -9,8 +9,10 @@
   border-radius: 2px;
   color: #535252;
 }
+
 .flex-search-input {
   display: flex;
+  align-items: center;
 }
 @media only screen and (max-width: 768px) {
   .flex-search-input {

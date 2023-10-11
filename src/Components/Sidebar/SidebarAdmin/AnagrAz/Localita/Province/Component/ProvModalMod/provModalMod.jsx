@@ -122,7 +122,7 @@ const ProvModalMod = ({ propShow, propClose, propRowID, propListaProvCodAdded = 
   // ********** RETURN *****************************************
   return (
     <>
-      <Modal show={propShow} size="lg" aria-labelledby="contained-modal-title-vcenter" top="true">
+      <Modal show={propShow} size="lg" aria-labelledby="contained-modal-title-vcenter" top="true"  centered>
         <Modal.Header>
           <Modal.Title id="contained-modal-title-vcenter" className="font-weight-bold">
             <h2>Modifica Provincia</h2>

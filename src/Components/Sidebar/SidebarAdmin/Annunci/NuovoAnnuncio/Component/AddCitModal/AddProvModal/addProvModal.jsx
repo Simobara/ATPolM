@@ -42,16 +42,19 @@ const ProvModalAdd = ({ propShow, propClose, propListaProvCodAdded }) => {
   const [errorDigit, setErrorDigit] = useState("");
 
   // eslint-disable-next-line
-  const [inputCount, setInputCount] = useState(0);
+  // const [inputCount, setInputCount] = useState(0);
   const [inputValue, setInputValue] = useState("");
-  const [remainingProvincesInList, setRemainingProvincesInList] = useState(0);
+
   // eslint-disable-next-line
   const [isDefaultBorder, setIsDefaultBorder] = useState(true);
   const [inputBorderClass, setInputBorderClass] = useState("form-control");
+
   const [isProvinceFound, setIsProvinceFound] = useState(false);
+  const [remainingProvincesInList, setRemainingProvincesInList] = useState(0);
+
+  const [listRegProvSiglFiltered, setListRegProvSiglFiltered] = useState("");
   // eslint-disable-next-line
   const [provinceFound, setProvinceFound] = useState(false);
-  const [listRegProvSiglFiltered, setListRegProvSiglFiltered] = useState("");
   const [regioniUPPER, setRegioniUPPER] = useState([]);
   // eslint-disable-next-line
   const [regListCurrent, setRegListCurrent] = useState([]);
@@ -105,6 +108,10 @@ const ProvModalAdd = ({ propShow, propClose, propListaProvCodAdded }) => {
     }
     return transformedProvinciaRegione;
   };
+
+
+
+
   const handleRegListCurrent = (regList) => {
     setRegListCurrent(regList);
     console.log("COMP ADD / REG", regList);
@@ -138,6 +145,12 @@ const ProvModalAdd = ({ propShow, propClose, propListaProvCodAdded }) => {
     // setListRegProvFiltered(filteredProvinciaRegione);
     setListRegProvSiglFiltered(regProvAndSigle);
   };
+
+
+
+
+
+
   const handleProvSelected = (provSel) => {
     // setProvSelected(provSel)
     // Trova la regione corrispondente
@@ -150,7 +163,7 @@ const ProvModalAdd = ({ propShow, propClose, propListaProvCodAdded }) => {
     // 3. Utilizzare il nome completo per trovare la regione corrispondente
     const regioneCorrispondente = provinciaRegione[nomeCompleto];
 
-    console.log("regioneCorrispondente", regioneCorrispondente);
+    console.log("COMP PADRE / REGIONE CORRISPONENTE", regioneCorrispondente);
 
     if (regioneCorrispondente) {
       setRegSelected(regioneCorrispondente.toUpperCase());
@@ -293,7 +306,7 @@ const ProvModalAdd = ({ propShow, propClose, propListaProvCodAdded }) => {
                     propOnProvinceFound={handleProvinceFound} // Passa il termine di ricerca al componente figlio
                     propRemainingProvincesInList={handleRemainProvInList}
                     propRegProvSiglFiltered={listRegProvSiglFiltered}
-                    propProvSelected={handleProvSelected}
+                    propProvSelected={handleProvSelected}  //hold the value of the province selected-----------------------
                     // className={`form-control ${errorCodice ? "is-invalid" : ""}`}
                     style={{
                       maxHeight: "80vh", // Imposta l'altezza massima a 80vh
@@ -333,8 +346,8 @@ const ProvModalAdd = ({ propShow, propClose, propListaProvCodAdded }) => {
                   <Row>
                     <Col>
                       <ProvForm
-                        propFrmData={(e) => {
-                          setFormData((prevState) => ({ ...prevState, idRegione: e }));
+                        propFrmData={(val) => {
+                          setFormData((prevState) => ({ ...prevState, idRegione: val }));
                           setErrorRegione(""); // Resetta l'errore quando si seleziona una regione
                         }}
                         className={`form-control ${errorRegione ? "is-invalid" : ""}`}
@@ -350,6 +363,7 @@ const ProvModalAdd = ({ propShow, propClose, propListaProvCodAdded }) => {
                           maxHeight: "80vh", // Imposta l'altezza massima a 80vh
                           overflowY: "auto", // Abilita lo scrolling se il contenuto supera l'altezza massima
                         }}
+                        propRegionnSelected={regSelected}
                       />
                       {errorRegione && (
                         <p className="text-danger border-danger p-3 rounded fs-4" style={{ borderTop: "4px solid red" }}>

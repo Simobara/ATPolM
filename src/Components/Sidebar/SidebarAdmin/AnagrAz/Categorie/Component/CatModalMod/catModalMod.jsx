@@ -80,7 +80,7 @@ const CatModalMod = ({ show, close, id }) => {
         // close={close}
         size="md"
         aria-labelledby="contained-modal-title-vcenter"
-        top="true"
+        top="true" centered
       >
         <Modal.Header>
           <Modal.Title id="contained-modal-title-vcenter" className="font-weight-bold">

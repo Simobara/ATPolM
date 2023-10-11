@@ -12,6 +12,9 @@
 .flex-search-input {
   display: flex;
 }
+.search-input::placeholder {
+  font-size: 12px !important;
+}
 @media only screen and (max-width: 768px) {
   .flex-search-input {
     display: block;

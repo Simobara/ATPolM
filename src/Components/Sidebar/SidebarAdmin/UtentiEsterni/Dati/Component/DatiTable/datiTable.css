@@ -16,8 +16,8 @@
 }
 
 .button-modify {
-  border: 5px solid blue;
-  background-color: blue;
+  border: 5px solid #1926b6;
+  background-color: #1926b6;
   color: white;
   margin: 1px;
   /* width: 40px;
@@ -27,19 +27,19 @@
 
 .button-modify:hover {
   background-color: white !important;
-  border: 5px solid  blue;
-  color: blue !important;
+  border: 5px solid  blu;
+  color: #1926b6 !important;
 }
 
 .icon-add {
   background-color: #dc86d8 !important;
-  color: blue;
-  border: 5px solid  blue ;
+  color: #1926b6;
+  border: 5px solid  #1926b6 ;
 }
 
 .icon-add:hover {
   background-color: rgb(253, 69, 217) !important;
-  border: 5px dotted  blue ;
+  border: 5px dotted  #1926b6 ;
 }
 
 .button-close {
@@ -57,4 +57,40 @@
 tr {
   border-top: 1px dashed black;
   border-bottom: 1px dashed black;
+}
+
+
+.largeTextButton {
+  font-size: 1rem; /* Adatta la dimensione del font come preferisci */
+  /* padding: 20px, 0 !important; Rimuove il padding */
+
+}
+.header-hieght{
+  margin-bottom: 60px;
+}
+@media (max-width:768px){
+  .header-hieght{
+    margin-bottom: 20px;
+  }
+  
+}
+@media (max-width:500px){
+  .header-hieght{
+    margin-bottom: 5px;
+  }
+  .bold-columns th:nth-child(n+1) {
+   
+    font-size: 1rem;
+    
+    
+  }
+  .tabel-Button .btn {
+    --mdb-btn-padding-top: 0rem; 
+    --mdb-btn-padding-bottom: 0rem;
+     --mdb-btn-border-width: 0; 
+     --mdb-btn-padding-x: 0rem;
+  }
+  .text-sm{
+    font-size: 16px;
+  }
 }
