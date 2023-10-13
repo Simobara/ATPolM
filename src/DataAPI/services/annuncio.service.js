@@ -55,7 +55,12 @@ const AnnuncioService = () => {
             headers: { 'Content-Type': 'multipart/form-data' }
         })
     }
-    return { addAnnuncio, getAnnunci };
+
+    const putAnnuncio = () => {
+        return axios.put(API_URL + 'annunci/check-chiusura-annuncio-ed-invio-notifiche')
+    }
+
+    return { addAnnuncio, getAnnunci, putAnnuncio };
 };
 
 export default AnnuncioService;

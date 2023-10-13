@@ -32,51 +32,51 @@ const AggSingAz = () => {
   const [isFormReset, setIsFormReset] = useState(false);
 
   const [formData, setFormData] = useState({
-    Email: "",
-    Ruoli: "",
-    Password: "",
-    ConfermaPassword: "",
-    RagioneSociale: "",
-    RappresentanteLegale: "",
-    Indirizzo: "",
-    CodiceFiscale: "",
-    PartitaIva: "",
-    Telefono1: "",
-    Telefono2: "",
-    DescrizioneTelefoni: "",
-    Fax: "",
-    Pec: "",
-    FormaGiuridica: "",
-    Associazione: "",
-    Localita: "",
-    Categoria: "",
-    "Attivita'Principale": "",
-    "Attivita'Secondaria": "",
+    username: "",
+    email: "",
+    password: "",
+    ragioneSociale: "",
+    legaleRappresentante: "",
+    indirizzo: "",
+    codiceFiscale: "",
+    pIva: "",
+    telefono: "",
+    telefono2: "",
+    descrizioneTelefoni: "",
+    fax: "",
+    pec: "",
+    idRuolo: "",
+    idFormaGiuridica: "",
+    idAssociazione: "",
+    idLocalita: "",
+    idCategoria: "",
+    idAttivitaPrincipale: "",
+    idAttivitaSecondaria: ""
   });
 
   const handleResetForm = (e) => {
     e.preventDefault();
     setFormData({
-      Email: "",
-      Ruoli: "",
-      Password: "",
-      ConfermaPassword: "",
-      RagioneSociale: "",
-      RappresentanteLegale: "",
-      Indirizzo: "",
-      CodiceFiscale: "",
-      PartitaIva: "",
-      Telefono1: "",
-      Telefono2: "",
-      DescrizioneTelefoni: "",
-      Fax: "",
-      Pec: "",
-      FormaGiuridica: "",
-      Associazione: "",
-      Localita: "",
-      Categoria: "",
-      "Attivita'Principale": "",
-      "Attivita'Secondaria": "",
+      username: "",
+      email: "",
+      password: "",
+      ragioneSociale: "",
+      legaleRappresentante: "",
+      indirizzo: "",
+      codiceFiscale: "",
+      pIva: "",
+      telefono: "",
+      telefono2: "",
+      descrizioneTelefoni: "",
+      fax: "",
+      pec: "",
+      idRuolo: "",
+      idFormaGiuridica: "",
+      idAssociazione: "",
+      idLocalita: "",
+      idCategoria: "",
+      idAttivitaPrincipale: "",
+      idAttivitaSecondaria: ""
     });
     setIsFormReset(true);
   };
@@ -140,13 +140,13 @@ const AggSingAz = () => {
       descrizioneTelefoni,
       fax,
       pec,
-      idRuolo,
-      idFormaGiuridica,
+      idFormaGiuridica,            
       idAssociazione,
       idLocalita,
       idCategoria,
       idAttivitaPrincipale,
-      idAttivitaSecondaria
+      idAttivitaSecondaria,
+      idRuolo
 
     })
   }
@@ -215,33 +215,36 @@ const AggSingAz = () => {
       try {
         //Aggiorna questa chiamata con i parametri corretti
         //await addAzienda(formData);
-        //await postUtenteData(formData);        
-        await postUtenteData(username, email, password, ragioneSociale, rappresentanteLegale, indirizzo, codiceFiscale, partitaIva, telefonoUno,
+        await addAzienda(username, email, password, ragioneSociale, rappresentanteLegale, indirizzo, codiceFiscale, partitaIva, telefonoUno,
                             telefonoDue, descrizioneTelefoni, fax, pec, idRuolo, idFormaGiuridica, idAssociazione, idLocalita,
                             idCategoria, idAttivitaPrincipale, idAttivitaSecondaria);
+        //await postUtenteData(formData);        
+        //await postUtenteData(username, email, password, ragioneSociale, rappresentanteLegale, indirizzo, codiceFiscale, partitaIva, telefonoUno,
+        //                    telefonoDue, descrizioneTelefoni, fax, pec, idRuolo, idFormaGiuridica, idAssociazione, idLocalita,
+        //                    idCategoria, idAttivitaPrincipale, idAttivitaSecondaria);
         //await postUtenteData();
 
         setFormData({
-          Email: "",
-          Ruoli: "",
-          Password: "",
-          ConfermaPassword: "",
-          RagioneSociale: "",
-          RappresentanteLegale: "",
-          Indirizzo: "",
-          CodiceFiscale: "",
-          PartitaIva: "",
-          Telefono1: "",
-          Telefono2: "",
-          DescrizioneTelefoni: "",
-          Fax: "",
-          Pec: "",
-          FormaGiuridica: "",
-          Associazione: "",
-          Localita: "",
-          Categoria: "",
-          "Attivita'Principale": "",
-          "Attivita'Secondaria": "",
+          username: "",
+          email: "",
+          password: "",
+          ragioneSociale: "",
+          legaleRappresentante: "",
+          indirizzo: "",
+          codiceFiscale: "",
+          pIva: "",
+          telefono: "",
+          telefono2: "",
+          descrizioneTelefoni: "",
+          fax: "",
+          pec: "",
+          idRuolo: "",
+          idFormaGiuridica: "",
+          idAssociazione: "",
+          idLocalita: "",
+          idCategoria: "",
+          idAttivitaPrincipale: "",
+          idAttivitaSecondaria: ""
         });
         console.log("set form data annunci --- dati salvati");
       } catch (error) {

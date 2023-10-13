@@ -5,7 +5,6 @@ import "./home.css";
 import { newData } from "../../../../DataAPI/newData";
 import { tableColumn } from "./Data/MainTable/Columns";
 import Table from "./Table/table";
-//import Table from "./Table";
 import AnnuncioService from "../../../../DataAPI/services/annuncio.service";
 // import AddNewRecordForm from "./AddNewRecord/AddNewRecord";
 
@@ -30,25 +29,46 @@ const SHome = () => {
     // onClosePopup();
   };
   const { getAnnunci } = AnnuncioService();
-  const getAnnunciData = async () => {
-    const response = await getAnnunci()
-    setAnnunci(response?.data?.map((data) => ({ ...data, classeWaste: data?.materiale?.descrizione, descrizioneDetail: data?.descrizione })))
-    if (response?.data) { setLoading(false) }
-
+  const { putAnnuncio } = AnnuncioService();
+  const putAnnunciData = async () => {
+    const response = await putAnnuncio()
+      //.then(response => {
+      console.log("Risposta da notifiche annuncio chiuso " + JSON.stringify(response.data));
+      //});
 
   }
+
+  const getAnnunciData = async () => {
+    const response = await getAnnunci()
+    setAnnunci(response?.data?.map((data) => ({
+      ...data,
+      classeWaste: data?.materiale?.descrizione,
+      descrizioneDetail: data?.descrizione
+    })))
+
+    if (response?.data) {
+      setLoading(false)
+    }
+  }
   useEffect(() => {
+
+    //Per prova facciamo triggerare il check su annuncio chiuso e in caso sulle notifiche da inviare agli interessati etc
+    putAnnunciData()
+
     getAnnunciData()
     // eslint-disable-next-line
   }, [])
+
 
   return loading ? (null) : (
     <>
       <div className="elems-container" style={{ fontSize: "1.9rem", marginTop: "80px" }}>
         <div className="container-fluid">
           <div className="row row-overflow">
-            <Table columnData={[...tableColumn]} rowData={annunci}
-            // handleAddNewRecPopup={handleAddNewRecPopup}
+            <Table
+              propColumnData={[...tableColumn]}
+              propRowData={annunci}
+            //  {/* handleAddNewRecPopup={handleAddNewRecPopup} */}
             />
             {/*<MainTable*/}
             {/*    getTableProps={getTableProps}*/}

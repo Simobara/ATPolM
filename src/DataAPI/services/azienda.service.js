@@ -2,6 +2,7 @@
 import axios from 'axios';
 
 const API_URL = 'http://localhost:8080/api/';
+const API_AUTH_URL = 'http://localhost:8080/api/auth/';
 
 
 
@@ -20,26 +21,28 @@ const AziendaService = () => {
     }
 
 
-    const addAzienda = async (id, email, fax, password, indirizzo, ragioneSociale, rappresentanteLegale, telefono1, telefono2,
-        descrizioneTelefoni, pec, idFormaGiuridica, idAssociazione, idLocalità, idCategoria, idAttivitaPrincipale,
-        idAttivitaSecondaria, idRuolo) => {
+    const addAzienda = async (username, email, password, ragioneSociale, legaleRappresentante, indirizzo, codiceFiscale, pIva, telefono,
+        telefono2, descrizioneTelefoni, fax, pec, idRuolo, idFormaGiuridica, idAssociazione, idLocalita,
+        idCategoria, idAttivitaPrincipale, idAttivitaSecondaria) => {
         try {
-            const response = await axios.post(`${API_URL}add-azienda/${id}/${idLocalità}/${idCategoria}
-            /${idAttivitaPrincipale}/${idAttivitaSecondaria}/${idAssociazione}/${idFormaGiuridica}/${idRuolo}`, {
-                id,
-                email,
-                fax,
-                password,
-                indirizzo,
+            const response = await axios.post(`${API_AUTH_URL}aggiungi-azienda-singola/${idLocalita}/${idCategoria}` +
+            `/${idAttivitaPrincipale}/${idAttivitaSecondaria}/${idAssociazione}/${idFormaGiuridica}/${idRuolo}`, {
+                username,
+                email,                
+                password,                
                 ragioneSociale,
-                rappresentanteLegale,
-                telefono1,
+                legaleRappresentante,
+                indirizzo,
+                codiceFiscale,
+                pIva,
+                telefono,
                 telefono2,
                 descrizioneTelefoni,
+                fax,
                 pec,
                 idFormaGiuridica,
                 idAssociazione,
-                idLocalità,
+                idLocalita,
                 idCategoria,
                 idAttivitaPrincipale,
                 idAttivitaSecondaria,
@@ -55,8 +58,14 @@ const AziendaService = () => {
         }
     };
 
+    const addAziendaFromExcel = async (json) => {
+        return axios.post(API_URL + 'add-azienda-from-excel', {
+            json
+        })
+    };
 
-    return { getAziende, addAzienda };
+
+    return { getAziende, addAzienda, addAziendaFromExcel };
 };
 
 export default AziendaService;
