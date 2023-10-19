@@ -8,6 +8,7 @@ import "./profileTable.css";
 // import MaterModalAdd from "../MaterModalAdd/materModalAdd";
 // import MaterModalMod from "../MaterModalMod/materModalMod";
 // import MaterModalDel from "../MaterModalDel/materModalDel";
+import authService from "../../../../../../DataAPI/services/auth.service";
 import ProButton from "../../../../../Global/ProButton/ProButton";
 //* MUI MATERIAL ICONS */
 import ModeIcon from "@mui/icons-material/Mode";
@@ -85,23 +86,37 @@ const ProfileNavTable = () => {
     }
   };
 
+  let pincoPallo = false;
+
+  const checkRole = () => {
+    console.log(authService.getCurrentUser().ruoli[0])   
+
+    if (authService.getCurrentUser().ruoli[0] == "ROLE_USER") {
+      console.log("è un utente normale");
+      pincoPallo = true;
+    } else {
+      console.log("è un admin!");
+    }
+  };
+
   return (
     <>
       <div style={{ marginTop: "5rem" }}>
+
+        <div>
+          {checkRole()}
+            
+            {pincoPallo ? authService.getCurrentUser().ruoli[0] : <div>Is false</div>}                    
+          
+        </div>
+
         <table className="table table-bordered w-100">
           <thead>
             <tr className="bold-columns text-center">
-              {columns.map((column, columnIndex) => (
-                <th key={columnIndex}>
-                  {columnIndex === 0 && (
-                    <button type="button" className="btn button-modify icon-add" onClick={() => (console.log("button open"))}
-                    >
-                      <AddIcon className="icon" />
-                    </button>
-                  )}
-                  {column}
-                </th>
-              ))}
+              
+              <td>{authService.getCurrentUser().email}</td>
+              <td>{authService.getCurrentUser().username}</td>
+              
             </tr>
           </thead>
           <tbody>

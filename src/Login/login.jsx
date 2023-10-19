@@ -9,41 +9,50 @@ import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 /* COMPONENTS */
 import Register from "./Register/register";
+import authService from "../DataAPI/services/auth.service";
 
 
 const LoginPage = ({ onRegistrationSuccess }) => {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [emailFocused, setEmailFocused] = useState(false);
+  const [usernameFocused, setUsernameFocused] = useState(false);
   const [isRegistered, setIsRegistered] = useState(true);
   // const [isEmailValid, setIsEmailValid] = useState(false);
   // const [isPswValid, setIsPswValid] = useState(false);
-  const localEmail = localStorage.getItem("email");
+  const localUsername = localStorage.getItem("username");
   const localPassword = localStorage.getItem("password");
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
+  const handleUsernameChange = (e) => {
+    setUsername(e.target.value);
   };
 
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
   };
 
-  const handleEmailFocus = () => {
-    setEmailFocused(true);
+  const handleUsernameFocus = () => {
+    setUsernameFocused(true);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     // if (isEmailValid && isPswValid) {
     // --------------------------fai le validazioni per i campi email e psw con i componenti
-    console.log(password, localPassword);
-    if (email === localEmail && password === localPassword) {
-      localStorage.setItem("signUp", email);
-      onRegistrationSuccess();
+    //console.log(password, localPassword);
+    //if (email === localEmail && password === localPassword) {
+      //localStorage.setItem("signUp", email);
+      //onRegistrationSuccess();
       //   window.location.reload();
-    } else {
-      alert("Please Enter valid Credential");
-    }
+    //} else {
+    //  alert("Please Enter valid Credential");
+
+    console.log(username, password)
+    authService.login(username, password);
+    localStorage.setItem("signUp", username);
+    onRegistrationSuccess();
+    window.location.reload();
+
+
+    
   };
 
   const handleSignUp = () => {
@@ -90,16 +99,16 @@ const LoginPage = ({ onRegistrationSuccess }) => {
                 <Form onSubmit={handleSubmit}>
                   <Form.Group controlId="formEmail">
                     <Form.Label
-                      className={`label-bold ${emailFocused ? "label-focused" : ""}`}
+                      className={`label-bold ${usernameFocused ? "label-focused" : ""}`}
                     >
-                      Email address
+                      Username
                     </Form.Label>
                     <Form.Control
-                      type="email"
-                      placeholder="email.."
-                      value={email}
-                      onChange={handleEmailChange}
-                      onFocus={handleEmailFocus}
+                      type="username"
+                      placeholder="username.."
+                      value={username}
+                      onChange={handleUsernameChange}
+                      onFocus={handleUsernameFocus}
                       className="small-placeholder"
                     />
                   </Form.Group>

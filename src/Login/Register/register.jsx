@@ -9,6 +9,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import axios from "../../Api/axios";
 import "../../index.css";
 import './register.css';
+import authService from "../../DataAPI/services/auth.service";
+import { Password } from "@mui/icons-material";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@¥$%+-=]).{8,24}$/;
@@ -16,6 +18,13 @@ const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@¥$%+-=]).{8,24}$/;
 // const REGISTER_URL = "/api/register";
 
 const Register = ({ setIsRegistered }) => {
+
+  const emailRef = useRef();
+
+  const [email, setEmail] = useState("");
+  const [validNameEmail, setValidNameEmail] = useState(false);
+  const [emailFocus, setEmailFocus] = useState(false);
+
   const userRef = useRef();
   const errRef = useRef();
 
@@ -60,15 +69,19 @@ const Register = ({ setIsRegistered }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     // if button enabled with JS hack
-    const v1 = EMAIL_REGEX.test(user);
+    /*const v1 = EMAIL_REGEX.test(user);
     const v2 = PWD_REGEX.test(pwd);
     if (!v1 || !v2) {
       setErrMsg("Invalid Entry");
       return;
-    }
-    localStorage.setItem("email", user);
-    localStorage.setItem("password", pwd);
-    localStorage.setItem("name", pwd);
+    }*/
+
+    console.log("I dati: " + user, email, pwd);
+    authService.register(user, email, pwd);
+
+    //localStorage.setItem("email", user);
+    //localStorage.setItem("password", pwd);
+    //localStorage.setItem("name", pwd);
     setIsRegistered(true);
     // try {
     //   const response = await axios.post(
@@ -140,16 +153,51 @@ const Register = ({ setIsRegistered }) => {
                   <form onSubmit={handleSubmit}>
 
 
-                    {/* ----------------USERNAME---------------------- */}
-                    <label htmlFor="username">
+                  {/* ----------------EMAIL---------------------- */}
+                  <label htmlFor="email">
                       Email:
                       <FontAwesomeIcon
                         icon={faCheck}
-                        className={validName ? "valid" : "hide"}
+                        //className={validNameEmail ? "valid" : "hide"}
                       />
                       <FontAwesomeIcon
                         icon={faTimes}
-                        className={validName || !user ? "hide" : "invalid"}
+                        //className={validNameEmail || !email ? "hide" : "invalid"}
+                      />
+                    </label>
+                    <input
+                      type="text"
+                      id="email"
+                      ref={emailRef}
+                      autoComplete="off"
+                      onChange={(e) => setEmail(e.target.value)}
+                      value={email}
+                      required
+                      //aria-invalid={validNameEmail ? "false" : "true"}
+                      //aria-describedby="uidnote"
+                      onFocus={() => setEmailFocus(true)}
+                      onBlur={() => setEmailFocus(false)}
+                    />
+                    <p id="uidnote" className={emailFocus && email && !validNameEmail ? "instructions" : "offscreen"}>
+                      <FontAwesomeIcon icon={faInfoCircle} />
+                      4 to 24 characters.
+                      <br />
+                      Must begin with a letter.
+                      <br />
+                      Letters, numbers, underscores, hyphens allowed.
+                    </p>
+
+
+                    {/* ----------------USERNAME---------------------- */}
+                    <label htmlFor="username">
+                      Username:
+                      <FontAwesomeIcon
+                        icon={faCheck}
+                        //className={validName ? "valid" : "hide"}
+                      />
+                      <FontAwesomeIcon
+                        icon={faTimes}
+                        //className={validName || !user ? "hide" : "invalid"}
                       />
                     </label>
                     <input
@@ -160,8 +208,8 @@ const Register = ({ setIsRegistered }) => {
                       onChange={(e) => setUser(e.target.value)}
                       value={user}
                       required
-                      aria-invalid={validName ? "false" : "true"}
-                      aria-describedby="uidnote"
+                      //aria-invalid={validName ? "false" : "true"}
+                      //aria-describedby="uidnote"
                       onFocus={() => setUserFocus(true)}
                       onBlur={() => setUserFocus(false)}
                     />
@@ -180,11 +228,11 @@ const Register = ({ setIsRegistered }) => {
                       Password:
                       <FontAwesomeIcon
                         icon={faCheck}
-                        className={validPwd ? "valid" : "hide"}
+                        //className={validPwd ? "valid" : "hide"}
                       />
                       <FontAwesomeIcon
                         icon={faTimes}
-                        className={validPwd || !pwd ? "hide" : "invalid"}
+                        //className={validPwd || !pwd ? "hide" : "invalid"}
                       />
                     </label>
                     <input
@@ -194,13 +242,13 @@ const Register = ({ setIsRegistered }) => {
                       value={pwd}
                       required
                       //   aria-invalid={validPwd ? "false" : setValidPwd(true)}
-                      aria-describedby="pwdnote"
+                      //aria-describedby="pwdnote"
                       onFocus={() => setPwdFocus(true)}
                       onBlur={() => setPwdFocus(false)}
                     />
                     <p
                       id="pwdnote"
-                      className={pwdFocus && !validPwd ? "instructions" : "offscreen"}
+                      //className={pwdFocus && !validPwd ? "instructions" : "offscreen"}
                     >
                       <FontAwesomeIcon icon={faInfoCircle} />
                       8 to 24 characters.
@@ -223,11 +271,11 @@ const Register = ({ setIsRegistered }) => {
                       Confirm Password:
                       <FontAwesomeIcon
                         icon={faCheck}
-                        className={validMatch && matchPwd ? "valid" : "hide"}
+                        //className={validMatch && matchPwd ? "valid" : "hide"}
                       />
                       <FontAwesomeIcon
                         icon={faTimes}
-                        className={validMatch || !matchPwd ? "hide" : "invalid"}
+                        //className={validMatch || !matchPwd ? "hide" : "invalid"}
                       />
                     </label>
                     <input
@@ -236,21 +284,21 @@ const Register = ({ setIsRegistered }) => {
                       onChange={(e) => setMatchPwd(e.target.value)}
                       value={matchPwd}
                       required
-                      aria-invalid={validMatch ? "false" : "true"}
-                      aria-describedby="confirmnote"
+                      //aria-invalid={validMatch ? "false" : "true"}
+                      //aria-describedby="confirmnote"
                       onFocus={() => setMatchFocus(true)}
                       onBlur={() => setMatchFocus(false)}
                     />
                     <p
                       id="confirmnote"
-                      className={matchFocus && !validMatch ? "instructions" : "offscreen"}
+                      //className={matchFocus && !validMatch ? "instructions" : "offscreen"}
                     >
                       <FontAwesomeIcon icon={faInfoCircle} />
                       Must match the first password input field.
                     </p>
                     {/* ----------------SIGN UP-------------------------------- */}
                     <button
-                      disabled={!validName || !validPwd || !validMatch ? true : false}
+                      //disabled={!validName || !validPwd || !validMatch ? true : false}
                     >
                       Sign Up
                     </button>
