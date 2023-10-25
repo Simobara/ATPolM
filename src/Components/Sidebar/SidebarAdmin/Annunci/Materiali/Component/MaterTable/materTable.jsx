@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
-/* CSS */
+//* CSS */
 import "./materTable.css";
-/* COMPONENTS */
+//* COMPONENTS */
 // import ButtonPen from '../../../../../../../Global/ButtonPen/buttonPen';
 import MaterModalAdd from "../MaterModalAdd/materModalAdd";
 import MaterModalMod from "../MaterModalMod/materModalMod";
 import MaterModalDel from "../MaterModalDel/materModalDel";
 import ProButton from "../../../../../../Global/ProButton/ProButton";
-/* MUI MATERIAL ICONS */
+//* MUI MATERIAL ICONS */
 import ModeIcon from "@mui/icons-material/Mode";
 import CloseIcon from "@mui/icons-material/Close";
 import AddIcon from "@mui/icons-material/Add";
@@ -102,7 +102,7 @@ const MaterTable = () => {
           height: '70px',
           backgroundColor: '#030947',
           width: '100%',
-        
+
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
@@ -111,60 +111,60 @@ const MaterTable = () => {
           MATERIALI
         </div>
         <div className="container custom-container" style={{ backgroundColor: "#f3f3f3" }}>
-        <div className="table-responsive tabel-Button"><table className="table table-bordered w-100">
-          <thead>
-            <tr className="bold-columns text-center">
-              {columns.map((column, columnIndex) => (
-                <th key={columnIndex}>
-                  {columnIndex === 0 && (
-                    <button type="button" className="btn button-modify icon-add" onClick={() => handleClickAddOpen()}>
-                      <AddIcon className="icon" />
-                    </button>
-                  )}
-                  {column}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {currentItems.map((row, rowIndex) => (
-              <tr key={rowIndex}>
-                <td className={getColumnClassName(0)}>
-                  <button type="button" className="btn btn-primary button-modify" onClick={() => handleClickModOpen(row?.id)}>
-                    <ModeIcon className="icon" />
-                  </button>
-                  {/* <ButtonPen onClick={openModal} /> */}
-                </td>
-                <td className={getColumnClassName(1)}>{row?.descrizione}</td>
-                <td className={getColumnClassName(2)}>
-                  <button type="button" className="btn btn-danger button-close" onClick={() => handleClickDelOpen()}>
-                    <CloseIcon className="icon-close" />
-                  </button>
-                </td>
+          <div className="table-responsive tabel-Button"><table className="table table-bordered w-100">
+            <thead>
+              <tr className="bold-columns text-center">
+                {columns.map((column, columnIndex) => (
+                  <th key={columnIndex}>
+                    {columnIndex === 0 && (
+                      <button type="button" className="btn button-modify icon-add" onClick={() => handleClickAddOpen()}>
+                        <AddIcon className="icon" />
+                      </button>
+                    )}
+                    {column}
+                  </th>
+                ))}
               </tr>
-            ))}
-          </tbody>
-        </table></div>
-        
-        <div style={{ marginBottom: "100px" }} className="d-flex justify-content-center w-100 text-sm page-text-input">
-          <div className="widthSmall d-flex justify-content-around align-items-center my-1">
-            <ProButton text="<<" title="Previous Page" disabled={currentPage === 1} clicked={() => handlePageChange(currentPage - 1)} />
-            <span className="text-center text-sm">
-              Pagina
-              <strong className="mx-3 text-sm">
-                {currentPage} di {Math.ceil(rowsCatAziende.length / itemsPerPage)}
-              </strong>
-              {/* &nbsp; | &nbsp; Go To Page &nbsp;&nbsp;
+            </thead>
+            <tbody>
+              {currentItems.map((row, rowIndex) => (
+                <tr key={rowIndex}>
+                  <td className={getColumnClassName(0)}>
+                    <button type="button" className="btn btn-primary button-modify" onClick={() => handleClickModOpen(row?.id)}>
+                      <ModeIcon className="icon" />
+                    </button>
+                    {/* <ButtonPen onClick={openModal} /> */}
+                  </td>
+                  <td className={getColumnClassName(1)}>{row?.descrizione}</td>
+                  <td className={getColumnClassName(2)}>
+                    <button type="button" className="btn btn-danger button-close" onClick={() => handleClickDelOpen()}>
+                      <CloseIcon className="icon-close" />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table></div>
+
+          <div style={{ marginBottom: "100px" }} className="d-flex justify-content-center w-100 text-sm page-text-input">
+            <div className="widthSmall d-flex justify-content-around align-items-center my-1">
+              <ProButton text="<<" title="Previous Page" disabled={currentPage === 1} clicked={() => handlePageChange(currentPage - 1)} />
+              <span className="text-center text-sm">
+                Pagina
+                <strong className="mx-3 text-sm">
+                  {currentPage} di {Math.ceil(rowsCatAziende.length / itemsPerPage)}
+                </strong>
+                {/* &nbsp; | &nbsp; Go To Page &nbsp;&nbsp;
             <input
               type="number"
               className="goto-page-input"
               defaultValue={indexOfLastItem >= rowsCatAziende.length ? currentPage - 1 : currentPage + 1}
             /> */}
-            </span>
-            <ProButton text=">>" title="Next Page" disabled={indexOfLastItem >= rowsCatAziende.length} clicked={() => handlePageChange(currentPage + 1)} />
+              </span>
+              <ProButton text=">>" title="Next Page" disabled={indexOfLastItem >= rowsCatAziende.length} clicked={() => handlePageChange(currentPage + 1)} />
+            </div>
           </div>
         </div>
-</div>
         <div>{isModalAddActive && <MaterModalAdd show={isModalAddActive} close={handleClickAddClose} />}</div>
         <div>{isModalModActive && <MaterModalMod show={isModalModActive} close={handleClickModClose} id={id} />}</div>
         <div>{isModalDelActive && <MaterModalDel show={isModalDelActive} close={handleClickDelClose} />}</div>

@@ -17,6 +17,21 @@ import SaveIcon from "@mui/icons-material/Save";
 const AziendeModalAdd = ({ show, close }) => {
   const [isEyePswOpen, setIsEyePswOpen] = useState(false);
   const [isEyeConfPswOpen, setIsEyeConfPswOpen] = useState(false);
+  // eslint-disable-next-line
+  const [dati, setDATI] = useState({
+    email: "",
+    ruoli: "",
+    password: "",
+    confirmPassword: "",
+    RageoniSocciale: "",
+    indrizzo: "",
+    codiceFiscale: "",
+    partitaiva: "",
+    telefono: "",
+    fax: "",
+    pec: "",
+
+  });
 
   return (
     <>
@@ -39,7 +54,7 @@ const AziendeModalAdd = ({ show, close }) => {
         <Modal.Body>
           <div className="row mt-3">
             <div className="word-label ml-2  mb-4" style={{ color: "black", fontSize: "16px" }}>
-              Dati Login
+
             </div>
             <div className="col-12 col-sm-12 col-md-12 col-lg-8 ml-2">
               <div className="row mt-2">
@@ -50,7 +65,7 @@ const AziendeModalAdd = ({ show, close }) => {
                 </div>
 
                 <div className="col-xl-9  col-md-9 col-lg-9 col-sm-8 col-8">
-                  <input type="text" id="email" className=" form-control form_middle_page custom-container mt-2" />
+                  <input type="text" id="email" className=" form-control form_middle_page custom-container mt-2" value={dati.email} />
                 </div>
               </div>
               <div className="row mt-3">
@@ -60,7 +75,7 @@ const AziendeModalAdd = ({ show, close }) => {
                   </label>
                 </div>
                 <div className="col-xl-9 col-md-9 col-lg-9 col-sm-8 col-8">
-                  <input type="text" id="Ruoli" className="mt-2 form-control form_middle_page custom-container" />
+                  <input type="text" id="Ruoli" className="mt-2 form-control form_middle_page custom-container" value={dati.ruoli} />
                 </div>
               </div>
               <form>
@@ -73,14 +88,14 @@ const AziendeModalAdd = ({ show, close }) => {
                   <div className="col-xl-9 col-md-9 col-lg-9 col-sm-8 col-8">
                     {isEyePswOpen ? (
                       <>
-                        <input type="text" id="Password" className="form-control form_middle_page custom-container mt-2" />
+                        <input type="text" id="Password" className="form-control form_middle_page custom-container mt-2" value={dati.password} />
                         <div className="items-icon" onClick={() => setIsEyePswOpen(!isEyePswOpen)}>
                           <VisibilityIcon fontSize="large" />
                         </div>
                       </>
                     ) : (
                       <>
-                        <input type="password" id="Password" className="form-control form_middle_page custom-container mt-2" />
+                        <input type="password" id="Password" className="form-control form_middle_page custom-container mt-2" value={dati.confirmPassword} />
                         <div className="items-icon" onClick={() => setIsEyePswOpen(!isEyePswOpen)}>
                           <VisibilityOffIcon fontSize="large" />
                         </div>
@@ -99,14 +114,14 @@ const AziendeModalAdd = ({ show, close }) => {
                   <div className="col-xl-9   col-md-9 col-lg-9 col-sm-8 col-8">
                     {isEyeConfPswOpen ? (
                       <>
-                        <input type="text" id="ConfPassword" className="form-control form_middle_page custom-container mt-1" />
+                        <input type="text" id="ConfPassword" className="form-control form_middle_page custom-container mt-1" value={dati.confirmPassword} />
                         <div className="items-icon" style={{ bottom: "15px" }} onClick={() => setIsEyeConfPswOpen(!isEyeConfPswOpen)}>
                           <VisibilityIcon fontSize="large" />
                         </div>
                       </>
                     ) : (
                       <>
-                        <input type="password" id="ConfPassword" className="form-control form_middle_page custom-container mt-1" />
+                        <input type="password" id="ConfPassword" className="form-control form_middle_page custom-container mt-1" value={dati.confirmPassword} />
                         <div className="items-icon" style={{ bottom: "15px" }} onClick={() => setIsEyeConfPswOpen(!isEyeConfPswOpen)}>
                           <VisibilityOffIcon fontSize="large" />
                         </div>
@@ -128,7 +143,7 @@ const AziendeModalAdd = ({ show, close }) => {
                   </label>
                 </div>
                 <div className="col-xl-9 col-md-9 col-lg-9 col-sm-8 col-8">
-                  <input type="text" id="RagioneSociale" className="form-control form_middle_page custom-container mt-2" />
+                  <input type="text" id="RagioneSociale" className="form-control form_middle_page custom-container mt-2" value={dati.RageoniSocciale} />
                 </div>
               </div>
               <div className="row mt-4">
@@ -138,7 +153,7 @@ const AziendeModalAdd = ({ show, close }) => {
                   </label>
                 </div>
                 <div className="col-xl-9 col-md-9 col-lg-9 col-sm-8 col-8">
-                  <input type="text" id="RappresentanteLegale" className="form-control form_middle_page custom-container  mt-2" />
+                  <input type="text" id="RappresentanteLegale" className="form-control form_middle_page custom-container  mt-2" value={dati.indrizzo} />
                 </div>
               </div>
               <div className="row mt-4">
@@ -148,7 +163,7 @@ const AziendeModalAdd = ({ show, close }) => {
                   </label>
                 </div>
                 <div className="col-xl-9 col-md-9 col-lg-9 col-sm-8 col-8">
-                  <input type="text" id="Indirizzo" className="form-control form_middle_page custom-container mt-2" />
+                  <input type="text" id="Indirizzo" className="form-control form_middle_page custom-container mt-2" value={dati.indrizzo} />
                 </div>
               </div>
               <div className="row mt-3">
@@ -158,7 +173,7 @@ const AziendeModalAdd = ({ show, close }) => {
                   </label>
                 </div>
                 <div className="col-xl-9 col-md-9 col-lg-9 col-sm-8 col-8">
-                  <input type="text" id="CodiceFiscale" className="form-control form_middle_page custom-container mt-3" />
+                  <input type="text" id="CodiceFiscale" className="form-control form_middle_page custom-container mt-3" value={dati.codiceFiscale} />
                 </div>
               </div>
               <div className="row mt-3">
@@ -168,7 +183,7 @@ const AziendeModalAdd = ({ show, close }) => {
                   </label>
                 </div>
                 <div className="col-xl-9 col-md-9 col-lg-9 col-sm-8 col-8">
-                  <input type="text" id="PartitaIva" className="form-control form_middle_page custom-container mt-2" />
+                  <input type="text" id="PartitaIva" className="form-control form_middle_page custom-container mt-2" value={dati.partitaiva} />
                 </div>
               </div>
               <div className="row mt-4">
@@ -178,7 +193,7 @@ const AziendeModalAdd = ({ show, close }) => {
                   </label>
                 </div>
                 <div className="col-xl-9 col-md-9 col-lg-9 col-sm-8 col-8">
-                  <input type="text" id="Telefono1" className="form-control form_middle_page custom-container mt-2" />
+                  <input type="text" id="Telefono1" className="form-control form_middle_page custom-container mt-2" value={dati.telefono} />
                 </div>
               </div>
               <div className="row mt-3">

@@ -1,0 +1,48 @@
+/* Stili di base (per desktop) */
+.footer-container {
+  position: fixed;
+  left: 215px;
+  bottom: 0;
+  color: white;
+  text-align: center;
+  background-color: #030947;
+  width: calc(100% - 205px);
+  z-index: 1;
+  overflow-wrap: break-word;
+  margin-right: 6rem;
+}
+
+.footer-container h5, .footer-container p {
+  text-align: left;
+  font-weight: bolder;
+  overflow-wrap: break-word;
+}
+
+.footer-container h5 {
+  font-size: 2rem;
+}
+
+.footer-container p {
+  font-size: 13px;
+}
+
+/* Stili per tablet e mobile */
+@media (max-width: 768px) { /* Questo targetterà dispositivi con larghezza <= 768px */
+  .footer-container {
+      left: 0px;
+      bottom: 0px;
+      width: 100%;
+  }
+  
+  .footer-container h5 {
+      font-size: 1.5rem;
+      line-height: 1.2; /* Riduci l'interlinea per h5 */
+      margin: 0;  /* Rimuovi gli spazi esterni per h5 */
+  }
+
+  .footer-container p {
+      font-size: 13px;
+      line-height: 1.2; /* Riduci l'interlinea per p */
+      margin: 0;  /* Rimuovi gli spazi esterni per p */
+  }
+}

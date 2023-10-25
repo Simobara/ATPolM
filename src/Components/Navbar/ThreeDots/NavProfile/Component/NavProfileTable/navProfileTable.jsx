@@ -1,16 +1,15 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
+import { useNavigate } from "react-router-dom";
 //* CSS */
 import "./navProfileTable.css";
-
 //* COMPONENTS */
 // import ButtonPen from '../../../../../../../Global/ButtonPen/buttonPen';
 // import MaterModalAdd from "../MaterModalAdd/materModalAdd";
 // import MaterModalMod from "../MaterModalMod/materModalMod";
 // import MaterModalDel from "../MaterModalDel/materModalDel";
+import authService from "../../../../../../DataAPI/services/auth.service";
 import ProButton from "../../../../../Global/ProButton/ProButton";
-
 //* MUI MATERIAL ICONS */
 import ModeIcon from "@mui/icons-material/Mode";
 // eslint-disable-next-line
@@ -23,6 +22,7 @@ import AddIcon from "@mui/icons-material/Add";
 const NavProfileTable = () => {
   const navigate = useNavigate();
   // const columns = ["", "Materiali", ""];
+  // eslint-disable-next-line
   const columns = ["", "Citta", "Cap", "Provincia"];
   const rowsCatAziende = ["A", "B", "C", "D", "E", "F", "G"];
   // const rowsCita = ["Aa", "Bc", "Cc", "Dd", "Ee", "Ff", "Gg"];
@@ -87,35 +87,37 @@ const NavProfileTable = () => {
     }
   };
 
+  let pincoPallo = false;
+
+  const checkRole = () => {
+    console.log(authService.getCurrentUser().ruoli[0])
+
+    if (authService.getCurrentUser().ruoli[0] === "ROLE_USER") {
+      console.log("è un utente normale");
+      pincoPallo = true;
+    } else {
+      console.log("è un admin!");
+    }
+  };
+
   return (
     <>
-      <div style={{ fontSize: '20px', marginBottom: '10px', marginTop: '5rem' }}>
-        <div style={{
-          height: '70px',
-          backgroundColor: '#030947',
-          width: '100%',
-          marginBottom: '20px',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          fontWeight: 'bold'
-        }} className="bold-columns text-center text-white">
-          MENU IMPOSTAZIONI - PROFILO
+      <div style={{ marginTop: "5rem" }}>
+
+        <div>
+          {checkRole()}
+
+          {pincoPallo ? authService.getCurrentUser().ruoli[0] : <div>Is false</div>}
+
         </div>
+
         <table className="table table-bordered w-100">
           <thead>
             <tr className="bold-columns text-center">
-              {columns.map((column, columnIndex) => (
-                <th key={columnIndex}>
-                  {columnIndex === 0 && (
-                    <button type="button" className="btn button-modify icon-add" onClick={() => (console.log("button open"))}
-                    >
-                      <AddIcon className="icon" />
-                    </button>
-                  )}
-                  {column}
-                </th>
-              ))}
+
+              <td>{authService.getCurrentUser().email}</td>
+              <td>{authService.getCurrentUser().username}</td>
+
             </tr>
           </thead>
           <tbody>
@@ -124,19 +126,21 @@ const NavProfileTable = () => {
                 <td className={getColumnClassName(0)}>
                   <button type="button"
                     className="btn btn-primary button-modify"
-                    onClick={() => navigate("/profileModify")}>
+                    onClick={() => navigate("/profile/del")}>
                     <ModeIcon className="icon" />
                   </button>
                   {/* <ButtonPen onClick={openModal} /> */}
                 </td>
                 <td className={getColumnClassName(1)}>{row}</td>
-                <td className={getColumnClassName(2)}>{row}
+                <td className={getColumnClassName(2)}>
+                  {row}
                   {/* {rowsCita.map((item, index) => ({ item }))} */}
                   {/* <button type="button" className="btn btn-danger button-close" onClick={handleClickDelOpen}>
                     <CloseIcon className="icon-close" />
                   </button> */}
                 </td>
-                <td className={getColumnClassName(3)}>{row}
+                <td className={getColumnClassName(3)}>
+                  {row}
                   {/* <button type="button" className="btn btn-danger button-close" onClick={handleClickDelOpen}>
                     <CloseIcon className="icon-close" />
                   </button> */}

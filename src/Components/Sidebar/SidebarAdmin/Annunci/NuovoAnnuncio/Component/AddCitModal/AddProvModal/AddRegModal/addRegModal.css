@@ -16,7 +16,7 @@
 }
 
 .modal-header {
-    background-color: limegreen; /* Colore di sfondo desiderato */
+    background-color: rgb(40, 92, 141); /* Colore di sfondo desiderato */
     color: white; /* Colore del testo nell'header */
     border-bottom: none; /* Rimuove il bordo inferiore */
 }

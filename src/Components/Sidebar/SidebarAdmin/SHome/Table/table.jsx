@@ -30,6 +30,7 @@ import Chat from "../../../../Global/Chat/Chat";
 const Table = ({ handleAddNewRecPopup, propRowData = [], propColumnData = [] }) => {
   const [selectedCell, setSelectedCell] = useState(null);
   const [rowsData, setRowsData] = useState([]);
+  const [filteredRowData, setFilteredRowData] = useState([]);
   const [columns, setColumns] = useState([]);
   const [isArrowSelected, setIsArrowSelected] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
@@ -47,6 +48,7 @@ const Table = ({ handleAddNewRecPopup, propRowData = [], propColumnData = [] }) 
   //USE EFFECT FOR RENDERING
   useEffect(() => {
     setRowsData(propRowData);
+    setFilteredRowData(propRowData)
     setSortState({ column: "Id Annuncio", order: "assending" });
   }, [propRowData, reset]);
 
@@ -61,6 +63,7 @@ const Table = ({ handleAddNewRecPopup, propRowData = [], propColumnData = [] }) 
     getTableBodyProps,
     headerGroups,
     prepareRow,
+    // eslint-disable-next-line
     setGlobalFilter,
     page,
     canPreviousPage,
@@ -69,6 +72,7 @@ const Table = ({ handleAddNewRecPopup, propRowData = [], propColumnData = [] }) 
     pageOptions,
     nextPage,
     previousPage,
+    // eslint-disable-next-line
     state: { pageIndex, globalFilter }, //fpr Pagination and global filter
   } = useTable(
     {
@@ -80,8 +84,6 @@ const Table = ({ handleAddNewRecPopup, propRowData = [], propColumnData = [] }) 
     useSortBy,
     usePagination
   );
-  console.log("==>", getTableProps, getTableBodyProps, headerGroups, prepareRow, setGlobalFilter, page, canPreviousPage, canNextPage, gotoPage, pageOptions, nextPage, previousPage);
-
   //--------------------------------
 
   const handleDetailPanel = (row) => {
@@ -148,11 +150,9 @@ const Table = ({ handleAddNewRecPopup, propRowData = [], propColumnData = [] }) 
   };
 
   const renderCellData = (cell) => {
-    console.log(cell, "cell");
     const headerName = cell.column.id;
     const id = cell.row.id;
     const arrowContainerClass = selectedCell?.id === id && isArrowSelected ? "arrow-container selected" : "arrow-container";
-    console.log(headerName, "header");
     // console.log(cell,"cell")
     return (
       <td {...cell.getCellProps()}>
@@ -246,7 +246,7 @@ const Table = ({ handleAddNewRecPopup, propRowData = [], propColumnData = [] }) 
       </>
     );
   };
-  console.log(headerGroups, "headerGroups");
+
   const filterData = (data) => {
     return data?.filter((val, index) => val.detail === false);
   };
@@ -287,10 +287,10 @@ const Table = ({ handleAddNewRecPopup, propRowData = [], propColumnData = [] }) 
   //**--------------------------------------RETURN------------------------------------------------------**
   return (
     <div className="h-[100%] ">
-      <div className="row" style={{display:"flex",alignItems:"end"}}>
+      <div className="row" style={{ display: "flex", alignItems: "end" }}>
         <div className="col-lg-5 col-md-12 col-sm-12 col-12">
           <div className="flex-search-input justify-content-between align-items-center addNewStyle">
-            <Search filter={globalFilter} setFilter={setGlobalFilter} />
+            <Search filter={[...filteredRowData]} setFilter={(e) => e.keyword.length > 0 ? setRowsData([...e.data]) : setRowsData([...rowsData])} />
             {/* <ProButton text="+ AddNew" title="Add New Record" clicked={handleAddNewRecPopup} /> */}
           </div>
         </div>
@@ -305,7 +305,7 @@ const Table = ({ handleAddNewRecPopup, propRowData = [], propColumnData = [] }) 
           </div>
         </div>
       </div>
-     
+
       <div style={{ marginTop: "10px" }} className="table-responsive">
         <table {...getTableProps()} className="table">
           <thead>
@@ -320,6 +320,7 @@ const Table = ({ handleAddNewRecPopup, propRowData = [], propColumnData = [] }) 
             ))}
           </thead>
           <tbody {...getTableBodyProps()}>
+            {console.log('page => ', page)}
             {page.length > 0 ? (
               page.map((row, rowIndex) => {
                 prepareRow(row);
@@ -344,7 +345,7 @@ const Table = ({ handleAddNewRecPopup, propRowData = [], propColumnData = [] }) 
       <div style={{ marginBottom: "25px" }}>
         <Pagination nextPage={nextPage} previousPage={previousPage} canPreviousPage={canPreviousPage} canNextPage={canNextPage} pageOptions={pageOptions} pageIndex={pageIndex} gotoPage={gotoPage} />
       </div>
-     
+
     </div>
   );
 };

@@ -55,7 +55,6 @@ const SHome = () => {
             height: '70px',
             backgroundColor: '#030947',
             width: '100%',
-           
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
@@ -63,7 +62,7 @@ const SHome = () => {
           }} className="bold-columns text-center text-white">
             HOME
           </div>
-          <div className="" style={{ backgroundColor: "#f3f3f3",paddingTop:"20px",paddingLeft:"30px",paddingRight:"30px" }}>
+          <div className="" style={{ backgroundColor: "#f3f3f3", paddingTop: "20px", paddingLeft: "30px", paddingRight: "30px" }}>
             <div className="row row-overflow">
               <Table
                 propColumnData={[...tableColumn]}

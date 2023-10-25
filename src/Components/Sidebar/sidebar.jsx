@@ -4,9 +4,10 @@ import { Link, NavLink } from "react-router-dom";
 /* CSS */
 import "./sidebar.css";
 // import farfallaLeft from "../../Assets/Images/farfallaLeft.jpg";
-import farfallaRight from "../../Assets/Images/farfallaRight.jpg";
+import farfallaRight from "../../Assets/Images/farfallaRight.jpeg";
 // import arrowDown from "../../Assets/Images/black-arrow-down.png";
-
+// import Footer from "../../../../../Footer/footer"; 
+import Footer from "../Footer/footer";
 /* COMPONENTS */
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import ClearIcon from "@mui/icons-material/Clear";
@@ -33,7 +34,6 @@ const Sidebar = () => {
 
   const [isSelectedLink, setIsSelectedLink] = useState("");
   const [active, setActive] = useState("");
-
   const handleClickLinkSidebar = (event) => {
     const linkId = event.target.id;
     setIsSelectedLink(linkId);
@@ -62,6 +62,7 @@ const Sidebar = () => {
     }
     // eslint-disable-next-line
   }, [window.location.pathname])
+  const userRole = JSON.parse(localStorage.getItem('user'))?.ruoli;
   return (
     <>
       <MenuIcon className="MenuIcon-toggle" onClick={() => setDisplayMenu(!displayMenu)} />
@@ -92,7 +93,7 @@ const Sidebar = () => {
                   </div>
                 </Typography>
               </MenuItem>
-              <MenuItem component={Link} to="/partec" className="MenuMainItemHome" onClick={() => setDisplayMenu(false)}>
+              {/* <MenuItem component={Link} to="/partec" className="MenuMainItemHome" onClick={() => setDisplayMenu(false)}>
                 <Typography variant="body2" className="ListItemTypo" component="span">
                   <div className="item-arrow">
                     <div className="item">Home(partec)</div>
@@ -105,95 +106,101 @@ const Sidebar = () => {
                     <div className="item">Le mie partecipazioni</div>
                   </div>
                 </Typography>
-              </MenuItem>
-              <MenuItem className="MenuMainItem">
-                {/* <ListItemIcon className="ListItemIcon icon">
-                <StartOutlinedIcon fontSize="small" locali/>
-              </ListItemIcon> */}
-                <Typography variant="body2" className="ListItemTypo" component="span">
-                  <div className="item-arrow" onClick={() => setIsArrowAziendeOpen(!isArrowAziendeOpen)}>
-                    <div className="item">Aziende</div>
-                    <div className="arrow-navigation">
-                      {isArrowAziendeOpen === true ? (
-                        <IoIosArrowUp style={{ color: "#fff" }} />
-                      ) : (
-                        <IoIosArrowDown style={{ color: "#fff" }} />
-                      )}
-                    </div>
-                  </div>
-                  {isArrowAziendeOpen && (
-                    <>
-                      <div className="submenu-open">
-                        <div className={`submenu sub-submenu menu-content  ${active === "Visualizza Azienda" ? "activeSubTab " : ""}`} onClick={() => setActive("Visualizza Azienda")}>
-                          <NavLink
-                            id="aggSingAz"
-                            to="/aziende"
-                            className={`submenu menu-link sott ${isSelectedLink === "visAzienda" ? "" : ""}`}
-                            onClick={handleClickLinkSidebar}
-                          >
-                            Visualizza Azienda
-                          </NavLink>
-                        </div>
-                        <div className={`submenu sub-submenu menu-content  ${active === "Aggiungi azienda" ? "activeSubTab " : ""}`} onClick={() => setActive("Aggiungi azienda")}>
-                          <NavLink
-                            id="aggSingAz"
-                            to="/aziende/aggSingAz"
-                            className={`submenu menu-link sott ${isSelectedLink === "aggSingAz" || window.location.pathname === "/aziende/AggSingAz" ? "" : ""}`}
-                            onClick={handleClickLinkSidebar}
-                          >
-                            Aggiungi azienda
-                          </NavLink>
-                        </div>
-                        <div className={`submenu sub-submenu menu-content  ${active === "Importa Dati Excel" ? "activeSubTab " : ""}`} onClick={() => setActive("Importa Dati Excel")}>
-                          <NavLink
-                            id="impDatiExc"
-                            to="/aziende/impDatiExc"
-                            className={`submenu menu-link sott ${isSelectedLink === "impDatiExc" ? "" : ""}`}
-                            onClick={handleClickLinkSidebar}
-                          >
-                            Importa Dati Excel
-                          </NavLink>
+              </MenuItem> */}
+              {
+                userRole?.find(role=>role==='ROLE_ADMIN')?
+                <>
+                  <MenuItem className="MenuMainItem">
+                  {/* <ListItemIcon className="ListItemIcon icon">
+                  <StartOutlinedIcon fontSize="small" locali/>
+                  </ListItemIcon> */}
+                    <Typography variant="body2" className="ListItemTypo" component="span">
+                      <div className="item-arrow" onClick={() => setIsArrowAziendeOpen(!isArrowAziendeOpen)}>
+                        <div className="item">Aziende</div>
+                        <div className="arrow-navigation">
+                          {isArrowAziendeOpen === true ? (
+                            <IoIosArrowUp style={{ color: "#fff" }} />
+                          ) : (
+                            <IoIosArrowDown style={{ color: "#fff" }} />
+                          )}
                         </div>
                       </div>
-                    </>
-                  )}
-                </Typography>
-              </MenuItem>
-              <MenuItem className="MenuMainItem">
-                <Typography variant="body2" className="ListItemTypo" component="span">
-                  <div className="item-arrow" onClick={() => setIsArrowUtEsterniOpen(!isArrowUtEsterniOpen)}>
-                    <div className="item">Utenti Esterni</div>
-                    <div className="arrow-navigation">
-                      {isArrowUtEsterniOpen === true ? (
-                        <IoIosArrowUp style={{ color: "#fff" }} />
-                      ) : (
-                        <IoIosArrowDown style={{ color: "#fff" }} />
+                      {isArrowAziendeOpen && (
+                        <>
+                          <div className="submenu-open">
+                            <div className={`submenu sub-submenu menu-content  ${active === "Visualizza Azienda" ? "activeSubTab " : ""}`} onClick={() => setActive("Visualizza Azienda")}>
+                              <NavLink
+                                id="aggSingAz"
+                                to="/aziende"
+                                className={`submenu menu-link sott ${isSelectedLink === "visAzienda" ? "" : ""}`}
+                                onClick={handleClickLinkSidebar}
+                              >
+                                Visualizza Azienda
+                              </NavLink>
+                            </div>
+                            <div className={`submenu sub-submenu menu-content  ${active === "Aggiungi azienda" ? "activeSubTab " : ""}`} onClick={() => setActive("Aggiungi azienda")}>
+                              <NavLink
+                                id="aggSingAz"
+                                to="/aziende/aggSingAz"
+                                className={`submenu menu-link sott ${isSelectedLink === "aggSingAz" || window.location.pathname === "/aziende/AggSingAz" ? "" : ""}`}
+                                onClick={handleClickLinkSidebar}
+                              >
+                                Aggiungi azienda
+                              </NavLink>
+                            </div>
+                            <div className={`submenu sub-submenu menu-content  ${active === "Importa Dati Excel" ? "activeSubTab " : ""}`} onClick={() => setActive("Importa Dati Excel")}>
+                              <NavLink
+                                id="impDatiExc"
+                                to="/aziende/impDatiExc"
+                                className={`submenu menu-link sott ${isSelectedLink === "impDatiExc" ? "" : ""}`}
+                                onClick={handleClickLinkSidebar}
+                              >
+                                Importa Dati Excel
+                              </NavLink>
+                            </div>
+                          </div>
+                        </>
                       )}
-                    </div>
-                  </div>
-                  {isArrowUtEsterniOpen && (
-                    <>
-                      <div className="submenu-open">
-                        <div className={`submenu sub-submenu menu-content  ${active === "Dati" ? "activeSubTab " : ""}`} onClick={() => setActive("Dati")}>
-                          <NavLink id="dati" to="/utEsterni/dati" className={`submenu menu-link sott ${isSelectedLink === "impDatiExc" ? "" : ""}`} onClick={handleClickLinkSidebar}>
-                            Dati
-                          </NavLink>
-                        </div>
-                        <div className={`submenu sub-submenu menu-content  ${active === "Interessi su Annunci" ? "activeSubTab " : ""}`} onClick={() => setActive("Interessi su Annunci")}>
-                          <NavLink
-                            id="intVersAnn"
-                            to="/utEsterni/intVersAnn"
-                            className={`submenu menu-link sott ${isSelectedLink === "impDatiExc" ? "" : ""}`}
-                            onClick={handleClickLinkSidebar}
-                          >
-                            Interessi su Annunci
-                          </NavLink>
+                    </Typography>
+                  </MenuItem>
+                  <MenuItem className="MenuMainItem">
+                    <Typography variant="body2" className="ListItemTypo" component="span">
+                      <div className="item-arrow" onClick={() => setIsArrowUtEsterniOpen(!isArrowUtEsterniOpen)}>
+                        <div className="item">Utenti Esterni</div>
+                        <div className="arrow-navigation">
+                          {isArrowUtEsterniOpen === true ? (
+                            <IoIosArrowUp style={{ color: "#fff" }} />
+                          ) : (
+                            <IoIosArrowDown style={{ color: "#fff" }} />
+                          )}
                         </div>
                       </div>
-                    </>
-                  )}
-                </Typography>
-              </MenuItem>
+                      {isArrowUtEsterniOpen && (
+                        <>
+                          <div className="submenu-open">
+                            <div className={`submenu sub-submenu menu-content  ${active === "Dati" ? "activeSubTab " : ""}`} onClick={() => setActive("Dati")}>
+                              <NavLink id="dati" to="/utEsterni/dati" className={`submenu menu-link sott ${isSelectedLink === "impDatiExc" ? "" : ""}`} onClick={handleClickLinkSidebar}>
+                                Dati
+                              </NavLink>
+                            </div>
+                            <div className={`submenu sub-submenu menu-content  ${active === "Interessi su Annunci" ? "activeSubTab " : ""}`} onClick={() => setActive("Interessi su Annunci")}>
+                              <NavLink
+                                id="intVersAnn"
+                                to="/utEsterni/intVersAnn"
+                                className={`submenu menu-link sott ${isSelectedLink === "impDatiExc" ? "" : ""}`}
+                                onClick={handleClickLinkSidebar}
+                              >
+                                Interessi su Annunci
+                              </NavLink>
+                            </div>
+                          </div>
+                        </>
+                      )}
+                    </Typography>
+                  </MenuItem>
+                </>:null
+              }
+              
 
               <MenuItem className="MenuMainItem">
                 <Typography variant="body2" className="ListItemTypo" component="span">
@@ -225,23 +232,30 @@ const Sidebar = () => {
                             I miei Annunci
                           </NavLink>
                         </div>
-                        <div className={`submenu sub-submenu menu-content  ${active === "Materiali" ? "activeSubTab " : ""}`} onClick={() => setActive("Materiali")}>
-                          <NavLink id="materiali" onClick={() => setDisplayMenu(false)} to="/annunci/materiali" className="submenu menu-link">
-                            Materiali
-                          </NavLink>
-                        </div>
-                        <div className={`submenu sub-submenu menu-content  ${active === "Unita' di misura" ? "activeSubTab " : ""}`} onClick={() => setActive("Unita' di misura")}>
-                          <NavLink id="unitaDiMisura" onClick={() => setDisplayMenu(false)} to="/annunci/unitaDiMisura" className="submenu menu-link">
-                            Unita' di misura
-                          </NavLink>
-                        </div>
+                        {
+                          userRole?.find(role=>role==='ROLE_ADMIN')?
+                          <>
+                           <div className={`submenu sub-submenu menu-content  ${active === "Materiali" ? "activeSubTab " : ""}`} onClick={() => setActive("Materiali")}>
+                              <NavLink id="materiali" onClick={() => setDisplayMenu(false)} to="/annunci/materiali" className="submenu menu-link">
+                                Materiali
+                              </NavLink>
+                            </div>
+                            <div className={`submenu sub-submenu menu-content  ${active === "Unita' di misura" ? "activeSubTab " : ""}`} onClick={() => setActive("Unita' di misura")}>
+                              <NavLink id="unitaDiMisura" onClick={() => setDisplayMenu(false)} to="/annunci/unitaDiMisura" className="submenu menu-link">
+                                Unita' di misura
+                              </NavLink>
+                            </div>
+                          </>:null
+                        }
+                        
                       </div>
                     </>
                   )}
                 </Typography>
               </MenuItem>
-
-              <MenuItem
+              {
+                userRole?.find(role=>role==='ROLE_ADMIN')?
+                <MenuItem
                 // component={Link}
                 // to="/anagrafAziende"
                 className="MenuMainItem"
@@ -316,7 +330,10 @@ const Sidebar = () => {
                     </>
                   )}
                 </Typography>
-              </MenuItem>
+              </MenuItem>:null
+              }
+
+             
             </MenuList>
             <div style={{ marginTop: "10px" }}>
               <div className="Polieco-Marketplace-heading" style={{ color: "#c4c2c2" }}>
@@ -340,21 +357,26 @@ const Sidebar = () => {
               fontSize: "40px",
             }}
           >
-            <img src={farfallaRight} height={70} alt="igmPicc" />
+            <img src={farfallaRight} height={130} width={250} alt="igmPicc" />
           </h3>
           <div className="Polieco-Marketplace-heading">Polieco - Marketplace</div>
         </div>
         <MenuList>{/* {" "}---------------------------------------------------- */}</MenuList>
         <div className="menuHeight">
           <MenuList>
-            <MenuItem component={Link} to="/" className={`MenuMainItemHome   ${active === "Home" ? " " : ""}`} onClick={() => setActive("Home")}>
+            
+              <MenuItem component={Link} to="/" className={`MenuMainItemHome   ${active === "Home" ? " " : ""}`} onClick={() => setActive("Home")}>
               <Typography variant="body2" className="ListItemTypo" component="span">
                 <div className="item-arrow">
                   <div className="item">Home</div>
                 </div>
               </Typography>
             </MenuItem>
-            <MenuItem component={Link} to="/partec" className="MenuMainItemHome" onClick={() => setDisplayMenu(false)}>
+            {
+             userRole?.find(role=>role==='ROLE_ADMIN')?
+             <>
+             <MenuItem className="MenuMainItem">
+            {/* <MenuItem component={Link} to="/partec" className="MenuMainItemHome" onClick={() => setDisplayMenu(false)}>
               <Typography variant="body2" className="ListItemTypo" component="span">
                 <div className="item-arrow">
                   <div className="item">Home(partec)</div>
@@ -367,8 +389,7 @@ const Sidebar = () => {
                   <div className="item">Le mie partecipazioni</div>
                 </div>
               </Typography>
-            </MenuItem>
-            <MenuItem className="MenuMainItem">
+            </MenuItem> */}
               {/* <ListItemIcon className="ListItemIcon icon">
                 <StartOutlinedIcon fontSize="small" />
               </ListItemIcon> */}
@@ -438,6 +459,9 @@ const Sidebar = () => {
                 )}
               </Typography>
             </MenuItem>
+             </> :null
+            }
+            
             <MenuItem className="MenuMainItem">
               <Typography variant="body2" className="ListItemTypo" component="span">
                 <div onClick={() => setIsArrowAnnunciOpen(!isArrowAnnunciOpen)}>
@@ -463,26 +487,35 @@ const Sidebar = () => {
                           </NavLink>
                         </div>
                       </NavLink>
-                      <NavLink to="/annunci/materiali">
+                      { 
+                        userRole?.find(role=>role==='ROLE_ADMIN')?
+                        <>
+                        <NavLink to="/annunci/materiali">
                         <div className={`submenu menu-content  ${active === "Materiali" ? "activeTab " : ""}`} onClick={() => setActive("Materiali")}>
                           <NavLink id="materiali" to="/annunci/materiali" className="menu-link" style={{ paddingLeft: "10px" }}>
                             Materiali
                           </NavLink>
                         </div>
-                      </NavLink>
-                      <NavLink to="/annunci/unitaDiMisura">
-                        <div className={`submenu menu-content  ${active === "Unita' di misura" ? "activeTab " : ""}`} onClick={() => setActive("Unita' di misura")}>
-                          <NavLink id="unitaDiMisura" to="/annunci/unitaDiMisura" className="menu-link" style={{ paddingLeft: "10px" }}>
-                            Unita' di misura
-                          </NavLink>
-                        </div>
-                      </NavLink>
+                        </NavLink>
+                        <NavLink to="/annunci/unitaDiMisura">
+                          <div className={`submenu menu-content  ${active === "Unita' di misura" ? "activeTab " : ""}`} onClick={() => setActive("Unita' di misura")}>
+                            <NavLink id="unitaDiMisura" to="/annunci/unitaDiMisura" className="menu-link" style={{ paddingLeft: "10px" }}>
+                              Unita' di misura
+                            </NavLink>
+                          </div>
+                        </NavLink>
+                        </>:null
+                       }
+                      
                     </div>
                   </>
                 )}
               </Typography>
             </MenuItem>
-            <MenuItem className="MenuMainItem">
+
+            {
+              userRole?.find(role=>role==='ROLE_ADMIN')?
+              <MenuItem className="MenuMainItem">
               <Typography variant="body2" className="ListItemTypo" component="span">
                 <div onClick={() => setIsArrowAnagrAzOpen(!isArrowAnagrAzOpen)}>
                   <div className="item-arrow">
@@ -555,7 +588,9 @@ const Sidebar = () => {
                   </>
                 )}
               </Typography>
-            </MenuItem>
+            </MenuItem>:null
+            }
+            
           </MenuList>
           <div style={{ marginTop: "10px" }}>
             <div className="Polieco-Marketplace-heading" style={{ color: "#c4c2c2" }}>
@@ -567,6 +602,7 @@ const Sidebar = () => {
           </div>
         </div>
       </div>
+      <Footer />
       {/* )} */}
       <>
         {/* <div className="menu-Documents-small">

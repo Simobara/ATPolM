@@ -16,6 +16,7 @@ import './formInput.css'
 const FormInput = ({ id, label, type, options = [], propOnChange, propValue, propIsFormReset }) => {
     const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState(null);
+    // eslint-disable-next-line
     const [isFocused, setIsFocused] = useState(false);
 
 

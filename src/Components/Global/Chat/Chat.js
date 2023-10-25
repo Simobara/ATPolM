@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBIcon, MDBBtn, MDBCardFooter, MDBCollapse } from "mdb-react-ui-kit";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBIcon, MDBCardFooter, MDBCollapse } from "mdb-react-ui-kit";
+// import Row from "react-bootstrap/Row";
+// import Col from "react-bootstrap/Col";
 //*CSS
 import ForumIcon from "@mui/icons-material/Forum";
 import { FaMinus } from "react-icons/fa";

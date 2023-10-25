@@ -17,7 +17,7 @@
 
   /* Aggiungi questa classe per il colore del bottone */
 .btn-green {
-    background-color: limegreen;
+    background-color: ;
     color: blue;
   }
 
@@ -30,8 +30,8 @@
     flex: 0 0 50%; /* Imposta la larghezza fissa del campo */
   }
 
-  .modal-header {
-    background-color: limegreen; /* Colore di sfondo desiderato */
+   {
+    background-color: rgb(64, 143, 165); /* Colore di sfondo desiderato */
     color: white; /* Colore del testo nell'header */
     border-bottom: none; /* Rimuove il bordo inferiore */
   }

@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 //* VALIDATIONS
 import AziendaService from "../../../../../DataAPI/services/azienda.service";
 // eslint-disable-next-line
-import CheckButton from "react-validation/build/button";
+// import CheckButton from "react-validation/build/button";
 
 //* COMPONENTS
 import Form from "react-validation/build/form";
@@ -18,6 +18,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 
 const AggSingAz = () => {
   const refForm = useRef(null);
+  // eslint-disable-next-line
   const refCheckBtn = useRef(null);
   // eslint-disable-next-line
   const [message, setMessage] = useState("");
@@ -29,21 +30,13 @@ const AggSingAz = () => {
     Password: "",
     ConfermaPassword: "",
     RagioneSociale: "",
-    RappresentanteLegale: "",
     Indirizzo: "",
     CodiceFiscale: "",
     PartitaIva: "",
     Telefono1: "",
-    Telefono2: "",
-    DescrizioneTelefoni: "",
     Fax: "",
     Pec: "",
-    FormaGiuridica: "",
-    Associazione: "",
-    Localita: "",
-    Categoria: "",
-    "Attivita'Principale": "",
-    "Attivita'Secondaria": "",
+
   });
 
   const handleResetForm = (e) => {
@@ -54,33 +47,33 @@ const AggSingAz = () => {
       Password: "",
       ConfermaPassword: "",
       RagioneSociale: "",
-      RappresentanteLegale: "",
+      // RappresentanteLegale: "",
       Indirizzo: "",
       CodiceFiscale: "",
       PartitaIva: "",
       Telefono1: "",
-      Telefono2: "",
-      DescrizioneTelefoni: "",
+      // Telefono2: "",
+      // DescrizioneTelefoni: "",
       Fax: "",
       Pec: "",
-      FormaGiuridica: "",
-      Associazione: "",
-      Localita: "",
-      Categoria: "",
-      "Attivita'Principale": "",
-      "Attivita'Secondaria": "",
+      // FormaGiuridica: "",
+      // Associazione: "",
+      // Localita: "",
+      // Categoria: "",
+      // "Attivita'Principale": "",
+      // "Attivita'Secondaria": "",
     });
     setIsFormReset(true);
   };
 
-  // OPTIONS
+  //* OPTIONS
   const ruoliOptions = ["Ruolo1", "Ruolo2"];
-  const formaGiuridicaOptions = ["Forma Giuridica 1", "Forma Giuridica 2"];
-  const associazioneOptions = ["Associazione 1", "Associazione 2"];
-  const localitaOptions = ["Località 1", "Località 2"];
-  const categoriaOptions = ["Categoria 1", "Categoria 2"];
-  const attivitaPrincipaleOptions = ["Attività Principale 1", "Attività Principale 2"];
-  const attivitaSecondariaOptions = ["Attività Secondaria 1", "Attività Secondaria 2"];
+  // const formaGiuridicaOptions = ["Forma Giuridica 1", "Forma Giuridica 2"];
+  // const associazioneOptions = ["Associazione 1", "Associazione 2"];
+  // const localitaOptions = ["Località 1", "Località 2"];
+  // const categoriaOptions = ["Categoria 1", "Categoria 2"];
+  // const attivitaPrincipaleOptions = ["Attività Principale 1", "Attività Principale 2"];
+  // const attivitaSecondariaOptions = ["Attività Secondaria 1", "Attività Secondaria 2"];
 
   const formDatiLogin = [
     { id: "Email", label: "Email", type: "email" },
@@ -91,21 +84,21 @@ const AggSingAz = () => {
 
   const formDatiAzienda = [
     { id: "RagioneSociale", label: "Ragione Sociale", type: "text" },
-    { id: "RappresentanteLegale", label: "Rappresentante Legale", type: "text" },
+    // { id: "RappresentanteLegale", label: "Rappresentante Legale", type: "text" },
     { id: "Indirizzo", label: "Indirizzo", type: "text" },
     { id: "CodiceFiscale", label: "Codice Fiscale", type: "text" },
     { id: "PartitaIva", label: "Partita Iva", type: "text" },
     { id: "Telefono1", label: "Telefono1", type: "number" },
-    { id: "Telefono2", label: "Telefono2", type: "number" },
-    { id: "DescrizioneTelefoni", label: "Descrizione Telefoni", type: "text" },
+    // { id: "Telefono2", label: "Telefono2", type: "number" },
+    // { id: "DescrizioneTelefoni", label: "Descrizione Telefoni", type: "text" },
     { id: "Fax", label: "Fax", type: "number" },
     { id: "Pec", label: "Pec", type: "email" },
-    { id: "FormaGiuridica", label: "Forma Giuridica", type: "select", options: formaGiuridicaOptions },
-    { id: "Associazione", label: "Associazione", type: "select", options: associazioneOptions },
-    { id: "Localita", label: "Localita", type: "select", options: localitaOptions },
-    { id: "Categoria", label: "Categoria", type: "select", options: categoriaOptions },
-    { id: "Attivita'Principale", label: "Attivita' Principale", type: "select", options: attivitaPrincipaleOptions },
-    { id: "Attivita'Secondaria", label: "Attivita' Secondaria", type: "select", options: attivitaSecondariaOptions },
+    // { id: "FormaGiuridica", label: "Forma Giuridica", type: "select", options: formaGiuridicaOptions },
+    // { id: "Associazione", label: "Associazione", type: "select", options: associazioneOptions },
+    // { id: "Localita", label: "Localita", type: "select", options: localitaOptions },
+    // { id: "Categoria", label: "Categoria", type: "select", options: categoriaOptions },
+    // { id: "Attivita'Principale", label: "Attivita' Principale", type: "select", options: attivitaPrincipaleOptions },
+    // { id: "Attivita'Secondaria", label: "Attivita' Secondaria", type: "select", options: attivitaSecondariaOptions },
   ];
 
   const { addAzienda } = AziendaService();
@@ -130,12 +123,15 @@ const AggSingAz = () => {
 
   const handleAddAzienda = async (e) => {
     e.preventDefault();
+    console.log(refForm.current, "")
     setMessage("");
     refForm.current.validateAll();
 
     // if (refCheckBtn.current.context._errors.length === 0) {
-    if (refCheckBtn.current && refCheckBtn.current.context && refCheckBtn.current.context._errors && refCheckBtn.current.context._errors.length === 0) {
+    if (true) {
       try {
+        // (username, email, password, ragioneSociale, indirizzo, codiceFiscale, pIva, telefono,
+        //   fax, pec, idRuolo)
         // Aggiorna questa chiamata con i parametri corretti
         await addAzienda(formData);
         setFormData({
@@ -144,21 +140,21 @@ const AggSingAz = () => {
           Password: "",
           ConfermaPassword: "",
           RagioneSociale: "",
-          RappresentanteLegale: "",
+          // RappresentanteLegale: "",
           Indirizzo: "",
           CodiceFiscale: "",
           PartitaIva: "",
           Telefono1: "",
-          Telefono2: "",
-          DescrizioneTelefoni: "",
+          // Telefono2: "",
+          // DescrizioneTelefoni: "",
           Fax: "",
           Pec: "",
-          FormaGiuridica: "",
-          Associazione: "",
-          Localita: "",
-          Categoria: "",
-          "Attivita'Principale": "",
-          "Attivita'Secondaria": "",
+          // FormaGiuridica: "",
+          // Associazione: "",
+          // Localita: "",
+          // Categoria: "",
+          // "Attivita'Principale": "",
+          // "Attivita'Secondaria": "",
         });
         console.log("set form data annunci --- dati salvati");
       } catch (error) {
@@ -167,7 +163,7 @@ const AggSingAz = () => {
       }
     }
   };
-
+  console.log(formData, "formData")
   useEffect(() => {
     if (isFormReset) {
       setIsFormReset(false);
@@ -184,7 +180,7 @@ const AggSingAz = () => {
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-          marginBottom:"40px",
+          marginBottom: "40px",
           fontWeight: 'bold',
         }} className="bold-columns text-center text-white">
           AGGIUNGI AZIENDA
@@ -192,8 +188,8 @@ const AggSingAz = () => {
         <div className="container custom-container">
           <Form onSubmit={handleAddAzienda} ref={refForm}>
             {/* <div className="row mt-5"> */}
-              {handleSection("DATI LOGIN", formDatiLogin)}
-              {handleSection("DATI AZIENDA", formDatiAzienda)}
+            {handleSection("DATI LOGIN", formDatiLogin)}
+            {handleSection("DATI AZIENDA", formDatiAzienda)}
             {/* </div> */}
             <div className="row justify-content-center form_middle_page_btn" style={{ marginTop: "80px", paddingBottom: "130px" }}>
               <div className="form-group col-md-2 mr-mt-0">

@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 /* CSS */
 import "./iMieiAnnTable.css";
 /* COMPONENTS */
 // import ButtonPen from '../../../../../../../Global/ButtonPen/buttonPen';
 import ModDatiModVisAnn from "../ModDatiModVisAnn/modDatiModVisAnn";
 import ProButton from "../../../../../../Global/ProButton/ProButton";
-import { useEffect } from "react";
 import axios from "axios";
 /* MUI MATERIAL ICONS */
 // import ModeIcon from '@mui/icons-material/Mode';
@@ -103,7 +102,7 @@ const IMieiAnnTable = () => {
           height: '70px',
           backgroundColor: '#030947',
           width: '100%',
-         
+
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
@@ -112,66 +111,66 @@ const IMieiAnnTable = () => {
           I MIEI ANNUNCI
         </div>
         <div className="container custom-container" style={{ backgroundColor: "#f3f3f3" }}>
-        <div className="table-responsive tabel-Button"> <table className="table table-bordered w-100">
-          <thead>
-            <tr className="bold-columns text-center">
-              {columns.map((column, columnIndex) => (
-                <th key={columnIndex}>
-                  {columnIndex === 0 && (
-                    <div>
-                      {/* <button type="button" className="btn btn-primary button-modify icon-add" onClick={() => ("")}>
+          <div className="table-responsive tabel-Button"> <table className="table table-bordered w-100">
+            <thead>
+              <tr className="bold-columns text-center">
+                {columns.map((column, columnIndex) => (
+                  <th key={columnIndex}>
+                    {columnIndex === 0 && (
+                      <div>
+                        {/* <button type="button" className="btn btn-primary button-modify icon-add" onClick={() => ("")}>
                                             <AddIcon className="icon" />
                                         </button> */}
+                      </div>
+                    )}
+                    {column}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {currentRowsCategory?.map((row, rowIndex) => (
+                <tr key={rowIndex}>
+                  <td className={getColumnClassName(0)}>
+                    <div>
+                      <button type="button" className="btn btn-primary button-modify largeTextButton" onClick={handleClickDatiModVisIntOpen} style={{ paddingLeft: '10px', paddingRight: '10px' }}>
+                        Visualizza Annuncio
+                      </button>
                     </div>
-                  )}
-                  {column}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {currentRowsCategory?.map((row, rowIndex) => (
-              <tr key={rowIndex}>
-                <td className={getColumnClassName(0)}>
-                  <div>
-                    <button type="button" className="btn btn-primary button-modify largeTextButton" onClick={handleClickDatiModVisIntOpen} style={{ paddingLeft: '10px', paddingRight: '10px' }}>
-                      Visualizza Annuncio
-                    </button>
-                  </div>
-                  {/* <ButtonPen onClick={openModal} /> */}
-                </td>
-                <td className={getColumnClassName(1)}>{row?.id}</td>
-                <td className={getColumnClassName(2)}>{row?.titolo}</td>
-                <td className={getColumnClassName(3)}>{row?.descrizione}</td>
-                <td className={getColumnClassName(4)}>{row?.quantita}</td>
-                {/* <div>
+                    {/* <ButtonPen onClick={openModal} /> */}
+                  </td>
+                  <td className={getColumnClassName(1)}>{row?.id}</td>
+                  <td className={getColumnClassName(2)}>{row?.titolo}</td>
+                  <td className={getColumnClassName(3)}>{row?.descrizione}</td>
+                  <td className={getColumnClassName(4)}>{row?.quantita}</td>
+                  {/* <div>
                                 <button type="button" className="btn btn-danger button-close" onClick={() => ("")}>
                                     <CloseIcon className="icon-close" />
                                 </button>
                             </div> */}
-              </tr>
-            ))}
-          </tbody>
-        </table></div>
-       
-        <div style={{ marginBottom: "100px" }} className="d-flex justify-content-center w-100 text-sm page-text-input">
-          <div className="widthSmall d-flex justify-content-around align-items-center my-1">
-            <ProButton text="<<" title="Previous Page" disabled={currentPage === 1} clicked={() => handlePageChange(currentPage - 1)} />
-            <span className="text-center text-sm">
-              Pagina
-              <strong className="mx-3 text-sm">
-                {currentPage} di {Math.ceil(categorie.length / itemsPerPage)}
-              </strong>
-              {/* &nbsp; | &nbsp; Go To Page &nbsp;&nbsp;
+                </tr>
+              ))}
+            </tbody>
+          </table></div>
+
+          <div style={{ marginBottom: "100px" }} className="d-flex justify-content-center w-100 text-sm page-text-input">
+            <div className="widthSmall d-flex justify-content-around align-items-center my-1">
+              <ProButton text="<<" title="Previous Page" disabled={currentPage === 1} clicked={() => handlePageChange(currentPage - 1)} />
+              <span className="text-center text-sm">
+                Pagina
+                <strong className="mx-3 text-sm">
+                  {currentPage} di {Math.ceil(categorie.length / itemsPerPage)}
+                </strong>
+                {/* &nbsp; | &nbsp; Go To Page &nbsp;&nbsp;
             <input
               type="number"
               className="goto-page-input"
               defaultValue={indexOfLastItem >= rowsCatAziende.length ? currentPage - 1 : currentPage + 1}
             /> */}
-            </span>
-            <ProButton text=">>" title="Next Page" disabled={indexOfLastItem >= categorie.length} clicked={() => handlePageChange(currentPage + 1)} />
+              </span>
+              <ProButton text=">>" title="Next Page" disabled={indexOfLastItem >= categorie.length} clicked={() => handlePageChange(currentPage + 1)} />
+            </div>
           </div>
-        </div>
         </div>
         <div>{isModalDatiVisIntActive && <ModDatiModVisAnn show={isModalDatiVisIntActive} close={handleClickDatiModVisIntClose} />}</div>
       </div>

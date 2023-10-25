@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 
 //* CSS */
@@ -18,12 +18,15 @@ import CloseIcon from "@mui/icons-material/Close";
 // eslint-disable-next-line
 import AddIcon from "@mui/icons-material/Add";
 import Search from "./Search/SearchAzinde";
+import AziendaService from "../../../../../../DataAPI/services/azienda.service";
 
 
 const AziendeTable = () => {
+  const { getAziende } = AziendaService()
   const columns = ["", "Email", ""];
-  const [rowsCatAziende,setRowsCatAziende]=useState(["1info@info", "2info@info", "3info@info", "4info@info", "5info@info", "6info@info", "7info@info", "8info@info", "9info@info", "10info@info", "11info@info", "12info@info"])
-  const [CatAziende,setCatAziende]=useState(["1info@info", "2info@info", "3info@info", "4info@info", "5info@info", "6info@info", "7info@info", "8info@info", "9info@info", "10info@info", "11info@info", "12info@info"])
+  // eslint-disable-next-line
+  const [CatAziende, setCatAziende] = useState(["1info@info", "2info@info", "3info@info", "4info@info", "5info@info", "6info@info", "7info@info", "8info@info", "9info@info", "10info@info", "11info@info", "12info@info"])
+  const [rowsCatAziende, setRowsCatAziende] = useState(["1info@info", "2info@info", "3info@info", "4info@info", "5info@info", "6info@info", "7info@info", "8info@info", "9info@info", "10info@info", "11info@info", "12info@info"])
 
 
   const itemsPerPage = 10;
@@ -100,6 +103,14 @@ const AziendeTable = () => {
       return "col-12 px-12 text-center h5";
     }
   };
+  const getAziendeData = async () => {
+    // eslint-disable-next-line
+    const response = await getAziende();
+  }
+  useEffect(() => {
+    getAziendeData()
+    // eslint-disable-next-line
+  }, [])
 
   return (
     <>
@@ -116,11 +127,11 @@ const AziendeTable = () => {
         }} className="bold-columns text-center text-white">
           AZIENDE
         </div>
-          {/* <div className="aziendeTableMargin"> */}
-         
-        
+        {/* <div className="aziendeTableMargin"> */}
+
+
         <div className="container custom-container" style={{ backgroundColor: "#f3f3f3" }}>
-        <Search rowsCatAziende={CatAziende} setRowsCatAziende={setRowsCatAziende}/>
+          <Search rowsCatAziende={CatAziende} setRowsCatAziende={setRowsCatAziende} />
           <Card>
             <div className="table-responsive tabel-Button">
               <table className="table table-bordered w-100">
@@ -173,11 +184,11 @@ const AziendeTable = () => {
               </div>
             </div>
           </Card>
-          </div>
-          <div>{isModalAddActive && <AziendeModalAdd show={isModalAddActive} close={handleClickAddClose} />}</div>
-          <div>{isModalModActive && <AziendeModalMod show={isModalModActive} close={handleClickModClose} />}</div>
-          <div>{isModalDelActive && <AziendeModalDel show={isModalDelActive} close={handleClickDelClose} />}</div>
-     
+        </div>
+        <div>{isModalAddActive && <AziendeModalAdd show={isModalAddActive} close={handleClickAddClose} />}</div>
+        <div>{isModalModActive && <AziendeModalMod show={isModalModActive} close={handleClickModClose} />}</div>
+        <div>{isModalDelActive && <AziendeModalDel show={isModalDelActive} close={handleClickDelClose} />}</div>
+
       </div>
       {/* </div> */}
     </>
